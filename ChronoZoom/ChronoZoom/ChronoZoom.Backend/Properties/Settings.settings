@@ -1,0 +1,9 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="ChronoZoom.Backend.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="Neo4jServerAddress" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">http://neo4j:neo@84.25.163.6:7474/db/data</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

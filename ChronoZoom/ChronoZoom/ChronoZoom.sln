@@ -1,0 +1,90 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChronoZoom.API", "ChronoZoom.API\ChronoZoom.API.csproj", "{366C26CF-6D7F-4989-BE45-D6C67D770404}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChronoZoom.API.Tests", "ChronoZoom.API.Tests\ChronoZoom.API.Tests.csproj", "{0F01FC26-1583-4523-84FC-60284F6A5988}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChronoZoom.Database", "ChronoZoom.Database\ChronoZoom.Database.csproj", "{7F6762DE-55BF-463B-A8B9-E1BFA1740FBC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChronoZoom.Database.Tests", "ChronoZoom.Database.Tests\ChronoZoom.Database.Tests.csproj", "{C1821555-FE67-4877-9508-B6A83E874160}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChronoZoom.Frontend", "ChronoZoom.Frontend\ChronoZoom.Frontend.csproj", "{AF9CFD07-2149-47E2-880A-9AE897D9AB78}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{20C515C6-8F25-4294-AA08-33A4DE4B525C}"
+	ProjectSection(SolutionItems) = preProject
+		CodeCoverage.runsettings = CodeCoverage.runsettings
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChronoZoom.Backend", "ChronoZoom.Backend\ChronoZoom.Backend.csproj", "{EC98BB47-FF09-44EC-883A-9A64FE82CF31}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChronoZoom.Backend.Tests", "ChronoZoom.Backend.Tests\ChronoZoom.Backend.Tests.csproj", "{8FFCD964-7AC0-4EFC-8B74-7E196AAD6CB4}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 8
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://chronozoom.visualstudio.com/defaultcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = ChronoZoom.API.Tests\\ChronoZoom.API.Tests.csproj
+		SccProjectName1 = ChronoZoom.API.Tests
+		SccLocalPath1 = ChronoZoom.API.Tests
+		SccProjectUniqueName2 = ChronoZoom.API\\ChronoZoom.API.csproj
+		SccProjectName2 = ChronoZoom.API
+		SccLocalPath2 = ChronoZoom.API
+		SccProjectUniqueName3 = ChronoZoom.Database.Tests\\ChronoZoom.Database.Tests.csproj
+		SccProjectName3 = ChronoZoom.Database.Tests
+		SccLocalPath3 = ChronoZoom.Database.Tests
+		SccProjectUniqueName4 = ChronoZoom.Database\\ChronoZoom.Database.csproj
+		SccProjectName4 = ChronoZoom.Database
+		SccLocalPath4 = ChronoZoom.Database
+		SccProjectUniqueName5 = ChronoZoom.Frontend\\ChronoZoom.Frontend.csproj
+		SccProjectName5 = ChronoZoom.Frontend
+		SccLocalPath5 = ChronoZoom.Frontend
+		SccProjectUniqueName6 = ChronoZoom.Backend\\ChronoZoom.Backend.csproj
+		SccProjectName6 = ChronoZoom.Backend
+		SccLocalPath6 = ChronoZoom.Backend
+		SccProjectUniqueName7 = ChronoZoom.Backend.Tests\\ChronoZoom.Backend.Tests.csproj
+		SccProjectName7 = ChronoZoom.Backend.Tests
+		SccLocalPath7 = ChronoZoom.Backend.Tests
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{366C26CF-6D7F-4989-BE45-D6C67D770404}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{366C26CF-6D7F-4989-BE45-D6C67D770404}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{366C26CF-6D7F-4989-BE45-D6C67D770404}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{366C26CF-6D7F-4989-BE45-D6C67D770404}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F01FC26-1583-4523-84FC-60284F6A5988}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F01FC26-1583-4523-84FC-60284F6A5988}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F01FC26-1583-4523-84FC-60284F6A5988}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F01FC26-1583-4523-84FC-60284F6A5988}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F6762DE-55BF-463B-A8B9-E1BFA1740FBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F6762DE-55BF-463B-A8B9-E1BFA1740FBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F6762DE-55BF-463B-A8B9-E1BFA1740FBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F6762DE-55BF-463B-A8B9-E1BFA1740FBC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1821555-FE67-4877-9508-B6A83E874160}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1821555-FE67-4877-9508-B6A83E874160}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1821555-FE67-4877-9508-B6A83E874160}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1821555-FE67-4877-9508-B6A83E874160}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF9CFD07-2149-47E2-880A-9AE897D9AB78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF9CFD07-2149-47E2-880A-9AE897D9AB78}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF9CFD07-2149-47E2-880A-9AE897D9AB78}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF9CFD07-2149-47E2-880A-9AE897D9AB78}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC98BB47-FF09-44EC-883A-9A64FE82CF31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC98BB47-FF09-44EC-883A-9A64FE82CF31}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC98BB47-FF09-44EC-883A-9A64FE82CF31}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC98BB47-FF09-44EC-883A-9A64FE82CF31}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FFCD964-7AC0-4EFC-8B74-7E196AAD6CB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FFCD964-7AC0-4EFC-8B74-7E196AAD6CB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FFCD964-7AC0-4EFC-8B74-7E196AAD6CB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FFCD964-7AC0-4EFC-8B74-7E196AAD6CB4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
