@@ -11,7 +11,7 @@ namespace ChronoZoom.API.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            // Added this line to test GitHub sync.
+            // Added this line to test GitHub sync
             return View();
         }
 
