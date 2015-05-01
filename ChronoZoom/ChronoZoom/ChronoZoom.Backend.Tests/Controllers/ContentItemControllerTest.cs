@@ -18,7 +18,7 @@ namespace ChronoZoom.Backend.Tests.Controllers
         [TestMethod]
         public void ContentItemController_Get_Test()
         {
-            //  Arrange
+            // Arrange
             Mock<IContentItemService> mock = new Mock<IContentItemService>(MockBehavior.Strict);
             mock.Setup(setup => setup.GetAll(It.IsAny<int>())).Returns(new Entities.ContentItem[2]);
             ContentItemController target = new ContentItemController(mock.Object);
