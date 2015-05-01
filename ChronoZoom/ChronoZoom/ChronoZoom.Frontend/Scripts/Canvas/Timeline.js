@@ -19,7 +19,7 @@
                 _isChanged = true;
                 _isLoading = false;
             }
-
+            _isChanged = true; //TODO change to be able to use mouse scroll right now is just a quick and dirty fix for demo
             // Check if timeline has changed 
             if(_isChanged) {
                 // Update all content items
@@ -32,8 +32,8 @@
                     _contentItems[i].y = 100 + (i * 50);
                     _contentItems[i].update();
                 }
-                console.log("UPDATED CONTENTITEMS :", _contentItems);
-                console.log("ITEM 0: ", _contentItems[0].x, _contentItems[0].width);
+                //console.log("UPDATED CONTENTITEMS :", _contentItems);
+               // console.log("ITEM 0: ", _contentItems[0].x, _contentItems[0].width);
 
                 // Remove change flag
                 _isChanged = false;
@@ -47,7 +47,7 @@
                 var context = Canvas.getContext();
                 context.font = Canvas.Settings.getTimescaleTickLabelFont();
                 context.fillStyle = Canvas.Settings.getTimescaleTickLabelColor();
-                context.fillText("LOADING!!!", 100, 100);
+                context.fillText("LOADING...", 100, 100);
             }
 
             // Draw all content items
@@ -61,18 +61,20 @@
         }
 
         function handleClickOnTimeline(eventArgs) {
-            var clickedContentItem = collides();
+            var clickedContentItem = getContentItemOnMousePosition();// collides();
             if (clickedContentItem !== undefined) {
-                Canvas.Timescale.setRange(clickedContentItem.beginDate, clickedContentItem.endDate);
+                Canvas.Timescale.setRange(clickedContentItem.beginDate-1, clickedContentItem.endDate+1);
                 Canvas.ContentItemService.findContentItemsByParentContentID(clickedContentItem.id);
+                _isLoading = true;
             } else {
                 // TODO: Zoom out
                 Canvas.Timescale.setRange(500, 3000);
             }
-            _isLoading = true;
+            
         }
 
         // Anthony aan alle : Waarom een intersects methode EN collides?!?! als collides object retouneert intersect ie dus
+        // Richard added: Intersects is used to know if two rectangles intersect with eachother, colides is used with arcs
         //function intersects(rectangle) {
         //    for (var i = 0; i < _contentItems.length; i++) {
         //        var item = _contentItems[i];
@@ -97,6 +99,17 @@
         //        }
         //    }
         //}
+
+        function getContentItemOnMousePosition() {
+            for (var i = 0; i < _contentItems.length; i++) {
+                var item = _contentItems[i];
+                var position = Canvas.Mousepointer.getPosition();
+                if (item.x < position.x && item.x + item.width > position.x && item.y < position.y && item.y + item.height > position.y) {
+                    return item;
+                }
+            }
+            return undefined;
+        }
 
         function collides() {
             var clickedContentItem = undefined;

@@ -1,0 +1,14 @@
+C:\ChronoZoomTFS\ChronoZoom\ChronoZoom.Database.Tests\obj\Debug\ChronoZoom.Database.Tests.csprojResolveAssemblyReference.cache
+C:\ChronoZoomTFS\ChronoZoom\ChronoZoom.Database.Tests\bin\Debug\ChronoZoom.Database.Tests.dll
+C:\ChronoZoomTFS\ChronoZoom\ChronoZoom.Database.Tests\bin\Debug\ChronoZoom.Database.Tests.pdb
+C:\ChronoZoomTFS\ChronoZoom\ChronoZoom.Database.Tests\bin\Debug\ChronoZoom.Database.dll
+C:\ChronoZoomTFS\ChronoZoom\ChronoZoom.Database.Tests\bin\Debug\Moq.dll
+C:\ChronoZoomTFS\ChronoZoom\ChronoZoom.Database.Tests\bin\Debug\ChronoZoom.Database.pdb
+C:\ChronoZoomTFS\ChronoZoom\ChronoZoom.Database.Tests\bin\Debug\Moq.xml
+C:\ChronoZoomTFS\ChronoZoom\ChronoZoom.Database.Tests\obj\Debug\ChronoZoom.Database.Tests.dll
+C:\ChronoZoomTFS\ChronoZoom\ChronoZoom.Database.Tests\obj\Debug\ChronoZoom.Database.Tests.pdb
+C:\ChronoZoomTFS\ChronoZoom\ChronoZoom.Database.Tests\bin\Debug\Neo4jClient.dll
+C:\ChronoZoomTFS\ChronoZoom\ChronoZoom.Database.Tests\bin\Debug\Newtonsoft.Json.dll
+C:\ChronoZoomTFS\ChronoZoom\ChronoZoom.Database.Tests\bin\Debug\Neo4jClient.pdb
+C:\ChronoZoomTFS\ChronoZoom\ChronoZoom.Database.Tests\bin\Debug\Neo4jClient.xml
+C:\ChronoZoomTFS\ChronoZoom\ChronoZoom.Database.Tests\bin\Debug\Newtonsoft.Json.xml

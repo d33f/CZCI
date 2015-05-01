@@ -35,13 +35,13 @@
         function zoomCanvas(e) {
             var range = Canvas.Timescale.getRange();
             if (e.wheelDelta > 0) {
-                begin = range.begin + 1;
-                end = range.end - 1;
+                begin = range.begin + 2;
+                end = range.end - 2;
                 Canvas.Timescale.setRange(begin,end);
             }else
             {
-                begin = range.begin - 1;
-                end = range.end + 1;
+                begin = range.begin - 2;
+                end = range.end + 2;
                 Canvas.Timescale.setRange(begin, end);
             }   
         }
@@ -49,12 +49,12 @@
         function zoomCanvasFirefox(e) {
             var range = Canvas.Timescale.getRange();
             if (e.detail > 0) {
-                begin = range.begin + 1;
-                end = range.end - 1;
+                begin = range.begin + 2;
+                end = range.end - 2;
                 Canvas.Timescale.setRange(begin, end);
             } else {
-                begin = range.begin - 1;
-                end = range.end + 1;
+                begin = range.begin - 2;
+                end = range.end + 2;
                 Canvas.Timescale.setRange(begin, end);
             }
 
