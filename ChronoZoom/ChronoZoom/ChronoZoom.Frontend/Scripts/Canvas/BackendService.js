@@ -81,7 +81,7 @@
             });
         }
 
-        // Get content items for parent content item (promise)
+        // Get content items for parent content item (promise) TODO : Check compatibility
         function getContentItems(parentContentItemID) {
             console.log('DEBUG: backendservice.getContentItems(' + parentContentItemID + ') called!');
             return getJSON('contentitem/' + parentContentItemID).then(function (json) {
