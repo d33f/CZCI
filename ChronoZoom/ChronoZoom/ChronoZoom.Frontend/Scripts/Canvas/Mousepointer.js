@@ -1,12 +1,17 @@
 ﻿var Canvas;
 (function (Canvas) {
     (function (Mousepointer) {
+        // Public methods
         Mousepointer.getPosition = getPosition;
         Mousepointer.init = init;
+
+        // Private fields
         var x = 0;
         var y = 0;
         var begin = 0;
         var end = 0;
+
+        // Update mouse position
         function updateMousePosition(e) {
             if ("offsetX" in e) { // Opera, ie
             x = e.offsetX;
@@ -21,7 +26,6 @@
             
 
             var time = Canvas.Timescale.getTimeForXPosition(x);
-            //console.log(x, time, Canvas.Timescale.getXPositionForTime(time));
         }
 
         function clickedOnTimeline(e) {
@@ -38,8 +42,7 @@
                 begin = range.begin + 2;
                 end = range.end - 2;
                 Canvas.Timescale.setRange(begin,end);
-            }else
-            {
+            } else {
                 begin = range.begin - 2;
                 end = range.end + 2;
                 Canvas.Timescale.setRange(begin, end);

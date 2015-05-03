@@ -1,10 +1,12 @@
 ﻿var Canvas;
 (function (Canvas) {
     (function (YearMarker) {
+        // Public methods
         YearMarker.draw = draw;
         YearMarker.update = update;
         YearMarker.setHeight = setHeight;
 
+        // Private fields
         var x;
         var y;
         var context;

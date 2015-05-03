@@ -6,7 +6,7 @@
         BackendService.getContentItems = getContentItems;
         
         // Private fields
-        var _baseUrl = "http://localhost:10000/api/";
+        var _baseUrl = "http://localhost:40000/api/";
 
         // Get json data from path, returns a promise object
         function getJSON(path) {
