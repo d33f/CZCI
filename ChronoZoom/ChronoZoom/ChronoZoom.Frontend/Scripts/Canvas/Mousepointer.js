@@ -3,39 +3,50 @@
     (function (Mousepointer) {
         // Public methods
         Mousepointer.getPosition = getPosition;
-        Mousepointer.init = init;
+        Mousepointer.start = start;
 
         // Private fields
-        var x = 0;
-        var y = 0;
-        var begin = 0;
-        var end = 0;
+        var _position = { x: 0, y: 0 };
+
+        // Start capturing the mouse position
+        function start() {
+            // Add event listeners
+            Canvas.getContainer().addEventListener("mousemove", updateMousePosition, false);
+            Canvas.getContainer().addEventListener("click", clickedOnTimeline, false);
+
+            // Check user agent and add event listener
+            if (navigator.userAgent.toLocaleLowerCase().indexOf('firefox') > 1) {
+                Canvas.getContainer().addEventListener("DOMMouseScroll", zoomCanvasFirefox, false);
+            } else {
+                Canvas.getContainer().addEventListener("mousewheel", zoomCanvas, false);
+            }
+        }
+
+        // Get current position
+        function getPosition() {
+            return _position;
+        }
 
         // Update mouse position
         function updateMousePosition(e) {
             if ("offsetX" in e) { // Opera, ie
-            x = e.offsetX;
-                y = e.offsetY;
+                _position.x = e.offsetX;
+                _position.y = e.offsetY;
             } else if ("pageX" in e) { // Firefox
-                x = e.pageX;
-                y = e.pageY;
+                _position.x = e.pageX;
+                _position.y = e.pageY;
             } else {
-                x = 0;
-                y = 0;
+                _position.x = 0;
+                _position.y = 0;
             }
-            
-
-            var time = Canvas.Timescale.getTimeForXPosition(x);
         }
 
+        // Handle click on time event
         function clickedOnTimeline(e) {
             Canvas.Timeline.handleClickOnTimeline(e);
         }
 
-        function getPosition() {
-            return { x: x, y: y };
-        }
-
+        // Handle zoom on canvas
         function zoomCanvas(e) {
             var range = Canvas.Timescale.getRange();
             if (e.wheelDelta > 0) {
@@ -49,6 +60,7 @@
             }   
         }
 
+        // Handle zoom on canvas for firefox
         function zoomCanvasFirefox(e) {
             var range = Canvas.Timescale.getRange();
             if (e.detail > 0) {
@@ -60,20 +72,7 @@
                 end = range.end + 2;
                 Canvas.Timescale.setRange(begin, end);
             }
-
         }
-     
-        function init() {
-            Canvas.getContainer().addEventListener("mousemove", updateMousePosition, false);
-            Canvas.getContainer().addEventListener("click", clickedOnTimeline, false);
-            if (navigator.userAgent.toLocaleLowerCase().indexOf('firefox') > 1) {
-                Canvas.getContainer().addEventListener("DOMMouseScroll", zoomCanvasFirefox, false);
-            } else {
-                Canvas.getContainer().addEventListener("mousewheel", zoomCanvas, false);
-            }
-            
-        }
-
     })(Canvas.Mousepointer || (Canvas.Mousepointer = {}));
     var Mousepointer = Canvas.Mousepointer;
 })(Canvas || (Canvas = {}));

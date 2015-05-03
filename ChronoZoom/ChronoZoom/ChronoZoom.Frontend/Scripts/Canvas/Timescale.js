@@ -8,7 +8,6 @@
         Timescale.convertTimeToString = convertTimeToString;
         Timescale.getTimeForXPosition = getTimeForXPosition;
         Timescale.getXPositionForTime = getXPositionForTime;
-        Timescale.getWidthForRange = getWidthForRange;
         Timescale.getRange = getRange;
 
         // Private fields
@@ -40,13 +39,6 @@
 
             // Return time
             return Math.floor(_range.begin + (timePerPixel * x));
-        }
-
-       
-        function getWidthForRange(beginDate,endDate) {
-            var beginPos = getXPositionForTime(beginDate);
-            var endPos = getXPositionForTime(endDate);
-            return endPos - beginPos;
         }
 
         // Get x-axis position for given time

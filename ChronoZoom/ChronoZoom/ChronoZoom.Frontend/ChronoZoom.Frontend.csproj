@@ -120,7 +120,7 @@
     <Content Include="Scripts\Canvas\BackendService.js" />
     <Content Include="Scripts\Canvas\Settings.js" />
     <Content Include="Scripts\Canvas\Mousepointer.js" />
-    <Content Include="Scripts\Canvas\Item.js" />
+    <Content Include="Scripts\Canvas\ContentItem.js" />
     <Content Include="Scripts\Canvas\ContentItemEnricher.js" />
     <Content Include="Scripts\Canvas\Timeline.js" />
     <Content Include="Scripts\Canvas\Yearmarker.js" />

@@ -8,10 +8,10 @@
         
 
         // Constructor
-        function init() {
+        function initialize() {
 
         }
-        init();
+        initialize();
 
     })(Canvas.Breadcrumbs || (Canvas.Breadcrumbs = {}));
     var Breadcrumbs = Canvas.Breadcrumbs;
