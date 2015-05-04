@@ -18,8 +18,8 @@ namespace ChronoZoom.Frontend
             "~/Scripts/Canvas/ContentItemEnricher.js",
             "~/Scripts/Canvas/Breadcrumbs.js",
             "~/Scripts/Canvas/Timeline.js",
-            "~/Scripts/Canvas/Timescale.js",
             "~/Scripts/Canvas/Yearmarker.js",
+            "~/Scripts/Canvas/Timescale.js",
             "~/Scripts/Canvas/ContentItem.js",
             "~/Scripts/Canvas/Mousepointer.js",
             "~/Scripts/Canvas/Canvas.js"    

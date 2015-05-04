@@ -1,12 +1,15 @@
-﻿function ContentItem() {
+﻿function ContentItem(data, parentContentItem) {
     // Public fields
-    this.id;
-    this.beginDate;
-    this.endDate;
-    this.title;
-    this.depth;
-    this.hasChildren;
-    this.sourceURL;
+    this.id = data.id;
+    this.beginDate = data.beginDate;
+    this.endDate = data.endDate;
+    this.title = data.title;
+    this.depth = data.depth;
+    this.hasChildren = data.hasChildren;
+    this.sourceURL = data.sourceURL;
+
+    this.data = data;
+    this.parentContentItem = parentContentItem;
 
     // Public methods
     this.update = update;
@@ -19,6 +22,7 @@
     var _y = 0;
     var _width = 0;
     var _height = 0;
+    var _isHovered = false;
 
     // Constructor
     function initialize() {
@@ -30,6 +34,9 @@
     function update() {
         _x = Canvas.Timescale.getXPositionForTime(this.beginDate);
         _width = Canvas.Timescale.getXPositionForTime(this.endDate) - _x;
+
+        var position = Canvas.Mousepointer.getPosition();
+        _isHovered = collides(position.x, position.y);
 
         // TODO: Do real logic here
         _height = _width * .75;
@@ -54,7 +61,7 @@
             context.closePath();
 
             context.beginPath();
-            context.fillStyle = "white";
+            context.fillStyle = _isHovered ? "blue" : "white";
             context.fillText(this.title, _x + 5, (_y + (_height - 50)) + 16);
             context.closePath();
         }
@@ -79,88 +86,38 @@
 
     // Check if content item displayed as a circle collides given position
     function collidesCircle(x, y) {
-        return false;
+        var radiusCircle = _width;
+        var centerpointX = (_x + (_width / 2));
+        var centerpointY = _y;
+        
+        // distance between centerpointX and x
+        var deltaX;
+        if (centerpointX >= x) {
+            deltaX = centerpointX - x;
+        } else {
+            deltaX = x - centerpointX;
+        }
+
+        // distance between centerpointY and y
+        var deltaY;
+        if (centerpointY >= y) {
+            deltaY = centerpointY - y;
+        } else {
+            deltaY = y - centerpointY;
+        }
+
+        // angle between centerpoint and given position (in radial)
+        var angle = Math.atan(deltaY / deltaX);
+
+        // sinus value of angle
+        var sinangle = Math.sin(angle);
+
+        // distance between centerpoint and given position
+        var distance = deltaY / sinangle;
+
+        // is mousepoint in circle
+        return radiusCircle > distance;
     }
-
-    //// OLD CODE
-
-    // Anthony aan alle : Waarom een intersects methode EN collides?!?! als collides object retouneert intersect ie dus
-    // Richard added: Intersects is used to know if two rectangles intersect with eachother, colides is used with arcs
-    //function intersects(rectangle) {
-    //    for (var i = 0; i < _contentItems.length; i++) {
-    //        var item = _contentItems[i];
-    //        if (item.id !== rectangle.id) {
-    //            var AT = rectangle.y;
-    //            var AR = rectangle.x + rectangle.width;
-    //            var AB = rectangle.y + rectangle.height;
-    //            var AL = rectangle.x;
-
-    //            var BT = item.y;
-    //            var BR = item.x + item.width;
-    //            var BB = item.y + item.height;
-    //            var BL = item.x;
-
-    //            if (AL <= BR &&
-    //                BL <= AR &&
-    //                AT <= BB &&
-    //                BT <= AB) {
-    //                console.log("intercept");
-    //                return true;
-    //            }
-    //        }
-    //    }
-    //}
-
-    //function collides() {
-    //    var clickedContentItem = undefined;
-    //    var position = Canvas.Mousepointer.getPosition();
-    //    var length = _contentItems.length;
-
-    //    for (var i = 0; i < length; i++) {
-
-    //        var radiusCircle = _contentItems[i].width;
-    //        var centerpointX = (_contentItems[i].x + (_contentItems[i].width / 2));
-    //        var centerpointY = _contentItems[i].y;
-    //        var mousePointX = position.x;
-    //        var mousePointY = position.y;
-
-    //        // distance between centerpointX and mousepointX
-    //        var deltaX;
-    //        if (centerpointX >= mousePointX) {
-    //            deltaX = centerpointX - mousePointX;
-    //        } else {
-    //            deltaX = mousePointX - centerpointX;
-    //        }
-
-    //        // distance between centerpointY and mousepointY
-    //        var deltaY;
-    //        if (centerpointY >= mousePointY) {
-    //            deltaY = centerpointY - mousePointY;
-    //        } else {
-    //            deltaY = mousePointY - centerpointY;
-    //        }
-
-    //        // angle between centerpoint and mousepoint (in radial)
-    //        var angle = Math.atan(deltaY / deltaX);
-
-    //        // sinus value of angle
-    //        var sinangle = Math.sin(angle);
-
-    //        // distance between centerpoint and mousepoint
-    //        var distance = deltaY / sinangle;
-
-    //        // is mousepoint in circle
-    //        var inCircle = (radiusCircle) > distance;
-
-    //        if (inCircle) {
-    //            clickedContentItem = _contentItems[i];
-    //            break;
-    //        }
-    //    }
-    //    return clickedContentItem;
-    //}
-
-    //// END OLD CODE
 
     // Return object instance
     initialize();

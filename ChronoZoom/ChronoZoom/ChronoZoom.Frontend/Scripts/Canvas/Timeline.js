@@ -9,8 +9,7 @@
         // Private fields
         var _contentItems = [];
         var _isLoading = true;
-        var _isChanged = false;
-
+        
         // Constructor
         function initialize() {
             Canvas.ContentItemService.addListener(onContentItemsChanged);
@@ -23,21 +22,14 @@
 
             // Update flags
             _isLoading = false;
-            _isChanged = true;
         }
 
         // Update the timeline
         function update() {
-            // Check if changed
-            if(_isChanged) {
-                // Update all content items
-                var length = _contentItems.length;
-                for (var i = 0; i < length; i++) {
-                    _contentItems[i].update();
-                }
-
-                // Remove change flag
-                _isChanged = false;
+            // Update all content items
+            var length = _contentItems.length;
+            for (var i = 0; i < length; i++) {
+                _contentItems[i].update();
             }
         }
 
@@ -77,15 +69,22 @@
         }
 
         function handleClickOnTimeline(eventArgs) {
+            // Mark loading flag
+            _isLoading = true;
+
+            // Find clicked item
             var clickedContentItem = getContentItemOnMousePosition();
-            console.log('Clicked', clickedContentItem);
+
+            // If no item found zoom out
+            if (clickedContentItem === undefined) {
+                clickedContentItem = Canvas.Breadcrumbs.decreaseDepthAndGetTheNewContentItem();
+            }
+
+            // Make sure root is not reached
             if (clickedContentItem !== undefined) {
-                Canvas.Timescale.setRange(clickedContentItem.beginDate-1, clickedContentItem.endDate+1);
-                Canvas.ContentItemService.findContentItemsByParentContentID(clickedContentItem.id);
-                _isLoading = true;
-            } else {
-                // TODO: Zoom out
-                //Canvas.Timescale.setRange(500, 3000);
+                // Update timescale and content item service
+                Canvas.Timescale.setRange(clickedContentItem.beginDate - 1, clickedContentItem.endDate + 1);
+                Canvas.ContentItemService.findContentItemsByParentContent(clickedContentItem);
             }
         }
 

@@ -49,16 +49,16 @@
         }
 
         // Create a timeline object of given json input (convert it to our internal structure)
-        function createContentItemObject(json) {
-            var item = new ContentItem();
-            item.id= json.Id;
-            item.beginDate = json.BeginDate;
-            item.endDate = json.EndDate;
-            item.title = json.Title;
-            item.depth = json.Depth;
-            item.hasChildren = json.HasChildren;
-            item.sourceURL = json.Source;
-            return item;
+        function createContentItemObject(json, parentContentItem) {
+            return new ContentItem({
+                id: json.Id,
+                beginDate: json.BeginDate,
+                endDate: json.EndDate,
+                title: json.Title,
+                depth: json.Depth,
+                hasChildren: json.HasChildren,
+                sourceURL: json.Source,
+            }, parentContentItem);
         }
 
         // Get timeline
@@ -67,10 +67,16 @@
                 // Create a timeline object
                 var timeline = createTimelineObject(json);
 
+                var parentContentItem = new ContentItem({
+                    id: 0,
+                    beginDate: timeline.beginDate,
+                    endDate: timeline.endDate,
+                }, undefined);
+
                 // Convert all content items
                 for (var i = 0; i < json.ContentItems.length; i++) {
                     // Create and add content item object
-                    var contentItem = createContentItemObject(json.ContentItems[i]);
+                    var contentItem = createContentItemObject(json.ContentItems[i], parentContentItem);
                     timeline.contentItems.push(contentItem);
                 }
 
@@ -81,16 +87,16 @@
             });
         }
 
-        // Get content items for parent content item (promise) TODO : Check compatibility
-        function getContentItems(parentContentItemID, resolve, reject) {
-            getJSON('contentitem/' + parentContentItemID, function (json) {
+        // Get content items for parent content item 
+        function getContentItems(parentContentItem, resolve, reject) {
+            getJSON('contentitem/' + parentContentItem.id, function (json) {
                 // Create empty array
                 var contentItems = [];
 
                 // Convert all content items
                 for (var i = 0; i < json.length; i++) {
                     // Create and add content item object
-                    var contentItem = createContentItemObject(json[i]);
+                    var contentItem = createContentItemObject(json[i], parentContentItem);
                     contentItems.push(contentItem);
                 }
 

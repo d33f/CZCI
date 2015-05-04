@@ -14,6 +14,11 @@
         var _range = { begin: 0, end: 0 };
         var _height = Canvas.Settings.getTimescaleHeight();
 
+        // Constructor
+        function initialize() {
+            Canvas.YearMarker.setHeight(_height);
+        }
+
         // Set new range of yearscale
         function setRange(begin, end) {
             _range = { begin: begin, end: end };
@@ -53,7 +58,6 @@
 
         // Update the state of the yearscale
         function update() {
-            Canvas.YearMarker.setHeight(_height);
             Canvas.YearMarker.update();
         }
 
@@ -157,6 +161,8 @@
             // Default
             return 10;
         }
+
+        initialize();
     })(Canvas.Timescale || (Canvas.Timescale = {}));
     var Timescale = Canvas.Timescale;
 })(Canvas || (Canvas = {}));
