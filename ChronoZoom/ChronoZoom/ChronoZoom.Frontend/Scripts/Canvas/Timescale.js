@@ -21,6 +21,13 @@
 
         // Set new range of yearscale
         function setRange(begin, end) {
+            var i = 1;
+            if (i === 1) {
+                console.log(begin, end);
+                i++;
+            }
+            
+
             _range = { begin: begin, end: end };
         }
 

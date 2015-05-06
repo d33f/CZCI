@@ -38,7 +38,7 @@
         // Set content items
         function setContentItems(contentItems) {
             _contentItems = contentItems;
-            document.dispatchEvent(_contentItemChangedEvent)
+            document.dispatchEvent(_contentItemChangedEvent);
         }
 
         // Find content items by parent content
@@ -46,14 +46,14 @@
             // Add breadcrumb
             Canvas.Breadcrumbs.addContentItem(parentContentItem);
             
-            if (_cache !== undefined && _cache.getItem(parentContentItem.id) !== null) {
+            if (_cache !== undefined && _cache.getItem(parentContentItem.getId()) !== null) {
                 // Get content items from cache
-                setContentItems(getContentItemsFromCache(parentContentItem.id));
+                setContentItems(getContentItemsFromCache(parentContentItem.getId()));
             } else {
                 // Get from backend service 
                 Canvas.BackendService.getContentItems(parentContentItem, function (contentItems) {
                     setContentItems(contentItems);
-                    addContentItemsToCache(parentContentItem.id, contentItems);
+                    addContentItemsToCache(parentContentItem.getId(), contentItems);
                 }, function (error) {
                     console.log("No content items for parent content id found!!!", error);
                 });
@@ -84,7 +84,7 @@
                 var items = [];
                 var length = contentItems.length;
                 for (var i = 0; i < length; i++) {
-                    items.push(contentItems[i].data);
+                    items.push(contentItems[i].getData());
                 }
 
                 // Store in cache as json
@@ -100,14 +100,14 @@
                 Canvas.Timescale.setRange(timeline.beginDate, timeline.endDate);
 
                 // Add breadcrumb
-                var parentContentItem = timeline.contentItems[0].parentContentItem;
+                var parentContentItem = timeline.contentItems[0].getParentContentItem();
                 Canvas.Breadcrumbs.addContentItem(parentContentItem);
                
                 // Set content items
                 setContentItems(timeline.contentItems);
 
                 // Add content items to cache
-                addContentItemsToCache(parentContentItem.id, timeline.contentItems);
+                addContentItemsToCache(parentContentItem.getId(), timeline.contentItems);
             }, function (error) {
                 console.log("No timeline data found!!!", error);
             });

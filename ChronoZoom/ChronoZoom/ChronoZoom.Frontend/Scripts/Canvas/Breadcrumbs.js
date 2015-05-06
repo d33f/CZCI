@@ -13,7 +13,7 @@
         function addContentItem(contentItem) {
             if (contentItem instanceof ContentItem) {
                 // Check if not already on top of the stack
-                if (_stack.length == 0 || _stack[_stack.length - 1].id != contentItem.id) {
+                if (_stack.length == 0 || _stack[_stack.length - 1].getId() != contentItem.getId()) {
                     _stack.push(contentItem);
                 }
             }

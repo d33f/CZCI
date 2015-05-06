@@ -6,7 +6,7 @@
         BackendService.getContentItems = getContentItems;
         
         // Private fields
-        var _baseUrl = "http://localhost:40000/api/";
+        var _baseUrl = "http://localhost:40001/api/";
 
         // Get json data from path, execute callback resolve when succesfull and reject if failed. 
         function getJSON(path, resolve, reject) {
@@ -57,7 +57,7 @@
                 title: json.Title,
                 depth: json.Depth,
                 hasChildren: json.HasChildren,
-                sourceURL: json.Source,
+                sourceURL: json.Source
             }, parentContentItem);
         }
 
@@ -70,7 +70,7 @@
                 var parentContentItem = new ContentItem({
                     id: 0,
                     beginDate: timeline.beginDate,
-                    endDate: timeline.endDate,
+                    endDate: timeline.endDate
                 }, undefined);
 
                 // Convert all content items
@@ -89,7 +89,8 @@
 
         // Get content items for parent content item 
         function getContentItems(parentContentItem, resolve, reject) {
-            getJSON('contentitem/' + parentContentItem.id, function (json) {
+            console.log("getContentItems");
+            getJSON('contentitem/' + parentContentItem.getId(), function (json) {
                 // Create empty array
                 var contentItems = [];
 

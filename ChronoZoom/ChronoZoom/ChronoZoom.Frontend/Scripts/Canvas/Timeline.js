@@ -29,7 +29,7 @@
             // Update all content items
             var length = _contentItems.length;
             for (var i = 0; i < length; i++) {
-                _contentItems[i].update();
+                _contentItems[i].update(_contentItems);
             }
         }
 
@@ -57,12 +57,13 @@
 
             // Draw all content items
             var length = _contentItems.length;
+
             for (var i = 0; i < length; i++) {
                 // Get current content item
                 var contentItem = _contentItems[i];
 
                 // Check if content item visible in current range
-                if (contentItem.beginDate >= range.begin && contentItem.endDate <= range.end) {
+                if (contentItem.getBeginDate() >= range.begin && contentItem.getEndDate() <= range.end) {
                     contentItem.draw();
                 }
             }
@@ -83,7 +84,7 @@
             // Make sure root is not reached
             if (clickedContentItem !== undefined) {
                 // Update timescale and content item service
-                Canvas.Timescale.setRange(clickedContentItem.beginDate - 1, clickedContentItem.endDate + 1);
+                Canvas.Timescale.setRange(clickedContentItem.getBeginDate() - 1, clickedContentItem.getEndDate() + 1);
                 Canvas.ContentItemService.findContentItemsByParentContent(clickedContentItem);
             }
         }
