@@ -30,6 +30,7 @@
     var _width = 0;
     var _height = 0;
     var _isHovered = false;
+    var tooltipShow = false;
 
     // Constructor
     function initialize() {
@@ -52,7 +53,7 @@
         return _id;
     }
 
-    // Get id
+    // Get parentContentItem
     function getParentContentItem() {
         return _parentContentItem;
     }
@@ -74,11 +75,8 @@
 
         var position = Canvas.Mousepointer.getPosition();
         _isHovered = collides(position.x, position.y);
-
-        // Do something with height
-        // contentitems
-
-        setYPosition(contentItems);
+        //setYPosition(contentItems);
+        
 
         // TODO: Do real logic here
         _height = _width * .75;
@@ -95,6 +93,8 @@
                 context.drawImage(_image, _x, _y, _width, _height);
                 context.closePath();
             }*/
+        showTooltip();
+        
 
         //draw circle otherwise draw rectangle
         if (_hasChildren) {
@@ -127,12 +127,22 @@
                 var position = contentItems[i].getPosition();
 
                 while (collides(position.x, position.y)) {
-
                     _y += 10;
                 }
             }
         }
 
+    }
+
+    function showTooltip() {
+        if (_isHovered) {
+            console.log(_x, _y);
+            tooltip.pop(_parentContentItem, _title, { offsetY: _y, offsetX: (_x + _width) - 20 });
+            tooltipShow = true;
+        } else if (tooltipShow === true) {
+            tooltip.hide();
+            tooltipShow = false;
+        }
     }
 
 
