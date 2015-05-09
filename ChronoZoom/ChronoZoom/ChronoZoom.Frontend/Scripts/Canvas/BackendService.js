@@ -6,7 +6,7 @@
         BackendService.getContentItems = getContentItems;
         
         // Private fields
-        var _baseUrl = "http://localhost:40001/api/";
+        var _baseUrl = "http://localhost:40000/api/";
 
         // Get json data from path, execute callback resolve when succesfull and reject if failed. 
         function getJSON(path, resolve, reject) {
