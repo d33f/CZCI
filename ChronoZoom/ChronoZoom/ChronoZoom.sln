@@ -3,10 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChronoZoom.Database", "ChronoZoom.Database\ChronoZoom.Database.csproj", "{7F6762DE-55BF-463B-A8B9-E1BFA1740FBC}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChronoZoom.Database.Tests", "ChronoZoom.Database.Tests\ChronoZoom.Database.Tests.csproj", "{C1821555-FE67-4877-9508-B6A83E874160}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChronoZoom.Frontend", "ChronoZoom.Frontend\ChronoZoom.Frontend.csproj", "{AF9CFD07-2149-47E2-880A-9AE897D9AB78}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{20C515C6-8F25-4294-AA08-33A4DE4B525C}"
@@ -24,14 +20,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{7F6762DE-55BF-463B-A8B9-E1BFA1740FBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7F6762DE-55BF-463B-A8B9-E1BFA1740FBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7F6762DE-55BF-463B-A8B9-E1BFA1740FBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7F6762DE-55BF-463B-A8B9-E1BFA1740FBC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C1821555-FE67-4877-9508-B6A83E874160}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C1821555-FE67-4877-9508-B6A83E874160}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C1821555-FE67-4877-9508-B6A83E874160}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C1821555-FE67-4877-9508-B6A83E874160}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AF9CFD07-2149-47E2-880A-9AE897D9AB78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AF9CFD07-2149-47E2-880A-9AE897D9AB78}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AF9CFD07-2149-47E2-880A-9AE897D9AB78}.Release|Any CPU.ActiveCfg = Release|Any CPU

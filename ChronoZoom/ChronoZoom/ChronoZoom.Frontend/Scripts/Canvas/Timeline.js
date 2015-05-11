@@ -55,17 +55,28 @@
             // Get current range
             var range = Canvas.Timescale.getRange();
 
-            // Draw all content items
+            // Draw all content items that has childeren first
+            drawContentItemsLoop(range, true);
+            drawContentItemsLoop(range, false);
+        }
+
+        // Draw content item loop
+        function drawContentItemsLoop(range, hasChildren) {
+            // Check all content items
             var length = _contentItems.length;
-
             for (var i = 0; i < length; i++) {
-                // Get current content item
-                var contentItem = _contentItems[i];
-
-                // Check if content item visible in current range
-                if (contentItem.getBeginDate() >= range.begin && contentItem.getEndDate() <= range.end) {
-                    contentItem.draw();
+                if (_contentItems[i].hasChildren() == hasChildren) {
+                    // Draw content item
+                    drawContentItem(range, _contentItems[i]);
                 }
+            }
+        }
+
+        // Draw given content item on canvas if in (current) range
+        function drawContentItem(range, contentItem) {
+            // Check if content item visible in current range
+            if (contentItem.getBeginDate() >= range.begin && contentItem.getEndDate() <= range.end) {
+                contentItem.draw();
             }
         }
 
@@ -84,7 +95,7 @@
             // Make sure root is not reached
             if (clickedContentItem !== undefined) {
                 // Update timescale and content item service
-                Canvas.Timescale.setRange(clickedContentItem.getBeginDate() - 1, clickedContentItem.getEndDate() + 1);
+                Canvas.Timescale.setRange(clickedContentItem.getBeginDate(), clickedContentItem.getEndDate());
                 Canvas.ContentItemService.findContentItemsByParentContent(clickedContentItem);
             }
         }

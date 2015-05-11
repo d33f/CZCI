@@ -5,12 +5,16 @@
     this.getEndDate = getEndDate;
     this.getParentContentItem = getParentContentItem;
     this.getData = getData;
+    this.getSize = getSize;
+    this.getChildren = getChildren;
+    this.hasChildren = hasChildren;
 
     // Public methods
     this.update = update;
     this.draw = draw;
     this.collides = collides;
     this.getPosition = getPosition;
+    this.addChild = addChild;
 
     // Private fields
     var _id = data.id;
@@ -23,19 +27,25 @@
 
     var _data = data;
     var _parentContentItem = parentContentItem;
+    var _children = [];
 
     var _image = new Image();
     var _x = 0;
     var _y = 100;
     var _width = 0;
     var _height = 0;
+    var _radius = 0;
     var _isHovered = false;
-    var tooltipShow = false;
-
+    
     // Constructor
-    function initialize() {
+    function initialize(instance) {
         _image.onload = function () { };
-        _image.src = 'http://www.in5d.com/images/maya46.jpg';
+        if (_sourceURL != undefined) {
+            _image.src = _sourceURL;
+        }
+        if (_parentContentItem != undefined) {
+            _parentContentItem.addChild(instance);
+        }
     }
 
     // Get begin date property
@@ -45,10 +55,10 @@
 
     // Get end date property
     function getEndDate() {
-        return _beginDate;
+        return _endDate;
     }
 
-    // Get id
+    // Get id property
     function getId() {
         return _id;
     }
@@ -56,6 +66,24 @@
     // Get parentContentItem
     function getParentContentItem() {
         return _parentContentItem;
+    }
+
+    // Get has childeren property
+    function hasChildren() {
+        return _hasChildren;
+    }
+
+    // Get childeren 
+    function getChildren() {
+        return _children;
+    }
+
+    // Add child
+    function addChild(contentItem) {
+        // Check if it is an content item
+        if (contentItem instanceof ContentItem) {
+            _children.push(contentItem);
+        }
     }
 
     // Get current position
@@ -68,6 +96,11 @@
         return _data;
     }
 
+    // Get size
+    function getSize() {
+        return { height: _height, width: _width };
+    }
+
     // Update this content item
     function update(contentItems) {
         _x = Canvas.Timescale.getXPositionForTime(_beginDate);
@@ -75,76 +108,125 @@
 
         var position = Canvas.Mousepointer.getPosition();
         _isHovered = collides(position.x, position.y);
-        //setYPosition(contentItems);
-        
 
-        // TODO: Do real logic here
-        _height = _width * .75;
-    };
+        //if (_hasChildren == false && _id == 14) {
+        //    // http://stackoverflow.com/questions/481144/equation-for-testing-if-a-point-is-inside-a-circle
+        //    //http://math.stackexchange.com/questions/198764/how-to-know-if-a-point-is-inside-a-circle
+
+        //    result = ((position.x - _x) * (position.x - _x)) + ((position.y - _y) * (position.y - _y));
+        //    console.log('position.x, position.y, _radius, result, (_radius ^ 2), result <= (_radius ^ 2)');
+        //    console.log(position.x, position.y, _radius, result, (_radius * _radius), result <= (_radius ^ 2));
+
+
+
+        //}
+
+        updateYPosition(contentItems);
+
+        _height = 100;
+
+        updateChildren();
+    }
+
+    // Update it's children and calculate height
+    function updateChildren() {
+        // Update all children en let them not collide with each other
+        var length = _children.length;
+        for (var i = 0; i < length; i++) {
+            // Update child
+            _children[i].update(_children);
+
+            // Check height
+            var childHeight = _children[i].getSize().height;
+            if (childHeight > _height) {
+                _height = childHeight;
+            }
+        }
+    }
+
+    // Update y position
+    function updateYPosition(contentItems) {
+        // Start at y position of parent if set
+        if (_parentContentItem != undefined) {
+            _y = _parentContentItem.getPosition().y + 20;
+        }
+
+        for (var i = 0; i < contentItems.length; i++) {
+            // Don't collide on your self!
+            if (contentItems[i].getId() !== _id) {
+                var position = contentItems[i].getPosition();
+                //while (collides(position.x, position.y)) {
+                //    _y += contentItems[i].getSize().height + 10;
+                //}
+            }
+        }
+    }
 
     // Draw this content item
     function draw() {
         // TODO: Below is example code, fancy styling is required :)
         var context = Canvas.getContext();
-       // if (_height > 100) {
-            /*
-            if (_image !== undefined) {
-                context.beginPath();
-                context.drawImage(_image, _x, _y, _width, _height);
-                context.closePath();
-            }*/
-        showTooltip();
+        // if (_height > 100) {
+        /*
+        if (_image !== undefined) {
+            context.beginPath();
+            context.drawImage(_image, _x, _y, _width, _height);
+            context.closePath();
+        }*/
         
-
-        //draw circle otherwise draw rectangle
         if (_hasChildren) {
-            context.beginPath();
-            context.rect(_x, _y, _width, _height);
-            context.fillStyle = 'rgba(0,0,0,0.6)';
-            context.fill();
-            context.lineWidth = 1;
-            context.strokeStyle = 'white';
-            context.stroke();
-            context.closePath();
-
-            context.beginPath();
-            context.fillStyle = _isHovered ? "blue" : "white";
-            context.fillText(_title, _x + 5, (_y + (_height - 50)) + 16);
-            context.closePath();
-
-        } else {
-            context.beginPath();
-            context.arc(_x, _y, 20, 0, 2 * Math.PI);
-            context.lineWidth = 1;
-            context.strokeStyle = 'white';
-            context.stroke();
+            drawContentItemWithChildren(context);
+            drawChildren();
+        }else{
+            drawContentItemWithoutChildren(context);
         }
+    }
+
+    // Draw content item with childeren
+    function drawContentItemWithChildren(context) {
+        context.beginPath();
+        context.rect(_x, _y, _width, _height);
+
+        if (_isHovered) {
+            var gradient = context.createLinearGradient(0, 0, _width, 0);
+            gradient.addColorStop(0, "gray");
+            gradient.addColorStop(1, "black");
+            
+            context.fillStyle = gradient;
+        } else {
+            context.fillStyle = 'rgba(0,0,0,0.6)';
+        }
+
+        context.fill();
+        context.lineWidth = _isHovered ? 3 : 1;
+        context.strokeStyle = 'white';
+        context.stroke();
+        context.closePath();
+
+        context.beginPath();
+        context.fillStyle = _isHovered ? "white" : "#C0C0C0";
+        context.font = "12px Arial";
+        context.fillText(_title, _x + 5, (_y + 5) + 12);
+        context.closePath();
+    }
+
+    // Draw content item without childeren
+    function drawContentItemWithoutChildren(context) {
+        context.beginPath();
+        _radius = _width > 0 ? _width : 50;
+        context.arc(_x, _y, _radius, 0, 2 * Math.PI);
+        context.lineWidth = _isHovered ? 3 : 1;
+        context.strokeStyle = 'white';
+        context.stroke();
     };
 
-    function setYPosition(contentItems) {
-        for (var i = 0; i < contentItems.length; i++) {
-            if (contentItems[i].getId() !== _id) {
-                var position = contentItems[i].getPosition();
-
-                while (collides(position.x, position.y)) {
-                    _y += 10;
-                }
-            }
-        }
-
-    }
-
-    function showTooltip() {
-        if (_isHovered) {
-            console.log(_x, _y);
-            tooltip.pop(_parentContentItem, _title, { offsetY: _y, offsetX: (_x + _width) - 20 });
-            tooltipShow = true;
-        } else if (tooltipShow === true) {
-            tooltip.hide();
-            tooltipShow = false;
+    // Draw child content items
+    function drawChildren() {
+        var length = _children.length;
+        for (var i = 0; i < length; i++) {
+            _children[i].draw();
         }
     }
-
 
     // Check if content item collides given position
     function collides(x, y) {
@@ -155,7 +237,7 @@
         }
     }
 
-// Check if content item displayed as a rectangle collides with the given position
+    // Check if content item displayed as a rectangle collides with the given position
     function collidesRectangle(x, y) {
         if (x >= _x && x <= (_x + _width) && y >= _y && y <= (_y + _height)) {
             return true;
@@ -165,8 +247,9 @@
 
     // Check if content item displayed as a circle collides with the given position
     function collidesCircle(x, y) {
+        
         var radiusCircle = _width;
-        var centerpointX = (_x + (_width / 2));
+        var centerpointX = _x; //(_x + (_width / 2));
         var centerpointY = _y;
         
         // distance between centerpointX and x
@@ -199,6 +282,6 @@
     }
 
     // Return object instance
-    initialize();
+    initialize(this);
     return this;
 }

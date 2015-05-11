@@ -66,12 +66,6 @@
     <Compile Include="Neo4JContentItemDatabaseTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ChronoZoom.Database\ChronoZoom.Database.csproj">
-      <Project>{7f6762de-55bf-463b-a8b9-e1bfa1740fbc}</Project>
-      <Name>ChronoZoom.Database</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <Choose>

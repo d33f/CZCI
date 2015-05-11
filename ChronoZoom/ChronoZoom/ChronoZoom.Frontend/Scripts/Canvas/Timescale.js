@@ -13,6 +13,7 @@
         // Private fields
         var _range = { begin: 0, end: 0 };
         var _height = Canvas.Settings.getTimescaleHeight();
+        var _width = 0;
 
         // Constructor
         function initialize() {
@@ -21,33 +22,56 @@
 
         // Set new range of yearscale
         function setRange(begin, end) {
-            var i = 1;
-            if (i === 1) {
-                console.log(begin, end);
-                i++;
-            }
-            
-
+            var span = end - begin;
             _range = { begin: begin, end: end };
         }
 
+        // Get the current range
         function getRange() {
             return _range;
         }
 
         // Convert time to string
         function convertTimeToString(time) {
+            // Check if before christ
             if (time < 0) {
                 return String(time * -1) + " BC";
             }
+
+            // Check if not rounded time and if period span is smaller then the amount of ticks
+            if (time != Math.round(time) && (_range.end - _range.begin) < getTicks()) {
+                var date = convertTimeToDate(time);
+
+                var monthNames = [
+                    "January", "February", "March",
+                    "April", "May", "June", "July",
+                    "August", "September", "October",
+                    "November", "December"
+                ];
+
+                return monthNames[date.getMonth()] + ", " + date.getFullYear();
+            }
             return String(time);
+        }
+
+        // Convert given time to date
+        function convertTimeToDate(time) {
+            var year = Math.floor(time);
+            var date = new Date(year, 0, 1);
+            var daysInYear = isLeapYear(year) ? 365 : 366;
+            var days = (time - year) * daysInYear;
+            return new Date(date.setDate(date.getDate() + days));
+        }
+
+        // Check if it is a leap year
+        function isLeapYear(year) {
+            return ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0);
         }
 
         // Get year for given x-axis position
         function getTimeForXPosition(x) {
             // Get canvas width and time per pixel
-            var canvasWidth = Canvas.getContainer().width;
-            var timePerPixel = (_range.end - _range.begin) / canvasWidth;
+            var timePerPixel = (_range.end - _range.begin) / _width;
 
             // Return time
             return Math.floor(_range.begin + (timePerPixel * x));
@@ -56,15 +80,18 @@
         // Get x-axis position for given time
         function getXPositionForTime(time) {
             // Get canvas width and time per pixel
-            var canvasWidth = Canvas.getContainer().width;
-            var timePerPixel = canvasWidth / (_range.end - _range.begin);
+            var timePerPixel = _width / (_range.end - _range.begin);
 
             // Return position
             return (time - _range.begin) * timePerPixel;
         }
 
-        // Update the state of the yearscale
+        // Update the state of timescale and the yearscale
         function update() {
+            // Update timescale
+            _width = Canvas.getContainer().width;
+            
+            // Update year marker
             Canvas.YearMarker.update();
         }
 
@@ -72,38 +99,37 @@
         function draw() {
             // Get (canvas) context and canvas width
             var context = Canvas.getContext();
-            var canvasWidth = Canvas.getContainer().width;
-
+            
             // Draw layers
-            drawBaseLayer(context, canvasWidth);
-            drawTimescaleLayer(context, canvasWidth);
+            drawBaseLayer(context);
+            drawTimescaleLayer(context);
             Canvas.YearMarker.draw();
         }
 
         // Draw the base layer of the yearscale
-        function drawBaseLayer(context, canvasWidth) {
+        function drawBaseLayer(context) {
             context.fillStyle = Canvas.Settings.getTimescaleBackgroundColor();
-            context.fillRect(0, 0, canvasWidth, _height);
+            context.fillRect(0, 0, _width, _height);
         }
 
         // Draw the yearscale layer
-        function drawTimescaleLayer(context, canvasWidth) {
+        function drawTimescaleLayer(context) {
             // Get ticks and define amount of small ticks per tick
-            var ticks = getTicks(canvasWidth);
+            var ticks = getTicks();
             var amountOfSmallTicksPerTick = 5;
 
             // Draw ticks, tick labels and bottom line
-            drawTicks(context, canvasWidth, ticks, amountOfSmallTicksPerTick);
-            drawTickLabels(context, canvasWidth, ticks, amountOfSmallTicksPerTick);
-            drawBottomLine(context, canvasWidth);
+            drawTicks(context, ticks, amountOfSmallTicksPerTick);
+            drawTickLabels(context, ticks, amountOfSmallTicksPerTick);
+            drawBottomLine(context);
         }
 
         // Draw (yearscale) ticks
-        function drawTicks(context, canvasWidth, ticks, amountOfSmallTicksPerTick) {
+        function drawTicks(context, ticks, amountOfSmallTicksPerTick) {
             // Set total ticks, define line width and set tick width
             var totalTicks = ticks * amountOfSmallTicksPerTick;
             var lineWidth = 2;
-            var tickWidth = canvasWidth / totalTicks; //Math.round(canvasWidth / totalTicks);
+            var tickWidth = _width / totalTicks; //Math.round(canvasWidth / totalTicks);
             //console.log(tickWidth, getTimeForXPosition(tickWidth * 5));
 
             // Set style
@@ -121,10 +147,10 @@
         }
 
         // Draw tick labels
-        function drawTickLabels(context, canvasWidth, ticks, amountOfSmallTicksPerTick) {
+        function drawTickLabels(context, ticks, amountOfSmallTicksPerTick) {
             // Set tick width and tick year
-            var tickWidth = canvasWidth / ticks; //Math.round(canvasWidth / (ticks * amountOfSmallTicksPerTick)) * amountOfSmallTicksPerTick;
-            var tickTime = Math.round((_range.end - _range.begin) / ticks);
+            var tickWidth = _width / ticks; // = Math.round(canvasWidth / (ticks * amountOfSmallTicksPerTick)) * amountOfSmallTicksPerTick;
+            var tickTime = (_range.end - _range.begin) / ticks; //Math.round((_range.end - _range.begin) / ticks);
 
             // Set style
             context.font = Canvas.Settings.getTimescaleTickLabelFont();
@@ -133,35 +159,35 @@
             // Draw all ticks
             for (var i = 0; i <= ticks; i++) {
                 // Set year and convert year to string
-                var year = Math.round(_range.begin + (i * tickTime));
+                var year = _range.begin + (i * tickTime);
                 var yearString = convertTimeToString(year);
-
+                
                 // Draw text centered above tick
                 context.fillText(yearString, (i * tickWidth) - (yearString.length * 5), _height - 30);
             }
         }
 
         // Draw bottom line
-        function drawBottomLine(context, canvasWidth) {
+        function drawBottomLine(context) {
             context.lineWidth = 1.5;
             context.moveTo(0, _height);
-            context.lineTo(canvasWidth, _height);
+            context.lineTo(_width, _height);
             context.stroke();
             context.closePath();
         }
 
-        // Get ticks for current range and given canvas width
-        function getTicks(canvasWidth) {
+        // Calculate ticks for current range and given canvas width
+        function getTicks() {
             // Calculate span
             var span = _range.end - _range.begin;
 
             // Less ticks for (realy) small screen
-            if (canvasWidth < 500) {
+            if (_width < 500) {
                 return 4;
             }
 
             // Less ticks for small year range or smaller screen
-            if (span < 10 || canvasWidth < 1000) {
+            if (span < 10 || _width < 1000) {
                 return 8;
             }
 

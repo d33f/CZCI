@@ -41,7 +41,7 @@
         function drawYear() {
             // Draw year in marker
             context.beginPath();
-            var timeText = Canvas.Timescale.convertTimeToString(Canvas.Timescale.getTimeForXPosition(x));   //Get the time belonging to the mouseposition
+            var timeText = Canvas.Timescale.convertTimeToString(Math.round(Canvas.Timescale.getTimeForXPosition(x)));   //Get the time belonging to the mouseposition
             var lengthOfStringInPixels = context.measureText(timeText).width;                               //The length in pixels of the string
             context.font = Canvas.Settings.getYearmarkerFont();
             context.fillStyle = Canvas.Settings.getYearmarkerFontColor();

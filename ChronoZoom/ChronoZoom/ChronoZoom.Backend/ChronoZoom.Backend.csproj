@@ -121,9 +121,11 @@
     <Compile Include="App_Start\UnityWebApiActivator.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Business\ContentItemService.cs" />
+    <Compile Include="Business\ContentItemServiceMock.cs" />
     <Compile Include="Business\Interfaces\IContentItemService.cs" />
     <Compile Include="Business\Interfaces\ITimelineService.cs" />
     <Compile Include="Business\TimelineService.cs" />
+    <Compile Include="Business\TimelineServiceMock.cs" />
     <Compile Include="Controllers\ContentItemController.cs" />
     <Compile Include="Controllers\TimelineController.cs" />
     <Compile Include="Data\BaseDao.cs" />

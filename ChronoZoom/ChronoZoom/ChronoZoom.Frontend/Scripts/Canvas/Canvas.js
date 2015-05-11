@@ -7,7 +7,7 @@
     // Private fields
     var _container;
     var _lastTime;
-    var _requiredElapsed = 1000 / 600; //is 60fps
+    var _requiredElapsed = 1000 / 10; // 600; //is 60fps
     var _context;
 
     // Constructor
@@ -57,6 +57,7 @@
         if (elapsed > _requiredElapsed) {
             update();
             draw();
+            _lastTime = Date.now();
         }
         requestAnimationFrame(canvasDrawProcessLoop);
     }

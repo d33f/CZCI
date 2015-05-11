@@ -89,7 +89,6 @@
 
         // Get content items for parent content item 
         function getContentItems(parentContentItem, resolve, reject) {
-            console.log("getContentItems");
             getJSON('contentitem/' + parentContentItem.getId(), function (json) {
                 // Create empty array
                 var contentItems = [];

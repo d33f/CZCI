@@ -20,7 +20,7 @@
             if (typeof(Storage) !== "undefined") {
                 _cache = window.sessionStorage;
             }
-
+            _cache.clear();
             // Find timeline
             findTimeline();
         }
@@ -52,7 +52,9 @@
             } else {
                 // Get from backend service 
                 Canvas.BackendService.getContentItems(parentContentItem, function (contentItems) {
-                    setContentItems(contentItems);
+
+                    // Set content items and update cache
+                    setContentItems([parentContentItem]);
                     addContentItemsToCache(parentContentItem.getId(), contentItems);
                 }, function (error) {
                     console.log("No content items for parent content id found!!!", error);
