@@ -9,6 +9,11 @@
     this.getSize = getSize;
     this.getChildren = getChildren;
     this.hasChildren = hasChildren;
+    this.getWidth = getWidth;
+    this.getHeight = getHeight;
+    this.getX = getX;
+    this.getY = getY;
+    this.getHovered = getHovered;
 
     // Public methods
     this.update = update;
@@ -102,6 +107,26 @@
     // Get has childeren property
     function hasChildren() {
         return _hasChildren;
+    }
+
+    function getWidth() {
+        return _width;
+    }
+
+    function getHeight() {
+        return _height;
+    }
+
+    function getX() {
+        return _x;
+    }
+
+    function getY(){
+        return _y;
+    }
+
+    function getHovered() {
+        return _isHovered;
     }
 
     // Get childeren 

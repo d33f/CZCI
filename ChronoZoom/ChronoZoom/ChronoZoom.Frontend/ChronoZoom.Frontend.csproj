@@ -123,6 +123,7 @@
     <Content Include="Scripts\Canvas\Mousepointer.js" />
     <Content Include="Scripts\Canvas\ContentItemEnricher.js" />
     <Content Include="Scripts\Canvas\Timeline.js" />
+    <Content Include="Scripts\Canvas\Tooltip.js" />
     <Content Include="Scripts\Canvas\Yearmarker.js" />
     <Content Include="Scripts\Canvas\Timescale.js" />
     <Content Include="Styles\Reset.min.css" />
