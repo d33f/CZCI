@@ -20,7 +20,7 @@
             if (typeof(Storage) !== "undefined") {
                 _cache = window.sessionStorage;
             }
-            _cache.clear();
+//            _cache.clear();
             // Find timeline
             findTimeline();
         }
@@ -43,16 +43,15 @@
 
         // Find content items by parent content
         function findContentItemsByParentContent(parentContentItem) {
-            // Add breadcrumb
-            Canvas.Breadcrumbs.addContentItem(parentContentItem);
+            // Set breadcrumb
+            Canvas.Breadcrumbs.setContentItem(parentContentItem);
             
             if (_cache !== undefined && _cache.getItem(parentContentItem.getId()) !== null) {
                 // Get content items from cache
-                setContentItems(getContentItemsFromCache(parentContentItem.getId()));
+                setContentItems(getContentItemsFromCache(parentContentItem));
             } else {
                 // Get from backend service 
                 Canvas.BackendService.getContentItems(parentContentItem, function (contentItems) {
-
                     // Set content items and update cache
                     setContentItems([parentContentItem]);
                     addContentItemsToCache(parentContentItem.getId(), contentItems);
@@ -62,19 +61,20 @@
             }
         }
 
-        // Get content items from cache with given parent content id
-        function getContentItemsFromCache(parentContentItemID) {
+        // Get content items from cache with given parent content
+        function getContentItemsFromCache(parentContentItem) {
             var contentItems = [];
 
             // Check for caching
             if (_cache !== undefined) {
                 // Get from cache
-                var items = JSON.parse(_cache.getItem(parentContentItemID));
+                var items = JSON.parse(_cache.getItem(parentContentItem.getId()));
                 var length = items.length;
                 for (var i = 0; i < length; i++) {
-                    contentItems.push(new ContentItem(items[i]));
+                    contentItems.push(new ContentItem(items[i], parentContentItem));
                 }
             }
+            contentItems.push(parentContentItem);
 
             return contentItems;
         }
@@ -101,9 +101,9 @@
                 // Set timeline range
                 Canvas.Timescale.setRange(timeline.beginDate, timeline.endDate);
 
-                // Add breadcrumb
+                // Set breadcrumb
                 var parentContentItem = timeline.contentItems[0].getParentContentItem();
-                Canvas.Breadcrumbs.addContentItem(parentContentItem);
+                Canvas.Breadcrumbs.setContentItem(parentContentItem);
                
                 // Set content items
                 setContentItems(timeline.contentItems);

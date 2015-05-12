@@ -3,6 +3,7 @@
     this.getId = getId;
     this.getBeginDate = getBeginDate;
     this.getEndDate = getEndDate;
+    this.getTitle = getTitle;
     this.getParentContentItem = getParentContentItem;
     this.getData = getData;
     this.getSize = getSize;
@@ -48,6 +49,11 @@
         }
     }
 
+    // Get id property
+    function getId() {
+        return _id;
+    }
+
     // Get begin date property
     function getBeginDate() {
         return _beginDate;
@@ -58,9 +64,9 @@
         return _endDate;
     }
 
-    // Get id property
-    function getId() {
-        return _id;
+    // Get title property
+    function getTitle() {
+        return _title;
     }
 
     // Get parentContentItem

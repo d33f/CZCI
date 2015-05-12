@@ -70,7 +70,8 @@
                 var parentContentItem = new ContentItem({
                     id: 0,
                     beginDate: timeline.beginDate,
-                    endDate: timeline.endDate
+                    endDate: timeline.endDate,
+                    title: timeline.title,
                 }, undefined);
 
                 // Convert all content items
