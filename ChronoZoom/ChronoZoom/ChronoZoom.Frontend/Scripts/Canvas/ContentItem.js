@@ -107,7 +107,8 @@
         _width = Canvas.Timescale.getXPositionForTime(_endDate) - _x;
 
         var position = Canvas.Mousepointer.getPosition();
-        _isHovered = collides(position.x, position.y);
+        (collides(position.x, position.y) && !collidesInChildren(position.x, position.y)) ? _isHovered = true : _isHovered = false;
+
 
         //if (_hasChildren == false && _id == 14) {
         //    // http://stackoverflow.com/questions/481144/equation-for-testing-if-a-point-is-inside-a-circle
@@ -213,11 +214,13 @@
     // Draw content item without childeren
     function drawContentItemWithoutChildren(context) {
         context.beginPath();
-        _radius = _width > 0 ? _width : 50;
+        _width = _width > 0 ? -_width : 50;
+        _radius = _width;
         context.arc(_x, _y, _radius, 0, 2 * Math.PI);
         context.lineWidth = _isHovered ? 3 : 1;
         context.strokeStyle = 'white';
         context.stroke();
+        console.log(_radius);
     };
 
     // Draw child content items
@@ -245,10 +248,19 @@
         return false;
     }
 
+    function collidesInChildren(x, y) {
+        var length = _children.length;
+        for (var i = 0; i < length; i++) {
+            if (_children[i].collides(x, y)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     // Check if content item displayed as a circle collides with the given position
     function collidesCircle(x, y) {
         
-        var radiusCircle = _width;
         var centerpointX = _x; //(_x + (_width / 2));
         var centerpointY = _y;
         
@@ -278,7 +290,9 @@
         var distance = deltaY / sinangle;
 
         // is mousepoint in circle
-        return radiusCircle > distance;
+        console.log("distance " + distance);
+        console.log("radius " + _radius);
+        return _radius > distance;
     }
 
     // Return object instance

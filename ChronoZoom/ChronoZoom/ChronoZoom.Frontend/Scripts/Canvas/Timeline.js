@@ -102,18 +102,36 @@
 
         // Get content item on mouse position
         function getContentItemOnMousePosition() {
-            var position = Canvas.Mousepointer.getPosition();
+            var result
 
             // Search through all content items
             var length = _contentItems.length;
             for (var i = 0; i < length; i++) {
                 // Check if content item collides
-                if(_contentItems[i].collides(position.x, position.y)) {
-                    return _contentItems[i];
+                if ((result = checkCollision(_contentItems[i])) !== undefined) {
+                    console.log(result);
+                    return result;
                 }
             }
 
             // Nothing collides
+            console.log(result);
+            return result;
+        }
+
+        function checkCollision(contentItem) {
+            var position = Canvas.Mousepointer.getPosition();
+
+            if (contentItem.collides(position.x, position.y)) {
+                var children = contentItem.getChildren();
+                var length = children.length;
+                for (var i = 0; i < length; i++) {
+                    if (checkCollision(children[i]) !== undefined) {
+                        return children[i];
+                    }
+                }
+                return contentItem;
+            }
             return undefined;
         }
 
