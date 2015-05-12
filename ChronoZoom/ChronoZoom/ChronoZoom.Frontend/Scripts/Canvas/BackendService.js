@@ -72,6 +72,7 @@
                     beginDate: timeline.beginDate,
                     endDate: timeline.endDate,
                     title: timeline.title,
+                    hasChildren: true
                 }, undefined);
 
                 // Convert all content items

@@ -83,7 +83,6 @@
                 breadcrumb.appendChild(document.createTextNode(_stack[i].getTitle()));
                 breadcrumb.title = _stack[i].getTitle();
                 breadcrumb.href = 'javascript:Canvas.Breadcrumbs.redirect(' + i + ')';
-                //breadcrumb.addEventListener("click", function (i) { console.log(i); Canvas.ContentItemService.findContentItemsByParentContent(' + _stack[i] + ') });
                 _container.appendChild(document.createTextNode(' » '));
                 _container.appendChild(breadcrumb);
             }

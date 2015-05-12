@@ -12,6 +12,7 @@ namespace ChronoZoom.Frontend
         {
             bundles.Add(new ScriptBundle("~/bundles/js/canvas").Include(
                 "~/Scripts/Canvas/Settings.js",
+                "~/Scripts/Canvas/ContentItem.js",
                 "~/Scripts/Canvas/BackendService.js",
                 "~/Scripts/Canvas/PublicAPIService.js",
                 "~/Scripts/Canvas/ContentItemService.js",
@@ -19,7 +20,6 @@ namespace ChronoZoom.Frontend
                 "~/Scripts/Canvas/Timeline.js",
                 "~/Scripts/Canvas/Yearmarker.js",
                 "~/Scripts/Canvas/Timescale.js",
-                "~/Scripts/Canvas/ContentItem.js",
                 "~/Scripts/Canvas/Mousepointer.js",
                 "~/Scripts/Canvas/Canvas.js",
                 "~/Scripts/Canvas/Breadcrumbs.js"

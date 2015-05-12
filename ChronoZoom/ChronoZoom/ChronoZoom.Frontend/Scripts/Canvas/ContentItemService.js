@@ -20,7 +20,7 @@
             if (typeof(Storage) !== "undefined") {
                 _cache = window.sessionStorage;
             }
-//            _cache.clear();
+            //_cache.clear();
             // Find timeline
             findTimeline();
         }
@@ -74,7 +74,11 @@
                     contentItems.push(new ContentItem(items[i], parentContentItem));
                 }
             }
-            contentItems.push(parentContentItem);
+
+            // Add to content items if not root
+            if (parentContentItem.getId() != 0) {
+                contentItems.push(parentContentItem);
+            }
 
             return contentItems;
         }
