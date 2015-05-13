@@ -27,7 +27,6 @@
     var _beginDate = data.beginDate;
     var _endDate = data.endDate;
     var _title = data.title;
-    var _depth = data.depth;
     var _hasChildren = data.hasChildren;
     var _sourceURL = data.sourceURL;
 
@@ -42,18 +41,20 @@
     var _height = 0;
     var _radius = 0;
     var _isHovered = false;
-    var _container; // HTML container
-    
+
+    // HTML container
+    var _container;
+
     // Constructor
     function initialize(instance) {
         // Set image
         _image.onload = function () { };
-        if (_sourceURL != undefined) {
+        if (_sourceURL !== undefined) {
             _image.src = _sourceURL;
         }
 
         // Add child to parent
-        if (_parentContentItem != undefined) {
+        if (_parentContentItem !== undefined) {
             _parentContentItem.addChild(instance);
         }
 
@@ -64,7 +65,7 @@
 
             // Create new content item element if it doesn't exist
             if (element == null) {
-                // Create element 
+                // Create element
                 element = document.createElement('div');
                 element.id = 'contentItem_' + _id;
                 element.style.position = "absolute";
@@ -129,7 +130,7 @@
         return _isHovered;
     }
 
-    // Get childeren 
+    // Get childeren
     function getChildren() {
         return _children;
     }
@@ -177,7 +178,7 @@
 
     // Update (DOM) container element
     function updateContainer() {
-        if (!_hasChildren && _container != undefined) {
+        if (!_hasChildren && _container !== undefined) {
             _container.style.top = _y + "px";
             _container.style.right = _x + "px";
             _container.style.width = _radius + "px";
@@ -205,17 +206,17 @@
     // Update y position
     function updateYPosition(contentItems) {
         // Start at y position of parent if set
-        if (_parentContentItem != undefined) {
+        if (_parentContentItem !== undefined) {
             _y = _parentContentItem.getPosition().y + 20;
         }
 
         for (var i = 0; i < contentItems.length; i++) {
             // Don't collide on your self!
             if (contentItems[i].getId() !== _id) {
-                var position = contentItems[i].getPosition();
-                //while (collides(position.x, position.y)) {
-                //    _y += contentItems[i].getSize().height + 10;
-                //}
+                /*var position = contentItems[i].getPosition();
+                while (collides(position.x, position.y)) {
+                    _y += contentItems[i].getSize().height + 10;
+                }*/
             }
         }
     }
@@ -231,7 +232,7 @@
             context.drawImage(_image, _x, _y, _width, _height);
             context.closePath();
         }*/
-        
+
         if (_hasChildren) {
             drawContentItemWithChildren(context);
             drawChildren();
@@ -249,7 +250,6 @@
             var gradient = context.createLinearGradient(0, 0, _width, 0);
             gradient.addColorStop(0, "gray");
             gradient.addColorStop(1, "black");
-            
             context.fillStyle = gradient;
         } else {
             context.fillStyle = 'rgba(0,0,0,0.6)';
@@ -315,7 +315,7 @@
     function collidesCircle(x, y) {
         var centerpointX = _x; //(_x + (_width / 2));
         var centerpointY = _y;
-        
+
         // distance between centerpointX and x
         var deltaX;
         if (centerpointX >= x) {

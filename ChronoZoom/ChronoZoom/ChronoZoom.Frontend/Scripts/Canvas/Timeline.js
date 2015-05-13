@@ -9,14 +9,14 @@
         // Private fields
         var _contentItems = [];
         var _isLoading = true;
-        
+
         // Constructor
         function initialize() {
             Canvas.ContentItemService.addListener(onContentItemsChanged);
         }
 
         // Handle on content item changed event
-        function onContentItemsChanged(e) {
+        function onContentItemsChanged() {
             // Get content items
             _contentItems = Canvas.ContentItemService.getContentItems();
 
@@ -43,7 +43,7 @@
             }
         }
 
-        // Draw loader 
+        // Draw loader
         function drawLoader() {
             var context = Canvas.getContext();
             context.font = Canvas.Settings.getTimescaleTickLabelFont();
@@ -66,7 +66,7 @@
             // Check all content items
             var length = _contentItems.length;
             for (var i = 0; i < length; i++) {
-                if (_contentItems[i].hasChildren() == hasChildren) {
+                if (_contentItems[i].hasChildren() === hasChildren) {
                     // Draw content item
                     drawContentItem(range, _contentItems[i]);
                 }
@@ -89,7 +89,7 @@
             }
         }
 
-        function handleClickOnTimeline(eventArgs) {
+        function handleClickOnTimeline() {
             // Mark loading flag
             _isLoading = true;
 

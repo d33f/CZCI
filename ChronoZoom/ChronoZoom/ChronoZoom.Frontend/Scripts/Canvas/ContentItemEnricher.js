@@ -13,7 +13,7 @@
         }
 
         // Handle on content item changed event
-        function onContentItemsChanged(e) {
+        function onContentItemsChanged() {
             // Get content items
             var contentItems = Canvas.ContentItemService.getContentItems();
 

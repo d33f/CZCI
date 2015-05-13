@@ -29,7 +29,7 @@
         var timescaleTickLabelFont =        "18px Tahoma";
         var yearmarkerFont =                "Consolas";
 
-        // Font size 
+        // Font size
         var yearmarkerFontSize = 16;
 
         // Size fields

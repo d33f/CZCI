@@ -8,7 +8,6 @@
 
         // Private fields
         var x;
-        var y;
         var context;
         var yearmarkerWidth = 80;
         var yearmarkerHeight = 20;
@@ -24,7 +23,7 @@
             context.lineTo(x, yearmarkerHeight);
             context.lineTo(x + 10, yearmarkerHeight - arrowHeight);
             context.fill();
-            context.closePath();  
+            context.closePath();
         }
 
         //  ---------
@@ -33,7 +32,8 @@
         function drawBox() {
             context.fillStyle = Canvas.Settings.getYearmarkerColor();
             context.beginPath();
-            context.rect(getBeginPositionOnTimeline(), 0, yearmarkerWidth, yearmarkerHeight-arrowHeight); // divide bt 1/2 to get the half of the width
+            // divide bt 1/2 to get the half of the width
+            context.rect(getBeginPositionOnTimeline(), 0, yearmarkerWidth, yearmarkerHeight-arrowHeight); 
             context.fill();
             context.closePath();
         }
@@ -41,18 +41,25 @@
         function drawYear() {
             // Draw year in marker
             context.beginPath();
-            var timeText = Canvas.Timescale.convertTimeToString(Math.round(Canvas.Timescale.getTimeForXPosition(x)));   //Get the time belonging to the mouseposition
-            var lengthOfStringInPixels = context.measureText(timeText).width;                               //The length in pixels of the string
+
+            //Get the time belonging to the mouseposition
+            var timeText = Canvas.Timescale.convertTimeToString(Math.round(Canvas.Timescale.getTimeForXPosition(x)));   
+
+            //The length in pixels of the string
+            var lengthOfStringInPixels = context.measureText(timeText).width;
             context.font = Canvas.Settings.getYearmarkerFont();
             context.fillStyle = Canvas.Settings.getYearmarkerFontColor();
-            var begintext = getBeginPositionOnTimeline() + ((yearmarkerWidth-lengthOfStringInPixels)/2);    //Calculate the middle of the box to draw the year
+
+            //Calculate the middle of the box to draw the year
+            var begintext = getBeginPositionOnTimeline() + ((yearmarkerWidth - lengthOfStringInPixels) / 2);
             context.fillText(timeText, begintext + 1, calculateYPositionForText());
             context.closePath();
         }
 
         //Calculate the position where to draw the text in the middle of the yearmarker box
         function calculateYPositionForText() {
-            var box = yearmarkerHeight - arrowHeight; // So only the box is left
+            // So only the box is left
+            var box = yearmarkerHeight - arrowHeight;
             var middleBox = box / 2;
             var halfOfTextHeight = (fontSize / 2)/2;
             var total = middleBox+halfOfTextHeight;
@@ -72,13 +79,13 @@
         function update() {
             fontSize = Canvas.Settings.getYearmarkerFontSize();
             x = Canvas.Mousepointer.getPosition().x;
-            y = Canvas.Mousepointer.getPosition().y;
         }
         function draw() {
             context = Canvas.getContext();
             drawBox();
             drawRectangleArrow();
-            drawYear(); // Must be the last call to draw ontop of the other items
+            // Must be the last call to draw ontop of the other items
+            drawYear();
         }
 
     })(Canvas.YearMarker || (Canvas.YearMarker = {}));

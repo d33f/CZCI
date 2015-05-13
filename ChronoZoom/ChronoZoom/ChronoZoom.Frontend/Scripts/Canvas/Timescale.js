@@ -22,7 +22,6 @@
 
         // Set new range of yearscale
         function setRange(begin, end) {
-            var span = end - begin;
             _range = { begin: begin, end: end };
         }
 
@@ -39,7 +38,7 @@
             }
 
             // Check if not rounded time and if period span is smaller then the amount of ticks
-            if (time != Math.round(time) && (_range.end - _range.begin) < getTicks()) {
+            if (time !== Math.round(time) && (_range.end - _range.begin) < getTicks()) {
                 var date = convertTimeToDate(time);
 
                 var monthNames = [
@@ -65,7 +64,7 @@
 
         // Check if it is a leap year
         function isLeapYear(year) {
-            return ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0);
+            return ((year % 4 === 0) && (year % 100 !== 0)) || (year % 400 === 0);
         }
 
         // Get year for given x-axis position
@@ -90,7 +89,6 @@
         function update() {
             // Update timescale
             _width = Canvas.getCanvasContainer().width;
-            
             // Update year marker
             Canvas.YearMarker.update();
         }
@@ -99,7 +97,6 @@
         function draw() {
             // Get (canvas) context and canvas width
             var context = Canvas.getContext();
-            
             // Draw layers
             drawBaseLayer(context);
             drawTimescaleLayer(context);
@@ -135,11 +132,11 @@
             // Set style
             context.lineWidth = lineWidth;
             context.strokeStyle = Canvas.Settings.getTimescaleTickColor();
-            
+
             // Draw all ticks
             context.beginPath();
             for (var i = 0; i <= totalTicks; i++) {
-                context.moveTo((i * tickWidth), _height - ((i % amountOfSmallTicksPerTick == 0) ? 20 : 10));
+                context.moveTo((i * tickWidth), _height - ((i % amountOfSmallTicksPerTick === 0) ? 20 : 10));
                 context.lineTo((i * tickWidth), _height);
             }
             context.stroke();
@@ -161,7 +158,6 @@
                 // Set year and convert year to string
                 var year = _range.begin + (i * tickTime);
                 var yearString = convertTimeToString(year);
-                
                 // Draw text centered above tick
                 context.fillText(yearString, (i * tickWidth) - (yearString.length * 5), _height - 30);
             }

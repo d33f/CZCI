@@ -13,16 +13,16 @@
             xmlHttpRequest.open("GET", url, true);
 
             // Ready event
-            xmlHttpRequest.onload = function () {
+            xmlHttpRequest.onload = function() {
                 // Check http status code and resolve the promise with the response text when valid
-                if (xmlHttpRequest.status == 200) {
+                if (xmlHttpRequest.status === 200) {
                     resolve(JSON.parse(xmlHttpRequest.response));
                 }
-                    // Otherwise reject with the status text
+                // Otherwise reject with the status text
                 else {
                     reject(Error(xmlHttpRequest.statusText));
                 }
-            }
+            };
 
             // Handle network errors
             xmlHttpRequest.onerror = function () {
