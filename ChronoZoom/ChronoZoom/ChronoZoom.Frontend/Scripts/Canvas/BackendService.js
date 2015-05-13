@@ -15,6 +15,7 @@
             // Create new instance of XMLHttpRequest and open requested path (async)
             var xmlHttpRequest = new XMLHttpRequest();
             xmlHttpRequest.open("GET", _baseUrl + path, true);
+            xmlHttpRequest.setRequestHeader("Content-Type", "application/json");
 
             // Ready event
             xmlHttpRequest.onload = function() {
