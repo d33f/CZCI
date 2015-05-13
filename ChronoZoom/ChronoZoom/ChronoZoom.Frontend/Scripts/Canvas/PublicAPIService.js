@@ -15,7 +15,7 @@
             // Ready event
             xmlHttpRequest.onload = function () {
                 // Check http status code and resolve the promise with the response text when valid
-                if (xmlHttpRequest.status == 200) {
+                if (xmlHttpRequest.status === 200) {
                     resolve(JSON.parse(xmlHttpRequest.response));
                 }
                     // Otherwise reject with the status text

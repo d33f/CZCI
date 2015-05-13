@@ -39,7 +39,7 @@
             }
 
             // Check if not rounded time and if period span is smaller then the amount of ticks
-            if (time != Math.round(time) && (_range.end - _range.begin) < getTicks()) {
+            if (time !== Math.round(time) && (_range.end - _range.begin) < getTicks()) {
                 var date = convertTimeToDate(time);
 
                 var monthNames = [
@@ -65,7 +65,7 @@
 
         // Check if it is a leap year
         function isLeapYear(year) {
-            return ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0);
+            return ((year % 4 === 0) && (year % 100 !== 0)) || (year % 400 === 0);
         }
 
         // Get year for given x-axis position
@@ -139,7 +139,7 @@
             // Draw all ticks
             context.beginPath();
             for (var i = 0; i <= totalTicks; i++) {
-                context.moveTo((i * tickWidth), _height - ((i % amountOfSmallTicksPerTick == 0) ? 20 : 10));
+                context.moveTo((i * tickWidth), _height - ((i % amountOfSmallTicksPerTick === 0) ? 20 : 10));
                 context.lineTo((i * tickWidth), _height);
             }
             context.stroke();

@@ -42,18 +42,20 @@
     var _height = 0;
     var _radius = 0;
     var _isHovered = false;
-    var _container; // HTML container
+
+    // HTML container
+    var _container;
     
     // Constructor
     function initialize(instance) {
         // Set image
         _image.onload = function () { };
-        if (_sourceURL != undefined) {
+        if (_sourceURL !== undefined) {
             _image.src = _sourceURL;
         }
 
         // Add child to parent
-        if (_parentContentItem != undefined) {
+        if (_parentContentItem !== undefined) {
             _parentContentItem.addChild(instance);
         }
 
@@ -204,7 +206,7 @@
     // Update y position
     function updateYPosition(contentItems) {
         // Start at y position of parent if set
-        if (_parentContentItem != undefined) {
+        if (_parentContentItem !== undefined) {
             _y = _parentContentItem.getPosition().y + 20;
         }
 

@@ -60,7 +60,6 @@
             return metrics.width;
         };
 
-    }
-(Canvas.Tooltip || (Canvas.Tooltip = {})));
+    }(Canvas.Tooltip || (Canvas.Tooltip = {})));
     var Tooltip = Canvas.Tooltip;
 })(Canvas || (Canvas = {}));

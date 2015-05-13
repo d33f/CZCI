@@ -66,7 +66,7 @@
             // Check all content items
             var length = _contentItems.length;
             for (var i = 0; i < length; i++) {
-                if (_contentItems[i].hasChildren() == hasChildren) {
+                if (_contentItems[i].hasChildren() === hasChildren) {
                     // Draw content item
                     drawContentItem(range, _contentItems[i]);
                 }
