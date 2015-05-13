@@ -22,7 +22,8 @@ namespace ChronoZoom.Frontend
                 "~/Scripts/Canvas/Timescale.js",
                 "~/Scripts/Canvas/Mousepointer.js",
                 "~/Scripts/Canvas/Canvas.js",
-                "~/Scripts/Canvas/Breadcrumbs.js"
+                "~/Scripts/Canvas/Breadcrumbs.js",
+                "~/Scripts/Canvas/Tooltip.js"
             )); 
 
             bundles.Add(new StyleBundle("~/bundles/css").Include(
