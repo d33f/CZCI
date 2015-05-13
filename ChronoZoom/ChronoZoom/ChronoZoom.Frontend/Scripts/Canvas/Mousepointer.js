@@ -32,10 +32,12 @@
 
         // Update mouse position
         function updateMousePosition(e) {
-            if ("offsetX" in e) { // Opera, ie
+            // Opera, ie
+            if ("offsetX" in e) {
                 _position.x = e.offsetX;
                 _position.y = e.offsetY;
-            } else if ("pageX" in e) { // Firefox
+            // Firefox
+            } else if ("pageX" in e) {
                 _position.x = e.pageX;
                 _position.y = e.pageY;
             } else {
@@ -52,29 +54,29 @@
         // Handle zoom on canvas
         function zoomCanvas(e) {
             var range = Canvas.Timescale.getRange();
+            var begin, end;
             if (e.wheelDelta > 0) {
                 begin = range.begin + 2;
-                end = range.end - 2;
-                Canvas.Timescale.setRange(begin,end);
+                end = range.end - 2;            
             } else {
                 begin = range.begin - 2;
                 end = range.end + 2;
-                Canvas.Timescale.setRange(begin, end);
-            }   
+            }
+            Canvas.Timescale.setRange(begin, end);
         }
 
         // Handle zoom on canvas for firefox
         function zoomCanvasFirefox(e) {
             var range = Canvas.Timescale.getRange();
+            var begin, end;
             if (e.detail > 0) {
                 begin = range.begin + 2;
                 end = range.end - 2;
-                Canvas.Timescale.setRange(begin, end);
             } else {
                 begin = range.begin - 2;
                 end = range.end + 2;
-                Canvas.Timescale.setRange(begin, end);
             }
+            Canvas.Timescale.setRange(begin, end);
         }
     })(Canvas.Mousepointer || (Canvas.Mousepointer = {}));
     var Mousepointer = Canvas.Mousepointer;

@@ -46,15 +46,12 @@
 
         // Decrease depth by removing the last content item at top of the stack and return the new last content item
         function decreaseDepthAndGetTheNewContentItem() {
-            if (_stack.length == 1) {
+            if (_stack.length === 1) {
                 return _stack[0]; // root
             } else {
                 // Remove last content item at top of the stack
                 _stack.pop();
-
-                // Display the new breadcrumbs
                 display();
-
                 return _stack[_stack.length - 1];
             }
         }
@@ -62,7 +59,6 @@
         // Display bread crumbs
         function display() {
             clearDisplay();
-
             displayNew();
         }
 
@@ -70,7 +66,8 @@
         function clearDisplay() {
             // Clear bread crumbs
             while (_container.firstChild) {
-                _container.removeChild(_container.firstChild); // Faster then _container.innerHTML = '';
+                // Faster then _container.innerHTML = '';
+                _container.removeChild(_container.firstChild);
             }
         }
 
@@ -79,11 +76,11 @@
             // Add crumbs
             var length = _stack.length;
             for (var i = 0; i < length; i++) {
-                var breadcrumb = document.createElement('a');
+                var breadcrumb = document.createElement("a");
                 breadcrumb.appendChild(document.createTextNode(_stack[i].getTitle()));
                 breadcrumb.title = _stack[i].getTitle();
-                breadcrumb.href = 'javascript:Canvas.Breadcrumbs.redirect(' + i + ')';
-                _container.appendChild(document.createTextNode(' » '));
+                breadcrumb.href = "javascript:Canvas.Breadcrumbs.redirect(" + i + ")";
+                _container.appendChild(document.createTextNode(" » "));
                 _container.appendChild(breadcrumb);
             }
         }

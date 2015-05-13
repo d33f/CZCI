@@ -3,8 +3,7 @@
     (function (BackendService) {
         // Public methods
         BackendService.getTimeline = getTimeline;
-        BackendService.getContentItems = getContentItems;
-        
+        BackendService.getContentItems = getContentItems;      
         // Private fields
         var _baseUrl = "http://localhost:40001/api/";
 
@@ -20,14 +19,14 @@
             // Ready event
             xmlHttpRequest.onload = function() {
                 // Check http status code and resolve the promise with the response text when valid
-                if (xmlHttpRequest.status == 200) {
+                if (xmlHttpRequest.status === 200) {
                     resolve(JSON.parse(xmlHttpRequest.response));
                 }
                 // Otherwise reject with the status text
                 else {
                     reject(Error(xmlHttpRequest.statusText));
                 }
-            }
+            };
 
             // Handle network errors
             xmlHttpRequest.onerror = function () {
@@ -59,7 +58,7 @@
                 hasChildren: json.HasChildren,
                 sourceURL: json.Source
             }, parentContentItem);
-        }
+        };
 
         // Get timeline
         function getTimeline(resolve, reject) {

@@ -9,7 +9,9 @@
     var _container;
     var _canvasContainer;
     var _lastTime;
-    var _requiredElapsed = 1000 / 600; //is 60fps
+
+    // 1000 divided by 150 gives 15fps
+    var _requiredElapsed = 1000 / 150;
     var _context;
 
     // Constructor
@@ -64,7 +66,9 @@
         Canvas.Timeline.draw();
     }
 
-    // Continuous (canvas) draw loop 
+    // The canvas draw loop
+    // The draw loop will call the update and draw method each given frames per second
+    // This means that if the fps is on 60, it will call draw and update 60 times.
     function canvasDrawProcessLoop() {
         if (_lastTime == undefined) {
             _lastTime = Date.now();

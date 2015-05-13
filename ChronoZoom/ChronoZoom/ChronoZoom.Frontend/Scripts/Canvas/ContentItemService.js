@@ -45,12 +45,11 @@
         function findContentItemsByParentContent(parentContentItem) {
             // Set breadcrumb
             Canvas.Breadcrumbs.setContentItem(parentContentItem);
-            
             if (_cache !== undefined && _cache.getItem(parentContentItem.getId()) !== null) {
                 // Get content items from cache
                 setContentItems(getContentItemsFromCache(parentContentItem));
             } else {
-                // Get from backend service 
+                // Get from backend service
                 Canvas.BackendService.getContentItems(parentContentItem, function (contentItems) {
                     // Set content items and update cache
                     setContentItems([parentContentItem]);
@@ -108,7 +107,7 @@
                 // Set breadcrumb
                 var parentContentItem = timeline.contentItems[0].getParentContentItem();
                 Canvas.Breadcrumbs.setContentItem(parentContentItem);
-               
+
                 // Set content items
                 setContentItems(timeline.contentItems);
 
