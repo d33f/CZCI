@@ -89,7 +89,7 @@
         // Update the state of timescale and the yearscale
         function update() {
             // Update timescale
-            _width = Canvas.getContainer().width;
+            _width = Canvas.getCanvasContainer().width;
             
             // Update year marker
             Canvas.YearMarker.update();

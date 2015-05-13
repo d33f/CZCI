@@ -39,6 +39,7 @@
                 drawLoader();
             } else {
                 drawContentItems();
+                drawToolTip();
             }
         }
 
@@ -77,6 +78,14 @@
             // Check if content item visible in current range
             if (contentItem.getBeginDate() >= range.begin && contentItem.getEndDate() <= range.end) {
                 contentItem.draw();
+            }
+        }
+
+        // Draw tooltip
+        function drawToolTip() {
+            if (getContentItemOnMousePosition() !== undefined) {
+                Canvas.Tooltip.update(getContentItemOnMousePosition());
+                Canvas.Tooltip.draw();
             }
         }
 

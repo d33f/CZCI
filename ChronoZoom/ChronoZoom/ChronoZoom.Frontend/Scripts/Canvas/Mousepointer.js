@@ -10,15 +10,18 @@
 
         // Start capturing the mouse position
         function start() {
+            // Get container
+            var container = Canvas.getCanvasContainer();
+
             // Add event listeners
-            Canvas.getContainer().addEventListener("mousemove", updateMousePosition, false);
-            Canvas.getContainer().addEventListener("click", clickedOnTimeline, false);
+            container.addEventListener("mousemove", updateMousePosition, false);
+            container.addEventListener("click", clickedOnTimeline, false);
 
             // Check user agent and add event listener
             if (navigator.userAgent.toLocaleLowerCase().indexOf('firefox') > 1) {
-                Canvas.getContainer().addEventListener("DOMMouseScroll", zoomCanvasFirefox, false);
+                container.addEventListener("DOMMouseScroll", zoomCanvasFirefox, false);
             } else {
-                Canvas.getContainer().addEventListener("mousewheel", zoomCanvas, false);
+                container.addEventListener("mousewheel", zoomCanvas, false);
             }
         }
 

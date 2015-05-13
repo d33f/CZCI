@@ -3,11 +3,17 @@
     this.getId = getId;
     this.getBeginDate = getBeginDate;
     this.getEndDate = getEndDate;
+    this.getTitle = getTitle;
     this.getParentContentItem = getParentContentItem;
     this.getData = getData;
     this.getSize = getSize;
     this.getChildren = getChildren;
     this.hasChildren = hasChildren;
+    this.getWidth = getWidth;
+    this.getHeight = getHeight;
+    this.getX = getX;
+    this.getY = getY;
+    this.getHovered = getHovered;
 
     // Public methods
     this.update = update;
@@ -36,16 +42,46 @@
     var _height = 0;
     var _radius = 0;
     var _isHovered = false;
+    var _container; // HTML container
     
     // Constructor
     function initialize(instance) {
+        // Set image
         _image.onload = function () { };
         if (_sourceURL != undefined) {
             _image.src = _sourceURL;
         }
+
+        // Add child to parent
         if (_parentContentItem != undefined) {
             _parentContentItem.addChild(instance);
         }
+
+        // Check if it has no children
+        if (!_hasChildren) {
+            // Get content item element
+            var element = document.getElementById('contentItem_' + _id);
+
+            // Create new content item element if it doesn't exist
+            if (element == null) {
+                // Create element 
+                element = document.createElement('div');
+                element.id = 'contentItem_' + _id;
+                element.style.position = "absolute";
+
+                // Get the canvas container element and add the child
+                var container = document.getElementById('canvasContainer');
+                container.appendChild(element);
+            }
+
+            // Store element as container
+            _container = element;
+        }
+    }
+
+    // Get id property
+    function getId() {
+        return _id;
     }
 
     // Get begin date property
@@ -58,9 +94,9 @@
         return _endDate;
     }
 
-    // Get id property
-    function getId() {
-        return _id;
+    // Get title property
+    function getTitle() {
+        return _title;
     }
 
     // Get parentContentItem
@@ -71,6 +107,26 @@
     // Get has childeren property
     function hasChildren() {
         return _hasChildren;
+    }
+
+    function getWidth() {
+        return _width;
+    }
+
+    function getHeight() {
+        return _height;
+    }
+
+    function getX() {
+        return _x;
+    }
+
+    function getY(){
+        return _y;
+    }
+
+    function getHovered() {
+        return _isHovered;
     }
 
     // Get childeren 
@@ -110,23 +166,24 @@
         (collides(position.x, position.y) && !collidesInChildren(position.x, position.y)) ? _isHovered = true : _isHovered = false;
 
 
-        //if (_hasChildren == false && _id == 14) {
-        //    // http://stackoverflow.com/questions/481144/equation-for-testing-if-a-point-is-inside-a-circle
-        //    //http://math.stackexchange.com/questions/198764/how-to-know-if-a-point-is-inside-a-circle
-
-        //    result = ((position.x - _x) * (position.x - _x)) + ((position.y - _y) * (position.y - _y));
-        //    console.log('position.x, position.y, _radius, result, (_radius ^ 2), result <= (_radius ^ 2)');
-        //    console.log(position.x, position.y, _radius, result, (_radius * _radius), result <= (_radius ^ 2));
-
-
-
-        //}
-
         updateYPosition(contentItems);
 
         _height = 100;
 
         updateChildren();
+
+        updateContainer();
+    }
+
+    // Update (DOM) container element
+    function updateContainer() {
+        if (!_hasChildren && _container != undefined) {
+            _container.style.top = _y + "px";
+            _container.style.right = _x + "px";
+            _container.style.width = _radius + "px";
+            _container.style.height = _radius + "px";
+            console.log(_container.style);
+        }
     }
 
     // Update it's children and calculate height
@@ -178,7 +235,7 @@
         if (_hasChildren) {
             drawContentItemWithChildren(context);
             drawChildren();
-        }else{
+        } else {
             drawContentItemWithoutChildren(context);
         }
     }
@@ -215,8 +272,7 @@
     function drawContentItemWithoutChildren(context) {
         context.beginPath();
         _width = _width > 0 ? -_width : 50;
-        _radius = _width;
-        context.arc(_x, _y, _radius, 0, 2 * Math.PI);
+        context.arc(_x + _radius, _y + _radius, _radius, 0, 2 * Math.PI);
         context.lineWidth = _isHovered ? 3 : 1;
         context.strokeStyle = 'white';
         context.stroke();
@@ -242,10 +298,7 @@
 
     // Check if content item displayed as a rectangle collides with the given position
     function collidesRectangle(x, y) {
-        if (x >= _x && x <= (_x + _width) && y >= _y && y <= (_y + _height)) {
-            return true;
-        }
-        return false;
+        return (x >= _x && x <= (_x + _width) && y >= _y && y <= (_y + _height));
     }
 
     function collidesInChildren(x, y) {
@@ -260,7 +313,6 @@
 
     // Check if content item displayed as a circle collides with the given position
     function collidesCircle(x, y) {
-        
         var centerpointX = _x; //(_x + (_width / 2));
         var centerpointY = _y;
         
@@ -290,7 +342,7 @@
         var distance = deltaY / sinangle;
 
         // is mousepoint in circle
-        console.log("distance " + distance);
+        return _radius > distance;
         console.log("radius " + _radius);
         return _radius > distance;
     }
