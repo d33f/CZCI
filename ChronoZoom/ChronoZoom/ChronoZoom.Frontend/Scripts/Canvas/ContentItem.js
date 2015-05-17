@@ -275,7 +275,7 @@
                 height < childTopY ? height = childTopY : height = height; 
             }
             //console.log(height);
-            _parentContentItem.setHeight(height + 20)
+            _parentContentItem.setHeight(height + 20);
         }
     }
 
@@ -284,12 +284,12 @@
         // TODO: Below is example code, fancy styling is required :)
         var context = Canvas.getContext();
         // if (_height > 100) {
-        /*
-        if (_image !== undefined) {
+        
+        if (_image.src !== "http://localhost:20000/null") {
             context.beginPath();
             context.drawImage(_image, _x, _y, _width, _height);
             context.closePath();
-        }*/
+        }
 
         if (_hasChildren) {
             drawContentItemWithChildren(context);
