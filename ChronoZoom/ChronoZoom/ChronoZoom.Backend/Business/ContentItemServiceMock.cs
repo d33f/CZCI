@@ -92,8 +92,8 @@ namespace ChronoZoom.Backend.Business
                 new Entities.ContentItem()
                 {
                     Id = 22,
-                    BeginDate = 1941M,
-                    EndDate = 1941M,
+                    BeginDate = 1940M,
+                    EndDate = 1940M,
                     HasChildren = false,
                     Title = "Australians at Tobruk",
                     Source = "http://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/AustraliansAtTobruk.jpg/587px-AustraliansAtTobruk.jpg",
@@ -114,8 +114,8 @@ namespace ChronoZoom.Backend.Business
                 new Entities.ContentItem()
                 {
                     Id = 24,
-                    BeginDate = 1940M,
-                    EndDate = 1945M,
+                    BeginDate = 1941M,
+                    EndDate = 1944M,
                     HasChildren = true,
                     Title = "Anne Frank",
                     Source = "http://en.wikipedia.org/wiki/File:Anne_Frank.jpg",

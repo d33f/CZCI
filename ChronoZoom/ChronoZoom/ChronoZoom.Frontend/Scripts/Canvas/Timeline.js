@@ -104,7 +104,10 @@
             // Make sure root is not reached
             if (clickedContentItem !== undefined) {
                 // Update timescale and content item service
-                Canvas.Timescale.setRange(clickedContentItem.getBeginDate(), clickedContentItem.getEndDate());
+                var rangeItem = clickedContentItem.getEndDate() - clickedContentItem.getBeginDate();
+                var rangeBegin = clickedContentItem.getBeginDate() - (rangeItem / 20);
+                var rangeEnd = clickedContentItem.getEndDate() + (rangeItem / 20);
+                Canvas.Timescale.setRange(rangeBegin, rangeEnd);
                 Canvas.ContentItemService.findContentItemsByParentContent(clickedContentItem);
             }
         }
@@ -118,13 +121,10 @@
             for (var i = 0; i < length; i++) {
                 // Check if content item collides
                 if ((result = checkCollision(_contentItems[i])) !== undefined) {
-                    console.log(result);
                     return result;
                 }
             }
-
             // Nothing collides
-            console.log(result);
             return result;
         }
 

@@ -98,6 +98,7 @@
                 for (var i = 0; i < json.length; i++) {
                     // Create and add content item object
                     var contentItem = createContentItemObject(json[i], parentContentItem);
+                    console.log(contentItem);
                     contentItems.push(contentItem);
                 }
 
