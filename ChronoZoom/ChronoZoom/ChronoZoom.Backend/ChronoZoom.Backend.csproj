@@ -62,6 +62,9 @@
     <Reference Include="Neo4jClient">
       <HintPath>..\packages\Neo4jClient.1.0.0.662\lib\net40\Neo4jClient.dll</HintPath>
     </Reference>
+    <Reference Include="Orient.Client">
+      <HintPath>..\..\..\..\..\..\..\..\Development\Orient\OrientDB-NET.binary-master\src\Orient\Orient.Client\bin\Debug\Orient.Client.dll</HintPath>
+    </Reference>
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Net.Http.Extensions">
       <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\net45\System.Net.Http.Extensions.dll</HintPath>
@@ -121,20 +124,21 @@
     <Compile Include="App_Start\UnityWebApiActivator.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Business\ContentItemService.cs" />
-    <Compile Include="Business\ContentItemServiceMock.cs" />
     <Compile Include="Business\Interfaces\IContentItemService.cs" />
     <Compile Include="Business\Interfaces\ITimelineService.cs" />
     <Compile Include="Business\TimelineService.cs" />
-    <Compile Include="Business\TimelineServiceMock.cs" />
     <Compile Include="Controllers\ContentItemController.cs" />
     <Compile Include="Controllers\TimelineController.cs" />
-    <Compile Include="Data\BaseDao.cs" />
-    <Compile Include="Data\ContentItemDao.cs" />
-    <Compile Include="Data\Neo4j\ContentItem.cs" />
-    <Compile Include="Data\Neo4j\Timeline.cs" />
     <Compile Include="Data\Interfaces\IContentItemDao.cs" />
     <Compile Include="Data\Interfaces\ITimelineDao.cs" />
-    <Compile Include="Data\TimelineDao.cs" />
+    <Compile Include="Data\OrientDb\Contains.cs" />
+    <Compile Include="Data\OrientDb\ContentItem.cs" />
+    <Compile Include="Data\OrientDb\ContentItemDaoOrientDb.cs" />
+    <Compile Include="Data\OrientDb\Factory\ContentItemFactory.cs" />
+    <Compile Include="Data\OrientDb\Factory\TimelineFactory.cs" />
+    <Compile Include="Data\OrientDb\OrientDb.cs" />
+    <Compile Include="Data\OrientDb\Timeline.cs" />
+    <Compile Include="Data\OrientDb\TimelineDaoOrientDb.cs" />
     <Compile Include="Entities\ContentItem.cs" />
     <Compile Include="Entities\Timeline.cs" />
     <Compile Include="Exceptions\ContentItemNotFoundException.cs" />

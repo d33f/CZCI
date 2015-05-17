@@ -7,6 +7,6 @@ namespace ChronoZoom.Backend.Data.Interfaces
 {
     public interface ITimelineDao
     {
-        Backend.Entities.Timeline Find(int id);
+        Backend.Entities.Timeline Find(string id);
     }
 }

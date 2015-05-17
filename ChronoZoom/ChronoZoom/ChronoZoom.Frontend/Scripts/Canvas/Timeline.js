@@ -118,13 +118,13 @@
             for (var i = 0; i < length; i++) {
                 // Check if content item collides
                 if ((result = checkCollision(_contentItems[i])) !== undefined) {
-                    console.log(result);
+//console.log(result);
                     return result;
                 }
             }
 
             // Nothing collides
-            console.log(result);
+         //   console.log(result);
             return result;
         }
 

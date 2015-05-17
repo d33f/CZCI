@@ -71,6 +71,7 @@
                 var length = items.length;
                 for (var i = 0; i < length; i++) {
                     contentItems.push(new ContentItem(items[i], parentContentItem));
+                    console.log(items[i].title);
                 }
             }
 

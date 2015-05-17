@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Web.Http;
 using ChronoZoom.Backend.Business.Interfaces;
 using ChronoZoom.Backend.Entities;
@@ -22,7 +23,8 @@ namespace ChronoZoom.Backend.Controllers
         /// </summary>
         /// <param name="id">parentId</param>
         /// <returns>List with contentItems by the given parent id</returns>
-        public IHttpActionResult Get(int id)
+        [HttpGet]
+        public IHttpActionResult Get(string id)
         {
             try
             {

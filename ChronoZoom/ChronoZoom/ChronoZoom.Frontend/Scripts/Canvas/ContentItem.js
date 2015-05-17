@@ -183,7 +183,6 @@
             _container.style.right = _x + "px";
             _container.style.width = _radius + "px";
             _container.style.height = _radius + "px";
-            console.log(_container.style);
         }
     }
 
@@ -213,8 +212,8 @@
         for (var i = 0; i < contentItems.length; i++) {
             // Don't collide on your self!
             if (contentItems[i].getId() !== _id) {
-                /*var position = contentItems[i].getPosition();
-                while (collides(position.x, position.y)) {
+                var position = contentItems[i].getPosition();
+               /* while (collides(position.x, position.y)) {
                     _y += contentItems[i].getSize().height + 10;
                 }*/
             }
@@ -226,12 +225,12 @@
         // TODO: Below is example code, fancy styling is required :)
         var context = Canvas.getContext();
         // if (_height > 100) {
-        /*
-        if (_image !== undefined) {
+        
+        if (_image.src !== "http://localhost:20000/null") {
             context.beginPath();
             context.drawImage(_image, _x, _y, _width, _height);
             context.closePath();
-        }*/
+        }
 
         if (_hasChildren) {
             drawContentItemWithChildren(context);
@@ -276,7 +275,7 @@
         context.lineWidth = _isHovered ? 3 : 1;
         context.strokeStyle = 'white';
         context.stroke();
-        console.log(_radius);
+        //console.log(_radius);
     };
 
     // Draw child content items

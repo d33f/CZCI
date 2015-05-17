@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Http;
 using System.Web.Routing;
+using ChronoZoom.Backend.Data.OrientDb;
+using Orient.Client;
 
 namespace ChronoZoom.Backend
 {
@@ -12,6 +14,7 @@ namespace ChronoZoom.Backend
         protected void Application_Start()
         {
             GlobalConfiguration.Configure(WebApiConfig.Register);
+            OrientDb.Initialize();
         }
     }
 }
