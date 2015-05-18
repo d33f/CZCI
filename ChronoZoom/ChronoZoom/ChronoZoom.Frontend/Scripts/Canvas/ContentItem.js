@@ -201,9 +201,9 @@
         if (!_hasChildren && _container !== undefined) {
             _container.style.top = _y + "px";
             _container.style.left = _x + "px";
-            _container.style.width = (_radius * 2) + "px";
-            _container.style.height = (_radius * 2) + "px";
-            _container.style.borderRadius = "50%";
+            //_container.style.width = (_radius * 2) + "px";
+            //_container.style.height = (_radius * 2) + "px";
+            //_container.style.borderRadius = "50%";
         }
     }
 

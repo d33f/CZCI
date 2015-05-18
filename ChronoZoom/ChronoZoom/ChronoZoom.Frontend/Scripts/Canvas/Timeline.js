@@ -159,7 +159,6 @@
 
         function checkCollision(contentItem) {
             var position = Canvas.Mousepointer.getPosition();
-
             if (contentItem.collides(position.x, position.y)) {
                 var children = contentItem.getChildren();
                 var length = children.length;
