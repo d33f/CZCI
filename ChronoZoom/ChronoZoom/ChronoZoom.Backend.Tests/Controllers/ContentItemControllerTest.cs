@@ -20,11 +20,11 @@ namespace ChronoZoom.Backend.Tests.Controllers
         {
             // Arrange
             Mock<IContentItemService> mock = new Mock<IContentItemService>(MockBehavior.Strict);
-            mock.Setup(setup => setup.GetAll(It.IsAny<int>())).Returns(new Entities.ContentItem[2]);
+            mock.Setup(setup => setup.GetAll(It.IsAny<string>())).Returns(new Entities.ContentItem[2]);
             ContentItemController target = new ContentItemController(mock.Object);
 
             // Act
-            IHttpActionResult result = target.Get(1);
+            IHttpActionResult result = target.Get("1:0");
 
             // Assert
             Assert.IsNotNull(result);
@@ -37,11 +37,11 @@ namespace ChronoZoom.Backend.Tests.Controllers
         {
             // Arrange
             Mock<IContentItemService> mock = new Mock<IContentItemService>(MockBehavior.Strict);
-            mock.Setup(setup => setup.GetAll(It.IsAny<int>())).Throws(new ContentItemNotFoundException());
+            mock.Setup(setup => setup.GetAll(It.IsAny<string>())).Throws(new ContentItemNotFoundException());
             ContentItemController target = new ContentItemController(mock.Object);
 
             // Act
-            IHttpActionResult result = target.Get(-1);
+            IHttpActionResult result = target.Get("1:0");
 
             // Assert
             Assert.IsNotNull(result);
@@ -53,11 +53,11 @@ namespace ChronoZoom.Backend.Tests.Controllers
         {
             // Arrange
             Mock<IContentItemService> mock = new Mock<IContentItemService>(MockBehavior.Strict);
-            mock.Setup(setup => setup.GetAll(It.IsAny<int>())).Throws(new Exception());
+            mock.Setup(setup => setup.GetAll(It.IsAny<string>())).Throws(new Exception());
             ContentItemController target = new ContentItemController(mock.Object);
 
             // Act
-            IHttpActionResult result = target.Get(-1);
+            IHttpActionResult result = target.Get("-1");
 
             // Assert
             Assert.IsNotNull(result);

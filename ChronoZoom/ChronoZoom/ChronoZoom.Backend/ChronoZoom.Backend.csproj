@@ -59,19 +59,14 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
-    <Reference Include="Neo4jClient">
-      <HintPath>..\packages\Neo4jClient.1.0.0.662\lib\net40\Neo4jClient.dll</HintPath>
+    <Reference Include="Orient.Client, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLLs\Orient.Client.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http" />
-    <Reference Include="System.Net.Http.Extensions">
-      <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\net45\System.Net.Http.Extensions.dll</HintPath>
-    </Reference>
     <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Net.Http.Primitives">
-      <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\net45\System.Net.Http.Primitives.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http.WebRequest" />
     <Reference Include="System.Web.Cors">
@@ -113,6 +108,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="DLLs\Orient.Client.dll" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -128,13 +124,16 @@
     <Compile Include="Business\TimelineServiceMock.cs" />
     <Compile Include="Controllers\ContentItemController.cs" />
     <Compile Include="Controllers\TimelineController.cs" />
-    <Compile Include="Data\BaseDao.cs" />
-    <Compile Include="Data\ContentItemDao.cs" />
-    <Compile Include="Data\Neo4j\ContentItem.cs" />
-    <Compile Include="Data\Neo4j\Timeline.cs" />
     <Compile Include="Data\Interfaces\IContentItemDao.cs" />
     <Compile Include="Data\Interfaces\ITimelineDao.cs" />
-    <Compile Include="Data\TimelineDao.cs" />
+    <Compile Include="Data\OrientDb\Contains.cs" />
+    <Compile Include="Data\OrientDb\ContentItem.cs" />
+    <Compile Include="Data\OrientDb\ContentItemDaoOrientDb.cs" />
+    <Compile Include="Data\OrientDb\Factory\ContentItemFactory.cs" />
+    <Compile Include="Data\OrientDb\Factory\TimelineFactory.cs" />
+    <Compile Include="Data\OrientDb\OrientDb.cs" />
+    <Compile Include="Data\OrientDb\Timeline.cs" />
+    <Compile Include="Data\OrientDb\TimelineDaoOrientDb.cs" />
     <Compile Include="Entities\ContentItem.cs" />
     <Compile Include="Entities\Timeline.cs" />
     <Compile Include="Exceptions\ContentItemNotFoundException.cs" />

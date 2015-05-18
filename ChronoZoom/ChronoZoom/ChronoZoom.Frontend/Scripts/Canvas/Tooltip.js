@@ -12,11 +12,14 @@
         }
 
         function draw() {
-            var _width = _contentItem.getWidth();
-            var _x = _contentItem.getX();
-            var _y = _contentItem.getY();
+            var position = _contentItem.getPosition();
+            var size = _contentItem.getSize();
+
+            var _width = position.width;
+            var _x = size.x;
+            var _y = size.y;
             var _title = _contentItem.getTitle();
-            var _contentItemHeight = _contentItem.getHeight();
+            var _contentItemHeight = size.height;
             var _tooltipHeight = 40;
             var _textWidth = getTextWidth(_title, 18);
             

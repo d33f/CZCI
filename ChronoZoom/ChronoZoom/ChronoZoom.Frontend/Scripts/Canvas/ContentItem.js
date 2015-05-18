@@ -9,24 +9,19 @@
     this.getSize = getSize;
     this.getChildren = getChildren;
     this.hasChildren = hasChildren;
-    this.getWidth = getWidth;
-    this.getHeight = getHeight;
-    this.setHeight = setHeight;
     this.getRadius = getRadius;
-    this.getX = getX;
-    this.getY = getY;
-    this.increaseY = increaseY;
     this.getHovered = getHovered;
 
     // Public methods
     this.update = update;
     this.draw = draw;
     this.collides = collides;
+    this.collidesContentItem = collidesContentItem;
     this.getPosition = getPosition;
+    this.setPosition = setPosition;
     this.updatePosition = updatePosition;
     this.addChild = addChild;
-    this.drawCollision = drawCollision;
-
+    
     // Private fields
     var _id = data.id;
     var _beginDate = data.beginDate;
@@ -116,32 +111,8 @@
         return _hasChildren;
     }
 
-    function getWidth() {
-        return _width;
-    }
-
-    function getHeight() {
-        return _height;
-    }
-
-    function setHeight(height) {
-        _height = height;
-    }
-
     function getRadius() {
         return _radius;
-    }
-
-    function getX() {
-        return _x;
-    }
-
-    function getY(){
-        return _y;
-    }
-
-    function increaseY(y) {
-        _y += y;
     }
 
     function getHovered() {
@@ -166,6 +137,12 @@
         return { x: _x, y: _y };
     }
 
+    // Set new position
+    function setPosition(x, y) {
+        _x = x;
+        _y = y;
+    }
+
     function updatePosition() {
         _x = Canvas.Timescale.getXPositionForTime(_beginDate);
         _width = Canvas.Timescale.getXPositionForTime(_endDate) - _x;
@@ -178,7 +155,7 @@
 
     // Get size
     function getSize() {
-        return { height: _height, width: _width };
+        return { height: _height, width: _width, radius: _radius };
     }
 
     // Update this content item
@@ -187,10 +164,8 @@
         _width = Canvas.Timescale.getXPositionForTime(_endDate) - _x;
 
         var position = Canvas.Mousepointer.getPosition();
-        //console.log("x " + position.x + " , y " + position.y);
 
         (collides(position.x, position.y) && !collidesInChildren(position.x, position.y)) ? _isHovered = true : _isHovered = false;
-
 
         updateYPosition(contentItems);
 
@@ -220,7 +195,8 @@
             _children[i].update(_children);
 
             // Check height
-            var childHeight = _children[i].getSize().height;
+            var childHeight = _children[i].getPosition().y + _children[i].getSize().height;
+
             if (childHeight > _height) {
                 _height = childHeight;
             }
@@ -230,52 +206,18 @@
     // Update y position
     function updateYPosition(contentItems) {
         // Start at y position of parent if set
-        //if (_parentContentItem !== undefined) {
-        //    _y = _parentContentItem.getPosition().y + 20;
-        //}
-
-        //for (var i = 0; i < contentItems.length; i++) {
-        //    // Don't collide on your self!
-        //    if (contentItems[i].getId() !== _id) {
-        //        /*var position = contentItems[i].getPosition();
-        //        while (collides(position.x, position.y)) {
-        //            _y += contentItems[i].getSize().height + 10;
-        //        }*/
-        //    }
-        //}
-        //for (var i = 1; i < _children.length; i++) {
-        //    if (_children[i - 1].drawCollision(_children[i])) {
-        //        _children[i].setY(_children[i].getY() + 50);
-        //    }
-        //}
-
         if (_parentContentItem !== undefined) {
-            var children = _parentContentItem.getChildren();
-            var index = -1;
-            var length = children.length;
-            var height = 0;
+            _y = _parentContentItem.getPosition().y + 20;
+        }
 
-            for (var j = 0; j < length; j++) {
-                if (children[j].getId() === _id) {
-                    index = j;
-                    break;
+        var length = contentItems.length;
+        for (var i = 0; i < length; i++) {
+            // Don't collide on your self!
+            if (contentItems[i].getId() !== _id) {
+                while (collidesContentItem(contentItems[i])) {
+                    _y += contentItems[i].getSize().height + 10;
                 }
             }
-
-            children.splice(j, 1);
-            length = children.length;
-
-            for (var i = 0; i < length; i++) {
-                children[i].updatePosition();
-                while(drawCollision(children[i])) {
-                    children[i].increaseY(20);
-                }
-                var childTopY = children[i].getY() + children[i].getHeight();
-                //console.log(childTopY);
-                height < childTopY ? height = childTopY : height = height; 
-            }
-            //console.log(height);
-            _parentContentItem.setHeight(height + 20)
         }
     }
 
@@ -284,12 +226,12 @@
         // TODO: Below is example code, fancy styling is required :)
         var context = Canvas.getContext();
         // if (_height > 100) {
-        /*
-        if (_image !== undefined) {
+        
+        if (_image.src !== "http://localhost:20000/null") {
             context.beginPath();
             context.drawImage(_image, _x, _y, _width, _height);
             context.closePath();
-        }*/
+        }
 
         if (_hasChildren) {
             drawContentItemWithChildren(context);
@@ -374,11 +316,6 @@
         var centerpointX = _x + _radius
         var centerpointY = _y + _radius;
 
-        if (_title === "Australians at Tobruk") {
-            console.log(centerpointX);
-            console.log(centerpointY);
-        }
-
         // distance between centerpointX and x
         var deltaX;
         if (centerpointX >= x) {
@@ -408,17 +345,17 @@
         return _radius > distance;
     }
 
-    function drawCollision(contentItem) {
-        if (_hasChildren && contentItem.hasChildren()) {
-            return drawRectangleCollision(contentItem);
-        } else if((_hasChildren && !contentItem.hasChildren()) || (!_hasChildren && contentItem.hasChildren())) {
-            return drawRectangleCollision(contentItem);
+    // Check if current content item collides given content item
+    function collidesContentItem(contentItem) {
+        if (_hasChildren && contentItem.hasChildren() || (_hasChildren && !contentItem.hasChildren()) || (!_hasChildren && contentItem.hasChildren())) {
+            return collidesContentItemRectangle(contentItem);
         } else {
-            return drawCircleCollision(contentItem);
+            return collidesContentItemCircle(contentItem);
         }
     }
 
-    function drawRectangleCollision(contentItem) {
+    // Check if current content item collides given content item
+    function collidesContentItemRectangle(contentItem) {
         var aX1;
         var aY1;
         var aX2;
@@ -428,56 +365,56 @@
         var bX2;
         var bY2;
 
+        var position = contentItem.getPosition();
+        var size = contentItem.getSize();
+
         if (!_hasChildren && contentItem.hasChildren()) {
             aX1 = _x; 
             aY1 = _y;
             aX2 = _x + (_radius * 2);
             aY2 = _y + (_radius * 2);
-            bX1 = contentItem.getX();
-            bY1 = contentItem.getY();
-            bX2 = contentItem.getX() + contentItem.getWidth();
-            bY2 = contentItem.getY() + contentItem.getHeight();
+
+            bX1 = position.x;
+            bY1 = position.y;
+            bX2 = position.x + size.width;
+            bY2 = position.y + size.height;
         } else if(_hasChildren && !contentItem.hasChildren()) {
             aX1 = _x;
             aY1 = _y;
             aX2 = _x + _width;
             aY2 = _y + _height;
-            bX1 = contentItem.getX();
-            bY1 = contentItem.getY();
-            bX2 = contentItem.getX() + (contentItem.getRadius() * 2);
-            bY2 = contentItem.getY() + (contentItem.getRadius() * 2);
+
+            bX1 = position.x;
+            bY1 = position.y;
+            bX2 = position.x + (size.radius * 2);
+            bY2 = position.y + (size.radius * 2);
         } else {
             aX1 = _x;
             aY1 = _y;
             aX2 = _x + _width;
             aY2 = _y + _height;
-            bX1 = contentItem.getX();
-            bY1 = contentItem.getY();
-            bX2 = contentItem.getX() + contentItem.getWidth();
-            bY2 = contentItem.getY() + contentItem.getHeight();
+
+            bX1 = position.x;
+            bY1 = position.y;
+            bX2 = position.x + size.width;
+            bY2 = position.y + size.height;
         }
-        /*
-        console.log(aY2 + " < " + bY1);
-        console.log(aY1 + " > " + bY2);
-        console.log(aX2 + " < " + bX1);
-        console.log(aX1 + " > " + bX2);
-        console.log(_title);
-        console.log(contentItem.getTitle());
-        */
         
-        if(aY2 < bY1 || aY1 > bY2 || aX2 < bX1 || aX1 > bX2)
-            return false;
-        else 
-            return true;
+        return !(aY2 < bY1 || aY1 > bY2 || aX2 < bX1 || aX1 > bX2);
     }
 
-    function drawCircleCollision(contentItem) {
+    // Check if current content item collides given content item
+    function collidesContentItemCircle(contentItem) {
         var aX = _x; //(_x + (_width / 2));
         var aY = _y;
         var aRadius = _radius;
-        var bX = contentItem.getX();
-        var bY = contentItem.getY();
-        var bRadius = contentItem.getRadius();
+
+        var position = contentItem.getPosition();
+        var size = contentItem.getSize();
+
+        var bX = position.x;
+        var bY = position.y;
+        var bRadius = size.radius;
 
         // distance between centerpointX and x
         var deltaX;

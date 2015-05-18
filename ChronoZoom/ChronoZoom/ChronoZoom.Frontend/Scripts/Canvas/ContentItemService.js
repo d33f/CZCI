@@ -20,7 +20,7 @@
             if (typeof(Storage) !== "undefined") {
                 _cache = window.sessionStorage;
             }
-            //_cache.clear();
+            _cache.clear();
             // Find timeline
             findTimeline();
         }
@@ -45,6 +45,7 @@
         function findContentItemsByParentContent(parentContentItem) {
             // Set breadcrumb
             Canvas.Breadcrumbs.setContentItem(parentContentItem);
+
             if (_cache !== undefined && _cache.getItem(parentContentItem.getId()) !== null) {
                 // Get content items from cache
                 setContentItems(getContentItemsFromCache(parentContentItem));

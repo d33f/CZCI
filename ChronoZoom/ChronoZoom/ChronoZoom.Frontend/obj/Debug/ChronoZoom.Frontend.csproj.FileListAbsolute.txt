@@ -23,7 +23,6 @@ C:\ChronoZoomTFS\ChronoZoom\ChronoZoom.Frontend\bin\System.Web.WebPages.Razor.xm
 C:\ChronoZoomTFS\ChronoZoom\ChronoZoom.Frontend\obj\Debug\ChronoZoom.Frontend.dll
 C:\ChronoZoomTFS\ChronoZoom\ChronoZoom.Frontend\obj\Debug\ChronoZoom.Frontend.pdb
 C:\ChronoZoomTFS\ChronoZoom\ChronoZoom.Frontend\obj\Debug\ChronoZoom.Frontend.csprojResolveAssemblyReference.cache
-C:\Users\Anthony\Source\Repos\CZCI\ChronoZoom\ChronoZoom\ChronoZoom.Frontend\bin\Resources\Space.jpg
 C:\Users\Anthony\Source\Repos\CZCI\ChronoZoom\ChronoZoom\ChronoZoom.Frontend\bin\ChronoZoom.Frontend.dll.config
 C:\Users\Anthony\Source\Repos\CZCI\ChronoZoom\ChronoZoom\ChronoZoom.Frontend\bin\ChronoZoom.Frontend.dll
 C:\Users\Anthony\Source\Repos\CZCI\ChronoZoom\ChronoZoom\ChronoZoom.Frontend\bin\ChronoZoom.Frontend.pdb
@@ -45,7 +44,6 @@ C:\Users\Anthony\Source\Repos\CZCI\ChronoZoom\ChronoZoom\ChronoZoom.Frontend\bin
 C:\Users\Anthony\Source\Repos\CZCI\ChronoZoom\ChronoZoom\ChronoZoom.Frontend\bin\System.Web.WebPages.xml
 C:\Users\Anthony\Source\Repos\CZCI\ChronoZoom\ChronoZoom\ChronoZoom.Frontend\bin\System.Web.WebPages.Deployment.xml
 C:\Users\Anthony\Source\Repos\CZCI\ChronoZoom\ChronoZoom\ChronoZoom.Frontend\bin\System.Web.WebPages.Razor.xml
-C:\Users\Anthony\Source\Repos\CZCI\ChronoZoom\ChronoZoom\ChronoZoom.Frontend\obj\Debug\ChronoZoom.Frontend.csprojResolveAssemblyReference.cache
 C:\Users\Anthony\Source\Repos\CZCI\ChronoZoom\ChronoZoom\ChronoZoom.Frontend\obj\Debug\ChronoZoom.Frontend.dll
 C:\Users\Anthony\Source\Repos\CZCI\ChronoZoom\ChronoZoom\ChronoZoom.Frontend\obj\Debug\ChronoZoom.Frontend.pdb
 C:\Users\Felix\Source\Repos\CZCI\ChronoZoom\ChronoZoom\ChronoZoom.Frontend\bin\Resources\Space.jpg
@@ -98,3 +96,4 @@ C:\Users\Bob\Source\Repos\CZCI\ChronoZoom\ChronoZoom\ChronoZoom.Frontend\bin\Sys
 C:\Users\Bob\Source\Repos\CZCI\ChronoZoom\ChronoZoom\ChronoZoom.Frontend\obj\Debug\ChronoZoom.Frontend.csprojResolveAssemblyReference.cache
 C:\Users\Bob\Source\Repos\CZCI\ChronoZoom\ChronoZoom\ChronoZoom.Frontend\obj\Debug\ChronoZoom.Frontend.dll
 C:\Users\Bob\Source\Repos\CZCI\ChronoZoom\ChronoZoom\ChronoZoom.Frontend\obj\Debug\ChronoZoom.Frontend.pdb
+C:\Users\Anthony\Source\Repos\CZCI\ChronoZoom\ChronoZoom\ChronoZoom.Frontend\obj\Debug\ChronoZoom.Frontend.csprojResolveAssemblyReference.cache

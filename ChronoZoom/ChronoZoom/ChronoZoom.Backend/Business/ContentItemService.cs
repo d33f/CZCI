@@ -14,9 +14,14 @@ namespace ChronoZoom.Backend.Business
             _contentItemDao = contentItemDao;
         }
 
-        public IEnumerable<ContentItem> GetAll(int parentContentItemID)
+        public IEnumerable<ContentItem> GetAll(string parentContentItemID)
         {
             return _contentItemDao.FindAll(parentContentItemID);
+        }
+
+        public IEnumerable<ContentItem> GetAllForTimeline(string parentContentItemID)
+        {
+            return _contentItemDao.FindAllForTimeline(parentContentItemID);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Web.Http;
 using ChronoZoom.Backend.Business.Interfaces;
 using ChronoZoom.Backend.Entities;
@@ -11,17 +12,21 @@ namespace ChronoZoom.Backend.Controllers
     public class TimelineController : ApiController
     {
         private ITimelineService _timelineService;
+        private IContentItemService _contentItemService;
 
-        public TimelineController(ITimelineService timelineService)
+        public TimelineController(ITimelineService timelineService, IContentItemService contentItemService)
         {
             _timelineService = timelineService;
+            _contentItemService = contentItemService;
         }
 
         public IHttpActionResult Get()
         {
             try
             {
-                var timeline = _timelineService.Get(1);
+                var timeline = _timelineService.Get("12:0");
+                var contentItems = _contentItemService.GetAllForTimeline(timeline.Id);
+                timeline.ContentItems = contentItems.ToArray();
                 return Ok(timeline);
             }
             catch (TimelineNotFoundException)
