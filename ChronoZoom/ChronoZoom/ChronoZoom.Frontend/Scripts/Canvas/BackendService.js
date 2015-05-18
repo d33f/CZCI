@@ -9,9 +9,6 @@
 
         // Get json data from path, execute callback resolve when succesfull and reject if failed. 
         function getJSON(path, resolve, reject) {
-            // For debugging usage
-            console.log('getJSON(' + path +')');
-
             // Create new instance of XMLHttpRequest and open requested path (async)
             var xmlHttpRequest = new XMLHttpRequest();
             xmlHttpRequest.open("GET", _baseUrl + path, true);
@@ -99,7 +96,6 @@
                 for (var i = 0; i < json.length; i++) {
                     // Create and add content item object
                     var contentItem = createContentItemObject(json[i], parentContentItem);
-                    console.log(contentItem);
                     contentItems.push(contentItem);
                 }
 

@@ -90,9 +90,6 @@
         }
 
         function handleClickOnTimeline() {
-            // Mark loading flag
-            _isLoading = true;
-
             // Find clicked item
             var clickedContentItem = getContentItemOnMousePosition();
 
@@ -103,29 +100,61 @@
 
             // Make sure root is not reached
             if (clickedContentItem !== undefined) {
-                // Update timescale and content item service
-                var rangeItem = clickedContentItem.getEndDate() - clickedContentItem.getBeginDate();
-                var rangeBegin = clickedContentItem.getBeginDate() - (rangeItem / 20);
-                var rangeEnd = clickedContentItem.getEndDate() + (rangeItem / 20);
-                Canvas.Timescale.setRange(rangeBegin, rangeEnd);
-                Canvas.ContentItemService.findContentItemsByParentContent(clickedContentItem);
+                handleClickOnContentItem(clickedContentItem);
             }
+        }
+
+        // Handle click on given content item
+        function handleClickOnContentItem(clickedContentItem) {
+            // Update timescale and content item service
+            var rangeItem = clickedContentItem.getEndDate() - clickedContentItem.getBeginDate();
+            var rangeBegin = clickedContentItem.getBeginDate() - (rangeItem / 20);
+            var rangeEnd = clickedContentItem.getEndDate() + (rangeItem / 20);
+            Canvas.Timescale.setRange(rangeBegin, rangeEnd);
+
+            // Handle event
+            if (clickedContentItem.hasChildren()) {
+                handleClickOnContentItemWithChildren(clickedContentItem);
+            } else {
+                handleClickOnContentItemWithoutChildren(clickedContentItem);
+            }
+        }
+
+        // Handle click on content item without children
+        function handleClickOnContentItemWithoutChildren(contentItem) {
+            // Update bread crumbs
+            Canvas.Breadcrumbs.setContentItem(contentItem);
+
+            // Update content items array
+            _contentItems = [contentItem];
+
+            // Mark content item as fullscreen mode
+            contentItem.setIsFullScreen(true);
+        }
+
+        // Handle click on content item with children
+        function handleClickOnContentItemWithChildren(contentItem) {
+            // Mark loading flag
+            _isLoading = true;
+
+            // Get children
+            Canvas.ContentItemService.findContentItemsByParentContent(contentItem);
         }
 
         // Get content item on mouse position
         function getContentItemOnMousePosition() {
-            var result
-
             // Search through all content items
             var length = _contentItems.length;
             for (var i = 0; i < length; i++) {
                 // Check if content item collides
-                if ((result = checkCollision(_contentItems[i])) !== undefined) {
+                var result = checkCollision(_contentItems[i]);
+                if (result !== undefined) {
                     return result;
                 }
             }
+
             // Nothing collides
-            return result;
+            return undefined;
         }
 
         function checkCollision(contentItem) {
