@@ -129,7 +129,7 @@ namespace ChronoZoom.Backend.Business
                     EndDate = 1945M,
                     HasChildren = true,
                     Title = "Anne Frank",
-                    Source = "http://en.wikipedia.org/wiki/File:Anne_Frank.jpg",
+                    Source = "http://upload.wikimedia.org/wikipedia/en/4/47/Anne_Frank.jpg",
                 }
             };
         }
