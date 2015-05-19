@@ -358,7 +358,7 @@
 
     // Check if content item displayed as a circle collides with the given position
     function collidesCircle(x, y) {
-        var centerpointX = _x + _radius
+        var centerpointX = _x + _radius;
         var centerpointY = _y + _radius;
 
         // distance between centerpointX and x

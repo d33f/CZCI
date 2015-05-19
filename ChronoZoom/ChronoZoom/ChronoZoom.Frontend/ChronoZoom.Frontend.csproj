@@ -110,6 +110,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
+    <Content Include="Resources\loader.gif" />
     <Content Include="Resources\Space.jpg" />
     <Content Include="Scripts\Canvas\ContentItem.js" />
     <Content Include="Scripts\Canvas\PublicAPIService.js" />

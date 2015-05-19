@@ -38,6 +38,7 @@
             if (_isLoading) {
                 drawLoader();
             } else {
+                document.getElementById('loader').style.visibility = 'hidden';
                 drawContentItems();
                 drawToolTip();
             }
@@ -46,9 +47,10 @@
         // Draw loader
         function drawLoader() {
             var context = Canvas.getContext();
-            context.font = Canvas.Settings.getTimescaleTickLabelFont();
-            context.fillStyle = Canvas.Settings.getTimescaleTickLabelColor();
-            context.fillText("LOADING...", 100, 100);
+            //context.font = Canvas.Settings.getTimescaleTickLabelFont();
+            //context.fillStyle = Canvas.Settings.getTimescaleTickLabelColor();
+            //context.fillText("LOADING...", 100, 100);
+
         }
 
         // Draw (visible) content items
