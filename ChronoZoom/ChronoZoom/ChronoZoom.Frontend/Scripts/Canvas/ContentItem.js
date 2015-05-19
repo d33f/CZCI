@@ -22,7 +22,7 @@
     this.updatePosition = updatePosition;
     this.addChild = addChild;
     this.setIsFullScreen = setIsFullScreen;
-    
+
     // Private fields
     var _id = data.id;
     var _beginDate = data.beginDate;
@@ -80,7 +80,7 @@
 
             // Store element as container
             _container = element;
-        } 
+        }
     }
 
     // Get id property
@@ -250,12 +250,12 @@
     function draw() {
         // TODO: Below is example code, fancy styling is required :)
         var context = Canvas.getContext();
-        
-        if (_image.src !== "http://localhost:20000/null") {
-            context.beginPath();
-            context.drawImage(_image, _x, _y, _width, _height);
-            context.closePath();
-        }
+
+        //if (_image.src !== "http://localhost:20000/null") {
+        //    context.beginPath();         
+        //    context.drawImage(_image, _x, _y, _width, _height);
+        //    context.closePath();
+        //}
 
         if (_hasChildren) {
             drawContentItemWithChildren(context);
@@ -295,14 +295,37 @@
 
     // Draw content item without childeren
     function drawContentItemWithoutChildren(context) {
-        context.beginPath();
 
-        _width = _width > 0 ? _width : 50;
-        _radius = _width;
+
+        context.save();
+        context.beginPath();
         context.arc(_x + _radius, _y + _radius, _radius, 0, 2 * Math.PI);
         context.lineWidth = _isHovered ? 3 : 1;
         context.strokeStyle = 'white';
         context.stroke();
+        context.closePath();
+        context.clip();
+
+        context.drawImage(_image, _x, _y, _width * 2, _height);
+
+        context.beginPath();
+        context.arc(_x, _y, _radius, 0, 2 * Math.PI);
+        context.clip();
+        context.closePath();
+        context.restore();
+
+        //Test picture in contentItem
+        //context.beginPath();
+        //var centerPointX = _x + _radius;
+        //var centerPointY = _y + _radius;
+        //var rectX = centerPointX + (_radius * Math.cos(0.7853981634));
+        //var rectY = centerPointY + (_radius * Math.sin(0.7853981634));
+        //var rectWidth = (centerPointX - rectX) * 2;
+        //var rectHeight = (centerPointY - rectY) * 2;
+        //context.drawImage(_image, rectX, rectY, rectWidth, rectHeight);
+        //context.strokeStyle = 'white';
+        //context.stroke();
+        //context.closePath();
     };
 
     // Draw child content items
@@ -395,7 +418,7 @@
         var size = contentItem.getSize();
 
         if (!_hasChildren && contentItem.hasChildren()) {
-            aX1 = _x; 
+            aX1 = _x;
             aY1 = _y;
             aX2 = _x + (_radius * 2);
             aY2 = _y + (_radius * 2);
@@ -404,7 +427,7 @@
             bY1 = position.y;
             bX2 = position.x + size.width;
             bY2 = position.y + size.height;
-        } else if(_hasChildren && !contentItem.hasChildren()) {
+        } else if (_hasChildren && !contentItem.hasChildren()) {
             aX1 = _x;
             aY1 = _y;
             aX2 = _x + _width;
@@ -425,7 +448,7 @@
             bX2 = position.x + size.width;
             bY2 = position.y + size.height;
         }
-        
+
         return !(aY2 < bY1 || aY1 > bY2 || aX2 < bX1 || aX1 > bX2);
     }
 
@@ -451,7 +474,7 @@
         }
 
         // distance between centerpointY and y
-        var deltaY;
+        var deltaY; 
         if (aY >= bY) {
             deltaY = aY - bY;
         } else {
@@ -468,7 +491,7 @@
         var distance = deltaY / sinangle;
 
         // is mousepoint in circle
-        
+
         (deltaX === 0 && deltaY === 0) ? distance = 0 : distance = distance;
         return (aRadius + bRadius) >= distance;
     }
