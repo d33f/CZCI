@@ -31,7 +31,13 @@
         // set the new content item
         function setContentItem(contentItem) {
             if (contentItem instanceof ContentItem) {
+                // Reset the stack
                 _stack = [];
+
+                // Check if top value is item without children
+                if (!contentItem.hasChildren()) {
+                    contentItem.setIsFullScreen(true);
+                }
 
                 while (contentItem !== undefined)
                 {
@@ -49,10 +55,20 @@
             if (_stack.length === 1) {
                 return _stack[0]; // root
             } else {
-                // Remove last content item at top of the stack
-                _stack.pop();
+                removeLastContentItem();
                 display();
                 return _stack[_stack.length - 1];
+            }
+        }
+
+        // Remove the last content item at top of the stack
+        function removeLastContentItem() {
+            // Remove the first item of the stack
+            var contentItem = _stack.pop();
+
+            // if content item has no children, make sure it is not in fullscreen mode anymore
+            if (!contentItem.hasChildren()) {
+                contentItem.setIsFullScreen(false);
             }
         }
 
@@ -86,6 +102,13 @@
         }
 
         function redirect(i) {
+            var length = _stack.length;
+            if (i < length) {
+                if (!_stack[length - 1].hasChildren()) {
+                    _stack[length - 1].setIsFullScreen(false);
+                }
+            }
+
             var contentItem = _stack[i];
             Canvas.Timescale.setRange(contentItem.getBeginDate(), contentItem.getEndDate());
             Canvas.ContentItemService.findContentItemsByParentContent(contentItem);
