@@ -227,11 +227,11 @@
         var context = Canvas.getContext();
         // if (_height > 100) {
         
-        if (_image.src !== "http://localhost:20000/null") {
-            context.beginPath();
-            context.drawImage(_image, _x, _y, _width, _height);
-            context.closePath();
-        }
+        //if (_image.src !== "http://localhost:20000/null") {
+        //    context.beginPath();         
+        //    context.drawImage(_image, _x, _y, _width, _height);
+        //    context.closePath();
+        //}
 
         if (_hasChildren) {
             drawContentItemWithChildren(context);
@@ -271,12 +271,37 @@
 
     // Draw content item without childeren
     function drawContentItemWithoutChildren(context) {
-        context.beginPath();
         _width = _width > 0 ? -_width : 50;
+
+        context.save();
+        context.beginPath();
         context.arc(_x + _radius, _y + _radius, _radius, 0, 2 * Math.PI);
         context.lineWidth = _isHovered ? 3 : 1;
         context.strokeStyle = 'white';
         context.stroke();
+        context.closePath();
+        context.clip();
+
+        context.drawImage(_image, _x, _y, _width * 2, _height);
+
+        context.beginPath();
+        context.arc(_x, _y, _radius, 0, 2 * Math.PI);
+        context.clip();
+        context.closePath();
+        context.restore();
+        
+        //Test picture in contentItem
+        //context.beginPath();
+        //var centerPointX = _x + _radius;
+        //var centerPointY = _y + _radius;
+        //var rectX = centerPointX + (_radius * Math.cos(0.7853981634));
+        //var rectY = centerPointY + (_radius * Math.sin(0.7853981634));
+        //var rectWidth = (centerPointX - rectX) * 2;
+        //var rectHeight = (centerPointY - rectY) * 2;
+        //context.drawImage(_image, rectX, rectY, rectWidth, rectHeight);
+        //context.strokeStyle = 'white';
+        //context.stroke();
+        //context.closePath();
     };
 
     // Draw child content items
