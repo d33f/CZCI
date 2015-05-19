@@ -28,3 +28,24 @@ canvas {
     cursor: pointer;
     text-decoration: underline;
 }
+
+div.contentItem {
+    position: absolute;
+    border-radius: 50%;
+    background: red;
+}
+div.circleWrapper {
+    position: absolute;
+    width: 70%;
+    height: 70%;
+    top: 15%;
+    left: 15%;
+    background: yellow;
+}
+div.contentItemText {
+    position: absolute;
+    bottom: 0px;
+    height: 50%;
+    overflow-y: auto;
+    background: blue;
+}
