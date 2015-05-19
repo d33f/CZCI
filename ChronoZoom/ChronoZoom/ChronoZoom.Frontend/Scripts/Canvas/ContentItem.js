@@ -291,7 +291,7 @@
 
     // Draw content item without childeren
     function drawContentItemWithoutChildren(context) {
-
+        _width = _width > 0 ? -_width : 50;
 
         context.save();
         context.beginPath();
