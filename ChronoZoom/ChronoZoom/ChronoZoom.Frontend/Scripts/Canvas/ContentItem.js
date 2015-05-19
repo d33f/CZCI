@@ -21,8 +21,7 @@
     this.setPosition = setPosition;
     this.updatePosition = updatePosition;
     this.addChild = addChild;
-    this.setIsFullScreen = setIsFullScreen;
-    
+
     // Private fields
     var _id = data.id;
     var _beginDate = data.beginDate;
@@ -42,48 +41,48 @@
     var _height = 0;
     var _radius = 0;
     var _isHovered = false;
-    var _isFullScreen = false;
 
     // HTML container
     var _container;
 
     // Constructor
     function initialize(instance) {
-        // Set image
-        _image.onload = function () { };
-        if (_sourceURL !== undefined) {
+    // Set image
+        _image.onload = function () {
+        };
+        if(_sourceURL !== undefined) {
             _image.src = _sourceURL;
         }
 
-        // Add child to parent
+            // Add child to parent
         if (_parentContentItem !== undefined) {
             _parentContentItem.addChild(instance);
-        }
+            }
 
-        // Check if it has no children
-        if (!_hasChildren) {
+                // Check if it has no children
+                if(!_hasChildren) {
             // Get content item element
             _radius = 50;
             var element = document.getElementById('contentItem_' + _id);
 
-            // Create new content item element if it doesn't exist
+                // Create new content item element if it doesn't exist
             if (element == null) {
                 // Create element
                 element = document.createElement('div');
                 element.id = 'contentItem_' + _id;
                 element.style.position = "absolute";
 
-                // Get the canvas container element and add the child
+                    // Get the canvas container element and add the child
                 var container = document.getElementById('canvasContainer');
-                container.appendChild(element);
+                    container.appendChild(element);
+                    }
+
+                    // Store element as container
+            _container = element;
+            }
             }
 
-            // Store element as container
-            _container = element;
-        } 
-    }
-
-    // Get id property
+                // Get id property
     function getId() {
         return _id;
     }
@@ -134,11 +133,6 @@
         }
     }
 
-    // Set is fullscreen
-    function setIsFullScreen(isFullScreen) {
-        _isFullScreen = isFullScreen;
-    }
-
     // Get current position
     function getPosition() {
         return { x: _x, y: _y };
@@ -171,39 +165,25 @@
         _width = Canvas.Timescale.getXPositionForTime(_endDate) - _x;
 
         var position = Canvas.Mousepointer.getPosition();
-        _isHovered = (collides(position.x, position.y) && !collidesInChildren(position.x, position.y));
 
-        if (_isFullScreen) {
-            var canvasContainer = Canvas.getCanvasContainer();
-            var canvasHeight = canvasContainer.height - 100;;
+        (collides(position.x, position.y) && !collidesInChildren(position.x, position.y)) ? _isHovered = true : _isHovered = false;
 
-            _width = ((canvasContainer.width > canvasHeight ? canvasHeight : canvasContainer.width) / 2) - 10;
-            _x = (canvasContainer.width / 2) - _width;
-            _y = 100; // Reset
+        updateYPosition(contentItems);
 
-            updateContainer();
+        _height = 100;
 
-            _container.innerHTML = "test";
+        updateChildren();
 
-        } else {
-            updateYPosition(contentItems);
-
-            _height = 100;
-
-            updateChildren();
-
-            updateContainer();
-        }
+        updateContainer();
     }
 
     // Update (DOM) container element
     function updateContainer() {
         if (!_hasChildren && _container !== undefined) {
             _container.style.top = _y + "px";
-            _container.style.left = _x + "px";
-            //_container.style.width = (_radius * 2) + "px";
-            //_container.style.height = (_radius * 2) + "px";
-            //_container.style.borderRadius = "50%";
+            _container.style.right = _x + "px";
+            _container.style.width = _radius + "px";
+            _container.style.height = _radius + "px";
         }
     }
 
@@ -246,6 +226,7 @@
     function draw() {
         // TODO: Below is example code, fancy styling is required :)
         var context = Canvas.getContext();
+        // if (_height > 100) {
         
         //if (_image.src !== "http://localhost:20000/null") {
         //    context.beginPath();         
@@ -291,7 +272,8 @@
 
     // Draw content item without childeren
     function drawContentItemWithoutChildren(context) {
-        context.beginPath();
+        _width = _width > 0 ? -_width : 50;
+
         context.save();
         context.beginPath();
         context.arc(_x + _radius, _y + _radius, _radius, 0, 2 * Math.PI);
@@ -300,7 +282,6 @@
         context.stroke();
         context.closePath();
         context.clip();
-        console.log(_image);
 
         context.drawImage(_image, _x, _y, _width * 2, _height);
 
@@ -491,6 +472,7 @@
         (deltaX === 0 && deltaY === 0) ? distance = 0 : distance = distance;
         return (aRadius + bRadius) >= distance;
     }
+
 
     // Return object instance
     initialize(this);
