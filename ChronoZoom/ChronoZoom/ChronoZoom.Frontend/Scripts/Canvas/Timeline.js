@@ -83,8 +83,10 @@
 
         // Draw tooltip
         function drawToolTip() {
-            if (getContentItemOnMousePosition() !== undefined) {
-                Canvas.Tooltip.update(getContentItemOnMousePosition());
+            var _contentItemOnMousePosition = getContentItemOnMousePosition();
+
+            if (_contentItemOnMousePosition !== undefined) {
+                Canvas.Tooltip.update(_contentItemOnMousePosition);
                 Canvas.Tooltip.draw();
             }
         }
@@ -147,15 +149,16 @@
             var length = _contentItems.length;
             for (var i = 0; i < length; i++) {
                 // Check if content item collides
-                var result = checkCollision(_contentItems[i]);
-                if (result !== undefined) {
-                    return result;
+                _collidedContentItem = checkCollision(_contentItems[i]);
+                if (_collidedContentItem !== undefined) {
+                    return _collidedContentItem;
                 }
             }
 
             // Nothing collides
             return undefined;
         }
+
 
         function checkCollision(contentItem) {
             var position = Canvas.Mousepointer.getPosition();
