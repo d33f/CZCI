@@ -110,7 +110,10 @@
             }
 
             var contentItem = _stack[i];
-            Canvas.Timescale.setRange(contentItem.getBeginDate(), contentItem.getEndDate());
+            var rangeItem = contentItem.getEndDate() - contentItem.getBeginDate();
+            var rangeBegin = contentItem.getBeginDate() - (rangeItem / 20);
+            var rangeEnd = contentItem.getEndDate() + (rangeItem / 20);
+            Canvas.Timescale.setRange(rangeBegin, rangeEnd);
             Canvas.ContentItemService.findContentItemsByParentContent(contentItem);
         }
 

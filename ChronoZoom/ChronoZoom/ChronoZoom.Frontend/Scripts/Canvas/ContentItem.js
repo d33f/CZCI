@@ -291,8 +291,7 @@
 
     // Draw content item without childeren
     function drawContentItemWithoutChildren(context) {
-
-
+        context.beginPath();
         context.save();
         context.beginPath();
         context.arc(_x + _radius, _y + _radius, _radius, 0, 2 * Math.PI);
@@ -301,6 +300,7 @@
         context.stroke();
         context.closePath();
         context.clip();
+        console.log(_image);
 
         context.drawImage(_image, _x, _y, _width * 2, _height);
 
