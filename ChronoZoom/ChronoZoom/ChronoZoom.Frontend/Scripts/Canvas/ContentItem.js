@@ -21,6 +21,7 @@
     this.setPosition = setPosition;
     this.updatePosition = updatePosition;
     this.addChild = addChild;
+    this.setIsFullScreen = setIsFullScreen;
 
     // Private fields
     var _id = data.id;
@@ -41,48 +42,48 @@
     var _height = 0;
     var _radius = 0;
     var _isHovered = false;
+    var _isFullScreen = false;
 
     // HTML container
     var _container;
 
     // Constructor
     function initialize(instance) {
-    // Set image
-        _image.onload = function () {
-        };
-        if(_sourceURL !== undefined) {
+        // Set image
+        _image.onload = function () { };
+        if (_sourceURL !== undefined) {
             _image.src = _sourceURL;
         }
 
-            // Add child to parent
+        // Add child to parent
         if (_parentContentItem !== undefined) {
             _parentContentItem.addChild(instance);
-            }
+        }
 
-                // Check if it has no children
-                if(!_hasChildren) {
+        // Check if it has no children
+        if (!_hasChildren) {
             // Get content item element
             _radius = 50;
             var element = document.getElementById('contentItem_' + _id);
 
-                // Create new content item element if it doesn't exist
+            // Create new content item element if it doesn't exist
             if (element == null) {
                 // Create element
                 element = document.createElement('div');
                 element.id = 'contentItem_' + _id;
                 element.style.position = "absolute";
 
-                    // Get the canvas container element and add the child
+                // Get the canvas container element and add the child
                 var container = document.getElementById('canvasContainer');
-                    container.appendChild(element);
-                    }
+                container.appendChild(element);
+            }
 
-                    // Store element as container
+            // Store element as container
             _container = element;
-            }
-            }
+        }
+    }
 
-                // Get id property
+    // Get id property
     function getId() {
         return _id;
     }
@@ -133,6 +134,11 @@
         }
     }
 
+    // Set is fullscreen
+    function setIsFullScreen(isFullScreen) {
+        _isFullScreen = isFullScreen;
+    }
+
     // Get current position
     function getPosition() {
         return { x: _x, y: _y };
@@ -165,25 +171,39 @@
         _width = Canvas.Timescale.getXPositionForTime(_endDate) - _x;
 
         var position = Canvas.Mousepointer.getPosition();
+        _isHovered = (collides(position.x, position.y) && !collidesInChildren(position.x, position.y));
 
-        (collides(position.x, position.y) && !collidesInChildren(position.x, position.y)) ? _isHovered = true : _isHovered = false;
+        if (_isFullScreen) {
+            var canvasContainer = Canvas.getCanvasContainer();
+            var canvasHeight = canvasContainer.height - 100;;
 
-        updateYPosition(contentItems);
+            _width = ((canvasContainer.width > canvasHeight ? canvasHeight : canvasContainer.width) / 2) - 10;
+            _x = (canvasContainer.width / 2) - _width;
+            _y = 100; // Reset
 
-        _height = 100;
+            updateContainer();
 
-        updateChildren();
+            _container.innerHTML = "test";
 
-        updateContainer();
+        } else {
+            updateYPosition(contentItems);
+
+            _height = 100;
+
+            updateChildren();
+
+            updateContainer();
+        }
     }
 
     // Update (DOM) container element
     function updateContainer() {
         if (!_hasChildren && _container !== undefined) {
             _container.style.top = _y + "px";
-            _container.style.right = _x + "px";
-            _container.style.width = _radius + "px";
-            _container.style.height = _radius + "px";
+            _container.style.left = _x + "px";
+            //_container.style.width = (_radius * 2) + "px";
+            //_container.style.height = (_radius * 2) + "px";
+            //_container.style.borderRadius = "50%";
         }
     }
 
@@ -226,8 +246,7 @@
     function draw() {
         // TODO: Below is example code, fancy styling is required :)
         var context = Canvas.getContext();
-        // if (_height > 100) {
-        
+
         //if (_image.src !== "http://localhost:20000/null") {
         //    context.beginPath();         
         //    context.drawImage(_image, _x, _y, _width, _height);
@@ -272,7 +291,7 @@
 
     // Draw content item without childeren
     function drawContentItemWithoutChildren(context) {
-        _width = _width > 0 ? -_width : 50;
+
 
         context.save();
         context.beginPath();
@@ -290,7 +309,7 @@
         context.clip();
         context.closePath();
         context.restore();
-        
+
         //Test picture in contentItem
         //context.beginPath();
         //var centerPointX = _x + _radius;
@@ -395,7 +414,7 @@
         var size = contentItem.getSize();
 
         if (!_hasChildren && contentItem.hasChildren()) {
-            aX1 = _x; 
+            aX1 = _x;
             aY1 = _y;
             aX2 = _x + (_radius * 2);
             aY2 = _y + (_radius * 2);
@@ -404,7 +423,7 @@
             bY1 = position.y;
             bX2 = position.x + size.width;
             bY2 = position.y + size.height;
-        } else if(_hasChildren && !contentItem.hasChildren()) {
+        } else if (_hasChildren && !contentItem.hasChildren()) {
             aX1 = _x;
             aY1 = _y;
             aX2 = _x + _width;
@@ -425,7 +444,7 @@
             bX2 = position.x + size.width;
             bY2 = position.y + size.height;
         }
-        
+
         return !(aY2 < bY1 || aY1 > bY2 || aX2 < bX1 || aX1 > bX2);
     }
 
@@ -451,7 +470,7 @@
         }
 
         // distance between centerpointY and y
-        var deltaY;
+        var deltaY; 
         if (aY >= bY) {
             deltaY = aY - bY;
         } else {
@@ -468,11 +487,10 @@
         var distance = deltaY / sinangle;
 
         // is mousepoint in circle
-        
+
         (deltaX === 0 && deltaY === 0) ? distance = 0 : distance = distance;
         return (aRadius + bRadius) >= distance;
     }
-
 
     // Return object instance
     initialize(this);
