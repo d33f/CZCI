@@ -68,10 +68,14 @@
 
             // Create new content item element if it doesn't exist
             if (element == null) {
-                // Create element
-                element = document.createElement('div');
+                // Create content item element
+                element = createElementWithClass('div', 'contentItem');
                 element.id = 'contentItem_' + _id;
-                element.style.position = "absolute";
+
+                // Create wrapper and text within the content item element
+                var wrapper = createElementWithClass('div', 'contentItemWrapper');
+                wrapper.appendChild(createElementWithClass('div', 'contentItemText'));
+                element.appendChild(wrapper);
 
                 // Get the canvas container element and add the child
                 var container = document.getElementById('canvasContainer');
@@ -81,6 +85,13 @@
             // Store element as container
             _container = element;
         }
+    }
+
+    // Create (DOM) element with class
+    function createElementWithClass(element, classname) {
+        var domElement = document.createElement(element);
+        domElement.classList.add(classname);
+        return domElement;
     }
 
     // Get id property
@@ -175,15 +186,17 @@
 
         if (_isFullScreen) {
             var canvasContainer = Canvas.getCanvasContainer();
-            var canvasHeight = canvasContainer.height - 100;;
+            var canvasHeight = canvasContainer.height - 100;
+            
+            _radius = ((canvasContainer.width > canvasHeight ? canvasHeight : canvasContainer.width) / 2) - 10;
+            _width = _radius;
 
-            _width = ((canvasContainer.width > canvasHeight ? canvasHeight : canvasContainer.width) / 2) - 10;
-            _x = (canvasContainer.width / 2) - _width;
+            _x = (canvasContainer.width / 2) - _radius;
             _y = 100; // Reset
 
             updateContainer();
 
-            _container.innerHTML = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui.";
+            _container.getElementsByClassName("contentItemText")[0].innerHTML = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui.";
 
         } else {
             updateYPosition(contentItems);
@@ -203,10 +216,7 @@
             _container.style.left = _x + "px";
             _container.style.width = (_radius * 2) + "px";
             _container.style.height = (_radius * 2) + "px";
-            _container.style.borderRadius = "50%";
             _container.style.display = _isFullScreen ? "block" : "none";
-            _container.style.color = "white";
-
             //_container.style.pointerEvents = "none";
         }
     }

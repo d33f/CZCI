@@ -167,5 +167,10 @@ namespace ChronoZoom.Backend.Business
                 }
             };
         }
+
+        public void Add(Entities.ContentItem item)
+        {
+            //throw new NotImplementedException();
+        }
     }
 }

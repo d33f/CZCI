@@ -7,5 +7,6 @@ namespace ChronoZoom.Backend.Business.Interfaces
     {
         IEnumerable<ContentItem> GetAll(string parentContentItemID);
         IEnumerable<ContentItem> GetAllForTimeline(string parentContentItemID);
+        void Add(ContentItem item);
     }
 }
