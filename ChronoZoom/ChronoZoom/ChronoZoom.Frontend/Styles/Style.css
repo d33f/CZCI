@@ -84,8 +84,9 @@ div.contentItemTitle {
 
 /* INPUT PANEL */
 #inputPanel.hiddenOnStartup {
-    opacity: 0;
-    transition: fade 0s;
+     visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s 0s, opacity 0s linear;
 }
 
 div#inputPanel {
@@ -98,18 +99,17 @@ div#inputPanel {
     z-index: 1500;
     width: 350px;
     height: 100%;
-    opacity: 1;
-    -webkit-transition: opacity 1s;
-    -moz-transition: opacity 1s;
-    -ms-transition: opacity 1s;
-    -o-transition: opacity 1s;
-    transition: opacity 1s;
+  visibility: visible;
+  opacity: 1;
+  transition: opacity .5s linear;
 }
 
 div#inputPanel.fade {
-    -ms-opacity: 0;
-    opacity: 0;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s .5s, opacity .5s linear;
 }
+
 #inputPanel > h1 {
     font-size: 150%;
     width:33%;
