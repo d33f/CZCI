@@ -40,5 +40,29 @@ namespace ChronoZoom.Backend.Controllers
                 return BadRequest("An error occured");
             }
         }
+
+        /// <summary>
+        /// Create a new content item
+        /// </summary>
+        /// <param name="item">The content item</param>
+        /// <returns>True if succesfully added</returns>
+        [HttpPut]
+        public IHttpActionResult Put(ContentItem item)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("Content item invalid");
+            }
+
+            try
+            {
+                _contentItemService.Add(item);
+                return Ok(true);
+            }
+            catch (Exception)
+            {
+                return BadRequest("An error occured");
+            }
+        }
     }
 }

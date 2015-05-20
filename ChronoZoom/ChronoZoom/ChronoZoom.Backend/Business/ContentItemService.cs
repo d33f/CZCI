@@ -23,5 +23,10 @@ namespace ChronoZoom.Backend.Business
         {
             return _contentItemDao.FindAllForTimeline(parentContentItemID);
         }
+
+        public void Add(ContentItem item)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

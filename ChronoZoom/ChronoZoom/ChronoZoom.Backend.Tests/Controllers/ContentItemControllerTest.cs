@@ -63,5 +63,77 @@ namespace ChronoZoom.Backend.Tests.Controllers
             Assert.IsNotNull(result);
             Assert.IsTrue(result is BadRequestErrorMessageResult);
         }
+
+        [TestMethod]
+        public void ContentItemController_Put_Test()
+        {
+            // Arrange
+            Mock<IContentItemService> mock = new Mock<IContentItemService>(MockBehavior.Strict);
+            mock.Setup(setup => setup.Add(It.IsAny<ContentItem>()));
+            ContentItemController target = new ContentItemController(mock.Object);
+            ContentItem item = new ContentItem()
+            {
+                BeginDate = -1,
+                EndDate = -1,
+                Title = "test",
+                ParentId = "1:0",
+                HasChildren = false,
+                Id = string.Empty,
+                Priref = -1,
+                Source = string.Empty
+            };
+
+            // Act
+            target.Configuration = new HttpConfiguration();
+            target.Validate<ContentItem>(item);
+            IHttpActionResult result = target.Put(item);
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result is OkNegotiatedContentResult<bool>);
+        }
+
+        [TestMethod]
+        public void ContentItemController_Put_Validation_Test()
+        {
+            // Arrange
+            Mock<IContentItemService> mock = new Mock<IContentItemService>(MockBehavior.Strict);
+            mock.Setup(setup => setup.Add(It.IsAny<ContentItem>()));
+            ContentItemController target = new ContentItemController(mock.Object);
+            ContentItem item = new ContentItem()
+            {
+                HasChildren = false,
+                Id = string.Empty,
+                Priref = -1,
+                Source = string.Empty
+            };
+
+            // Act
+            target.Configuration = new HttpConfiguration();
+            target.Validate<ContentItem>(item);
+            IHttpActionResult result = target.Put(item);
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result is BadRequestErrorMessageResult);
+            Assert.AreEqual(false, target.ModelState.IsValid);
+            Assert.AreEqual(4, target.ModelState.Count);
+        }
+
+        [TestMethod]
+        public void ContentItemController_Put_BadRequest_Test()
+        {
+            // Arrange
+            Mock<IContentItemService> mock = new Mock<IContentItemService>(MockBehavior.Strict);
+            mock.Setup(setup => setup.Add(It.IsAny<ContentItem>())).Throws(new Exception());
+            ContentItemController target = new ContentItemController(mock.Object);
+            
+            // Act
+            IHttpActionResult result = target.Put(new ContentItem());
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result is BadRequestErrorMessageResult);
+        }
     }
 }
