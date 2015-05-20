@@ -3,6 +3,7 @@
     margin: 0;
     height: 100%;
     overflow: hidden;
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
 }
 #canvasContainer {
     width: 100%;
@@ -18,7 +19,7 @@ canvas {
 #breadcrumbs {
     position: absolute;
     z-index: 1;
-    top: 50px;
+    top: 90px;
     padding: 5px;
 }
 #breadcrumbs, #breadcrumbs a {
@@ -78,4 +79,67 @@ div.contentItemTitle {
     text-align: center;
     color: white;
     background: black;
+}
+
+
+/* INPUT PANEL */
+#inputPanel.hiddenOnStartup {
+    opacity: 0;
+    transition: fade 0s;
+}
+
+div#inputPanel {
+    background-color:royalblue;
+    color: white;
+    padding: 5px;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    z-index: 1500;
+    width: 350px;
+    height: 100%;
+    opacity: 1;
+    -webkit-transition: opacity 1s;
+    -moz-transition: opacity 1s;
+    -ms-transition: opacity 1s;
+    -o-transition: opacity 1s;
+    transition: opacity 1s;
+}
+
+div#inputPanel.fade {
+    -ms-opacity: 0;
+    opacity: 0;
+}
+#inputPanel > h1 {
+    font-size: 150%;
+    width:33%;
+    margin: 0 auto;
+    margin-bottom: 10px;
+}
+
+/* Menu */
+#header {
+    width: 100%;
+    background-color:rgb(35,35,35);
+    height: 40px;
+    color: #eeeeee;
+}
+#header > #title {
+    float: left;
+    font-size: 120%;
+    font-style: italic;
+    padding: 0 10px 0 10px;
+    line-height: 40px;
+}
+#header > #timerange {
+    float: left;
+    font-size: 70%;
+    line-height: 40px;
+}
+#header > #menuButtons {
+    float: right;
+    line-height: 40px;
+}
+#header > #timerange:after, #header > #title:after {
+    clear: both;
 }

@@ -30,9 +30,10 @@
         // Set the timescale range with some default data
         Canvas.Timescale.setRange(-2000, 2000);
 
+
         // Start the mouse pointer and draw process loop
-        Canvas.Mousepointer.start();
-        canvasDrawProcessLoop();
+         Canvas.Mousepointer.start();
+         canvasDrawProcessLoop();
     }
 
     // Get the (canvas) context 
