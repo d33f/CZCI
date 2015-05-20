@@ -137,8 +137,8 @@ div#inputPanel.fade {
     line-height: 40px;
 }
 #header > #menuButtons {
+    margin-top: 10px;
     float: right;
-    line-height: 40px;
 }
 #header > #timerange:after, #header > #title:after {
     clear: both;
