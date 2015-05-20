@@ -1,80 +1,85 @@
 ﻿var Canvas;
 (function (Canvas) {
     (function (Tooltip) {
+        // Public methods
         Tooltip.update = update;
         Tooltip.draw = draw;
         Tooltip.setFadeOut = setFadeOut;
 
-        var _contentItem;
+        // Private fields
+        var _x = 0;
+        var _y = 0;
+        var _width = 0;
+        var _height = 40;
+        var _title;
+        var _fadeout = false;
         var _globalAlpha = 0.0;
-        var _globalAlphaIncreaser = 0.05;
+        var _globalAlphaIncreaser = 0.04;
 
-        
-
-        function update(contentItem) {
-            _contentItem = contentItem;
-        }
-
+        // Set fade out to true
         function setFadeOut() {
             _fadeout = true;
         }
 
-        function draw() {
-            var position = _contentItem.getPosition();
-            var size = _contentItem.getSize();
-            var _tooltipHeight = 40;
-            var _title = _contentItem.getTitle();
-            var _textWidth = getTextWidth(_title, 18);
-            var _tooltipX;
-            var _tooltipY;
-            
+        // Update the tooltip
+        function update(contentItem) {
+            var position = contentItem.getPosition();
+            var size = contentItem.getSize();
+
+            _title = contentItem.getTitle();
+            _width = getTextWidth(_title, 18);
 
             //If the tooltip needs to be drawn next to a rectangle
-            if (_contentItem.hasChildren()) {
-                if ((_textWidth + position.x + size.width < screen.width)) { //If there's enough space on the right side of the item
-                    _tooltipX = (size.width + position.x);
-                    _tooltipY = (size.height * 0.5) - (_tooltipHeight * 0.5) + position.y;
-                } else if (position.x - _textWidth > _textWidth) { //Left side
-                    _tooltipX = (position.x - _textWidth);
-
-
-                    _tooltipY = (size.height * 0.5) - (_tooltipHeight * 0.5) + position.y;
-                } else { //Middle bottom side
-                    _tooltipX = position.x + (0.5 * size.width);
-                    _tooltipY = position.y + size.height;
-                }
-            //Else if the tooltip needs to be drawn next to a circle
+            if (contentItem.hasChildren()) {
+                updatePosition(contentItem, position, size);
+                
+                //Else if the tooltip needs to be drawn next to a circle
             } else {
-                _tooltipX = (size.radius *2 ) + position.x;
-                _tooltipY = (size.radius * 0.5) + position.y;
+                _x = (size.radius * 2) + position.x;
+                _y = (size.radius * 0.5) + position.y;
             }
-
-            drawToolTip(_tooltipX, _tooltipY, _textWidth, _tooltipHeight, _title);
-
-
         }
 
-        function drawToolTip(x, y, width, height, _title) {
+        // Update position
+        function updatePosition(contentItem, position, size) {
+            var canvasContainer = Canvas.getCanvasContainer();
+
+            if ((_width + position.x + size.width) < canvasContainer.width) { //If there's enough space on the right side of the item
+                _x = (size.width + position.x);
+                _y = (size.height * 0.5) - (_height * 0.5) + position.y;
+            } else if ((position.x - _width) > _width) { //Left side
+                _x = (position.x - _width);
+                _y = (size.height * 0.5) - (_height * 0.5) + position.y;
+            } else { //Middle bottom side
+                _x = position.x + (0.5 * size.width);
+                _y = position.y + size.height;
+            }
+        }
+
+        // Draw the tooltip
+        function draw() {
             if (_globalAlpha < 1.1) {
                 fadeIn();
             }
 
             var context = Canvas.getContext();
             context.save();
-            context.rect(x, y, width, height);
+            context.rect(_x, _y, _width, _height);
             context.fillStyle = 'rgb(49,79,79)';
             context.globalAlpha = _globalAlpha;
             context.fill();
 
             context.fillStyle = "white";
-            context.fillText(_title, x, (y + height / 2));
+            context.fillText(_title, _x, (_y + _height / 2));
             context.restore();
         }
 
+        // Fade in
         function fadeIn() {
             _globalAlpha = _globalAlpha + _globalAlphaIncreaser;
         }
 
+        // Calculate and get text width for given text and font
         function getTextWidth(text, font) {
             var context = Canvas.getContext();
             context.font = font;
