@@ -8,12 +8,12 @@
 
         function setTitle(timelineTitle) {
             var title = document.getElementById("title");
-            title.innerText = ""+timelineTitle;
+            title.innerHTML = ""+timelineTitle;
         }
 
         function setTimeRange(timelineTimeRange) {
             var timerange = document.getElementById("timerange");
-            timerange.innerText = timelineTimeRange;
+            timerange.innerHTML = timelineTimeRange;
         }
 
 
