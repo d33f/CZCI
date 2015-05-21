@@ -38,17 +38,20 @@
 
         function updatePosition() {
             var canvasContainer = Canvas.getCanvasContainer();
-
+            console.log(_tooltipWidth, _contentItemPosition.x);
             if (_contentItemHasChildren) {
-                if ((_tooltipWidth + _contentItemPosition.x + _contentItemSize.width) < canvasContainer.width) {
+                if ((_contentItemPosition.x + _contentItemSize.width + _tooltipWidth) < canvasContainer.width) {
                     positionsRightSideRectangle();
-                } else if ((_contentItemPosition.x - _tooltipWidth) > _tooltipWidth) {
+                } else if (_contentItemPosition.x - _tooltipWidth > 0) {
                     positionsLeftSideRectangle();
                 } else {
                     positionsBottomRectangle();
                 }
             } else {
-                positionsRightSideCircle();
+                if ((_tooltipWidth + _contentItemPosition.x + _contentItemSize.radius + _contentItemSize.width) < canvasContainer.width) {
+                    positionsRightSideCircle();
+                }
+                
             }
         }
 
