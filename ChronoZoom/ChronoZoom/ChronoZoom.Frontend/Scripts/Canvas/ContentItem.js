@@ -50,10 +50,12 @@
     // Constructor
     function initialize(instance) {
         // Set image
+        _image.src = undefined;
         _image.onload = function () { };
         if (_sourceURL !== undefined) {
             _image.src = _sourceURL;
         }
+
 
         // Add child to parent
         if (_parentContentItem !== undefined) {
@@ -188,7 +190,7 @@
         if (_isFullScreen) {
             var canvasContainer = Canvas.getCanvasContainer();
             var canvasHeight = canvasContainer.height - 100;
-            
+
             _radius = ((canvasContainer.width > canvasHeight ? canvasHeight : canvasContainer.width) / 2) - 10;
             _width = _radius;
 
@@ -209,7 +211,7 @@
 
                 //ContentItem with children spacing
                 if (positionParent.x != 0 && positionParent.y != 0) {
-                  
+
                     _x >= positionParent.x + spacing ? _x = _x : _x = positionParent.x + spacing;
 
                     var parentRightX = positionParent.x + sizeParent.width;
@@ -245,7 +247,7 @@
     // Update (DOM) container element
     function updateContainer() {
         if (!_hasChildren && _container !== undefined) {
-            _container.style.top = _y  + "px";
+            _container.style.top = _y + "px";
             _container.style.left = _x + "px";
             _container.style.width = (_radius * 2) + "px";
             _container.style.height = (_radius * 1.40) + "px";
@@ -317,7 +319,7 @@
         if (_isHovered) {
             var gradient = context.createLinearGradient(0, 0, _width, 0);
             gradient.addColorStop(0, "gray");
-            gradient.addColorStop(1, "black");
+            gradient.addColorStop(1, "rgba(0,0,0,0.55)");
             context.fillStyle = gradient;
         } else {
             context.fillStyle = 'rgba(0,0,0,0.6)';
@@ -372,9 +374,7 @@
             context.stroke();
             context.closePath();
             context.clip();
-
             context.drawImage(_image, _x, _y, _width * 2, _height);
-
             context.beginPath();
             context.arc(_x, _y, _radius, 0, 2 * Math.PI);
             context.clip();
@@ -529,7 +529,7 @@
         }
 
         // distance between centerpointY and y
-        var deltaY; 
+        var deltaY;
         if (aY >= bY) {
             deltaY = aY - bY;
         } else {
