@@ -22,6 +22,7 @@
     this.updatePosition = updatePosition;
     this.addChild = addChild;
     this.setIsFullScreen = setIsFullScreen;
+    this.getCenterPointArc = getCenterPointArc;
 
     // Private fields
     var _id = data.id;
@@ -38,6 +39,9 @@
     var _image = new Image();
     var _x = 0;
     var _y = 100;
+    var _centerPointArcX = 0;
+    var _centerPointArcY = 0;
+
     var _width = 0;
     var _height = 0;
     var _radius = 0;
@@ -162,6 +166,10 @@
     function setPosition(x, y) {
         _x = x;
         _y = y;
+    }
+
+    function getCenterPointArc() {
+        return { x: _centerPointArcX, y: _centerPointArcY };
     }
 
     function updatePosition() {
@@ -341,6 +349,8 @@
     // Draw content item without childeren
     function drawContentItemWithoutChildren(context) {
         _width = _width > 0 ? -_width : 50;
+        _centerPointArcX = _x + _radius;
+        _centerPointArcY = _y + _radius;
 
         if (_isFullScreen) {
             //Test picture in contentItem
@@ -354,12 +364,11 @@
             context.closePath();
 
             context.beginPath();
-            var centerPointX = _x + _radius;
-            var centerPointY = _y + _radius;
-            var rectX = centerPointX - ((_radius * 0.9) * Math.cos(0.7853981634));
-            var rectY = centerPointY - ((_radius * 0.9) * Math.sin(0.7853981634));
-            var rectWidth = (centerPointX - rectX) * 2;
-            var rectHeight = (centerPointY - rectY) * 1.2;
+
+            var rectX = _centerPointArcX - ((_radius * 0.9) * Math.cos(0.7853981634));
+            var rectY = _centerPointArcY - ((_radius * 0.9) * Math.sin(0.7853981634));
+            var rectWidth = (_centerPointArcX - rectX) * 2;
+            var rectHeight = (_centerPointArcY - rectY) * 1.2;
             context.drawImage(_image, rectX, rectY, rectWidth, rectHeight);
             context.strokeStyle = 'white';
             context.stroke();
@@ -368,7 +377,7 @@
         } else {
             context.save();
             context.beginPath();
-            context.arc(_x + _radius, _y + _radius, _radius, 0, 2 * Math.PI);
+            context.arc(_centerPointArcX, _centerPointArcY, _radius, 0, 2 * Math.PI);
             context.lineWidth = _isHovered ? 3 : 1;
             context.strokeStyle = 'white';
             context.stroke();

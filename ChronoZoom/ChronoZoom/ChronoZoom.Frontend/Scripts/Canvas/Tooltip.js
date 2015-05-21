@@ -19,26 +19,29 @@
         var _triangleWidth = 10;
 
         var _positions;
+        var _centerPositionsArc;
         var _size;
         var _width = 0;
         var _height = 40;
         var _title;
+        var _hasChildren;
 
         // Update the tooltip
         function update(contentItem) {
-            var position = contentItem.getPosition();
-            var size = contentItem.getSize();
+            _positions = contentItem.getPosition();
+            _centerPositionsArc = contentItem.getCenterPointArc();
+            _size = contentItem.getSize();
             _title = contentItem.getTitle();
             _width = getTextWidth(_title, 18);
-            updatePosition(contentItem, position, size);
+            _hasChildren = contentItem.hasChildren();
+
+            updatePosition();
         }
 
-        function updatePosition(contentItem, position, size) {
+        function updatePosition() {
             var canvasContainer = Canvas.getCanvasContainer();
-            _positions = position;
-            _size = size;
 
-            if (contentItem.hasChildren()) {
+            if (_hasChildren) {
                 if ((_width + _positions.x + _size.width) < canvasContainer.width) {
                     positionsRightSideRectangle();
                 } else if ((position.x - _width) > _width) {
@@ -82,8 +85,8 @@
             _triangleWidth = 10;
 
             //Rectangle
-            _rectangleX = (_size.radius * 2) + _positions.x + _triangleWidth;
-            _rectangleY = (_size.radius * 0.5) + _positions.y;
+            _rectangleX = (_centerPositionsArc.x + _size.radius) + _triangleWidth;
+            _rectangleY = _centerPositionsArc.y - (0.5 * _height);
 
             //Triangle
             _triangleX1 = _rectangleX - _triangleWidth;
@@ -94,6 +97,8 @@
 
             _triangleX3 = _rectangleX;
             _triangleY3 = _rectangleY + _height;
+
+            console.log(_triangleX1, _triangleX2);
         }
 
         // Draw the tooltip
