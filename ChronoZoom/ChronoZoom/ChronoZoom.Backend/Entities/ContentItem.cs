@@ -7,9 +7,9 @@ namespace ChronoZoom.Backend.Entities
     {
         public string Id { get; set; }
         [Required]
-        public decimal BeginDate { get; set; }
+        public decimal? BeginDate { get; set; }
         [Required]
-        public decimal EndDate { get; set; }
+        public decimal? EndDate { get; set; }
         [Required]
         public string Title { get; set; }
         public bool HasChildren { get; set; }

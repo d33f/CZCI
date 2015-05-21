@@ -21,7 +21,7 @@
         var _positions;
         var _size;
         var _width = 0;
-        var _height = 40;
+        var _tooltipHeight = 40;
         var _title;
 
         // Update the tooltip
@@ -53,23 +53,23 @@
 
         function positionsRightSideRectangle() {
             //Rectangle
-            _rectangleX = (_size.width + _positions.x + _triangleWidth);
-            _rectangleY = (_size.height * 0.5) - (_height * 0.5) + _positions.y;
+            _rectangleX = _size.width + _positions.x + _triangleWidth + _size.linewidth;
+            _rectangleY = (_size.height * 0.5) - (_tooltipHeight * 0.5) + _positions.y;
 
             //Triangle
             _triangleX1 = _rectangleX - _triangleWidth;
-            _triangleY1 = _rectangleY + (_height * 0.5);
+            _triangleY1 = _rectangleY + (_tooltipHeight * 0.5);
 
             _triangleX2 = _rectangleX;
             _triangleY2 = _rectangleY;
 
             _triangleX3 = _rectangleX;
-            _triangleY3 = _rectangleY + _height;
+            _triangleY3 = _rectangleY + _tooltipHeight;
         }
 
         function positionsLeftSideRectangle() {
             _rectangleX = (_positions.x - _width);
-            _rectangleY = (_size.height * 0.5) - (_height * 0.5) + _positions.y;
+            _rectangleY = (_size.height * 0.5) - (_tooltipHeight * 0.5) + _positions.y;
         }
 
         function positionsBottomRectangle() {
@@ -82,18 +82,18 @@
             _triangleWidth = 10;
 
             //Rectangle
-            _rectangleX = (_size.radius * 2) + _positions.x + _triangleWidth;
-            _rectangleY = (_size.radius * 0.5) + _positions.y;
+            _rectangleX = (_positions.x + _triangleWidth) + (_size.radius * 2) + _size.linewidth; //;
+            _rectangleY = (_positions.y +_size.radius) - (0.5 * _tooltipHeight);
 
             //Triangle
             _triangleX1 = _rectangleX - _triangleWidth;
-            _triangleY1 = _rectangleY + (_height * 0.5);
+            _triangleY1 = _rectangleY + (_tooltipHeight * 0.5);
 
             _triangleX2 = _rectangleX;
             _triangleY2 = _rectangleY;
 
             _triangleX3 = _rectangleX;
-            _triangleY3 = _rectangleY + _height;
+            _triangleY3 = _rectangleY + _tooltipHeight;
         }
 
         // Draw the tooltip
@@ -109,13 +109,13 @@
             context.lineTo(_triangleX2, _triangleY2);
             context.lineTo(_triangleX3, _triangleY3);
             //Draw the rectangle
-            context.rect(_rectangleX, _rectangleY, (_width + _rectangleMarginRight), _height);
+            context.rect(_rectangleX, _rectangleY, (_width + _rectangleMarginRight), _tooltipHeight);
             context.fill();
             context.closePath();
 
             //Draw the text
             context.fillStyle = "white";
-            context.fillText(_title, _rectangleX, (_rectangleY + _height / 2));
+            context.fillText(_title, _rectangleX, (_rectangleY + _tooltipHeight / 2));
             context.restore();
         }
 
