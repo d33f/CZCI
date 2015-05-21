@@ -22,7 +22,6 @@
     this.updatePosition = updatePosition;
     this.addChild = addChild;
     this.setIsFullScreen = setIsFullScreen;
-    this.getCenterPointArc = getCenterPointArc;
 
     // Private fields
     var _id = data.id;
@@ -39,14 +38,12 @@
     var _image = new Image();
     var _x = 0;
     var _y = 100;
-    var _centerPointArcX = 0;
-    var _centerPointArcY = 0;
-
     var _width = 0;
     var _height = 0;
     var _radius = 0;
     var _isHovered = false;
     var _isFullScreen = false;
+    var _linewidth;
 
     // HTML container
     var _container;
@@ -168,10 +165,6 @@
         _y = y;
     }
 
-    function getCenterPointArc() {
-        return { x: _centerPointArcX, y: _centerPointArcY };
-    }
-
     function updatePosition() {
         _x = Canvas.Timescale.getXPositionForTime(_beginDate);
         _width = Canvas.Timescale.getXPositionForTime(_endDate) - _x;
@@ -184,7 +177,7 @@
 
     // Get size
     function getSize() {
-        return { height: _height, width: _width, radius: _radius };
+        return { height: _height, width: _width, radius: _radius, linewidth: _linewidth };
     }
 
     // Update this content item
@@ -334,7 +327,8 @@
         }
 
         context.fill();
-        context.lineWidth = _isHovered ? 3 : 1;
+        _linewidth = _isHovered ? 3 : 1;
+        context.lineWidth = _linewidth;
         context.strokeStyle = 'white';
         context.stroke();
         context.closePath();
@@ -349,8 +343,7 @@
     // Draw content item without childeren
     function drawContentItemWithoutChildren(context) {
         _width = _width > 0 ? -_width : 50;
-        _centerPointArcX = _x + _radius;
-        _centerPointArcY = _y + _radius;
+        
 
         if (_isFullScreen) {
             //Test picture in contentItem
@@ -358,17 +351,19 @@
             context.fillStyle = 'black';
             context.arc(_x + _radius, _y + _radius, _radius, 0, 2 * Math.PI);
             context.fill();
-            context.lineWidth = _isHovered ? 3 : 1;
+            _linewidth = _isHovered ? 3 : 1;
+            context.lineWidth = _linewidth;
             context.strokeStyle = 'white';
             context.stroke();
             context.closePath();
 
             context.beginPath();
-
-            var rectX = _centerPointArcX - ((_radius * 0.9) * Math.cos(0.7853981634));
-            var rectY = _centerPointArcY - ((_radius * 0.9) * Math.sin(0.7853981634));
-            var rectWidth = (_centerPointArcX - rectX) * 2;
-            var rectHeight = (_centerPointArcY - rectY) * 1.2;
+            var centerPointX = _x + _radius;
+            var centerPointY = _y + _radius;
+            var rectX = centerPointX - ((_radius * 0.9) * Math.cos(0.7853981634));
+            var rectY = centerPointY - ((_radius * 0.9) * Math.sin(0.7853981634));
+            var rectWidth = (centerPointX - rectX) * 2;
+            var rectHeight = (centerPointY - rectY) * 1.2;
             context.drawImage(_image, rectX, rectY, rectWidth, rectHeight);
             context.strokeStyle = 'white';
             context.stroke();
@@ -377,8 +372,9 @@
         } else {
             context.save();
             context.beginPath();
-            context.arc(_centerPointArcX, _centerPointArcY, _radius, 0, 2 * Math.PI);
-            context.lineWidth = _isHovered ? 3 : 1;
+            context.arc(_x + _radius, _y + _radius, _radius, 0, 2 * Math.PI);
+            _linewidth = _isHovered ? 3 : 1;
+            context.lineWidth = _linewidth;
             context.strokeStyle = 'white';
             context.stroke();
             context.closePath();
