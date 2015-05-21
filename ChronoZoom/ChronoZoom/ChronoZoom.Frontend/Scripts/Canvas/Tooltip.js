@@ -43,9 +43,9 @@
                 if ((_tooltipWidth + _contentItemPosition.x + _contentItemSize.width) < canvasContainer.width) {
                     positionsRightSideRectangle();
                 } else if ((_contentItemPosition.x - _tooltipWidth) > _tooltipWidth) {
-                    positionsBottomRectangle();
-                } else {
                     positionsLeftSideRectangle();
+                } else {
+                    positionsBottomRectangle();
                 }
             } else {
                 positionsRightSideCircle();
