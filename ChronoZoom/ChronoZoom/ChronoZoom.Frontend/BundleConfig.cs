@@ -17,14 +17,14 @@ namespace ChronoZoom.Frontend
                 "~/Scripts/Canvas/ContentItem.js",
                 "~/Scripts/Canvas/BackendService.js",
                 "~/Scripts/Canvas/PublicAPIService.js",
+                "~/Scripts/Canvas/Yearmarker.js",
+                "~/Scripts/Canvas/Timescale.js",
+                "~/Scripts/Canvas/Breadcrumbs.js",
                 "~/Scripts/Canvas/ContentItemService.js",
                 "~/Scripts/Canvas/ContentItemEnricher.js",
                 "~/Scripts/Canvas/Timeline.js",
-                "~/Scripts/Canvas/Yearmarker.js",
-                "~/Scripts/Canvas/Timescale.js",
                 "~/Scripts/Canvas/Mousepointer.js",
                 "~/Scripts/Canvas/Canvas.js",
-                "~/Scripts/Canvas/Breadcrumbs.js",
                 "~/Scripts/Canvas/Tooltip.js"
             )); 
 

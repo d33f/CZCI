@@ -38,6 +38,7 @@
         // Create a timeline object of given json input (convert it to our internal structure)
         function createTimelineObject(json) {
             return {
+                id: json.Id,
                 beginDate: json.BeginDate,
                 endDate: json.EndDate,
                 title: json.Title,
