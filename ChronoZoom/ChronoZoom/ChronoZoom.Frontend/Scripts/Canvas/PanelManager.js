@@ -6,7 +6,10 @@
 
         function handleTestPanel() {
             var inputPanel = document.getElementById('inputPanel');
-            inputPanel.className = inputPanel.className ? '' : 'fade';
+           // inputPanel.style.width = inputPanel.style.width === '0px' ? '0px' : '300px';
+           // inputPanel.style.left = inputPanel.style.left === '-300px' ? '0px' : '-300px';
+            // inputPanel.style.visibility = inputPanel.style.visibility === 'hidden' ? 'hidden' : 'visible';
+            inputPanel.className = inputPanel.className === 'inputPanelHidden' ? 'inputPanelShow' : 'inputPanelHidden';
         }
 
     })(Canvas.PanelManager || (Canvas.PanelManager = {}));

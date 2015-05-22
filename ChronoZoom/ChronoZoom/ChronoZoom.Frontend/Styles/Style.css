@@ -5,10 +5,12 @@
     overflow: hidden;
     font-family: "Trebuchet MS", Helvetica, sans-serif;
 }
+
 #canvasContainer {
     width: 100%;
     height: 100%;
 }
+
 canvas {
     position: relative;
     background: url('../Resources/Space.jpg');
@@ -16,21 +18,25 @@ canvas {
     width: 100%;
     height: 100%;
 }
+
 #breadcrumbs {
     position: absolute;
     z-index: 1;
     top: 90px;
     padding: 5px;
 }
-#breadcrumbs, #breadcrumbs a {
-    color: gold;
-    text-decoration: none;
-}
-#breadcrumbs a:hover {
-    color: yellow;
-    cursor: pointer;
-    text-decoration: underline;
-}
+
+    #breadcrumbs, #breadcrumbs a {
+        color: gold;
+        text-decoration: none;
+    }
+
+        #breadcrumbs a:hover {
+            color: yellow;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
 #loader {
     position: fixed;
     z-index: 2;
@@ -40,6 +46,7 @@ canvas {
     width: 100%;
     height: 100%;
 }
+
 #loaderGif {
     position: fixed;
     top: 50%;
@@ -54,12 +61,14 @@ div.contentItem {
     position: absolute;
     border-radius: 50%;
 }
+
 div.contentItemWrapper {
     position: absolute;
     width: 70%;
     height: 70%;
     left: 15%;
 }
+
 div.contentItemText {
     position: absolute;
     top: 128%;
@@ -69,6 +78,7 @@ div.contentItemText {
     color: white;
     background: black;
 }
+
 div.contentItemTitle {
     position: absolute;
     top: 25%;
@@ -83,36 +93,30 @@ div.contentItemTitle {
 
 
 /* INPUT PANEL */
-#inputPanel.hiddenOnStartup {
-     visibility: hidden;
-  opacity: 0;
-  transition: visibility 0s 0s, opacity 0s linear;
-}
 
 div#inputPanel {
-    background-color:royalblue;
-    color: white;
-    padding: 5px;
+    transition: left .6s ease;
+    width: 400px;
+    background-color: rgb(35,35,35);
+    color: #e0e0e0;
     position: absolute;
-    left: 0px;
-    top: 0px;
-    z-index: 1500;
-    width: 350px;
+    top: 40px;
+    bottom: 0;
     height: 100%;
-  visibility: visible;
-  opacity: 1;
-  transition: opacity .5s linear;
+    z-index: 1500;
 }
 
-div#inputPanel.fade {
-  visibility: hidden;
-  opacity: 0;
-  transition: visibility 0s .5s, opacity .5s linear;
+.inputPanelHidden {
+    left: -400px;
+}
+
+.inputPanelShow {
+    left: -0px; 
 }
 
 #inputPanel > h1 {
     font-size: 150%;
-    width:33%;
+    width: 33%;
     margin: 0 auto;
     margin-bottom: 10px;
 }
@@ -120,26 +124,30 @@ div#inputPanel.fade {
 /* Menu */
 #header {
     width: 100%;
-    background-color:rgb(35,35,35);
+    background-color: rgb(35,35,35);
     height: 40px;
     color: #eeeeee;
 }
-#header > #title {
-    float: left;
-    font-size: 120%;
-    font-style: italic;
-    padding: 0 10px 0 10px;
-    line-height: 40px;
-}
-#header > #timerange {
-    float: left;
-    font-size: 70%;
-    line-height: 40px;
-}
-#header > #menuButtons {
-    margin-top: 10px;
-    float: right;
-}
-#header > #timerange:after, #header > #title:after {
-    clear: both;
-}
+
+    #header > #title {
+        float: left;
+        font-size: 120%;
+        font-style: italic;
+        padding: 0 10px 0 10px;
+        line-height: 40px;
+    }
+
+    #header > #timerange {
+        float: left;
+        font-size: 70%;
+        line-height: 40px;
+    }
+
+    #header > #menuButtons {
+        margin-top: 10px;
+        float: right;
+    }
+
+    #header > #timerange:after, #header > #title:after {
+        clear: both;
+    }
