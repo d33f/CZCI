@@ -51,7 +51,7 @@
     // Constructor
     function initialize(instance) {
         // Set image
-        _image.src = undefined;
+        _image.src = 'resources/no_image.jpg';
         _image.onload = function () { };
         if (_sourceURL !== undefined) {
             _image.src = _sourceURL;
@@ -201,8 +201,7 @@
                 var sizeParent = _parentContentItem.getSize();
                 var spacing = sizeParent.width / 80;
 
-
-                //ContentItem with children spacing
+                // ContentItem with children spacing
                 if (positionParent.x !== 0 && positionParent.y !== 0) {
                     _x = (_x >= positionParent.x + spacing) ? _x : (positionParent.x + spacing);
 
