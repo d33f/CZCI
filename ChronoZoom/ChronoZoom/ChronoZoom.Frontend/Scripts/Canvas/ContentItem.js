@@ -153,6 +153,9 @@
     // Set is fullscreen
     function setIsFullScreen(isFullScreen) {
         _isFullScreen = isFullScreen;
+        if (!_isFullScreen) {
+            updateContainer();
+        }
     }
 
     // Get current position
