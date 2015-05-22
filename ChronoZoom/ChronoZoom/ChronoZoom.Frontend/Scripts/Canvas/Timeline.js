@@ -34,9 +34,9 @@
 
         // Draw the timeline
         function draw() {
-            drawContentItems();
-            drawToolTip();
-        }
+                drawContentItems();
+                drawToolTip();
+            }
 
         // Draw (visible) content items
         function drawContentItems() {
@@ -68,14 +68,15 @@
             }
         }
 
-        // Draw tooltip
         function drawToolTip() {
             var _contentItemOnMousePosition = getContentItemOnMousePosition();
 
             if (_contentItemOnMousePosition !== undefined) {
+                if (!_contentItemOnMousePosition.getFullScreen()) {
                 Canvas.Tooltip.update(_contentItemOnMousePosition);
                 Canvas.Tooltip.draw();
             }
+        }
         }
 
         // Handle the click on timeline event
