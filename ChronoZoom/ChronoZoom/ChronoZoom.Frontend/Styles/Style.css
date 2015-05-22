@@ -68,7 +68,7 @@ div.contentItemText {
     width: 100%;
     overflow-y: auto;
     color: white;
-    background: black;
+    background: black; 
 }
 div.contentItemTitle {
     position: absolute;
