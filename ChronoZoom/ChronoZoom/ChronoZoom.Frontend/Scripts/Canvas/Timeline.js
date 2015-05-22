@@ -39,6 +39,7 @@
                 drawLoader();
             } else {
                 document.getElementById('loader').style.visibility = 'hidden';
+
                 drawContentItems();
                 drawToolTip();
             }
@@ -83,13 +84,14 @@
             }
         }
 
-        // Draw tooltip
         function drawToolTip() {
             var _contentItemOnMousePosition = getContentItemOnMousePosition();
 
             if (_contentItemOnMousePosition !== undefined) {
+                if (!_contentItemOnMousePosition.getFullScreen()) {
                 Canvas.Tooltip.update(_contentItemOnMousePosition);
                 Canvas.Tooltip.draw();
+                }
             }
         }
 
