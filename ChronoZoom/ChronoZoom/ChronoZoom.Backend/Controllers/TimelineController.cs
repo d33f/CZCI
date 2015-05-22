@@ -49,7 +49,7 @@ namespace ChronoZoom.Backend.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest("Content item invalid");
+                return BadRequest("Timeline item invalid");
             }
 
             try
