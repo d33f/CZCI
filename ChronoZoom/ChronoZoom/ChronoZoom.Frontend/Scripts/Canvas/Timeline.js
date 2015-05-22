@@ -8,7 +8,6 @@
 
         // Private fields
         var _contentItems = [];
-        var _isLoading = true;
 
         // Constructor
         function initialize() {
@@ -20,8 +19,8 @@
             // Get content items
             _contentItems = Canvas.ContentItemService.getContentItems();
 
-            // Update flags
-            _isLoading = false;
+            // Hide loader
+            Canvas.WindowManager.showLoader(false);
         }
 
         // Update the timeline
@@ -35,22 +34,8 @@
 
         // Draw the timeline
         function draw() {
-            if (_isLoading) {
-                drawLoader();
-            } else {
-                document.getElementById('loader').style.visibility = 'hidden';
-                drawContentItems();
-                drawToolTip();
-            }
-        }
-
-        // Draw loader
-        function drawLoader() {
-            var context = Canvas.getContext();
-            //context.font = Canvas.Settings.getTimescaleTickLabelFont();
-            //context.fillStyle = Canvas.Settings.getTimescaleTickLabelColor();
-            //context.fillText("LOADING...", 100, 100);
-
+            drawContentItems();
+            drawToolTip();
         }
 
         // Draw (visible) content items
@@ -93,6 +78,7 @@
             }
         }
 
+        // Handle the click on timeline event
         function handleClickOnTimeline() {
             // Find clicked item
             var clickedContentItem = getContentItemOnMousePosition();
@@ -138,8 +124,8 @@
 
         // Handle click on content item with children
         function handleClickOnContentItemWithChildren(contentItem) {
-            // Mark loading flag
-            _isLoading = true;
+            // Show loader
+            Canvas.WindowManager.showLoader(true);
 
             // Get children
             Canvas.ContentItemService.findContentItemsByParentContent(contentItem);
@@ -161,7 +147,7 @@
             return undefined;
         }
 
-
+        // Check if current content item collides given content item
         function checkCollision(contentItem) {
             var position = Canvas.Mousepointer.getPosition();
             if (contentItem.collides(position.x, position.y)) {
