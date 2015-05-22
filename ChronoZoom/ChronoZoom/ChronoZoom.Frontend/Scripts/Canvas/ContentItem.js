@@ -364,7 +364,7 @@
             var rectY = centerPointY - ((_radius * 0.9) * Math.sin(0.7853981634));
             var rectWidth = (centerPointX - rectX) * 2;
             var rectHeight = (centerPointY - rectY) * 1.2;
-            context.drawImage(_image, rectX, rectY, rectWidth, rectHeight);
+            _image.src !== "http://localhost:20000/null" ? context.drawImage(_image, rectX, rectY, rectWidth, rectHeight) : context.drawImage("Resources/no_image.jpg", rectX, rectY, rectWidth, rectHeight);
             context.strokeStyle = 'white';
             context.stroke();
             context.closePath();
@@ -379,7 +379,7 @@
             context.stroke();
             context.closePath();
             context.clip();
-            context.drawImage(_image, _x, _y, _width * 2, _height);
+            _image.src !== "http://localhost:20000/null" ? context.drawImage(_image, _x, _y, _width * 2, _height) : context.drawImage("Resources/no_image.jpg", _x, _y, _width * 2, _height);
             context.beginPath();
             context.arc(_x, _y, _radius, 0, 2 * Math.PI);
             context.clip();
