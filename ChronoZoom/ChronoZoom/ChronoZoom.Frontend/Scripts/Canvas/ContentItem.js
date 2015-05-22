@@ -9,7 +9,6 @@
     this.getSize = getSize;
     this.getChildren = getChildren;
     this.hasChildren = hasChildren;
-    this.getRadius = getRadius;
     this.getHovered = getHovered;
 
     // Public methods
@@ -22,6 +21,7 @@
     this.updatePosition = updatePosition;
     this.addChild = addChild;
     this.setIsFullScreen = setIsFullScreen;
+    this.clearChildren = clearChildren;
 
     // Private fields
     var _id = data.id;
@@ -56,7 +56,6 @@
         if (_sourceURL !== undefined) {
             _image.src = _sourceURL;
         }
-
 
         // Add child to parent
         if (_parentContentItem !== undefined) {
@@ -128,10 +127,7 @@
         return _hasChildren;
     }
 
-    function getRadius() {
-        return _radius;
-    }
-
+    // Get if content item is hovered
     function getHovered() {
         return _isHovered;
     }
@@ -147,6 +143,11 @@
         if (contentItem instanceof ContentItem) {
             _children.push(contentItem);
         }
+    }
+
+    // Clear children
+    function clearChildren() {
+        _children = [];
     }
 
     // Set is fullscreen
@@ -165,6 +166,7 @@
         _y = y;
     }
 
+    // Update the position of the content item
     function updatePosition() {
         _x = Canvas.Timescale.getXPositionForTime(_beginDate);
         _width = Canvas.Timescale.getXPositionForTime(_endDate) - _x;
@@ -189,20 +191,7 @@
         _isHovered = (collides(position.x, position.y) && !collidesInChildren(position.x, position.y));
 
         if (_isFullScreen) {
-            var canvasContainer = Canvas.getCanvasContainer();
-            var canvasHeight = canvasContainer.height - 100;
-
-            _radius = ((canvasContainer.width > canvasHeight ? canvasHeight : canvasContainer.width) / 2) - 10;
-            _width = _radius;
-
-            _x = (canvasContainer.width / 2) - _radius;
-            _y = 100; // Reset
-
-            updateContainer();
-
-            _container.getElementsByClassName("contentItemTitle")[0].innerHTML = _title;
-            _container.getElementsByClassName("contentItemText")[0].innerHTML = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui.";
-
+            updateFullScreenContentItem(contentItems);
         } else {
             if (_parentContentItem !== undefined) {
                 var positionParent = _parentContentItem.getPosition();
@@ -211,9 +200,8 @@
 
 
                 //ContentItem with children spacing
-                if (positionParent.x != 0 && positionParent.y != 0) {
-
-                    _x >= positionParent.x + spacing ? _x = _x : _x = positionParent.x + spacing;
+                if (positionParent.x !== 0 && positionParent.y !== 0) {
+                    _x = (_x >= positionParent.x + spacing) ? _x : (positionParent.x + spacing);
 
                     var parentRightX = positionParent.x + sizeParent.width;
 
@@ -224,13 +212,13 @@
                         if (deltaRight < 0)
                             _width += deltaRight;
 
-                        rightX <= parentRightX - spacing ? _width = _width : _width -= spacing;
+                        _width = (rightX <= parentRightX - spacing) ? _width : (_width - spacing);
 
                     } else {
                         var radius = (_radius * 2);
                         var rightX = _x + radius;
 
-                        rightX <= parentRightX - spacing ? _x = _x : _x = parentRightX - spacing - radius;
+                        _x = (rightX <= parentRightX - spacing) ? _x : (parentRightX - spacing - radius);
                     }
                 }
             }
@@ -243,6 +231,23 @@
 
             updateContainer();
         }
+    }
+
+    // Update full screen content item
+    function updateFullScreenContentItem(contentItems) {
+        var canvasContainer = Canvas.getCanvasContainer();
+        var canvasHeight = canvasContainer.height - 100;
+
+        _radius = ((canvasContainer.width > canvasHeight ? canvasHeight : canvasContainer.width) / 2) - 10;
+        _width = _radius;
+
+        _x = (canvasContainer.width / 2) - _radius;
+        _y = 100; // Reset
+
+        updateContainer();
+
+        _container.getElementsByClassName("contentItemTitle")[0].innerHTML = _title;
+        _container.getElementsByClassName("contentItemText")[0].innerHTML = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui.";
     }
 
     // Update (DOM) container element
@@ -294,14 +299,7 @@
 
     // Draw this content item
     function draw() {
-        // TODO: Below is example code, fancy styling is required :)
         var context = Canvas.getContext();
-
-        //if (_image.src !== "http://localhost:20000/null") {
-        //    context.beginPath();         
-        //    context.drawImage(_image, _x, _y, _width, _height);
-        //    context.closePath();
-        //}
 
         if (_hasChildren) {
             drawContentItemWithChildren(context);
@@ -344,9 +342,7 @@
     function drawContentItemWithoutChildren(context) {
         _width = _width > 0 ? -_width : 50;
         
-
         if (_isFullScreen) {
-            //Test picture in contentItem
             context.beginPath();
             context.fillStyle = 'black';
             context.arc(_x + _radius, _y + _radius, _radius, 0, 2 * Math.PI);
@@ -465,12 +461,8 @@
 
     // Check if current content item collides given content item
     function collidesContentItemRectangle(contentItem) {
-        var aX1;
-        var aY1;
         var aX2;
         var aY2;
-        var bX1;
-        var bY1;
         var bX2;
         var bY2;
 
@@ -478,43 +470,31 @@
         var size = contentItem.getSize();
 
         if (!_hasChildren && contentItem.hasChildren()) {
-            aX1 = _x;
-            aY1 = _y;
             aX2 = _x + (_radius * 2);
             aY2 = _y + (_radius * 2);
-
-            bX1 = position.x;
-            bY1 = position.y;
+            
             bX2 = position.x + size.width;
             bY2 = position.y + size.height;
         } else if (_hasChildren && !contentItem.hasChildren()) {
-            aX1 = _x;
-            aY1 = _y;
             aX2 = _x + _width;
             aY2 = _y + _height;
 
-            bX1 = position.x;
-            bY1 = position.y;
             bX2 = position.x + (size.radius * 2);
             bY2 = position.y + (size.radius * 2);
         } else {
-            aX1 = _x;
-            aY1 = _y;
             aX2 = _x + _width;
             aY2 = _y + _height;
 
-            bX1 = position.x;
-            bY1 = position.y;
             bX2 = position.x + size.width;
             bY2 = position.y + size.height;
         }
 
-        return !(aY2 < bY1 || aY1 > bY2 || aX2 < bX1 || aX1 > bX2);
+        return !(aY2 < position.y || _y > bY2 || aX2 < position.x || _x > bX2);
     }
 
     // Check if current content item collides given content item
     function collidesContentItemCircle(contentItem) {
-        var aX = _x; //(_x + (_width / 2));
+        var aX = _x;
         var aY = _y;
         var aRadius = _radius;
 
@@ -551,9 +531,8 @@
         var distance = deltaY / sinangle;
 
         // is mousepoint in circle
-
-        (deltaX === 0 && deltaY === 0) ? distance = 0 : distance = distance;
-        return (aRadius + bRadius) >= distance;
+        distance = (deltaX === 0 && deltaY === 0) ? 0 : distance;
+        return ((aRadius + bRadius) >= distance);
     }
 
     // Return object instance

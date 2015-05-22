@@ -36,7 +36,7 @@
          canvasDrawProcessLoop();
     }
 
-    // Get the (canvas) context 
+    // Get the (canvas) context
     function getContext() {
         return _context;
     }
@@ -71,7 +71,7 @@
     // The draw loop will call the update and draw method each given frames per second
     // This means that if the fps is on 60, it will call draw and update 60 times.
     function canvasDrawProcessLoop() {
-        if (_lastTime == undefined) {
+        if (_lastTime === undefined) {
             _lastTime = Date.now();
         };
         var elapsed = Date.now() - _lastTime;

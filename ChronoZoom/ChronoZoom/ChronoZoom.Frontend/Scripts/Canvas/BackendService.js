@@ -42,7 +42,7 @@
                 endDate: json.EndDate,
                 title: json.Title,
                 contentItems: []
-            }
+            };
         }
 
         // Create a timeline object of given json input (convert it to our internal structure)

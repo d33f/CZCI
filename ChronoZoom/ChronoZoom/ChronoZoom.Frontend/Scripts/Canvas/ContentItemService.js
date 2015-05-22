@@ -67,6 +67,9 @@
 
             // Check for caching
             if (_cache !== undefined) {
+                // Clear children
+                parentContentItem.clearChildren();
+
                 // Get from cache
                 var items = JSON.parse(_cache.getItem(parentContentItem.getId()));
                 var length = items.length;
@@ -83,6 +86,7 @@
             return contentItems;
         }
 
+        // Add content items to cache
         function addContentItemsToCache(parentContentItemID, contentItems) {
             // Check for caching
             if (_cache !== undefined) {

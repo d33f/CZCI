@@ -38,7 +38,7 @@
 
         function updatePosition() {
             var canvasContainer = Canvas.getCanvasContainer();
-            console.log(_tooltipWidth, _contentItemPosition.x);
+   
             if (_contentItemHasChildren) {
                 if ((_contentItemPosition.x + _contentItemSize.width + _tooltipWidth) < canvasContainer.width) {
                     positionsRightSideRectangle();
