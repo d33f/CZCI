@@ -94,8 +94,8 @@ div.contentItemTitle {
 
 
 /* INPUT PANEL */
-
 div#inputPanel {
+
     transition: left .6s ease;
     width: 400px;
     background-color: rgb(35,35,35);
@@ -106,21 +106,40 @@ div#inputPanel {
     height: 100%;
     z-index: 1500;
 }
-
 .inputPanelHidden {
-    left: -400px;
+    left: -420px;
+    display: inline;
 }
-
 .inputPanelShow {
     left: -0px; 
 }
-
 #inputPanel > h1 {
     font-size: 150%;
     width: 33%;
     margin: 0 auto;
     margin-bottom: 10px;
 }
+
+/* INPUT PANEL Items*/
+#inputPanel  ul {
+    list-style-type: none;
+}
+#inputPanel ul li {
+    margin: 0;
+    border-top: 1px solid #303030;
+}
+#inputPanel ul li a {  
+    display: block;  
+    padding: 20px;  
+    background-color: rgb(35,35,35);
+    font-family: Verdana;  
+    color: white;  
+    text-decoration: none;
+    font-style: italic;
+}  
+#inputPanel ul li a:hover {  
+    background-color: rgb(60,60,60);
+} 
 
 /* Menu */
 #header {
