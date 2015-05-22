@@ -67,6 +67,9 @@
 
             // Check for caching
             if (_cache !== undefined) {
+                // Clear children
+                parentContentItem.clearChildren();
+
                 // Get from cache
                 var items = JSON.parse(_cache.getItem(parentContentItem.getId()));
                 var length = items.length;
@@ -76,13 +79,14 @@
             }
 
             // Add to content items if not root
-            if (parentContentItem.getId() != 0) {
+            if (parentContentItem.getId() !== 0) {
                 contentItems.push(parentContentItem);
             }
 
             return contentItems;
         }
 
+        // Add content items to cache
         function addContentItemsToCache(parentContentItemID, contentItems) {
             // Check for caching
             if (_cache !== undefined) {

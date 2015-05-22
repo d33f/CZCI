@@ -101,11 +101,13 @@
             }
         }
 
+        // Redirect to given breadcrumb
         function redirect(i) {
             var length = _stack.length;
             if (i < length) {
                 if (!_stack[length - 1].hasChildren()) {
                     _stack[length - 1].setIsFullScreen(false);
+                    _stack[length - 1] = undefined;
                 }
             }
 
