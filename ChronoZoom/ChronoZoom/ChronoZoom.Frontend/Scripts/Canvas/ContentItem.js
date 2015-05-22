@@ -403,7 +403,8 @@
             var rectY = centerPointY - ((_radius * 0.9) * Math.sin(0.7853981634));
             var rectWidth = (centerPointX - rectX) * 2;
             var rectHeight = (centerPointY - rectY) * 1.2;
-            context.drawImage(_image, rectX, rectY, rectWidth, rectHeight);
+            drawImage(context, rectX, rectY, rectWidth, rectHeight);
+
             context.strokeStyle = 'white';
             context.stroke();
             context.closePath();
@@ -418,7 +419,7 @@
             context.stroke();
             context.closePath();
             context.clip();
-            context.drawImage(_image, _x, _y, _width * 2, _height);
+            drawImage(context, _x, _y, _width * 2, _height);
             context.beginPath();
             context.arc(_x, _y, _radius, 0, 2 * Math.PI);
             context.clip();
@@ -427,6 +428,17 @@
         }
     };
 
+    // Draw the image, if it fails display no image found
+    function drawImage(context, x, y, width, height) {
+        try {
+            context.drawImage(_image, x, y, width, height);
+        }
+        catch(ex) {
+            _image.src = 'resources/no_image.jpg';
+            context.drawImage(_image, x, y, width, height);
+        }
+    }
+    
     // Draw child content items
     function drawChildren() {
         var length = _children.length;
