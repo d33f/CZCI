@@ -79,7 +79,7 @@
             }
 
             // Add to content items if not root
-            if (parentContentItem.getId() != 0) {
+            if (parentContentItem.getId() !== 0) {
                 contentItems.push(parentContentItem);
             }
 

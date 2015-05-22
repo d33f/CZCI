@@ -67,6 +67,9 @@
         if (!_hasChildren) {
             // Get content item element
             _radius = 50;
+            _width = (_radius * 2);
+            _height = (_radius * 2);
+
             var element = document.getElementById('contentItem_' + _id);
 
             // Create new content item element if it doesn't exist
@@ -217,16 +220,17 @@
 
     // Check spacing
     function checkSpacing() {
+        // Get position of the parent
         var positionParent = _parentContentItem.getPosition();
         
-        // ContentItem with children spacing
+        // ContentItem with children spacing, the check exclude the root content item
         if (positionParent.x !== 0 && positionParent.y !== 0) {
-            updateSpacing(positionParent);
+            updateHorizontalSpacing(positionParent);
         }
     }
 
     // Update current content item spacing 
-    function updateSpacing(positionParent) {
+    function updateHorizontalSpacing(positionParent) {
         var sizeParent = _parentContentItem.getSize();
         var spacing = sizeParent.width / 80;
 
@@ -257,7 +261,8 @@
         var canvasHeight = canvasContainer.height - 100;
 
         _radius = ((canvasContainer.width > canvasHeight ? canvasHeight : canvasContainer.width) / 2) - 10;
-        _width = _radius;
+        _width = (_radius * 2);
+        _height = (_radius * 2);
 
         _x = (canvasContainer.width / 2) - _radius;
         _y = 100; // Reset
@@ -289,11 +294,10 @@
             _children[i].update(_children);
 
             // Check height
-            var childHeight = _children[i].getPosition().y + _children[i].getSize().height;
+            var newHeight = _children[i].getPosition().y + _children[i].getSize().height - _y;
 
-            if (childHeight > _height) {
-                console.log(childHeight);
-                _height = childHeight;
+            if (newHeight > _height) {
+                _height = newHeight + 10;
             }
         }
     }
