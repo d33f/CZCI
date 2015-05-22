@@ -83,11 +83,12 @@
                 wrapper.appendChild(createElementWithClass('div', 'contentItemTitle'))
                 wrapper.appendChild(createElementWithClass('div', 'contentItemText'));
                 element.appendChild(wrapper);
+                
 
                 // Get the canvas container element and add the child
                 var container = document.getElementById('canvasContainer');
                 container.appendChild(element);
-            }
+            } 
 
             // Store element as container
             _container = element;
@@ -357,7 +358,10 @@
         context.beginPath();
         context.fillStyle = _isHovered ? "white" : "#C0C0C0";
         context.font = "12px Arial";
-        context.fillText(_title, _x + 5, (_y + 5) + 12);
+
+        console.log(_title + " " + context.measureText(_title) + " " + (_width - 2));
+        if(context.measureText(_title).width < _width - 2)
+            context.fillText(_title, _x + 5, (_y + 5) + 12);
         context.closePath();
     }
 
