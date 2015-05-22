@@ -57,7 +57,6 @@
                 else {
                     positionsBottomCircle();
                 }
-                
             }
         }
 
@@ -170,7 +169,7 @@
             var context = Canvas.getContext();
             //Save and restore used so the globalAlpha isn't applied to the whole Canvas
             context.save();
-            context.fillStyle = 'rgb(250,140,140)';
+            context.fillStyle = 'rgb(72,77,73)';
 
             context.beginPath();
             //Draw the triangle

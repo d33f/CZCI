@@ -16,8 +16,16 @@
 
         // Handle on content item changed event
         function onContentItemsChanged() {
-            // Get content items
+            var oldContentItems = _contentItems;
+
+            // Get and set content items
             _contentItems = Canvas.ContentItemService.getContentItems();
+
+            // Destruct old content items
+            var length = oldContentItems.length;
+            for (var i = 0; i < length; i++) {
+                oldContentItems[i].destructor();
+            }
 
             // Hide loader
             Canvas.WindowManager.showLoader(false);

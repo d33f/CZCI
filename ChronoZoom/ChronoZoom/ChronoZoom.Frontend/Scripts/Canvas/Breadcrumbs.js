@@ -103,20 +103,23 @@
 
         // Redirect to given breadcrumb
         function redirect(i) {
+            // Don't redirect to your self
             var length = _stack.length;
-            if (i < length) {
-                if (!_stack[length - 1].hasChildren()) {
-                    _stack[length - 1].setIsFullScreen(false);
-                    _stack[length - 1] = undefined;
+            if (i !== length - 1) {
+                if (i < length) {
+                    if (!_stack[length - 1].hasChildren()) {
+                        _stack[length - 1].setIsFullScreen(false);
+                        _stack[length - 1] = undefined;
+                    }
                 }
-            }
 
-            var contentItem = _stack[i];
-            var rangeItem = contentItem.getEndDate() - contentItem.getBeginDate();
-            var rangeBegin = contentItem.getBeginDate() - (rangeItem / 20);
-            var rangeEnd = contentItem.getEndDate() + (rangeItem / 20);
-            Canvas.Timescale.setRange(rangeBegin, rangeEnd);
-            Canvas.ContentItemService.findContentItemsByParentContent(contentItem);
+                var contentItem = _stack[i];
+                var rangeItem = contentItem.getEndDate() - contentItem.getBeginDate();
+                var rangeBegin = contentItem.getBeginDate() - (rangeItem / 20);
+                var rangeEnd = contentItem.getEndDate() + (rangeItem / 20);
+                Canvas.Timescale.setRange(rangeBegin, rangeEnd);
+                Canvas.ContentItemService.findContentItemsByParentContent(contentItem);
+            }
         }
 
         initialize();
