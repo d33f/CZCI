@@ -51,12 +51,11 @@
                 if ((_contentItemPosition.x + (_contentItemSize.radius * 2) + _tooltipWidth) < canvasWidth) {
                     positionsRightSideCircle();
                 } else if(_contentItemPosition.x - _tooltipWidth > 0) {
-                    positionLeftSideCircle();
+                    positionsLeftSideCircle();
                 }
                 else {
-                    positionBottomCircle();
+                    positionsBottomCircle();
                 }
-                
             }
         }
 

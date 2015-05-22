@@ -23,6 +23,7 @@
     this.addChild = addChild;
     this.setIsFullScreen = setIsFullScreen;
     this.clearChildren = clearChildren;
+    this.destructor = destructor;
 
     // Private fields
     var _id = data.id;
@@ -95,6 +96,17 @@
         }
     }
 
+    // Destructor
+    function destructor() {
+        // Get content item element
+        var element = document.getElementById('contentItem_' + _id);
+        if (element !== null) {
+            // Get the canvas container element and remove this content item container
+            var container = document.getElementById('canvasContainer');
+            container.removeChild(element);
+        }
+    }
+
     // Create (DOM) element with class
     function createElementWithClass(element, classname) {
         var domElement = document.createElement(element);
@@ -152,6 +164,10 @@
 
     // Clear children
     function clearChildren() {
+        var length = _children.length;
+        for (var i = 0; i < length; i++) {
+            _children[i].destructor();
+        }
         _children = [];
     }
 
@@ -199,9 +215,6 @@
         _x = Canvas.Timescale.getXPositionForTime(_beginDate);
         _width = Canvas.Timescale.getXPositionForTime(_endDate) - _x;
 
-        var position = Canvas.Mousepointer.getPosition();
-        _isHovered = (collides(position.x, position.y) && !collidesInChildren(position.x, position.y));
-
         if (_isFullScreen) {
             updateFullScreenContentItem(contentItems);
         } else {
@@ -217,6 +230,9 @@
 
             updateContainer();
         }
+
+        var position = Canvas.Mousepointer.getPosition();
+        _isHovered = (collides(position.x, position.y) && !collidesInChildren(position.x, position.y));
     }
 
     // Check spacing
@@ -359,9 +375,9 @@
         context.fillStyle = _isHovered ? "white" : "#C0C0C0";
         context.font = "12px Arial";
 
-        console.log(_title + " " + context.measureText(_title) + " " + (_width - 2));
-        if(context.measureText(_title).width < _width - 2)
+        if (context.measureText(_title).width < _width - 2) {
             context.fillText(_title, _x + 5, (_y + 5) + 12);
+        }
         context.closePath();
     }
 
@@ -433,6 +449,7 @@
         return (x >= _x && x <= (_x + _width) && y >= _y && y <= (_y + _height));
     }
 
+    // Check if given x and y collides with the child content items
     function collidesInChildren(x, y) {
         var length = _children.length;
         for (var i = 0; i < length; i++) {

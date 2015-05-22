@@ -20,7 +20,7 @@
             if (typeof(Storage) !== "undefined") {
                 _cache = window.sessionStorage;
             }
-            _cache.clear();
+            //_cache.clear();
             // Find timeline
             findTimeline();
         }
