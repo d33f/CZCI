@@ -5,10 +5,24 @@
     <title>ChronoZoom</title>
 </head>
 <body>
-    <div id="canvasContainer">
-        <canvas id="canvas"></canvas>
+<div id="header">
+    <div id="title"></div>
+    <div id="timerange"></div>
+    <div id="menuButtons">
+        <button onclick="Canvas.PanelManager.handleTestPanel()">Test panel</button>
     </div>
-    @Scripts.Render("~/bundles/js/canvas")
-    @Styles.Render("~/bundles/css")
+</div>
+<div id="inputPanel" class="hiddenOnStartup">
+    <h1>Heading</h1>
+    <p>Test :)</p>
+</div>
+<div id="canvasContainer">
+    <canvas id="canvas"></canvas>
+    <div id="loader">
+        <img id="loaderGif" src="Resources/loader.gif"/>
+    </div>
+</div>
+@Scripts.Render("~/bundles/js/canvas")
+@Styles.Render("~/bundles/css")
 </body>
 </html>

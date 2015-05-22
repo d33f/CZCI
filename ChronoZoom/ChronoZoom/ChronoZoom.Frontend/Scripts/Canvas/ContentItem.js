@@ -43,6 +43,7 @@
     var _radius = 0;
     var _isHovered = false;
     var _isFullScreen = false;
+    var _linewidth;
 
     // HTML container
     var _container;
@@ -50,10 +51,12 @@
     // Constructor
     function initialize(instance) {
         // Set image
+        _image.src = undefined;
         _image.onload = function () { };
         if (_sourceURL !== undefined) {
             _image.src = _sourceURL;
         }
+
 
         // Add child to parent
         if (_parentContentItem !== undefined) {
@@ -74,6 +77,7 @@
 
                 // Create wrapper and text within the content item element
                 var wrapper = createElementWithClass('div', 'contentItemWrapper');
+                wrapper.appendChild(createElementWithClass('div', 'contentItemTitle'))
                 wrapper.appendChild(createElementWithClass('div', 'contentItemText'));
                 element.appendChild(wrapper);
 
@@ -173,7 +177,7 @@
 
     // Get size
     function getSize() {
-        return { height: _height, width: _width, radius: _radius };
+        return { height: _height, width: _width, radius: _radius, linewidth: _linewidth };
     }
 
     // Update this content item
@@ -187,7 +191,7 @@
         if (_isFullScreen) {
             var canvasContainer = Canvas.getCanvasContainer();
             var canvasHeight = canvasContainer.height - 100;
-            
+
             _radius = ((canvasContainer.width > canvasHeight ? canvasHeight : canvasContainer.width) / 2) - 10;
             _width = _radius;
 
@@ -196,9 +200,41 @@
 
             updateContainer();
 
+            _container.getElementsByClassName("contentItemTitle")[0].innerHTML = _title;
             _container.getElementsByClassName("contentItemText")[0].innerHTML = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui.";
 
         } else {
+            if (_parentContentItem !== undefined) {
+                var positionParent = _parentContentItem.getPosition();
+                var sizeParent = _parentContentItem.getSize();
+                var spacing = sizeParent.width / 80;
+
+
+                //ContentItem with children spacing
+                if (positionParent.x != 0 && positionParent.y != 0) {
+
+                    _x >= positionParent.x + spacing ? _x = _x : _x = positionParent.x + spacing;
+
+                    var parentRightX = positionParent.x + sizeParent.width;
+
+                    if (_hasChildren) {
+                        var rightX = _x + _width;
+                        var deltaRight = parentRightX - rightX;
+
+                        if (deltaRight < 0)
+                            _width += deltaRight;
+
+                        rightX <= parentRightX - spacing ? _width = _width : _width -= spacing;
+
+                    } else {
+                        var radius = (_radius * 2);
+                        var rightX = _x + radius;
+
+                        rightX <= parentRightX - spacing ? _x = _x : _x = parentRightX - spacing - radius;
+                    }
+                }
+            }
+
             updateYPosition(contentItems);
 
             _height = 100;
@@ -215,7 +251,7 @@
             _container.style.top = _y + "px";
             _container.style.left = _x + "px";
             _container.style.width = (_radius * 2) + "px";
-            _container.style.height = (_radius * 2) + "px";
+            _container.style.height = (_radius * 1.40) + "px";
             _container.style.display = _isFullScreen ? "block" : "none";
             //_container.style.pointerEvents = "none";
         }
@@ -242,7 +278,7 @@
     function updateYPosition(contentItems) {
         // Start at y position of parent if set
         if (_parentContentItem !== undefined) {
-            _y = _parentContentItem.getPosition().y + 20;
+            _y = _parentContentItem.getPosition().y + 30;
         }
 
         var length = contentItems.length;
@@ -284,14 +320,15 @@
         if (_isHovered) {
             var gradient = context.createLinearGradient(0, 0, _width, 0);
             gradient.addColorStop(0, "gray");
-            gradient.addColorStop(1, "black");
+            gradient.addColorStop(1, "rgba(0,0,0,0.55)");
             context.fillStyle = gradient;
         } else {
             context.fillStyle = 'rgba(0,0,0,0.6)';
         }
 
         context.fill();
-        context.lineWidth = _isHovered ? 3 : 1;
+        _linewidth = _isHovered ? 3 : 1;
+        context.lineWidth = _linewidth;
         context.strokeStyle = 'white';
         context.stroke();
         context.closePath();
@@ -305,37 +342,50 @@
 
     // Draw content item without childeren
     function drawContentItemWithoutChildren(context) {
+        _width = _width > 0 ? -_width : 50;
+        
 
+        if (_isFullScreen) {
+            //Test picture in contentItem
+            context.beginPath();
+            context.fillStyle = 'black';
+            context.arc(_x + _radius, _y + _radius, _radius, 0, 2 * Math.PI);
+            context.fill();
+            _linewidth = _isHovered ? 3 : 1;
+            context.lineWidth = _linewidth;
+            context.strokeStyle = 'white';
+            context.stroke();
+            context.closePath();
 
-        context.save();
-        context.beginPath();
-        context.arc(_x + _radius, _y + _radius, _radius, 0, 2 * Math.PI);
-        context.lineWidth = _isHovered ? 3 : 1;
-        context.strokeStyle = 'white';
-        context.stroke();
-        context.closePath();
-        context.clip();
+            context.beginPath();
+            var centerPointX = _x + _radius;
+            var centerPointY = _y + _radius;
+            var rectX = centerPointX - ((_radius * 0.9) * Math.cos(0.7853981634));
+            var rectY = centerPointY - ((_radius * 0.9) * Math.sin(0.7853981634));
+            var rectWidth = (centerPointX - rectX) * 2;
+            var rectHeight = (centerPointY - rectY) * 1.2;
+            context.drawImage(_image, rectX, rectY, rectWidth, rectHeight);
+            context.strokeStyle = 'white';
+            context.stroke();
+            context.closePath();
 
-        context.drawImage(_image, _x, _y, _width * 2, _height);
-
-        context.beginPath();
-        context.arc(_x, _y, _radius, 0, 2 * Math.PI);
-        context.clip();
-        context.closePath();
-        context.restore();
-
-        //Test picture in contentItem
-        //context.beginPath();
-        //var centerPointX = _x + _radius;
-        //var centerPointY = _y + _radius;
-        //var rectX = centerPointX + (_radius * Math.cos(0.7853981634));
-        //var rectY = centerPointY + (_radius * Math.sin(0.7853981634));
-        //var rectWidth = (centerPointX - rectX) * 2;
-        //var rectHeight = (centerPointY - rectY) * 2;
-        //context.drawImage(_image, rectX, rectY, rectWidth, rectHeight);
-        //context.strokeStyle = 'white';
-        //context.stroke();
-        //context.closePath();
+        } else {
+            context.save();
+            context.beginPath();
+            context.arc(_x + _radius, _y + _radius, _radius, 0, 2 * Math.PI);
+            _linewidth = _isHovered ? 3 : 1;
+            context.lineWidth = _linewidth;
+            context.strokeStyle = 'white';
+            context.stroke();
+            context.closePath();
+            context.clip();
+            context.drawImage(_image, _x, _y, _width * 2, _height);
+            context.beginPath();
+            context.arc(_x, _y, _radius, 0, 2 * Math.PI);
+            context.clip();
+            context.closePath();
+            context.restore();
+        }
     };
 
     // Draw child content items
@@ -372,7 +422,7 @@
 
     // Check if content item displayed as a circle collides with the given position
     function collidesCircle(x, y) {
-        var centerpointX = _x + _radius
+        var centerpointX = _x + _radius;
         var centerpointY = _y + _radius;
 
         // distance between centerpointX and x
@@ -484,7 +534,7 @@
         }
 
         // distance between centerpointY and y
-        var deltaY; 
+        var deltaY;
         if (aY >= bY) {
             deltaY = aY - bY;
         } else {

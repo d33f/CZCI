@@ -114,6 +114,10 @@
 
                 // Add content items to cache
                 addContentItemsToCache(parentContentItem.getId(), timeline.contentItems);
+
+                //Set title and range of the window
+                Canvas.WindowManager.setTitle(timeline.title);
+                Canvas.WindowManager.setTimeRange(timeline.beginDate + ' - ' + timeline.endDate);
             }, function (error) {
                 console.log("No timeline data found!!!", error);
             });

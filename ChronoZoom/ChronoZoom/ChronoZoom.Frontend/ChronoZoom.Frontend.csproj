@@ -110,8 +110,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
+    <Content Include="Resources\loader.gif" />
     <Content Include="Resources\Space.jpg" />
     <Content Include="Scripts\Canvas\ContentItem.js" />
+    <Content Include="Scripts\Canvas\PanelManager.js" />
     <Content Include="Scripts\Canvas\PublicAPIService.js" />
     <Content Include="Scripts\Canvas\Breadcrumbs.js" />
     <Content Include="Scripts\Canvas\ContentItemService.js" />
@@ -122,6 +124,7 @@
     <Content Include="Scripts\Canvas\ContentItemEnricher.js" />
     <Content Include="Scripts\Canvas\Timeline.js" />
     <Content Include="Scripts\Canvas\Tooltip.js" />
+    <Content Include="Scripts\Canvas\WindowManager.js" />
     <Content Include="Scripts\Canvas\Yearmarker.js" />
     <Content Include="Scripts\Canvas\Timescale.js" />
     <Content Include="Styles\Reset.min.css" />

@@ -4,79 +4,147 @@
         // Public methods
         Tooltip.update = update;
         Tooltip.draw = draw;
-        Tooltip.setFadeOut = setFadeOut;
 
         // Private fields
-        var _x = 0;
-        var _y = 0;
-        var _width = 0;
-        var _height = 40;
-        var _title;
-        var _fadeout = false;
-        var _globalAlpha = 0.0;
-        var _globalAlphaIncreaser = 0.04;
+        var _tooltipX;
+        var _tooltipY;
+        var _tooltipWidth;
+        var _tooltipHeight = 40;
+        var _tooltipMarginRight = 10;
 
-        // Set fade out to true
-        function setFadeOut() {
-            _fadeout = true;
-        }
+        var _triangleX1;
+        var _triangleX2;
+        var _triangleX3;
+        var _triangleY1;
+        var _triangleY2;
+        var _triangleY3;
+        var _triangleWidth = 10;
+
+        var _contentItemPosition;
+        var _contentItemSize;
+
+        var _contentItemTitle;
+        var _contentItemHasChildren;
 
         // Update the tooltip
         function update(contentItem) {
-            var position = contentItem.getPosition();
-            var size = contentItem.getSize();
+            _contentItemPosition = contentItem.getPosition();
+            _contentItemSize = contentItem.getSize();
+            _contentItemTitle = contentItem.getTitle();
+            _contentItemHasChildren = contentItem.hasChildren();
+            _tooltipWidth = getTextWidth(_contentItemTitle, 18);
+            updatePosition();
+        }
 
-            _title = contentItem.getTitle();
-            _width = getTextWidth(_title, 18);
-
-            //If the tooltip needs to be drawn next to a rectangle
-            if (contentItem.hasChildren()) {
-                updatePosition(contentItem, position, size);
-                
-                //Else if the tooltip needs to be drawn next to a circle
+        function updatePosition() {
+            var canvasContainer = Canvas.getCanvasContainer();
+            console.log(_tooltipWidth, _contentItemPosition.x);
+            if (_contentItemHasChildren) {
+                if ((_contentItemPosition.x + _contentItemSize.width + _tooltipWidth) < canvasContainer.width) {
+                    positionsRightSideRectangle();
+                } else if (_contentItemPosition.x - _tooltipWidth > 0) {
+                    positionsLeftSideRectangle();
+                } else {
+                    positionsBottomRectangle();
+                }
             } else {
-                _x = (size.radius * 2) + position.x;
-                _y = (size.radius * 0.5) + position.y;
+                if ((_tooltipWidth + _contentItemPosition.x + _contentItemSize.radius + _contentItemSize.width) < canvasContainer.width) {
+                    positionsRightSideCircle();
+                }
+                
             }
         }
 
-        // Update position
-        function updatePosition(contentItem, position, size) {
-            var canvasContainer = Canvas.getCanvasContainer();
+        function positionsRightSideRectangle() {
+            //Rectangle
+            _tooltipX = _contentItemSize.width + _contentItemPosition.x + _triangleWidth + _contentItemSize.linewidth;
+            _tooltipY = (_contentItemSize.height * 0.5) - (_tooltipHeight * 0.5) + _contentItemPosition.y;
+            _tooltipWidth = _tooltipWidth + _tooltipMarginRight;
 
-            if ((_width + position.x + size.width) < canvasContainer.width) { //If there's enough space on the right side of the item
-                _x = (size.width + position.x);
-                _y = (size.height * 0.5) - (_height * 0.5) + position.y;
-            } else if ((position.x - _width) > _width) { //Left side
-                _x = (position.x - _width);
-                _y = (size.height * 0.5) - (_height * 0.5) + position.y;
-            } else { //Middle bottom side
-                _x = position.x + (0.5 * size.width);
-                _y = position.y + size.height;
-            }
+            //Triangle
+            _triangleX1 = _tooltipX - _triangleWidth;
+            _triangleY1 = _tooltipY + (_tooltipHeight * 0.5);
+
+            _triangleX2 = _tooltipX;
+            _triangleY2 = _tooltipY;
+
+            _triangleX3 = _tooltipX;
+            _triangleY3 = _tooltipY + _tooltipHeight;
+        }
+
+        function positionsLeftSideRectangle() {
+            _tooltipX = (_contentItemPosition.x - _triangleWidth) - (_tooltipWidth - _contentItemSize.linewidth);
+            _tooltipY = (_contentItemSize.height * 0.5) - (_tooltipHeight * 0.5) + _contentItemPosition.y;
+
+            //Triangle
+            _triangleX1 = _tooltipX + _tooltipWidth + _triangleWidth;
+            _triangleY1 = _tooltipY + (_tooltipHeight * 0.5);
+
+            _triangleX2 = _tooltipX + _tooltipWidth;
+            _triangleY2 = _tooltipY;
+
+            _triangleX3 = _tooltipX + _tooltipWidth;
+            _triangleY3 = _tooltipY + _tooltipHeight;
+        }
+
+        function positionsBottomRectangle() {
+            var triangleHeight = 10;
+
+            _tooltipX = _contentItemPosition.x + (0.5 * _contentItemSize.width) - (0.5 * _tooltipWidth);
+            _tooltipY = _contentItemPosition.y + _contentItemSize.height + triangleHeight + _contentItemSize.linewidth;
+
+            //Triangle
+            _triangleX1 = _tooltipX + (0.5 * _tooltipWidth);
+            _triangleY1 = _tooltipY - triangleHeight;
+
+            _triangleX2 = _tooltipX;
+            _triangleY2 = _tooltipY;
+
+            _triangleX3 = _tooltipX + _tooltipWidth;
+            _triangleY3 = _tooltipY ;
+        }
+
+        function positionsRightSideCircle() {
+            _tooltipMarginRight = 5;
+            _triangleWidth = 10;
+
+            //Rectangle
+            _tooltipX = (_contentItemPosition.x + _triangleWidth) + (_contentItemSize.radius * 2) + _contentItemSize.linewidth;
+            _tooltipY = (_contentItemPosition.y + _contentItemSize.radius) - (0.5 * _tooltipHeight);
+            _tooltipWidth += _tooltipMarginRight;
+
+            //Triangle
+            _triangleX1 = _tooltipX - _triangleWidth;
+            _triangleY1 = _tooltipY + (_tooltipHeight * 0.5);
+
+            _triangleX2 = _tooltipX;
+            _triangleY2 = _tooltipY;
+
+            _triangleX3 = _tooltipX;
+            _triangleY3 = _tooltipY + _tooltipHeight;
         }
 
         // Draw the tooltip
         function draw() {
-            if (_globalAlpha < 1.1) {
-                fadeIn();
-            }
-
             var context = Canvas.getContext();
+            //Save and restore used so the globalAlpha isn't applied to the whole Canvas
             context.save();
-            context.rect(_x, _y, _width, _height);
             context.fillStyle = 'rgb(49,79,79)';
-            context.globalAlpha = _globalAlpha;
+
+            context.beginPath();
+            //Draw the triangle
+            context.moveTo(_triangleX1, _triangleY1);
+            context.lineTo(_triangleX2, _triangleY2);
+            context.lineTo(_triangleX3, _triangleY3);
+            //Draw the rectangle
+            context.rect(_tooltipX, _tooltipY, _tooltipWidth, _tooltipHeight);
             context.fill();
+            context.closePath();
 
+            //Draw the text
             context.fillStyle = "white";
-            context.fillText(_title, _x, (_y + _height / 2));
+            context.fillText(_contentItemTitle, (_tooltipX + 2), (_tooltipY + _tooltipHeight / 2) + 4);
             context.restore();
-        }
-
-        // Fade in
-        function fadeIn() {
-            _globalAlpha = _globalAlpha + _globalAlphaIncreaser;
         }
 
         // Calculate and get text width for given text and font

@@ -21,6 +21,8 @@ namespace ChronoZoom.Frontend
                 "~/Scripts/Canvas/Yearmarker.js",
                 "~/Scripts/Canvas/Timescale.js",
                 "~/Scripts/Canvas/Mousepointer.js",
+                "~/Scripts/Canvas/PanelManager.js",
+                "~/Scripts/Canvas/WindowManager.js",
                 "~/Scripts/Canvas/Canvas.js",
                 "~/Scripts/Canvas/Breadcrumbs.js",
                 "~/Scripts/Canvas/Tooltip.js"
