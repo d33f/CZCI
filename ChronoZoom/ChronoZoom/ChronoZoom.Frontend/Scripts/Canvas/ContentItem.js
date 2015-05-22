@@ -10,6 +10,7 @@
     this.getChildren = getChildren;
     this.hasChildren = hasChildren;
     this.getHovered = getHovered;
+    this.getFullScreen = getFullScreen;
 
     // Public methods
     this.update = update;
@@ -51,7 +52,7 @@
     // Constructor
     function initialize(instance) {
         // Set image
-        _image.src = undefined;
+        _image.src = 'resources/no_image.jpg';
         _image.onload = function () { };
         if (_sourceURL !== undefined) {
             _image.src = _sourceURL;
@@ -159,6 +160,10 @@
         }
     }
 
+    function getFullScreen() {
+        return _isFullScreen;
+    }
+
     // Get current position
     function getPosition() {
         return { x: _x, y: _y };
@@ -198,33 +203,7 @@
             updateFullScreenContentItem(contentItems);
         } else {
             if (_parentContentItem !== undefined) {
-                var positionParent = _parentContentItem.getPosition();
-                var sizeParent = _parentContentItem.getSize();
-                var spacing = sizeParent.width / 80;
-
-
-                //ContentItem with children spacing
-                if (positionParent.x !== 0 && positionParent.y !== 0) {
-                    _x = (_x >= positionParent.x + spacing) ? _x : (positionParent.x + spacing);
-
-                    var parentRightX = positionParent.x + sizeParent.width;
-
-                    if (_hasChildren) {
-                        var rightX = _x + _width;
-                        var deltaRight = parentRightX - rightX;
-
-                        if (deltaRight < 0)
-                            _width += deltaRight;
-
-                        _width = (rightX <= parentRightX - spacing) ? _width : (_width - spacing);
-
-                    } else {
-                        var radius = (_radius * 2);
-                        var rightX = _x + radius;
-
-                        _x = (rightX <= parentRightX - spacing) ? _x : (parentRightX - spacing - radius);
-                    }
-                }
+                checkSpacing();
             }
 
             updateYPosition(contentItems);
@@ -234,6 +213,42 @@
             updateChildren();
 
             updateContainer();
+        }
+    }
+
+    // Check spacing
+    function checkSpacing() {
+        var positionParent = _parentContentItem.getPosition();
+        
+        // ContentItem with children spacing
+        if (positionParent.x !== 0 && positionParent.y !== 0) {
+            updateSpacing(positionParent);
+        }
+    }
+
+    // Update current content item spacing 
+    function updateSpacing(positionParent) {
+        var sizeParent = _parentContentItem.getSize();
+        var spacing = sizeParent.width / 80;
+
+        _x = (_x >= positionParent.x + spacing) ? _x : (positionParent.x + spacing);
+
+        var parentRightX = positionParent.x + sizeParent.width;
+
+        if (_hasChildren) {
+            var rightX = _x + _width;
+            var deltaRight = parentRightX - rightX;
+
+            if (deltaRight < 0)
+                _width += deltaRight;
+
+            _width = (rightX <= parentRightX - spacing) ? _width : (_width - spacing);
+
+        } else {
+            var radius = (_radius * 2);
+            var rightX = _x + radius;
+
+            _x = (rightX <= parentRightX - spacing) ? _x : (parentRightX - spacing - radius);
         }
     }
 
@@ -278,6 +293,7 @@
             var childHeight = _children[i].getPosition().y + _children[i].getSize().height;
 
             if (childHeight > _height) {
+                console.log(childHeight);
                 _height = childHeight;
             }
         }
