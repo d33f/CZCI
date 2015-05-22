@@ -37,10 +37,10 @@
         }
 
         function updatePosition() {
-            var canvasContainer = Canvas.getCanvasContainer();
-   
+            var canvasWidth = Canvas.getCanvasContainer().width;
+
             if (_contentItemHasChildren) {
-                if ((_contentItemPosition.x + _contentItemSize.width + _tooltipWidth) < canvasContainer.width) {
+                if ((_contentItemPosition.x + _contentItemSize.width + _tooltipWidth) < canvasWidth) {
                     positionsRightSideRectangle();
                 } else if (_contentItemPosition.x - _tooltipWidth > 0) {
                     positionsLeftSideRectangle();
@@ -48,8 +48,13 @@
                     positionsBottomRectangle();
                 }
             } else {
-                if ((_tooltipWidth + _contentItemPosition.x + _contentItemSize.radius + _contentItemSize.width) < canvasContainer.width) {
+                if ((_contentItemPosition.x + (_contentItemSize.radius * 2) + _tooltipWidth) < canvasWidth) {
                     positionsRightSideCircle();
+                } else if(_contentItemPosition.x - _tooltipWidth > 0) {
+                    positionLeftSideCircle();
+                }
+                else {
+                    positionBottomCircle();
                 }
                 
             }
@@ -123,6 +128,7 @@
             _triangleX3 = _tooltipX;
             _triangleY3 = _tooltipY + _tooltipHeight;
         }
+
 
         // Draw the tooltip
         function draw() {
