@@ -44,11 +44,11 @@ namespace ChronoZoom.Backend
              container.RegisterType<ITimelineDao, TimelineDaoOrientDb>();
              container.RegisterType<IContentItemDao, ContentItemDaoOrientDb>();
 
-             //container.RegisterType<ITimelineService, TimelineService>();
-             //container.RegisterType<IContentItemService, ContentItemService>();
-
-             container.RegisterType<ITimelineService, TimelineServiceMock>();
-             container.RegisterType<IContentItemService, ContentItemServiceMock>();
+             container.RegisterType<ITimelineService, TimelineService>();
+             container.RegisterType<IContentItemService, ContentItemService>();
+            
+            //container.RegisterType<ITimelineService, TimelineServiceMock>();
+             //container.RegisterType<IContentItemService, ContentItemServiceMock>();
         }
     }
 }
