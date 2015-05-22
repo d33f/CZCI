@@ -10,6 +10,7 @@
     this.getChildren = getChildren;
     this.hasChildren = hasChildren;
     this.getHovered = getHovered;
+    this.getFullScreen = getFullScreen;
 
     // Public methods
     this.update = update;
@@ -156,6 +157,10 @@
         if (!_isFullScreen) {
             updateContainer();
         }
+    }
+
+    function getFullScreen() {
+        return _isFullScreen;
     }
 
     // Get current position
