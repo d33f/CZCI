@@ -38,5 +38,29 @@ namespace ChronoZoom.Backend.Controllers
                 return BadRequest("An error occured");
             }
         }
+
+        /// <summary>
+        /// Create a new timeline item
+        /// </summary>
+        /// <param name="timeline">The timeline item</param>
+        /// <returns>True if succesfully added</returns>
+        [HttpPut]
+        public IHttpActionResult Put(Timeline timeline)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("Timeline item invalid");
+            }
+
+            try
+            {
+                _timelineService.Add(timeline);
+                return Ok(true);
+            }
+            catch (Exception)
+            {
+                return BadRequest("An error occured");
+            }
+        }
     }
 }

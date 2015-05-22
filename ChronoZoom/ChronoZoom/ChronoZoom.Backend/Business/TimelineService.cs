@@ -17,5 +17,10 @@ namespace ChronoZoom.Backend.Business
         {
             return _timelineDao.Find(id);
         }
+
+        public void Add(Entities.Timeline timeline)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
