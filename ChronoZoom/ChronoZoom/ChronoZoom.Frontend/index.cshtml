@@ -10,6 +10,7 @@
     <div id="timerange"></div>
     <div id="menuButtons">
         <button onclick="Canvas.PanelManager.handleTestPanel()">Test panel</button>
+        <button onclick="Canvas.PanelManager.handleImportPanel()">Import panel</button>
     </div>
 </div>
 <div id="inputPanel" class="inputPanelHidden">
@@ -18,6 +19,35 @@
         <li><a href="#">Mock timeline</a></li>
         <li><a href="#">Worldwars timeline</a></li>
     </ul>
+</div>
+<div id="importPanel" class="importPanelHidden">
+    <h1>Add Timeline</h1>
+    <ul>
+        <li>
+            Title: <input type="text" id="titleInput" value="Enter title.." required/>
+        </li>
+        <li>
+            <br />
+        </li>
+        <li>
+            Start date: <input type="number" id="startDateInput" value="0" required/>
+        </li>
+        <li>
+            <br />
+        </li>
+        <li>
+            End date: <input type="number" id="endDateInput" value="2015" required/>
+        </li>
+        <li>
+            <br />
+        </li>
+        <li>
+            <button onclick="Canvas.PanelManager.handleImportPanelInput()">Submit</button>
+        </li>
+    </ul>
+    <div id="importOutput">
+
+    </div>
 </div>
 <div id="canvasContainer">
     <canvas id="canvas"></canvas>

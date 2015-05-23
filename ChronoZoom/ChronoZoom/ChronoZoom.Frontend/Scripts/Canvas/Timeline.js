@@ -12,6 +12,7 @@
         // Constructor
         function initialize() {
             Canvas.ContentItemService.addListener(onContentItemsChanged);
+            Canvas.ContentItemService.findTimeline();
         }
 
         // Handle on content item changed event
@@ -81,10 +82,13 @@
 
             if (_contentItemOnMousePosition !== undefined) {
                 if (!_contentItemOnMousePosition.getFullScreen()) {
-                Canvas.Tooltip.update(_contentItemOnMousePosition);
-                Canvas.Tooltip.draw();
+                    Canvas.Tooltip.update(_contentItemOnMousePosition);
+                    Canvas.Tooltip.draw();
+                }
             }
-        }
+
+            var container = Canvas.getCanvasContainer();
+            container.style.cursor = _contentItemOnMousePosition !== undefined ? 'pointer' : 'default';
         }
 
         // Handle the click on timeline event

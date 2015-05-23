@@ -139,6 +139,59 @@ div#inputPanel {
 }  
 #inputPanel ul li a:hover {  
     background-color: rgb(60,60,60);
+}
+
+/* Import PANEL */
+div#importPanel {
+
+    transition: right .6s ease;
+    font-size: 20px;
+    width: 400px;
+    background-color: rgb(35,35,35);
+    color: #e0e0e0;
+    position: absolute;
+    top: 40px;
+    bottom: 0;
+    height: 100%;
+    z-index: 1500;
+}
+.importPanelHidden {
+    right: -420px;
+    display: inline;
+}
+.importPanelShow {
+    right: -0px; 
+}
+#importPanel > h1 {
+    font-size: 120%;
+    margin: 0 auto;
+    margin-bottom: 10px;
+    margin-left: 150px;
+}
+
+/* Import PANEL Items*/
+#importPanel  ul {
+    list-style-type: none;
+}
+#importPanel ul li {
+    margin: 0;
+    border-top: 1px solid #303030;
+}
+#importPanel ul li a {  
+    display: block;  
+    padding: 20px;  
+    background-color: rgb(35,35,35);
+    font-family: Verdana;  
+    color: white;  
+    text-decoration: none;
+    font-style: italic;
+}  
+#importPanel ul li a:hover {  
+    background-color: rgb(60,60,60);
+}
+#importPanel input { 
+    line-height: 30px;
+    font-size: 30px;
 } 
 
 /* Menu */
