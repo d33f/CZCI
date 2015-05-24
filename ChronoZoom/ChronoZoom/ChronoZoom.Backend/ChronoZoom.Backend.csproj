@@ -138,6 +138,7 @@
     <Compile Include="Entities\Timeline.cs" />
     <Compile Include="Exceptions\ContentItemNotFoundException.cs" />
     <Compile Include="Exceptions\TimelineNotFoundException.cs" />
+    <Compile Include="Exceptions\ToManyResultsException.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

@@ -41,14 +41,14 @@ namespace ChronoZoom.Backend
             // NOTE: To load from web.config uncomment the line below. Make sure to add a Microsoft.Practices.Unity.Configuration to the using statements.
             // container.LoadConfiguration();
 
-             container.RegisterType<ITimelineDao, TimelineDaoOrientDb>();
-             container.RegisterType<IContentItemDao, ContentItemDaoOrientDb>();
+            container.RegisterType<ITimelineDao, TimelineDaoOrientDb>();
+            container.RegisterType<IContentItemDao, ContentItemDaoOrientDb>();
 
-            // container.RegisterType<ITimelineService, TimelineService>();
-            // container.RegisterType<IContentItemService, ContentItemService>();
-            
-            container.RegisterType<ITimelineService, TimelineServiceMock>();
-             container.RegisterType<IContentItemService, ContentItemServiceMock>();
+            container.RegisterType<ITimelineService, TimelineService>();
+            container.RegisterType<IContentItemService, ContentItemService>();
+
+            //container.RegisterType<ITimelineService, TimelineServiceMock>();
+            //container.RegisterType<IContentItemService, ContentItemServiceMock>();
         }
     }
 }

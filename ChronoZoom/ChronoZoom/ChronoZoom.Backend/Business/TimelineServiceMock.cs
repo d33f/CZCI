@@ -19,5 +19,10 @@ namespace ChronoZoom.Backend.Business
                 ContentItems = new Entities.ContentItem[0]
             };
         }
+
+        public void Add(Entities.Timeline timeline)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

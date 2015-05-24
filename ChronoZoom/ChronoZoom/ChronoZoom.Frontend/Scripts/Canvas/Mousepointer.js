@@ -57,7 +57,7 @@
             var begin, end;
             if (e.wheelDelta > 0) {
                 begin = range.begin + 2;
-                end = range.end - 2;            
+                end = range.end - 2;
             } else {
                 begin = range.begin - 2;
                 end = range.end + 2;

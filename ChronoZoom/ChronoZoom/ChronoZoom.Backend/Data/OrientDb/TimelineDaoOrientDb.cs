@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Web;
 using ChronoZoom.Backend.Data.Interfaces;
 using ChronoZoom.Backend.Data.OrientDb.Factory;
@@ -15,16 +16,13 @@ namespace ChronoZoom.Backend.Data.OrientDb
         {
             using (var db = new ODatabase(OrientDb.DATABASE))
             {
-                try
-                {
-                    string queryWithparam = "select * from timeline where @rid=#" + id + ")";
-                    Timeline timeline = db.Query<Timeline>(queryWithparam)[0];
-                    return TimelineFactory.Create(timeline);
-                }
-                catch (Exception ex)
-                {
-                    throw new TimelineNotFoundException();
-                }
+
+                    var queryWithparam = "select * from timeline where @rid=#" + id + ")";
+                    var timelines = db.Query<Timeline>(queryWithparam);
+
+                    if (timelines.Count > 1) throw new ToManyResultsException();
+                    if (timelines.Count == 0) throw new TimelineNotFoundException();
+                    return TimelineFactory.Create(timelines[0]);
             }
         }
     }

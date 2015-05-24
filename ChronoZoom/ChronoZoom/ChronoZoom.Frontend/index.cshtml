@@ -9,12 +9,45 @@
     <div id="title"></div>
     <div id="timerange"></div>
     <div id="menuButtons">
-        <button onclick="Canvas.PanelManager.handleTestPanel()">Test panel</button>
+        <button onclick="Canvas.PanelManager.showTimelinePanel(true)">My Timelines</button>
+        <button onclick="Canvas.PanelManager.handleImportPanel()">Import panel</button>
     </div>
 </div>
-<div id="inputPanel" class="hiddenOnStartup">
-    <h1>Heading</h1>
-    <p>Test :)</p>
+<div id="inputPanel" class="inputPanelHidden">
+    <h1>Timelines</h1>
+    <ul>
+        <li><a href="#" onclick="Canvas.setTimeline('12:1')">Worldwars timeline</a></li>
+        <li><a href="#" onclick="Canvas.setTimeline('12:0')">Musea of the netherlands timeline</a></li>
+    </ul>
+</div>
+<div id="importPanel" class="importPanelHidden">
+    <h1>Add Timeline</h1>
+    <ul>
+        <li>
+            Title: <input type="text" id="titleInput" value="Enter title.." required/>
+        </li>
+        <li>
+            <br />
+        </li>
+        <li>
+            Start date: <input type="number" id="startDateInput" value="0" required/>
+        </li>
+        <li>
+            <br />
+        </li>
+        <li>
+            End date: <input type="number" id="endDateInput" value="2015" required/>
+        </li>
+        <li>
+            <br />
+        </li>
+        <li>
+            <button onclick="Canvas.PanelManager.handleImportPanelInput()">Submit</button>
+        </li>
+    </ul>
+    <div id="importOutput">
+
+    </div>
 </div>
 <div id="canvasContainer">
     <canvas id="canvas"></canvas>
