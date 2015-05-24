@@ -5,14 +5,17 @@
         Timeline.draw = draw;
         Timeline.update = update;
         Timeline.handleClickOnTimeline = handleClickOnTimeline;
-
+        Timeline.setTimeline = setTimeline;
         // Private fields
         var _contentItems = [];
 
         // Constructor
         function initialize() {
             Canvas.ContentItemService.addListener(onContentItemsChanged);
-            Canvas.ContentItemService.findTimeline();
+        }
+
+        function setTimeline(timelineId) {
+            Canvas.ContentItemService.findTimeline(timelineId);
         }
 
         // Handle on content item changed event
@@ -88,7 +91,7 @@
             }
 
             var container = Canvas.getCanvasContainer();
-            container.style.cursor = _contentItemOnMousePosition !== undefined ? 'pointer' : 'default';
+            //container.style.cursor = _contentItemOnMousePosition !== undefined ? 'pointer' : 'default';
         }
 
         // Handle the click on timeline event

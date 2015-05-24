@@ -4,7 +4,7 @@
     Canvas.getContext = getContext;
     Canvas.getContainer = getContainer;
     Canvas.getCanvasContainer = getCanvasContainer;
-
+    Canvas.setTimeline = setTimeline;
     // Private fields
     var _container;
     var _canvasContainer;
@@ -28,8 +28,14 @@
         _context = _canvasContainer.getContext("2d");
 
         // Start the mouse pointer and draw process loop
-         Canvas.Mousepointer.start();
+        Canvas.Mousepointer.start();
+        Canvas.WindowManager.showLoader(false);
          canvasDrawProcessLoop();
+    }
+
+    function setTimeline(timelineId) {
+        Canvas.Timeline.setTimeline(timelineId);
+        Canvas.PanelManager.showTimelinePanel(false);
     }
 
     // Get the (canvas) context

@@ -9,7 +9,7 @@ namespace ChronoZoom.Backend.Data.OrientDb.Factory
 {
     public class ContentItemFactory
     {
-        public static IEnumerable<Entities.ContentItem> CreateList(List<ContentItem> list)
+        public static IEnumerable<Entities.ContentItem> CreateList(string parentId, List<ContentItem> list)
         {
             List<Task> tasks = new List<Task>(list.Count);
             ConcurrentBag<Entities.ContentItem> contentItems = new ConcurrentBag<Entities.ContentItem>();
@@ -25,9 +25,10 @@ namespace ChronoZoom.Backend.Data.OrientDb.Factory
                         EndDate = local.EndDate,
                         HasChildren = local.HasChildren,
                         Id =id,
-                        Priref = local.Priref,
+                       // Priref = local.Priref,
                         Source = local.Source,
-                        Title = local.Title
+                        Title = local.Title,
+                        ParentId = parentId
                     };
                     contentItems.Add(ci);
                 }));

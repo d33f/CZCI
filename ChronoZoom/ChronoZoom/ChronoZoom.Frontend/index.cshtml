@@ -9,15 +9,15 @@
     <div id="title"></div>
     <div id="timerange"></div>
     <div id="menuButtons">
-        <button onclick="Canvas.PanelManager.handleTestPanel()">Test panel</button>
+        <button onclick="Canvas.PanelManager.showTimelinePanel(true)">My Timelines</button>
         <button onclick="Canvas.PanelManager.handleImportPanel()">Import panel</button>
     </div>
 </div>
 <div id="inputPanel" class="inputPanelHidden">
     <h1>Timelines</h1>
     <ul>
-        <li><a href="#">Mock timeline</a></li>
-        <li><a href="#">Worldwars timeline</a></li>
+        <li><a href="#" onclick="Canvas.setTimeline('12:1')">Worldwars timeline</a></li>
+        <li><a href="#" onclick="Canvas.setTimeline('12:0')">Musea of the netherlands timeline</a></li>
     </ul>
 </div>
 <div id="importPanel" class="importPanelHidden">

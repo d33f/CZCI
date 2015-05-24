@@ -8,10 +8,10 @@
         var _baseUrl = "http://localhost:40001/api/";
 
         // Get json data from path, execute callback resolve when succesfull and reject if failed. 
-        function getJSON(path, resolve, reject) {
+        function getJSON(id, path, resolve, reject) {
             // Create new instance of XMLHttpRequest and open requested path (async)
             var xmlHttpRequest = new XMLHttpRequest();
-            xmlHttpRequest.open("GET", _baseUrl + path, true);
+            xmlHttpRequest.open("GET", _baseUrl + path +'/'+ id, true);
             xmlHttpRequest.setRequestHeader("Content-Type", "application/json");
 
             // Ready event
@@ -60,8 +60,8 @@
         };
 
         // Get timeline
-        function getTimeline(resolve, reject) {
-            getJSON('timeline', function (json) {
+        function getTimeline(timelineId,resolve, reject) {
+            getJSON(timelineId,'timeline', function (json) {
                 // Create a timeline object
                 var timeline = createTimelineObject(json);
 
@@ -89,7 +89,7 @@
 
         // Get content items for parent content item 
         function getContentItems(parentContentItem, resolve, reject) {
-            getJSON('contentitem/' + parentContentItem.getId(), function (json) {
+            getJSON(parentContentItem.getId(),'contentitem', function (json) {
                 // Create empty array
                 var contentItems = [];
 
