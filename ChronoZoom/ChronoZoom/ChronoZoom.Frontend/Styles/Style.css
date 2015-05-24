@@ -96,7 +96,7 @@ div.contentItemTitle {
 div#inputPanel {
     transition: left .6s ease;
     width: 400px;
-    background-color: rgb(35,35,35);
+    background-color: #1B1C1D;
     color: #e0e0e0;
     position: absolute;
     top: 40px;
@@ -122,36 +122,12 @@ div#inputPanel {
     margin-bottom: 10px;
 }
 
-/* INPUT PANEL Items*/
-#inputPanel ul {
-    list-style-type: none;
-}
-
-    #inputPanel ul li {
-        margin: 0;
-        border-top: 1px solid #303030;
-    }
-
-        #inputPanel ul li > a {
-            display: block;
-            padding: 20px 0 20px 0;
-            background-color: rgb(35,35,35);
-            font-family: Verdana;
-            color: white;
-            text-decoration: none;
-            font-style: italic;
-        }
-
-        #inputPanel ul li a:hover {
-            background-color: rgb(60,60,60);
-        }
-
 /* Import PANEL */
 div#importPanel {
     transition: right .6s ease;
     font-size: 20px;
     width: 400px;
-    background-color: rgb(35,35,35);
+    background-color: #1B1C1D;
     color: #e0e0e0;
     position: absolute;
     top: 40px;
@@ -183,7 +159,7 @@ div#importPanel {
 
     #importPanel ul li {
         margin: 0;
-        border-top: 1px solid #303030;
+        border-top: 1px solid #1B1C1D;
     }
 
         #importPanel ul li a {
@@ -200,15 +176,11 @@ div#importPanel {
                 background-color: rgb(60,60,60);
             }
 
-#importPanel input {
-    line-height: 30px;
-    font-size: 30px;
-}
 
 /* Menu */
 #header {
     width: 100%;
-    background-color: rgb(35,35,35);
+    background-color: #1B1C1D;
     height: 40px;
     color: #eeeeee;
 }

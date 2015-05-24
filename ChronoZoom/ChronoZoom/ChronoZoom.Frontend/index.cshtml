@@ -16,20 +16,69 @@
     </div>
     <div id="inputPanel" class="inputPanelHidden">
         <h1>Timelines</h1>
-        <ul>
-            <li><a href="#" onclick="Canvas.setTimeline('12:1')">Worldwars timeline</a></li>
-            <li><a href="#" onclick="Canvas.setTimeline('12:0')">Musea of the netherlands timeline</a></li>
-            <li>
-                <div class="compact ui button green small">
-                    <i class="icon add"></i>
-                    Add Timeline
+
+
+        <div class="ui divided list inverted">
+            <div class="item">
+                <i class="list layout icon"></i>
+                <div class="content">
+                    <a class="header" href="#" onclick="Canvas.setTimeline('12:1')">Worldwars timeline</a>
+                    <div class="description">A timeline about the the first and second worldwar. This timeline has special focus to Anne Frank</div>
                 </div>
-            </li>
-        </ul>
+            </div>
+            <div class="item">
+                <i class="list layout  icon"></i>
+                <div class="content">
+                    <a class="header" href="#" onclick="Canvas.setTimeline('12:0')">Musea of the netherlands timeline</a>
+                    <div class="description">This timeline is all about the first 400 creators of the Amsterdam museum. Also do these creators show theire work in chornological order.</div>
+                </div>
+            </div>
+
+        </div>
+        <div class="compact ui button green small">
+            <i class="icon add"></i>
+            Add Timeline
+        </div>
+
+        @*<ul>
+                <li><a href="#" onclick="Canvas.setTimeline('12:1')">Worldwars timeline</a></li>
+                <li><a href="#" onclick="Canvas.setTimeline('12:0')">Musea of the netherlands timeline</a></li>
+                <li>
+                    <div class="compact ui button green small">
+                        <i class="icon add"></i>
+                        Add Timeline
+                    </div>
+                </li>
+            </ul>*@
     </div>
     <div id="importPanel" class="importPanelHidden">
         <h1>Add Timeline</h1>
-        <ul>
+        <div class="ui error inverted form segment">
+            <div class="ui error message">
+                <div class="header">Not possible</div>
+                <p>At this moment it is not possible to add a personal timeline</p>
+            </div>
+            <div class="field">
+                <label>Title</label>
+                <input id="titleInput" placeholder="Timeline title" type="text">
+            </div>
+            <div class="two fields">
+                <div class="field">
+                    <label>Begin date</label>
+                    <input id="startDateInput" placeholder="Begin date" type="text">
+                </div>
+                <div class="field">
+                    <label>End date</label>
+                    <input id="endDateInput" placeholder="End date" type="text">
+                </div>
+            </div>
+            <div class="field">
+                <label>Description</label>
+                <textarea></textarea>
+            </div>
+            <div class="ui submit button green" onclick="Canvas.PanelManager.handleImportPanelInput()">Create timeline!</div>
+        </div>
+        @*<ul>
             <li>
                 Title: <input type="text" id="titleInput" value="Enter title.." required />
             </li>
@@ -51,7 +100,7 @@
             <li>
                 <button onclick="Canvas.PanelManager.handleImportPanelInput()">Submit</button>
             </li>
-        </ul>
+        </ul>*@
         <div id="importOutput">
 
         </div>
@@ -59,8 +108,8 @@
     <div id="canvasContainer">
         <canvas id="canvas"></canvas>
         @*<div id="loader">
-            <img id="loaderGif" src="Resources/loader.gif" />
-        </div>*@
+                <img id="loaderGif" src="Resources/loader.gif" />
+            </div>*@
         <div id="loader" class="">
             <div class="ui active dimmer">
                 <div class="ui medium text loader">Loading timeline</div>
@@ -68,7 +117,7 @@
             <p></p>
             <p></p>
         </div>
-        </div>
+    </div>
     @Scripts.Render("~/bundles/js/canvas")
     @Styles.Render("~/bundles/css")
 </body>
