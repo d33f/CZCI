@@ -4,7 +4,7 @@
     Canvas.getContext = getContext;
     Canvas.getContainer = getContainer;
     Canvas.getCanvasContainer = getCanvasContainer;
-
+    Canvas.setTimeline = setTimeline;
     // Private fields
     var _container;
     var _canvasContainer;
@@ -27,16 +27,18 @@
         // Get the canvas context
         _context = _canvasContainer.getContext("2d");
 
-        // Set the timescale range with some default data
-        Canvas.Timescale.setRange(-2000, 2000);
-
-
         // Start the mouse pointer and draw process loop
-         Canvas.Mousepointer.start();
+        Canvas.Mousepointer.start();
+        Canvas.WindowManager.showLoader(false);
          canvasDrawProcessLoop();
     }
 
-    // Get the (canvas) context 
+    function setTimeline(timelineId) {
+        Canvas.Timeline.setTimeline(timelineId);
+        Canvas.PanelManager.showTimelinePanel(false);
+    }
+
+    // Get the (canvas) context
     function getContext() {
         return _context;
     }
@@ -71,7 +73,7 @@
     // The draw loop will call the update and draw method each given frames per second
     // This means that if the fps is on 60, it will call draw and update 60 times.
     function canvasDrawProcessLoop() {
-        if (_lastTime == undefined) {
+        if (_lastTime === undefined) {
             _lastTime = Date.now();
         };
         var elapsed = Date.now() - _lastTime;

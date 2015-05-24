@@ -1,5 +1,6 @@
 ﻿using System.Web.Http;
 using System.Diagnostics.CodeAnalysis;
+using System.Web.Http.Cors;
 
 namespace ChronoZoom.Backend
 {
@@ -8,13 +9,13 @@ namespace ChronoZoom.Backend
     {
         public static void Register(HttpConfiguration config)
         {
+            // Enable cross-origin-requests
+            var cors = new EnableCorsAttribute("http://localhost:20000", "*", "GET");
+            config.EnableCors(cors);
             // Web API configuration and services
 
             // Web API routes
             config.MapHttpAttributeRoutes();
-
-            // Enable cross-origin-requests
-            config.EnableCors();
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",

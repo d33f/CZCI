@@ -117,7 +117,7 @@
 
             // Draw ticks, tick labels and bottom line
             drawTicks(context, ticks, amountOfSmallTicksPerTick);
-            drawTickLabels(context, ticks, amountOfSmallTicksPerTick);
+            drawTickLabels(context, ticks);
             drawBottomLine(context);
         }
 
@@ -126,8 +126,7 @@
             // Set total ticks, define line width and set tick width
             var totalTicks = ticks * amountOfSmallTicksPerTick;
             var lineWidth = 2;
-            var tickWidth = _width / totalTicks; //Math.round(canvasWidth / totalTicks);
-            //console.log(tickWidth, getTimeForXPosition(tickWidth * 5));
+            var tickWidth = _width / totalTicks; 
 
             // Set style
             context.lineWidth = lineWidth;
@@ -144,10 +143,10 @@
         }
 
         // Draw tick labels
-        function drawTickLabels(context, ticks, amountOfSmallTicksPerTick) {
+        function drawTickLabels(context, ticks) {
             // Set tick width and tick year
-            var tickWidth = _width / ticks; // = Math.round(canvasWidth / (ticks * amountOfSmallTicksPerTick)) * amountOfSmallTicksPerTick;
-            var tickTime = (_range.end - _range.begin) / ticks; //Math.round((_range.end - _range.begin) / ticks);
+            var tickWidth = _width / ticks;
+            var tickTime = (_range.end - _range.begin) / ticks;
 
             // Set style
             context.font = Canvas.Settings.getTimescaleTickLabelFont();
@@ -158,6 +157,7 @@
                 // Set year and convert year to string
                 var year = _range.begin + (i * tickTime);
                 var yearString = convertTimeToString(year);
+
                 // Draw text centered above tick
                 context.fillText(yearString, (i * tickWidth) - (yearString.length * 5), _height - 30);
             }

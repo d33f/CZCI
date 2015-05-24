@@ -8,7 +8,8 @@ using System.Web.Http.Cors;
 
 namespace ChronoZoom.Backend.Controllers
 {
-    [EnableCors(origins: "http://localhost:20000", headers: "*", methods: "*")]
+
+    [EnableCors(origins: "http://localhost:20000", headers: "*", methods: "GET")]
     public class TimelineController : ApiController
     {
         private ITimelineService _timelineService;
@@ -20,11 +21,11 @@ namespace ChronoZoom.Backend.Controllers
             _contentItemService = contentItemService;
         }
 
-        public IHttpActionResult Get()
+        public IHttpActionResult Get(string id)
         {
             try
             {
-                var timeline = _timelineService.Get("12:0");
+                var timeline = _timelineService.Get(id);
                 var contentItems = _contentItemService.GetAllForTimeline(timeline.Id);
                 timeline.ContentItems = contentItems.ToArray();
                 return Ok(timeline);
@@ -38,5 +39,29 @@ namespace ChronoZoom.Backend.Controllers
                 return BadRequest("An error occured");
             }
         }
+
+        /// <summary>
+        /// Create a new timeline item
+        /// </summary>
+        /// <param name="timeline">The timeline item</param>
+        /// <returns>True if succesfully added</returns>
+        //[HttpPut]
+        //public IHttpActionResult Put(Timeline timeline)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest("Timeline item invalid");
+        //    }
+
+        //    try
+        //    {
+        //        _timelineService.Add(timeline);
+        //        return Ok(true);
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return BadRequest("An error occured");
+        //    }
+        //}
     }
 }

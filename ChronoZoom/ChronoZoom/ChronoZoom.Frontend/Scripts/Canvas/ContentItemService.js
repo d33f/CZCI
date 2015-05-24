@@ -4,12 +4,14 @@
         // Public methods
         ContentItemService.addListener = addListener;
         ContentItemService.getContentItems = getContentItems;
+        ContentItemService.findTimeline = findTimeline;
         ContentItemService.findContentItemsByParentContent = findContentItemsByParentContent;
 
         // Private fields
         var _contentItems = [];
         var _contentItemChangedEvent;
         var _cache = undefined;
+        var _timelineID;
 
         // Constructor
         function initialize() {
@@ -20,9 +22,7 @@
             if (typeof(Storage) !== "undefined") {
                 _cache = window.sessionStorage;
             }
-            _cache.clear();
-            // Find timeline
-            findTimeline();
+            //_cache.clear();
         }
 
         // Add listener
@@ -45,14 +45,16 @@
         function findContentItemsByParentContent(parentContentItem) {
             // Set breadcrumb
             Canvas.Breadcrumbs.setContentItem(parentContentItem);
-
-            if (_cache !== undefined && _cache.getItem(parentContentItem.getId()) !== null) {
-                // Get content items from cache
-                setContentItems(getContentItemsFromCache(parentContentItem));
+            
+            // Get cached data
+            var cachedData = getContentItemsFromCache(parentContentItem);
+            if (cachedData !== undefined) {
+                // Set content items with cached data
+                setContentItems(cachedData);
             } else {
                 // Get from backend service
                 Canvas.BackendService.getContentItems(parentContentItem, function (contentItems) {
-                    // Set content items and update cache
+                    // Set content items and cache the data
                     setContentItems([parentContentItem]);
                     addContentItemsToCache(parentContentItem.getId(), contentItems);
                 }, function (error) {
@@ -63,64 +65,169 @@
 
         // Get content items from cache with given parent content
         function getContentItemsFromCache(parentContentItem) {
-            var contentItems = [];
+            // Check if parent content item is not root
+            if (parentContentItem.getId() === 0) {
+                var cachedData = getTimelineFromCache(_timelineID);
+                if (cachedData !== undefined) {
+                    return cachedData.contentItems;
+                }
+
+                // Timeline not found in cache
+                return undefined;
+            }
 
             // Check for caching
             if (_cache !== undefined) {
-                // Get from cache
-                var items = JSON.parse(_cache.getItem(parentContentItem.getId()));
-                var length = items.length;
-                for (var i = 0; i < length; i++) {
-                    contentItems.push(new ContentItem(items[i], parentContentItem));
+                // Try to get the data from the cache
+                var data = _cache.getItem("C" + parentContentItem.getId());
+
+                // Check if data is found
+                if (data !== null) {
+                    // Clear children
+                    parentContentItem.clearChildren();
+
+                    // Parse json and create content items from cache
+                    var contentItems = convertDataArrayToContentItems(JSON.parse(data), parentContentItem);
+
+                    // Add parent content item to response
+                    contentItems.push(parentContentItem);
+
+                    // Return response
+                    return contentItems;
                 }
             }
 
-            // Add to content items if not root
-            if (parentContentItem.getId() != 0) {
-                contentItems.push(parentContentItem);
+            // No caching or data not found
+            return undefined;
+        }
+
+        // Add content items to cache
+        function addContentItemsToCache(parentContentItemID, contentItems) {
+            // Check for caching
+            if (_cache !== undefined) {
+                // Get data from all content items
+                var items = convertContentItemsToDataArray(contentItems);
+
+                // Store in cache as json
+                _cache.setItem("C" + parentContentItemID, JSON.stringify(items));
+            }
+        }
+
+        // Convert content items to array by getting all the data objects from each content item
+        function convertContentItemsToDataArray(contentItems) {
+            var items = [];
+
+            var length = contentItems.length;
+            for (var i = 0; i < length; i++) {
+                items.push(contentItems[i].getData());
+            }
+
+            return items;
+        }
+
+        // Convert data array to content item objects
+        function convertDataArrayToContentItems(data, parentContentItem) {
+            var contentItems = [];
+
+            var length = data.length;
+            for (var i = 0; i < length; i++) {
+                contentItems.push(new ContentItem(data[i], parentContentItem));
             }
 
             return contentItems;
         }
 
-        function addContentItemsToCache(parentContentItemID, contentItems) {
-            // Check for caching
-            if (_cache !== undefined) {
-                // Get data from all content items
-                var items = [];
-                var length = contentItems.length;
-                for (var i = 0; i < length; i++) {
-                    items.push(contentItems[i].getData());
-                }
+        // Find timeline
+        function findTimeline(timelineId) {
+            // Get cached data
+            var cachedData = getTimelineFromCache(timelineId);
+            if (cachedData !== undefined) {
+                // Set the timeline with the cached data
+                setTimeline(cachedData);
+            } else {
+                // Get from backend service
+                Canvas.BackendService.getTimeline(timelineId,function (timeline) {
+                    // Cache the timeline
+                    addTimelineToCache(timeline.id, timeline);
 
-                // Store in cache as json
-                _cache.setItem(parentContentItemID, JSON.stringify(items));
+                    // Set the timeline
+                    setTimeline(timeline);
+                }, function (error) {
+                    console.log("No timeline data found!!!", error);
+                });
             }
         }
 
-        // Find timeline
-        function findTimeline() {
-            // Get from backend service
-            Canvas.BackendService.getTimeline(function (timeline) {
-                // Set timeline range
-                Canvas.Timescale.setRange(timeline.beginDate, timeline.endDate);
+        // Set the new timeline
+        function setTimeline(timeline) {
+            // Set current timeline id
+            _timelineID = timeline.id;
 
-                // Set breadcrumb
-                var parentContentItem = timeline.contentItems[0].getParentContentItem();
-                Canvas.Breadcrumbs.setContentItem(parentContentItem);
+            // Set timeline range
+            Canvas.Timescale.setRange(timeline.beginDate, timeline.endDate);
 
-                // Set content items
-                setContentItems(timeline.contentItems);
+            // Set breadcrumb with root
+            var parentContentItem = timeline.contentItems[0].getParentContentItem();
+            Canvas.Breadcrumbs.setContentItem(parentContentItem);
 
-                // Add content items to cache
-                addContentItemsToCache(parentContentItem.getId(), timeline.contentItems);
+            // Set content items
+            setContentItems(timeline.contentItems);
 
-                //Set title and range of the window
-                Canvas.WindowManager.setTitle(timeline.title);
-                Canvas.WindowManager.setTimeRange(timeline.beginDate + ' - ' + timeline.endDate);
-            }, function (error) {
-                console.log("No timeline data found!!!", error);
-            });
+            // Set title and range of the window
+            Canvas.WindowManager.setTitle(timeline.title);
+            Canvas.WindowManager.setTimeRange(timeline.beginDate + ' - ' + timeline.endDate);
+        }
+
+        // Add timeline to cache
+        function addTimelineToCache(timelineID, timeline) {
+            // Check for caching
+            if (_cache !== undefined) {
+                // Get data from all content items
+                var items = convertContentItemsToDataArray(timeline.contentItems);
+
+                // Store in cache as json
+                _cache.setItem("T" + timelineID, JSON.stringify({
+                    id: timelineID,
+                    beginDate: timeline.beginDate,
+                    endDate: timeline.endDate,
+                    title: timeline.title,
+                    contentItems: items,
+                    parentContentItem: timeline.contentItems[0].getParentContentItem().getData()
+                }));
+            }
+        }
+
+        // Get timeline from cache with given timeline id
+        function getTimelineFromCache(timelineID) {
+            // Check for caching
+            if (_cache !== undefined) {
+                // Try to get the data from the cache
+                var data = _cache.getItem("T" + timelineID);
+
+                // Check if data is found
+                if (data !== null) {
+                    // Parse data to json
+                    var json = JSON.parse(data);
+
+                    // Create parent content item
+                    var parentContentItem = new ContentItem(json.parentContentItem, undefined);
+
+                    // Parse json and create content items from cache
+                    var contentItems = convertDataArrayToContentItems(json.contentItems, parentContentItem);
+
+                    // Return response
+                    return {
+                        id: json.id,
+                        beginDate: json.beginDate,
+                        endDate: json.endDate,
+                        title: json.title,
+                        contentItems: contentItems
+                    };
+                }
+            }
+
+            // No caching or data not found
+            return undefined;
         }
 
         initialize();

@@ -5,23 +5,34 @@
         Timeline.draw = draw;
         Timeline.update = update;
         Timeline.handleClickOnTimeline = handleClickOnTimeline;
-
+        Timeline.setTimeline = setTimeline;
         // Private fields
         var _contentItems = [];
-        var _isLoading = true;
 
         // Constructor
         function initialize() {
             Canvas.ContentItemService.addListener(onContentItemsChanged);
         }
 
+        function setTimeline(timelineId) {
+            Canvas.ContentItemService.findTimeline(timelineId);
+        }
+
         // Handle on content item changed event
         function onContentItemsChanged() {
-            // Get content items
+            var oldContentItems = _contentItems;
+
+            // Get and set content items
             _contentItems = Canvas.ContentItemService.getContentItems();
 
-            // Update flags
-            _isLoading = false;
+            // Destruct old content items
+            var length = oldContentItems.length;
+            for (var i = 0; i < length; i++) {
+                oldContentItems[i].destructor();
+            }
+
+            // Hide loader
+            Canvas.WindowManager.showLoader(false);
         }
 
         // Update the timeline
@@ -35,23 +46,9 @@
 
         // Draw the timeline
         function draw() {
-            if (_isLoading) {
-                drawLoader();
-            } else {
-                document.getElementById('loader').style.visibility = 'hidden';
                 drawContentItems();
                 drawToolTip();
             }
-        }
-
-        // Draw loader
-        function drawLoader() {
-            var context = Canvas.getContext();
-            //context.font = Canvas.Settings.getTimescaleTickLabelFont();
-            //context.fillStyle = Canvas.Settings.getTimescaleTickLabelColor();
-            //context.fillText("LOADING...", 100, 100);
-
-        }
 
         // Draw (visible) content items
         function drawContentItems() {
@@ -83,16 +80,21 @@
             }
         }
 
-        // Draw tooltip
         function drawToolTip() {
             var _contentItemOnMousePosition = getContentItemOnMousePosition();
 
             if (_contentItemOnMousePosition !== undefined) {
-                Canvas.Tooltip.update(_contentItemOnMousePosition);
-                Canvas.Tooltip.draw();
+                if (!_contentItemOnMousePosition.getFullScreen()) {
+                    Canvas.Tooltip.update(_contentItemOnMousePosition);
+                    Canvas.Tooltip.draw();
+                }
             }
+
+            var container = Canvas.getCanvasContainer();
+            //container.style.cursor = _contentItemOnMousePosition !== undefined ? 'pointer' : 'default';
         }
 
+        // Handle the click on timeline event
         function handleClickOnTimeline() {
             // Find clicked item
             var clickedContentItem = getContentItemOnMousePosition();
@@ -138,8 +140,8 @@
 
         // Handle click on content item with children
         function handleClickOnContentItemWithChildren(contentItem) {
-            // Mark loading flag
-            _isLoading = true;
+            // Show loader
+            Canvas.WindowManager.showLoader(true);
 
             // Get children
             Canvas.ContentItemService.findContentItemsByParentContent(contentItem);
@@ -161,7 +163,7 @@
             return undefined;
         }
 
-
+        // Check if current content item collides given content item
         function checkCollision(contentItem) {
             var position = Canvas.Mousepointer.getPosition();
             if (contentItem.collides(position.x, position.y)) {

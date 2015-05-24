@@ -14,6 +14,6 @@ namespace ChronoZoom.Backend.Data.OrientDb
         public decimal EndDate { get; set; }
         public string Source { get; set; }
         public bool HasChildren { get; set; }
-        public int Priref { get; set; }
+        //public int Priref { get; set; }
     }
 }

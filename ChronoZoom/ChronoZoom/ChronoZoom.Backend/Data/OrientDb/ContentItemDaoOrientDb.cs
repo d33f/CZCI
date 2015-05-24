@@ -25,7 +25,7 @@ namespace ChronoZoom.Backend.Data.OrientDb
                     string queryWithparam = "select * from contentitem where @rid in (select out('Contains') from ContentItem where @rid=#" + parentID + ")";
 
                     List<ContentItem> list = db.Query<ContentItem>(queryWithparam);
-                    return ContentItemFactory.CreateList(list);
+                    return ContentItemFactory.CreateList(parentID,list);
                 }
                 catch (Exception ex)
                 {
@@ -40,10 +40,10 @@ namespace ChronoZoom.Backend.Data.OrientDb
             {
                 try
                 {
-                    string queryWithparam = "select * from contentitem where @rid in (select out('Contains') from Timeline where @rid=#" + parentID + ")";
+                    string queryWithparam = "select * from contentitem where @rid in (select out('Contains') from TimeLine where @rid=#" + parentID + ")";
 
                     List<ContentItem> list = db.Query<ContentItem>(queryWithparam);
-                    return ContentItemFactory.CreateList(list);
+                    return ContentItemFactory.CreateList(parentID,list);
                 }
                 catch (Exception ex)
                 {
