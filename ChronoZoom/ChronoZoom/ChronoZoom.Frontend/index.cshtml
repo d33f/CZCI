@@ -3,59 +3,73 @@
 <html>
 <head>
     <title>ChronoZoom</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.12.2/semantic.css" />
 </head>
 <body>
-<div id="header">
-    <div id="title"></div>
-    <div id="timerange"></div>
-    <div id="menuButtons">
-        <button onclick="Canvas.PanelManager.showTimelinePanel(true)">My Timelines</button>
-        <button onclick="Canvas.PanelManager.handleImportPanel()">Import panel</button>
+    <div id="header">
+        <div id="title"></div>
+        <div id="timerange"></div>
+        <div id="menuButtons">
+            <button class="compact ui button default" onclick="Canvas.PanelManager.showTimelinePanel(true)">My Timelines</button>
+            <button class="compact ui button default" onclick="Canvas.PanelManager.handleImportPanel()">Import panel</button>
+        </div>
     </div>
-</div>
-<div id="inputPanel" class="inputPanelHidden">
-    <h1>Timelines</h1>
-    <ul>
-        <li><a href="#" onclick="Canvas.setTimeline('12:1')">Worldwars timeline</a></li>
-        <li><a href="#" onclick="Canvas.setTimeline('12:0')">Musea of the netherlands timeline</a></li>
-    </ul>
-</div>
-<div id="importPanel" class="importPanelHidden">
-    <h1>Add Timeline</h1>
-    <ul>
-        <li>
-            Title: <input type="text" id="titleInput" value="Enter title.." required/>
-        </li>
-        <li>
-            <br />
-        </li>
-        <li>
-            Start date: <input type="number" id="startDateInput" value="0" required/>
-        </li>
-        <li>
-            <br />
-        </li>
-        <li>
-            End date: <input type="number" id="endDateInput" value="2015" required/>
-        </li>
-        <li>
-            <br />
-        </li>
-        <li>
-            <button onclick="Canvas.PanelManager.handleImportPanelInput()">Submit</button>
-        </li>
-    </ul>
-    <div id="importOutput">
+    <div id="inputPanel" class="inputPanelHidden">
+        <h1>Timelines</h1>
+        <ul>
+            <li><a href="#" onclick="Canvas.setTimeline('12:1')">Worldwars timeline</a></li>
+            <li><a href="#" onclick="Canvas.setTimeline('12:0')">Musea of the netherlands timeline</a></li>
+            <li>
+                <div class="compact ui button green small">
+                    <i class="icon add"></i>
+                    Add Timeline
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div id="importPanel" class="importPanelHidden">
+        <h1>Add Timeline</h1>
+        <ul>
+            <li>
+                Title: <input type="text" id="titleInput" value="Enter title.." required />
+            </li>
+            <li>
+                <br />
+            </li>
+            <li>
+                Start date: <input type="number" id="startDateInput" value="0" required />
+            </li>
+            <li>
+                <br />
+            </li>
+            <li>
+                End date: <input type="number" id="endDateInput" value="2015" required />
+            </li>
+            <li>
+                <br />
+            </li>
+            <li>
+                <button onclick="Canvas.PanelManager.handleImportPanelInput()">Submit</button>
+            </li>
+        </ul>
+        <div id="importOutput">
 
+        </div>
     </div>
-</div>
-<div id="canvasContainer">
-    <canvas id="canvas"></canvas>
-    <div id="loader">
-        <img id="loaderGif" src="Resources/loader.gif"/>
-    </div>
-</div>
-@Scripts.Render("~/bundles/js/canvas")
-@Styles.Render("~/bundles/css")
+    <div id="canvasContainer">
+        <canvas id="canvas"></canvas>
+        @*<div id="loader">
+            <img id="loaderGif" src="Resources/loader.gif" />
+        </div>*@
+        <div id="loader" class="">
+            <div class="ui active dimmer">
+                <div class="ui medium text loader">Loading timeline</div>
+            </div>
+            <p></p>
+            <p></p>
+        </div>
+        </div>
+    @Scripts.Render("~/bundles/js/canvas")
+    @Styles.Render("~/bundles/css")
 </body>
 </html>
