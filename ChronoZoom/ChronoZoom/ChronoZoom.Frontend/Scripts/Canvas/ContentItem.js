@@ -550,32 +550,22 @@
 
     // Check if current content item collides given content item
     function collidesContentItemCircle(contentItem) {
-        var aX = _x;
-        var aY = _y;
-        var aRadius = _radius;
+        var centerpointAX = _x + _radius;
+        var centerpointAY = _y + _radius;
 
         var position = contentItem.getPosition();
         var size = contentItem.getSize();
 
-        var bX = position.x;
-        var bY = position.y;
+        var centerpointBX = position.x + size.radius;
+        var centerpointBY = position.y + size.radius;
         var bRadius = size.radius;
 
         // distance between centerpointX and x
-        var deltaX;
-        if (aX >= bX) {
-            deltaX = aX - bX;
-        } else {
-            deltaX = bX - aX;
-        }
+        var deltaX = centerpointAX >= centerpointBX ? centerpointAX - centerpointBX : centerpointBX - centerpointAX;
 
         // distance between centerpointY and y
-        var deltaY;
-        if (aY >= bY) {
-            deltaY = aY - bY;
-        } else {
-            deltaY = bY - aY;
-        }
+        var deltaY = centerpointAY >= centerpointBY ? centerpointAY - centerpointBY : centerpointBY - centerpointAY;
+
 
         // angle between centerpoint and given position (in radial)
         var angle = Math.atan(deltaY / deltaX);
@@ -588,7 +578,7 @@
 
         // is mousepoint in circle
         distance = (deltaX === 0 && deltaY === 0) ? 0 : distance;
-        return ((aRadius + bRadius) >= distance);
+        return ((_radius + bRadius) >= distance);
     }
 
     // Return object instance
