@@ -30,7 +30,7 @@
         // Start the mouse pointer and draw process loop
         Canvas.Mousepointer.start();
         Canvas.WindowManager.showLoader(false);
-         canvasDrawProcessLoop();
+        canvasDrawProcessLoop();
     }
 
     function setTimeline(timelineId) {
