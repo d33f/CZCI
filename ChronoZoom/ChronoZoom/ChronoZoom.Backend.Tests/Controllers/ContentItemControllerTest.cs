@@ -117,7 +117,7 @@ namespace ChronoZoom.Backend.Tests.Controllers
             Assert.IsNotNull(result);
             Assert.IsTrue(result is BadRequestErrorMessageResult);
             Assert.AreEqual(false, target.ModelState.IsValid);
-            Assert.AreEqual(4, target.ModelState.Count);
+            Assert.AreEqual(3, target.ModelState.Count);
         }
 
         [TestMethod]

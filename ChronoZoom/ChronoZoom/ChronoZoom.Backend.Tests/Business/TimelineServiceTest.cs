@@ -29,7 +29,7 @@ namespace ChronoZoom.Backend.Tests.Business
 
             // Assert
             Assert.IsNotNull(result);
-            Assert.AreEqual("1:0", result.Id);
+            Assert.AreEqual(1, result.Id);
             Assert.AreEqual("1ste wereld oorlog", result.Title);
             Assert.AreEqual(1914M, result.BeginDate);
             Assert.AreEqual(1918M, result.EndDate);
