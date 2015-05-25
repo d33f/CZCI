@@ -28,7 +28,7 @@ namespace ChronoZoom.Backend.Tests.Controllers
             TimelineController target = new TimelineController(mock.Object, contentItemMock.Object);
 
             // Act
-            IHttpActionResult result = target.Get();
+            IHttpActionResult result = target.Get("12:0");
 
             // Assert
             Assert.IsNotNull(result);
@@ -46,7 +46,7 @@ namespace ChronoZoom.Backend.Tests.Controllers
             TimelineController target = new TimelineController(mock.Object, contentItemMock.Object);
 
             // Act
-            IHttpActionResult result = target.Get();
+            IHttpActionResult result = target.Get("12:0");
 
             // Assert
             Assert.IsNotNull(result);
@@ -63,7 +63,7 @@ namespace ChronoZoom.Backend.Tests.Controllers
             TimelineController target = new TimelineController(mock.Object, contentItemMock.Object);
 
             // Act
-            IHttpActionResult result = target.Get();
+            IHttpActionResult result = target.Get("12:0");
 
             // Assert
             Assert.IsNotNull(result);

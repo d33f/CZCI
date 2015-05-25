@@ -138,15 +138,15 @@
         }
 
         // Find timeline
-        function findTimeline() {
-            // Get cached data (TODO: now timeline is still hardcoded, should be dynamic)
-            var cachedData = getTimelineFromCache("1");
+        function findTimeline(timelineId) {
+            // Get cached data
+            var cachedData = getTimelineFromCache(timelineId);
             if (cachedData !== undefined) {
                 // Set the timeline with the cached data
                 setTimeline(cachedData);
             } else {
                 // Get from backend service
-                Canvas.BackendService.getTimeline(function (timeline) {
+                Canvas.BackendService.getTimeline(timelineId,function (timeline) {
                     // Cache the timeline
                     addTimelineToCache(timeline.id, timeline);
 

@@ -26,24 +26,23 @@ canvas {
     padding: 5px;
 }
 
-#breadcrumbs, #breadcrumbs a {
-    color: gold;
-    text-decoration: none;
-}
+    #breadcrumbs, #breadcrumbs a {
+        color: gold;
+        text-decoration: none;
+    }
 
-#breadcrumbs a:hover {
-    color: yellow;
-    cursor: pointer;
-    text-decoration: underline;
-}
+        #breadcrumbs a:hover {
+            color: yellow;
+            cursor: pointer;
+            text-decoration: underline;
+        }
 
 #loader {
     position: fixed;
     z-index: 2;
     top: 0px;
     left: 0px;
-    background-color: black;
-    width: 100%;
+   width: 100%;
     height: 100%;
 }
 
@@ -95,24 +94,27 @@ div.contentItemTitle {
 
 /* INPUT PANEL */
 div#inputPanel {
-
     transition: left .6s ease;
     width: 400px;
-    background-color: rgb(35,35,35);
+    background-color: #1B1C1D;
     color: #e0e0e0;
     position: absolute;
     top: 40px;
     bottom: 0;
     height: 100%;
     z-index: 1500;
+    padding: 10px;
 }
+
 .inputPanelHidden {
     left: -420px;
     display: inline;
 }
+
 .inputPanelShow {
-    left: -0px; 
+    left: -0px;
 }
+
 #inputPanel > h1 {
     font-size: 150%;
     width: 33%;
@@ -120,69 +122,105 @@ div#inputPanel {
     margin-bottom: 10px;
 }
 
-/* INPUT PANEL Items*/
-#inputPanel  ul {
+/* Import PANEL */
+div#importPanel {
+    transition: right .6s ease;
+    font-size: 20px;
+    width: 400px;
+    background-color: #1B1C1D;
+    color: #e0e0e0;
+    position: absolute;
+    top: 40px;
+    bottom: 0;
+    height: 100%;
+    z-index: 1500;
+}
+
+.importPanelHidden {
+    right: -420px;
+    display: inline;
+}
+
+.importPanelShow {
+    right: -0px;
+}
+
+#importPanel > h1 {
+    font-size: 120%;
+    margin: 0 auto;
+    margin-bottom: 10px;
+    margin-left: 150px;
+}
+
+/* Import PANEL Items*/
+#importPanel ul {
     list-style-type: none;
 }
-#inputPanel ul li {
-    margin: 0;
-    border-top: 1px solid #303030;
-}
-#inputPanel ul li a {  
-    display: block;  
-    padding: 20px;  
-    background-color: rgb(35,35,35);
-    font-family: Verdana;  
-    color: white;  
-    text-decoration: none;
-    font-style: italic;
-}  
-#inputPanel ul li a:hover {  
-    background-color: rgb(60,60,60);
-} 
+
+    #importPanel ul li {
+        margin: 0;
+        border-top: 1px solid #1B1C1D;
+    }
+
+        #importPanel ul li a {
+            display: block;
+            padding: 20px;
+            background-color: rgb(35,35,35);
+            font-family: Verdana;
+            color: white;
+            text-decoration: none;
+            font-style: italic;
+        }
+
+            #importPanel ul li a:hover {
+                background-color: rgb(60,60,60);
+            }
+
 
 /* Menu */
 #header {
     width: 100%;
-    background-color: rgb(35,35,35);
+    background-color: #1B1C1D;
     height: 40px;
     color: #eeeeee;
 }
 
-#header > #title {
-    float: left;
-    font-size: 120%;
-    font-style: italic;
-    padding: 0 10px 0 10px;
-    line-height: 40px;
-}
+    #header > #title {
+        float: left;
+        font-size: 120%;
+        font-style: italic;
+        padding: 0 10px 0 10px;
+        line-height: 40px;
+    }
 
-#header > #timerange {
-    float: left;
-    font-size: 70%;
-    line-height: 40px;
-}
+    #header > #timerange {
+        float: left;
+        font-size: 70%;
+        line-height: 40px;
+    }
 
-#header > #menuButtons {
-    margin-top: 10px;
-    float: right;
-}
+    #header > #menuButtons {
+        margin-top: 2px;
+        float: right;
+    }
 
-#header > #timerange:after, #header > #title:after {
-    clear: both;
-}
+    #header > #timerange:after, #header > #title:after {
+        clear: both;
+    }
 
 ::-webkit-scrollbar {
     width: 10px;
 }
- 
+
 ::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
     border-radius: 10px;
 }
- 
+
 ::-webkit-scrollbar-thumb {
     border-radius: 10px;
-    background: rgba(255,255,255,0.8); 
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+    background: rgba(255,255,255,0.8);
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
 }
+
+/*Button*/
