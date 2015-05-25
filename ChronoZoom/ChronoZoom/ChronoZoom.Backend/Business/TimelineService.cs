@@ -13,7 +13,7 @@ namespace ChronoZoom.Backend.Business
             _timelineDao = timelineDao;
         }
 
-        public Entities.Timeline Get(string id)
+        public Entities.Timeline Get(int id)
         {
             return _timelineDao.Find(id);
         }

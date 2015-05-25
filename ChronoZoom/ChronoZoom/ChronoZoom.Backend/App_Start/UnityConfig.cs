@@ -5,6 +5,7 @@ using ChronoZoom.Backend.Data;
 using ChronoZoom.Backend.Data.Interfaces;
 using Microsoft.Practices.Unity;
 using System.Diagnostics.CodeAnalysis;
+using ChronoZoom.Backend.Data.MSSQL.Dao;
 using ChronoZoom.Backend.Data.OrientDb;
 
 namespace ChronoZoom.Backend
@@ -41,8 +42,8 @@ namespace ChronoZoom.Backend
             // NOTE: To load from web.config uncomment the line below. Make sure to add a Microsoft.Practices.Unity.Configuration to the using statements.
             // container.LoadConfiguration();
 
-            container.RegisterType<ITimelineDao, TimelineDaoOrientDb>();
-            container.RegisterType<IContentItemDao, ContentItemDaoOrientDb>();
+            container.RegisterType<ITimelineDao, TimelineMssqlDao>();
+            container.RegisterType<IContentItemDao, ContentItemMssqlDao>();
 
             container.RegisterType<ITimelineService, TimelineService>();
             container.RegisterType<IContentItemService, ContentItemService>();

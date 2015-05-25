@@ -8,28 +8,28 @@ namespace ChronoZoom.Backend.Business
 {
     public class ContentItemServiceMock : IContentItemService
     {
-        public IEnumerable<Entities.ContentItem> GetAll(string parentContentItemID)
+        public IEnumerable<Entities.ContentItem> GetAll(int parentContentItemID)
         {
             switch (parentContentItemID)
             {
-                case "1:0":
+                case 1:
                     return WorldWarI();
-                case "2:0":
+                case 2:
                     return WorldWarII();
-                case "24:0":
+                case 24:
                     return AnneFrank();
                 default:
                     return null;
             }
         }
 
-        public IEnumerable<Entities.ContentItem> GetAllForTimeline(string parentContentItemID)
+        public IEnumerable<Entities.ContentItem> GetAllForTimeline(int parentContentItemID)
         {
             return new Entities.ContentItem[] 
             {
                 new Entities.ContentItem()
                 {
-                    Id = "1:0",
+                    Id = 1,
                     BeginDate = 1914M,
                     EndDate = 1918M,
                     HasChildren = true,
@@ -38,7 +38,7 @@ namespace ChronoZoom.Backend.Business
                 },
                 new Entities.ContentItem()
                 {
-                    Id = "2:0",
+                    Id = 2,
                     BeginDate = 1940M,
                     EndDate = 1945M,
                     HasChildren = true,
@@ -54,7 +54,7 @@ namespace ChronoZoom.Backend.Business
             { 
                 new Entities.ContentItem()
                 {
-                    Id = "11:0",
+                    Id =11,
                     BeginDate = 1914M,
                     EndDate = 1914M,
                     HasChildren = false,
@@ -63,7 +63,7 @@ namespace ChronoZoom.Backend.Business
                 },
                 new Entities.ContentItem()
                 {
-                    Id = "12:0",
+                    Id = 12,
                     BeginDate = 1914M,
                     EndDate = 1914M,
                     HasChildren = false,
@@ -72,7 +72,7 @@ namespace ChronoZoom.Backend.Business
                 },
                 new Entities.ContentItem()
                 {
-                    Id = "13:0",
+                    Id = 13,
                     BeginDate = 1916M,
                     EndDate = 1916M,
                     HasChildren = false,
@@ -81,7 +81,7 @@ namespace ChronoZoom.Backend.Business
                 },
                 new Entities.ContentItem()
                 {
-                    Id = "14:0",
+                    Id = 14,
                     BeginDate = 1916M,
                     EndDate = 1916M,
                     HasChildren = false,
@@ -97,7 +97,7 @@ namespace ChronoZoom.Backend.Business
             { 
                 new Entities.ContentItem()
                 {
-                    Id = "21:0",
+                    Id =21,
                     BeginDate = 1940M,
                     EndDate = 1940M,
                     HasChildren = false,
@@ -106,7 +106,7 @@ namespace ChronoZoom.Backend.Business
                 },
                 new Entities.ContentItem()
                 {
-                    Id = "22:0",
+                    Id = 22,
                     BeginDate = 1941M,
                     EndDate = 1941M,
                     HasChildren = false,
@@ -115,7 +115,7 @@ namespace ChronoZoom.Backend.Business
                 },
                 new Entities.ContentItem()
                 {
-                    Id = "23:0",
+                    Id = 23,
                     BeginDate = 1943M,
                     EndDate = 1943M,
                     HasChildren = false,
@@ -124,7 +124,7 @@ namespace ChronoZoom.Backend.Business
                 },
                 new Entities.ContentItem()
                 {
-                    Id = "24:0",
+                    Id = 24,
                     BeginDate = 1940M,
                     EndDate = 1945M,
                     HasChildren = true,
@@ -140,7 +140,7 @@ namespace ChronoZoom.Backend.Business
             { 
                 new Entities.ContentItem()
                 {
-                    Id = "31:0",
+                    Id = 31,
                     BeginDate = 1944M,
                     EndDate = 1944M,
                     HasChildren = false,
@@ -149,7 +149,7 @@ namespace ChronoZoom.Backend.Business
                 },
                 new Entities.ContentItem()
                 {
-                    Id = "32:0",
+                    Id = 32,
                     BeginDate = 1941M,
                     EndDate = 1941M,
                     HasChildren = false,
@@ -158,7 +158,7 @@ namespace ChronoZoom.Backend.Business
                 },
                 new Entities.ContentItem()
                 {
-                    Id = "33:0",
+                    Id = 33,
                     BeginDate = 1945M,
                     EndDate = 1945M,
                     HasChildren = false,

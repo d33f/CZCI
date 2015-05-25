@@ -2,21 +2,21 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using ChronoZoom.Backend.Data.MSSQL.Entities;
 
-namespace ChronoZoom.Backend.Data.OrientDb.Factory
+namespace ChronoZoom.Backend.Data.MSSQL.Factory
 {
     public class TimelineFactory
     {
-        public static Entities.Timeline Create(Timeline timeline)
+        public static Backend.Entities.Timeline Create(Timeline timeline)
         {
             //var id = timeline.ORID.RID.Substring(1, timeline.ORID.RID.Length-1);
-            var id = 0;
-            return new Entities.Timeline()
+            return new Backend.Entities.Timeline()
             {
                 BeginDate = timeline.BeginDate,
                 EndDate = timeline.EndDate,
-                ContentItems = new Entities.ContentItem[0],
-                Id = id,
+                ContentItems = new Backend.Entities.ContentItem[0],
+                Id = timeline.Id,
                 Title = timeline.Title
             };
         }
