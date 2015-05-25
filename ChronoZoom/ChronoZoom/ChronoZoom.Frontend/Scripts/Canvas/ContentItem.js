@@ -259,8 +259,9 @@
             var rightX = _x + _width;
             var deltaRight = parentRightX - rightX;
 
-            if (deltaRight < 0)
+            if (deltaRight < 0) {
                 _width += deltaRight;
+            }
 
             _width = (rightX <= parentRightX - spacing) ? _width : (_width - spacing);
 

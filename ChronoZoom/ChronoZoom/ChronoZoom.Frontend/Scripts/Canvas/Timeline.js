@@ -6,6 +6,7 @@
         Timeline.update = update;
         Timeline.handleClickOnTimeline = handleClickOnTimeline;
         Timeline.setTimeline = setTimeline;
+
         // Private fields
         var _contentItems = [];
 
@@ -46,9 +47,9 @@
 
         // Draw the timeline
         function draw() {
-                drawContentItems();
-                drawToolTip();
-            }
+            drawContentItems();
+            drawToolTip();
+        }
 
         // Draw (visible) content items
         function drawContentItems() {
@@ -83,15 +84,17 @@
         function drawToolTip() {
             var _contentItemOnMousePosition = getContentItemOnMousePosition();
 
-            if (_contentItemOnMousePosition !== undefined) {
-                if (!_contentItemOnMousePosition.getFullScreen()) {
-                    Canvas.Tooltip.update(_contentItemOnMousePosition);
-                    Canvas.Tooltip.draw();
-                }
+            if (_contentItemOnMousePosition !== undefined && !_contentItemOnMousePosition.getFullScreen()) {
+                Canvas.Tooltip.update(_contentItemOnMousePosition);
+                Canvas.Tooltip.draw();
             }
 
             var container = Canvas.getCanvasContainer();
-            //container.style.cursor = _contentItemOnMousePosition !== undefined ? 'pointer' : 'default';
+            var cursor = _contentItemOnMousePosition !== undefined ? 'pointer' : 'default';
+            
+            if (container.style.cursor !== cursor) {
+                container.style.cursor = cursor;
+            }
         }
 
         // Handle the click on timeline event

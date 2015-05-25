@@ -42,7 +42,6 @@
             if (_contentItemHasChildren) {
                 if ((_contentItemPosition.x + _contentItemSize.width + _tooltipWidth) < canvasWidth) {
                     positionsRightSideRectangle();
-                    //positionsRightSideRectangle();
                 } else if (_contentItemPosition.x - _tooltipWidth > 0) {
                     positionsLeftSideRectangle();
                 } else {
