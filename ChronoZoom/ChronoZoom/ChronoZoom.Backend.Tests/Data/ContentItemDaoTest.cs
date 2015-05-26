@@ -25,5 +25,18 @@ namespace ChronoZoom.Backend.Tests.Data
             // Assert
             Assert.AreEqual(51, result.Count());
         }
+
+        [TestMethod]
+        public void ContentItemDao_FindAllForTimeline_IntegrationTest()
+        {
+            // Arrange
+            IContentItemDao target = new ContentItemMssqlDao();
+
+            // Act
+            IEnumerable<ContentItem> result = target.FindAllForTimeline(18);
+
+            // Assert
+            Assert.AreEqual(2, result.Count());
+        }
     }
 }
