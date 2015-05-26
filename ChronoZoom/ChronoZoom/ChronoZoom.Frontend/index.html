@@ -1,0 +1,103 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>ChronoZoom</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.12.2/semantic.css"/>
+    <link rel="icon" href="Resources/favicon.ico" />
+</head>
+<body>
+    <div id="header">
+        <div id="title"></div>
+        <div id="timerange"></div>
+        <div id="menuButtons">
+            <button class="compact ui button default" onclick="Canvas.PanelManager.showTimelinePanel(true)">My Timelines</button>
+            <button class="compact ui button default" onclick="Canvas.PanelManager.handleImportPanel()">Import panel</button>
+        </div>
+    </div>
+    <div id="inputPanel" class="inputPanelHidden">
+        <h1>Timelines</h1>
+
+
+        <div class="ui divided list inverted">
+            <div class="item">
+                <i class="list layout icon"></i>
+                <div class="content">
+                    <a class="header" href="#" onclick="Canvas.setTimeline('18')">Worldwars timeline</a>
+                    <div class="description">A timeline about the first and second worldwar. This timeline has special focus to Anne Frank</div>
+                </div>
+            </div>
+            <div class="item">
+                <i class="list layout  icon"></i>
+                <div class="content">
+                    <a class="header" href="#" onclick="Canvas.setTimeline('13')">Musea of the netherlands timeline</a>
+                    <div class="description">This timeline is all about the first 400 creators of the Amsterdam museum. Also do these creators show their work in chronological order.</div>
+                </div>
+            </div>
+
+        </div>
+        <div class="compact ui button green small">
+            <i class="icon add"></i>
+            Add Timeline
+        </div>
+    </div>
+    <div id="importPanel" class="importPanelHidden">
+        <h1>Add Timeline</h1>
+        <div class="ui error inverted form segment">
+            <div class="ui error message">
+                <div class="header">Not possible</div>
+                <p>At this moment it is not possible to add a personal timeline</p>
+            </div>
+            <div class="field">
+                <label>Title</label>
+                <input id="titleInput" placeholder="Timeline title" type="text">
+            </div>
+            <div class="two fields">
+                <div class="field">
+                    <label>Begin date</label>
+                    <input id="startDateInput" placeholder="Begin date" type="text">
+                </div>
+                <div class="field">
+                    <label>End date</label>
+                    <input id="endDateInput" placeholder="End date" type="text">
+                </div>
+            </div>
+            <div class="field">
+                <label>Description</label>
+                <textarea id="descriptionInput" placeholder="Timeline description"></textarea>
+            </div>
+            <div class="ui submit button green" onclick="Canvas.PanelManager.handleImportPanelInput()">Create timeline!</div>
+        </div>
+ 
+        <div id="importOutput">
+
+        </div>
+    </div>
+    <div id="canvasContainer">
+        <canvas id="canvas"></canvas>
+
+        <div id="loader" class="">
+            <div class="ui active dimmer">
+                <div class="ui medium text loader">Loading timeline</div>
+            </div>
+            <p></p>
+            <p></p>
+        </div>
+    </div>
+    <script src="Scripts/Canvas/Settings.js"></script>
+    <script src="Scripts/Canvas/WindowManager.js"></script>
+    <script src="Scripts/Canvas/PanelManager.js"></script>
+    <script src="Scripts/Canvas/ContentItem.js"></script>
+    <script src="Scripts/Canvas/BackendService.js"></script>
+    <script src="Scripts/Canvas/PublicAPIService.js"></script>
+    <script src="Scripts/Canvas/Yearmarker.js"></script>
+    <script src="Scripts/Canvas/Timescale.js"></script>
+    <script src="Scripts/Canvas/Breadcrumbs.js"></script>
+    <script src="Scripts/Canvas/ContentItemService.js"></script>
+    <script src="Scripts/Canvas/ContentItemEnricher.js"></script>
+    <script src="Scripts/Canvas/Timeline.js"></script>
+    <script src="Scripts/Canvas/Mousepointer.js"></script>
+    <script src="Scripts/Canvas/Canvas.js"></script>
+    <script src="Scripts/Canvas/Tooltip.js"></script>
+    <link href="Styles/Style.css" rel="stylesheet" />
+</body>
+</html>

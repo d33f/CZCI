@@ -17,11 +17,11 @@ namespace ChronoZoom.Backend.Tests.Business
         {
             // Arrange
             Mock<IContentItemDao> mock = new Mock<IContentItemDao>(MockBehavior.Strict);
-            mock.Setup(setup => setup.FindAll(It.IsAny<string>())).Returns(new Entities.ContentItem[] 
+            mock.Setup(setup => setup.FindAll(It.IsAny<int>())).Returns(new Entities.ContentItem[] 
             {
                 new Entities.ContentItem()
                 {
-                    Id = "1:0",
+                    Id = 1,
                     Title = "Bevrijding",
                     BeginDate = 1945M,
                     EndDate = 1945M,
@@ -32,13 +32,13 @@ namespace ChronoZoom.Backend.Tests.Business
             ContentItemService target = new ContentItemService(mock.Object);
 
             // Act
-            IEnumerable<Entities.ContentItem> result = target.GetAll("1:0");
+            IEnumerable<Entities.ContentItem> result = target.GetAll(1);
 
             // Assert
             Assert.IsNotNull(result);
             Assert.AreEqual(1, result.Count());
             Entities.ContentItem resultFirst = result.First();
-            Assert.AreEqual("1:0", resultFirst.Id);
+            Assert.AreEqual(1, resultFirst.Id);
             Assert.AreEqual("Bevrijding", resultFirst.Title);
             Assert.AreEqual(1945M, resultFirst.BeginDate);
             Assert.AreEqual(1945M, resultFirst.EndDate);
@@ -51,11 +51,11 @@ namespace ChronoZoom.Backend.Tests.Business
         {
             // Arrange
             Mock<IContentItemDao> mock = new Mock<IContentItemDao>(MockBehavior.Strict);
-            mock.Setup(setup => setup.FindAll(It.IsAny<string>())).Throws(new ContentItemNotFoundException());
+            mock.Setup(setup => setup.FindAll(It.IsAny<int>())).Throws(new ContentItemNotFoundException());
             ContentItemService target = new ContentItemService(mock.Object);
 
             // Act
-            target.GetAll("-1");
+            target.GetAll(-1);
         }
     }
 }

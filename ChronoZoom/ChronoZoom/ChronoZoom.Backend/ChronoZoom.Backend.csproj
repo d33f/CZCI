@@ -126,6 +126,15 @@
     <Compile Include="Controllers\TimelineController.cs" />
     <Compile Include="Data\Interfaces\IContentItemDao.cs" />
     <Compile Include="Data\Interfaces\ITimelineDao.cs" />
+    <Compile Include="Data\MSSQL\Dao\ContentItemMssqlDao.cs" />
+    <Compile Include="Data\MSSQL\Dao\TimelineMssqlDao.cs" />
+    <Compile Include="Data\MSSQL\Entities\ContentItem.cs" />
+    <Compile Include="Data\MSSQL\Entities\Timeline.cs" />
+    <Compile Include="Data\MSSQL\Factory\ContentItemFactory.cs" />
+    <Compile Include="Data\MSSQL\Factory\TimelineFactory.cs" />
+    <Compile Include="Data\MSSQL\MssqlConnection.cs" />
+    <Compile Include="Data\MSSQL\SqlMapper.cs" />
+    <Compile Include="Data\MSSQL\SqlMapperAsync.cs" />
     <Compile Include="Data\OrientDb\Contains.cs" />
     <Compile Include="Data\OrientDb\ContentItem.cs" />
     <Compile Include="Data\OrientDb\ContentItemDaoOrientDb.cs" />
@@ -151,6 +160,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+    <None Include="Properties\PublishProfiles\custom.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

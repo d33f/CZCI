@@ -24,7 +24,7 @@ namespace ChronoZoom.Backend.Controllers
         /// <param name="id">parentId</param>
         /// <returns>List with contentItems by the given parent id</returns>
         [HttpGet]
-        public IHttpActionResult Get(string id)
+        public IHttpActionResult Get(int id)
         {
             try
             {

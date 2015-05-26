@@ -15,7 +15,7 @@ namespace ChronoZoom.Backend
         protected void Application_Start()
         {
             GlobalConfiguration.Configure(WebApiConfig.Register);
-            OrientDb.Initialize();
+            //OrientDb.Initialize();
 
             GlobalConfiguration.Configuration.Formatters.Clear();
             GlobalConfiguration.Configuration.Formatters.Add(new JsonMediaTypeFormatter());

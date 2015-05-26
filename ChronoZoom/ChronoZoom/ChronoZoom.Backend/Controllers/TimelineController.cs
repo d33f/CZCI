@@ -21,7 +21,7 @@ namespace ChronoZoom.Backend.Controllers
             _contentItemService = contentItemService;
         }
 
-        public IHttpActionResult Get(string id)
+        public IHttpActionResult Get(int id)
         {
             try
             {

@@ -12,7 +12,7 @@ namespace ChronoZoom.Backend.Data.OrientDb
 {
     public class TimelineDaoOrientDb : ITimelineDao
     {
-        public Entities.Timeline Find(string id)
+        public Entities.Timeline Find(int id)
         {
             using (var db = new ODatabase(OrientDb.DATABASE))
             {

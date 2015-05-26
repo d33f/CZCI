@@ -8,11 +8,11 @@ namespace ChronoZoom.Backend.Business
 {
     public class TimelineServiceMock : ITimelineService
     {
-        public Entities.Timeline Get(string id)
+        public Entities.Timeline Get(int id)
         {
             return new Entities.Timeline()
             {
-                Id = "1",
+                Id = 1,
                 BeginDate = 1900,
                 EndDate = 1950,
                 Title = "20th Century",
