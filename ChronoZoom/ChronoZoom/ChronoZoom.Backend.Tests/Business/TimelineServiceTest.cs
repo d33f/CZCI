@@ -35,6 +35,7 @@ namespace ChronoZoom.Backend.Tests.Business
             Assert.AreEqual(1918M, result.EndDate);
         }
 
+        [TestMethod]
         [ExpectedException(typeof(TimelineNotFoundException))]
         public void TimelineService_GetNotFound_Test()
         {

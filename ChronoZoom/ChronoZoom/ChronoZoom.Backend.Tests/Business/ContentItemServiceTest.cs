@@ -46,6 +46,7 @@ namespace ChronoZoom.Backend.Tests.Business
             Assert.AreEqual(false, resultFirst.HasChildren);
         }
 
+        [TestMethod]
         [ExpectedException(typeof(ContentItemNotFoundException))]
         public void ContentItemService_FindNotFound_Test()
         {
@@ -56,6 +57,40 @@ namespace ChronoZoom.Backend.Tests.Business
 
             // Act
             target.GetAll(-1);
+        }
+
+        [TestMethod]
+        public void ContentItemService_GetAllForTimeline_Test()
+        {
+            // Arrange
+            Mock<IContentItemDao> mock = new Mock<IContentItemDao>(MockBehavior.Strict);
+            mock.Setup(setup => setup.FindAllForTimeline(It.IsAny<int>())).Returns(new Entities.ContentItem[] 
+            {
+                new Entities.ContentItem()
+                {
+                    Id = 1,
+                    Title = "Bevrijding",
+                    BeginDate = 1945M,
+                    EndDate = 1945M,
+                    Source = "UrlNaSource",
+                    HasChildren = false,
+                }
+            });
+            ContentItemService target = new ContentItemService(mock.Object);
+
+            // Act
+            IEnumerable<Entities.ContentItem> result = target.GetAllForTimeline(1);
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(1, result.Count());
+            Entities.ContentItem resultFirst = result.First();
+            Assert.AreEqual(1, resultFirst.Id);
+            Assert.AreEqual("Bevrijding", resultFirst.Title);
+            Assert.AreEqual(1945M, resultFirst.BeginDate);
+            Assert.AreEqual(1945M, resultFirst.EndDate);
+            Assert.AreEqual("UrlNaSource", resultFirst.Source);
+            Assert.AreEqual(false, resultFirst.HasChildren);
         }
     }
 }

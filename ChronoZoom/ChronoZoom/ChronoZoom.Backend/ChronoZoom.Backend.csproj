@@ -108,7 +108,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="DLLs\Orient.Client.dll" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -117,11 +116,9 @@
     <Compile Include="App_Start\UnityWebApiActivator.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Business\ContentItemService.cs" />
-    <Compile Include="Business\ContentItemServiceMock.cs" />
     <Compile Include="Business\Interfaces\IContentItemService.cs" />
     <Compile Include="Business\Interfaces\ITimelineService.cs" />
     <Compile Include="Business\TimelineService.cs" />
-    <Compile Include="Business\TimelineServiceMock.cs" />
     <Compile Include="Controllers\ContentItemController.cs" />
     <Compile Include="Controllers\TimelineController.cs" />
     <Compile Include="Data\Interfaces\IContentItemDao.cs" />
@@ -130,19 +127,6 @@
     <Compile Include="Data\MSSQL\Dao\TimelineMssqlDao.cs" />
     <Compile Include="Data\MSSQL\Entities\ContentItem.cs" />
     <Compile Include="Data\MSSQL\Entities\Timeline.cs" />
-    <Compile Include="Data\MSSQL\Factory\ContentItemFactory.cs" />
-    <Compile Include="Data\MSSQL\Factory\TimelineFactory.cs" />
-    <Compile Include="Data\MSSQL\MssqlConnection.cs" />
-    <Compile Include="Data\MSSQL\SqlMapper.cs" />
-    <Compile Include="Data\MSSQL\SqlMapperAsync.cs" />
-    <Compile Include="Data\OrientDb\Contains.cs" />
-    <Compile Include="Data\OrientDb\ContentItem.cs" />
-    <Compile Include="Data\OrientDb\ContentItemDaoOrientDb.cs" />
-    <Compile Include="Data\OrientDb\Factory\ContentItemFactory.cs" />
-    <Compile Include="Data\OrientDb\Factory\TimelineFactory.cs" />
-    <Compile Include="Data\OrientDb\OrientDb.cs" />
-    <Compile Include="Data\OrientDb\Timeline.cs" />
-    <Compile Include="Data\OrientDb\TimelineDaoOrientDb.cs" />
     <Compile Include="Entities\ContentItem.cs" />
     <Compile Include="Entities\Timeline.cs" />
     <Compile Include="Exceptions\ContentItemNotFoundException.cs" />
@@ -174,6 +158,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Dapper\Dapper.csproj">
+      <Project>{19d27040-c51a-4346-8f34-b9d72b3fa5fb}</Project>
+      <Name>Dapper</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -5,7 +5,7 @@
         BackendService.getTimeline = getTimeline;
         BackendService.getContentItems = getContentItems;      
         // Private fields
-        var _baseUrl = "http://www.kompili.nl/Chronozoomapi/api/";
+        var _baseUrl = "http://localhost:40001";
 
         // Get json data from path, execute callback resolve when succesfull and reject if failed. 
         function getJSON(id, path, resolve, reject) {

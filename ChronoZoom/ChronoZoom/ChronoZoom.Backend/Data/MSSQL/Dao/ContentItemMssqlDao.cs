@@ -14,22 +14,18 @@ namespace ChronoZoom.Backend.Data.MSSQL.Dao
     {
         public IEnumerable<ContentItem> FindAll(int parentID)
         {
-            SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DBstring"].ConnectionString);
-            con.Open();
-            var query = "select * from contentitem where parentId=@parentId";
-            var results = con.Query<ContentItem>(query,new {parentId = parentID});
-            con.Close();
-            return results;
+            using (DapperQuery query = new DapperQuery())
+            {
+                return query.Select<MSSQL.Entities.ContentItem, ContentItem>("select * from contentitem where parentId=@parentId",new {parentId = parentID});
+            }
         }
 
         public IEnumerable<ContentItem> FindAllForTimeline(int parentID)
         {
-            SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DBstring"].ConnectionString);
-            con.Open();
-            var query = "select * from contentitem where timelineId=@timelineId";
-            var results = con.Query<ContentItem>(query, new { timelineId = parentID });
-            con.Close();
-            return results;
+            using (DapperQuery query = new DapperQuery())
+            {
+                return query.Select<MSSQL.Entities.ContentItem, ContentItem>("select * from contentitem where timelineId=@timelineId", new { timelineId = parentID });
+            }
         }
     }
 }

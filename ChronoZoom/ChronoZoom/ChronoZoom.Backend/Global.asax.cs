@@ -5,18 +5,18 @@ using System.Net.Http.Formatting;
 using System.Web;
 using System.Web.Http;
 using System.Web.Routing;
-using ChronoZoom.Backend.Data.OrientDb;
 using Orient.Client;
+using System.Diagnostics.CodeAnalysis;
 
 namespace ChronoZoom.Backend
 {
+    [ExcludeFromCodeCoverage]
     public class WebApiApplication : System.Web.HttpApplication
     {
         protected void Application_Start()
         {
             GlobalConfiguration.Configure(WebApiConfig.Register);
-            //OrientDb.Initialize();
-
+            
             GlobalConfiguration.Configuration.Formatters.Clear();
             GlobalConfiguration.Configuration.Formatters.Add(new JsonMediaTypeFormatter());
         }
@@ -26,7 +26,6 @@ namespace ChronoZoom.Backend
 
             if (Context.Request.Path.Contains("api/") && Context.Request.HttpMethod == "OPTIONS")
             {
-
                 Context.Response.AddHeader("Access-Control-Allow-Origin", Context.Request.Headers["Origin"]);
                 Context.Response.AddHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
                 Context.Response.AddHeader("Access-Control-Allow-Methods", "GET, POST PUT, DELETE, OPTIONS");

@@ -7,6 +7,7 @@ using System.Web;
 using ChronoZoom.Backend.Data.Interfaces;
 using ChronoZoom.Backend.Entities;
 using Dapper;
+using ChronoZoom.Backend.Exceptions;
 
 namespace ChronoZoom.Backend.Data.MSSQL.Dao
 {
@@ -14,12 +15,10 @@ namespace ChronoZoom.Backend.Data.MSSQL.Dao
     {
         public Timeline Find(int id)
         {
-            SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DBstring"].ConnectionString);
-            con.Open();
-            var query = "select * from timeline where Id=@id";
-            var results = con.Query<Timeline>(query, new { id = id }).FirstOrDefault();
-            con.Close();
-            return results;
+            using (DapperQuery query = new DapperQuery())
+            {
+                return query.FirstOrDefault<MSSQL.Entities.Timeline, Timeline>("select * from timeline where Id=@id", new { id = id });
+            }
         }
     }
 }

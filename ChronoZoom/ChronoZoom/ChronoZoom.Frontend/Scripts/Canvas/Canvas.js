@@ -31,8 +31,12 @@
         Canvas.Mousepointer.start();
         Canvas.WindowManager.showLoader(false);
         canvasDrawProcessLoop();
+
+        // Select default timeline
+        Canvas.ContentItemService.findTimeline(14);
     }
 
+    // Set the new timeline
     function setTimeline(timelineId) {
         Canvas.Timeline.setTimeline(timelineId);
         Canvas.PanelManager.showTimelinePanel(false);

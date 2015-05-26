@@ -1,28 +1,42 @@
-﻿//using System;
-//using Microsoft.VisualStudio.TestTools.UnitTesting;
-//using ChronoZoom.Backend.Data;
-//using System.Collections;
-//using ChronoZoom.Backend.Entities;
-//using System.Collections.Generic;
+﻿using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ChronoZoom.Backend.Data;
+using System.Collections;
+using ChronoZoom.Backend.Entities;
+using System.Collections.Generic;
+using ChronoZoom.Backend.Data.MSSQL.Dao;
+using ChronoZoom.Backend.Data.Interfaces;
 
-//namespace ChronoZoom.Backend.Tests.Data
-//{
-//    [TestClass]
-//    public class TimelineDaoTest
-//    {
-//        [TestMethod]
-//        public void ContentItemDao_FindAll_IntegrationTest()
-//        {
-//            // Arrange
-//            TimelineDao target = new TimelineDao();
+namespace ChronoZoom.Backend.Tests.Data
+{
+    [TestClass]
+    public class TimelineDaoTest
+    {
+        [TestMethod]
+        public void TimelineDao_FindAll_IntegrationTest()
+        {
+            // Arrange
+            ITimelineDao target = new TimelineMssqlDao();
 
-//            // Act
-//            Timeline result = target.Find(1);
+            // Act
+            Timeline result = target.Find(18);
 
-//            // Assert
-//            Assert.IsNotNull(result);
-//            Assert.AreEqual(1, result.Id);
-//            Assert.AreEqual(8, result.ContentItems.Length);
-//        }
-//    }
-//}
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(18, result.Id);
+        }
+
+        [TestMethod]
+        public void TimelineDao_FindAll_Null_IntegrationTest()
+        {
+            // Arrange
+            ITimelineDao target = new TimelineMssqlDao();
+
+            // Act
+            Timeline result = target.Find(-1);
+
+            // Assert
+            Assert.IsNull(result);
+        }
+    }
+}

@@ -13,7 +13,7 @@ namespace ChronoZoom.Backend.Entities
         [Required]
         public string Title { get; set; }
         public bool HasChildren { get; set; }
-        public String Source { get; set; }
+        public string Source { get; set; }
         public int Priref { get; set; }
         [Required]
         public int ParentId { get; set; }

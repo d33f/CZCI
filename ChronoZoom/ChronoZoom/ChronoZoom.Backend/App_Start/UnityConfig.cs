@@ -6,7 +6,6 @@ using ChronoZoom.Backend.Data.Interfaces;
 using Microsoft.Practices.Unity;
 using System.Diagnostics.CodeAnalysis;
 using ChronoZoom.Backend.Data.MSSQL.Dao;
-using ChronoZoom.Backend.Data.OrientDb;
 
 namespace ChronoZoom.Backend
 {
@@ -47,9 +46,6 @@ namespace ChronoZoom.Backend
 
             container.RegisterType<ITimelineService, TimelineService>();
             container.RegisterType<IContentItemService, ContentItemService>();
-
-            //container.RegisterType<ITimelineService, TimelineServiceMock>();
-            //container.RegisterType<IContentItemService, ContentItemServiceMock>();
         }
     }
 }

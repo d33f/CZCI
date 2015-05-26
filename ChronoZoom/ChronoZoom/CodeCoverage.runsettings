@@ -18,15 +18,7 @@
             <!-- (Use "\." to delimit namespaces in C#)  -->
             <Functions>
               <Exclude>
-                <Function>^ChronoZoom\.API\.Areas\.HelpPage\..*</Function>
-                <Function>^ChronoZoom\.API\.Providers\..*</Function>
-                <Function>^ChronoZoom\.API\.Providers\..*</Function>
-                <Function>^ChronoZoom\.API\.Models\..*</Function>
-                <Function>^ChronoZoom\.API\.Results\..*</Function>
-                <Function>^ChronoZoom\.API\.WebApiApplication\..*</Function>
-                <Function>^ChronoZoom\.API\.Controllers\.HomeController\..*</Function>
-                <Function>^ChronoZoom\.API\.App_Start\..*</Function>
-                <Function>^Neo4jClient\..*</Function>
+                <Function>^Dapper\..*</Function>
               </Exclude>
             </Functions>
             
