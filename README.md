@@ -16,10 +16,7 @@ Script to create the database structure
 
 Web.config connection string (default is student live server, if you want to use your own SQL server, replace the existing connection string)
 
-<connectionStrings>
-    <add name="DBstring" connectionString="Data Source=84.246.4.143,9135;Initial Catalog=Quist1Chronozoom;User Id=Quist1Chronozoom;Password=chronozoom1;" providerName="System.Data.SqlClient" />
-    <!--<add name="DBstring" connectionString="Data Source=sql8.mijnhostingpartner.nl;Initial Catalog=Quist1Chronozoom;User Id=Quist1Chronozoom;Password=chronozoom1;" providerName="System.Data.SqlClient" />-->
-</connectionStrings>
+- https://www.dropbox.com/s/4um8zjevnnrorv9/webconfig.png?dl=0
 
 # BUGS
 At this moment it is not possible to use ChronoZoom in Firefox
