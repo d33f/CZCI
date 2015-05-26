@@ -21,3 +21,5 @@ Web.config connection string (default is student live server, if you want to use
     <!--<add name="DBstring" connectionString="Data Source=sql8.mijnhostingpartner.nl;Initial Catalog=Quist1Chronozoom;User Id=Quist1Chronozoom;Password=chronozoom1;" providerName="System.Data.SqlClient" />-->
 </connectionStrings>
 
+# BUGS
+At this moment it is not possible to use ChronoZoom in Firefox
