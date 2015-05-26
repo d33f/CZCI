@@ -2,9 +2,17 @@
 ChronoZoom continuous integration  
 
 # Installation
+To get ChronoZoom up and running please follow the steps described in the installation_guide.pdf.
 
-- backend en frontend moeten beide draaien
-- standaard gebruikt hij de live database
-- database beschrijven als je dat wilt
-- script met database structuur
-- web.config connectie string
+Please make sure that you have downloaded the latest release (at the top of the page), which can be found under the following URL: https://github.com/d33f/CZCI/releases
+
+Now click on the ZIP icon under the title of the job.
+
+Please follow the steps being shown in the Quickstart ChronoZoom.pdf
+This file can be found here: https://www.dropbox.com/s/hrh6e0tmk564nte/Quickstart%20ChronoZoom.pdf?dl=0
+
+Script to create the database structure
+- https://github.com/d33f/CZCI/blob/master/database.sql
+
+Web.config connectie string
+
