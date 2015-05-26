@@ -33,7 +33,7 @@
         canvasDrawProcessLoop();
 
         // Select default timeline
-        Canvas.ContentItemService.findTimeline(14);
+        Canvas.ContentItemService.findTimeline(18);
     }
 
     // Set the new timeline
