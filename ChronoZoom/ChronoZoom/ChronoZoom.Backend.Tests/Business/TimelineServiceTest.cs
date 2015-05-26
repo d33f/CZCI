@@ -15,9 +15,9 @@ namespace ChronoZoom.Backend.Tests.Business
         {
             // Arrange
             Mock<ITimelineDao> mock = new Mock<ITimelineDao>(MockBehavior.Strict);
-            mock.Setup(setup => setup.Find(It.IsAny<string>())).Returns(new Entities.Timeline()
+            mock.Setup(setup => setup.Find(It.IsAny<int>())).Returns(new Entities.Timeline()
             {
-                Id = "1:0",
+                Id = 1,
                 Title = "1ste wereld oorlog",
                 BeginDate = 1914M,
                 EndDate = 1918M
@@ -25,11 +25,11 @@ namespace ChronoZoom.Backend.Tests.Business
             TimelineService target = new TimelineService(mock.Object);
 
             // Act
-            Entities.Timeline result = target.Get("1:0");
+            Entities.Timeline result = target.Get(1);
 
             // Assert
             Assert.IsNotNull(result);
-            Assert.AreEqual("1:0", result.Id);
+            Assert.AreEqual(1, result.Id);
             Assert.AreEqual("1ste wereld oorlog", result.Title);
             Assert.AreEqual(1914M, result.BeginDate);
             Assert.AreEqual(1918M, result.EndDate);
@@ -40,11 +40,11 @@ namespace ChronoZoom.Backend.Tests.Business
         {
             // Arrange
             Mock<ITimelineDao> mock = new Mock<ITimelineDao>(MockBehavior.Strict);
-            mock.Setup(setup => setup.Find(It.IsAny<string>())).Throws(new TimelineNotFoundException());
+            mock.Setup(setup => setup.Find(It.IsAny<int>())).Throws(new TimelineNotFoundException());
             TimelineService target = new TimelineService(mock.Object);
 
             // Act
-            target.Get("-1");
+            target.Get(-1);
         }
     }
 }

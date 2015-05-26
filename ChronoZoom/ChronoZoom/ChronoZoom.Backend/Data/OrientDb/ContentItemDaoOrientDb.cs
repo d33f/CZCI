@@ -16,7 +16,7 @@ namespace ChronoZoom.Backend.Data.OrientDb
 {
     public class ContentItemDaoOrientDb : IContentItemDao
     {
-        public IEnumerable<Entities.ContentItem> FindAll(string parentID)
+        public IEnumerable<Entities.ContentItem> FindAll(int parentID)
         {
             using (var db = new ODatabase(OrientDb.DATABASE))
             {
@@ -25,7 +25,7 @@ namespace ChronoZoom.Backend.Data.OrientDb
                     string queryWithparam = "select * from contentitem where @rid in (select out('Contains') from ContentItem where @rid=#" + parentID + ")";
 
                     List<ContentItem> list = db.Query<ContentItem>(queryWithparam);
-                    return ContentItemFactory.CreateList(parentID,list);
+                    return ContentItemFactory.CreateList(parentID.ToString(),list);
                 }
                 catch (Exception ex)
                 {
@@ -34,7 +34,7 @@ namespace ChronoZoom.Backend.Data.OrientDb
             }
         }
 
-        public IEnumerable<Entities.ContentItem> FindAllForTimeline(string parentID)
+        public IEnumerable<Entities.ContentItem> FindAllForTimeline(int parentID)
         {
             using (var db = new ODatabase(OrientDb.DATABASE))
             {
@@ -43,7 +43,7 @@ namespace ChronoZoom.Backend.Data.OrientDb
                     string queryWithparam = "select * from contentitem where @rid in (select out('Contains') from TimeLine where @rid=#" + parentID + ")";
 
                     List<ContentItem> list = db.Query<ContentItem>(queryWithparam);
-                    return ContentItemFactory.CreateList(parentID,list);
+                    return ContentItemFactory.CreateList(parentID.ToString(),list);
                 }
                 catch (Exception ex)
                 {

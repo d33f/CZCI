@@ -18,22 +18,22 @@ namespace ChronoZoom.Backend.Tests.Controllers
         {
             // Arrange
             Mock<ITimelineService> mock = new Mock<ITimelineService>(MockBehavior.Strict);
-            mock.Setup(setup => setup.Get(It.IsAny<string>())).Returns(new Entities.Timeline()
+            mock.Setup(setup => setup.Get(It.IsAny<int>())).Returns(new Entities.Timeline()
             {
-                Id = "12:0"
+                Id =12
             });
             Mock<IContentItemService> contentItemMock = new Mock<IContentItemService>(MockBehavior.Strict);
-            contentItemMock.Setup(setup => setup.GetAllForTimeline(It.IsAny<string>())).Returns(new Entities.ContentItem[0]);
+            contentItemMock.Setup(setup => setup.GetAllForTimeline(It.IsAny<int>())).Returns(new Entities.ContentItem[0]);
 
             TimelineController target = new TimelineController(mock.Object, contentItemMock.Object);
 
             // Act
-            IHttpActionResult result = target.Get("12:0");
+            IHttpActionResult result = target.Get(12);
 
             // Assert
             Assert.IsNotNull(result);
             Assert.IsTrue(result is OkNegotiatedContentResult<Timeline>);
-            Assert.AreEqual("12:0", (result as OkNegotiatedContentResult<Timeline>).Content.Id);
+            Assert.AreEqual(12, (result as OkNegotiatedContentResult<Timeline>).Content.Id);
         }
 
         [TestMethod]
@@ -42,11 +42,11 @@ namespace ChronoZoom.Backend.Tests.Controllers
             // Arrange
             Mock<ITimelineService> mock = new Mock<ITimelineService>(MockBehavior.Strict);
             Mock<IContentItemService> contentItemMock = new Mock<IContentItemService>(MockBehavior.Strict);
-            mock.Setup(setup => setup.Get(It.IsAny<string>())).Throws(new TimelineNotFoundException());
+            mock.Setup(setup => setup.Get(It.IsAny<int>())).Throws(new TimelineNotFoundException());
             TimelineController target = new TimelineController(mock.Object, contentItemMock.Object);
 
             // Act
-            IHttpActionResult result = target.Get("12:0");
+            IHttpActionResult result = target.Get(12);
 
             // Assert
             Assert.IsNotNull(result);
@@ -59,11 +59,11 @@ namespace ChronoZoom.Backend.Tests.Controllers
             // Arrange
             Mock<ITimelineService> mock = new Mock<ITimelineService>(MockBehavior.Strict);
             Mock<IContentItemService> contentItemMock = new Mock<IContentItemService>(MockBehavior.Strict);
-            mock.Setup(setup => setup.Get(It.IsAny<string>())).Throws(new Exception());
+            mock.Setup(setup => setup.Get(It.IsAny<int>())).Throws(new Exception());
             TimelineController target = new TimelineController(mock.Object, contentItemMock.Object);
 
             // Act
-            IHttpActionResult result = target.Get("12:0");
+            IHttpActionResult result = target.Get(12);
 
             // Assert
             Assert.IsNotNull(result);
