@@ -10,11 +10,11 @@ using System.Reflection;
 
 namespace Dapper
 {
-    public class DapperQuery : IDisposable
+    public class DatabaseContext : IDisposable
     {
         private SqlConnection _connection;
 
-        public DapperQuery()
+        public DatabaseContext()
         {
             _connection = new SqlConnection(ConfigurationManager.ConnectionStrings["DBstring"].ConnectionString);
             _connection.Open();

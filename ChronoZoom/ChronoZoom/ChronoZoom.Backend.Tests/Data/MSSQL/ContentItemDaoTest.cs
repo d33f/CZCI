@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using ChronoZoom.Backend.Data.Interfaces;
 using ChronoZoom.Backend.Data.MSSQL.Dao;
 
-namespace ChronoZoom.Backend.Tests.Data
+namespace ChronoZoom.Backend.Tests.Data.MSSQL
 {
     [TestClass]
     public class ContentItemDaoTest
@@ -17,10 +17,10 @@ namespace ChronoZoom.Backend.Tests.Data
         public void ContentItemDao_FindAll_IntegrationTest()
         {
             // Arrange
-            IContentItemDao target = new ContentItemMssqlDao();
+            IContentItemDao target = new ContentItemDao();
 
             // Act
-            IEnumerable<ContentItem> result = target.FindAll(1034);
+            IEnumerable<ContentItem> result = target.FindAllBy(1034);
 
             // Assert
             Assert.AreEqual(51, result.Count());
@@ -30,10 +30,10 @@ namespace ChronoZoom.Backend.Tests.Data
         public void ContentItemDao_FindAllForTimeline_IntegrationTest()
         {
             // Arrange
-            IContentItemDao target = new ContentItemMssqlDao();
+            IContentItemDao target = new ContentItemDao();
 
             // Act
-            IEnumerable<ContentItem> result = target.FindAllForTimeline(18);
+            IEnumerable<ContentItem> result = target.FindAllForTimelineBy(18);
 
             // Assert
             Assert.AreEqual(2, result.Count());

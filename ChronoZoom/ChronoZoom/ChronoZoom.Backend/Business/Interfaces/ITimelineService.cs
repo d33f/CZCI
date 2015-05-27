@@ -9,7 +9,7 @@ namespace ChronoZoom.Backend.Business.Interfaces
     public interface ITimelineService
     {
         Timeline Get(int id);
-
-        void Add(Timeline timeline);
+        Timeline Add(Timeline timeline);
+        void Update(Timeline timeline);
     }
 }

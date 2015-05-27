@@ -30,6 +30,7 @@ namespace ChronoZoom.Backend.Tests.Controllers
             Assert.IsNotNull(result);
             Assert.IsTrue(result is OkNegotiatedContentResult<IEnumerable<ContentItem>>);
             Assert.AreEqual(2, (result as OkNegotiatedContentResult<IEnumerable<ContentItem>>).Content.Count());
+            mock.Verify(verify => verify.GetAll(It.IsAny<int>()), Times.Once);
         }
 
         [TestMethod]
@@ -37,7 +38,7 @@ namespace ChronoZoom.Backend.Tests.Controllers
         {
             // Arrange
             Mock<IContentItemService> mock = new Mock<IContentItemService>(MockBehavior.Strict);
-            mock.Setup(setup => setup.GetAll(It.IsAny<int>())).Throws(new ContentItemNotFoundException());
+            mock.Setup(setup => setup.GetAll(It.IsAny<int>())).Throws(new ContentItemsNotFoundException());
             ContentItemController target = new ContentItemController(mock.Object);
 
             // Act
@@ -69,7 +70,10 @@ namespace ChronoZoom.Backend.Tests.Controllers
         {
             // Arrange
             Mock<IContentItemService> mock = new Mock<IContentItemService>(MockBehavior.Strict);
-            mock.Setup(setup => setup.Add(It.IsAny<ContentItem>()));
+            mock.Setup(setup => setup.Add(It.IsAny<ContentItem>())).Returns(new ContentItem() 
+            {
+                Id = 123
+            });
             ContentItemController target = new ContentItemController(mock.Object);
             ContentItem item = new ContentItem()
             {
@@ -78,7 +82,6 @@ namespace ChronoZoom.Backend.Tests.Controllers
                 Title = "test",
                 ParentId = 1,
                 HasChildren = false,
-                Id = -1,
                 Priref = -1,
                 Source = string.Empty
             };
@@ -90,7 +93,9 @@ namespace ChronoZoom.Backend.Tests.Controllers
 
             // Assert
             Assert.IsNotNull(result);
-            Assert.IsTrue(result is OkNegotiatedContentResult<bool>);
+            Assert.IsTrue(result is OkNegotiatedContentResult<ContentItem>);
+            Assert.AreEqual(123, (result as OkNegotiatedContentResult<ContentItem>).Content.Id);
+            mock.Verify(verify => verify.Add(It.IsAny<ContentItem>()), Times.Once);
         }
 
         [TestMethod]
@@ -103,7 +108,6 @@ namespace ChronoZoom.Backend.Tests.Controllers
             ContentItem item = new ContentItem()
             {
                 HasChildren = false,
-                Id = 0,
                 Priref = -1,
                 Source = string.Empty
             };
@@ -130,6 +134,108 @@ namespace ChronoZoom.Backend.Tests.Controllers
             
             // Act
             IHttpActionResult result = target.Put(new ContentItem());
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result is BadRequestErrorMessageResult);
+        }
+
+        [TestMethod]
+        public void ContentItemController_Post_Test()
+        {
+            // Arrange
+            Mock<IContentItemService> mock = new Mock<IContentItemService>(MockBehavior.Strict);
+            mock.Setup(setup => setup.Update(It.IsAny<ContentItem>()));
+            ContentItemController target = new ContentItemController(mock.Object);
+            ContentItem item = new ContentItem()
+            {
+                BeginDate = -1,
+                EndDate = -1,
+                Title = "test",
+                ParentId = 1,
+                HasChildren = false,
+                Id = 1,
+                Priref = -1,
+                Source = string.Empty
+            };
+
+            // Act
+            target.Configuration = new HttpConfiguration();
+            target.Validate<ContentItem>(item);
+            IHttpActionResult result = target.Post(item);
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result is OkResult);
+            mock.Verify(verify => verify.Update(It.IsAny<ContentItem>()), Times.Once);
+        }
+
+        [TestMethod]
+        public void ContentItemController_Post_Validation_Test()
+        {
+            // Arrange
+            Mock<IContentItemService> mock = new Mock<IContentItemService>(MockBehavior.Strict);
+            mock.Setup(setup => setup.Update(It.IsAny<ContentItem>()));
+            ContentItemController target = new ContentItemController(mock.Object);
+            ContentItem item = new ContentItem()
+            {
+                HasChildren = false,
+                Id = 0,
+                Priref = -1,
+                Source = string.Empty
+            };
+
+            // Act
+            target.Configuration = new HttpConfiguration();
+            target.Validate<ContentItem>(item);
+            IHttpActionResult result = target.Post(item);
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result is BadRequestErrorMessageResult);
+            Assert.AreEqual(false, target.ModelState.IsValid);
+            Assert.AreEqual(3, target.ModelState.Count);
+        }
+
+        [TestMethod]
+        public void ContentItemController_Post_InvalidID_Test()
+        {
+            // Arrange
+            Mock<IContentItemService> mock = new Mock<IContentItemService>(MockBehavior.Strict);
+            mock.Setup(setup => setup.Update(It.IsAny<ContentItem>()));
+            ContentItemController target = new ContentItemController(mock.Object);
+            ContentItem item = new ContentItem()
+            {
+                BeginDate = -1,
+                EndDate = -1,
+                Title = "test",
+                ParentId = 1,
+                HasChildren = false,
+                Id = 0,
+                Priref = -1,
+                Source = string.Empty
+            };
+
+            // Act
+            target.Configuration = new HttpConfiguration();
+            target.Validate<ContentItem>(item);
+            IHttpActionResult result = target.Post(item);
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result is BadRequestErrorMessageResult);
+        }
+
+        [TestMethod]
+        public void ContentItemController_Post_BadRequest_Test()
+        {
+            // Arrange
+            Mock<IContentItemService> mock = new Mock<IContentItemService>(MockBehavior.Strict);
+            mock.Setup(setup => setup.Update(It.IsAny<ContentItem>())).Throws(new Exception());
+            ContentItemController target = new ContentItemController(mock.Object);
+
+            // Act
+            IHttpActionResult result = target.Post(new ContentItem());
 
             // Assert
             Assert.IsNotNull(result);

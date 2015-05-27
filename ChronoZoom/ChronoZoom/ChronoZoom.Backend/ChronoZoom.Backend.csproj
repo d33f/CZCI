@@ -119,13 +119,13 @@
     <Compile Include="Controllers\TimelineController.cs" />
     <Compile Include="Data\Interfaces\IContentItemDao.cs" />
     <Compile Include="Data\Interfaces\ITimelineDao.cs" />
-    <Compile Include="Data\MSSQL\Dao\ContentItemMssqlDao.cs" />
-    <Compile Include="Data\MSSQL\Dao\TimelineMssqlDao.cs" />
+    <Compile Include="Data\MSSQL\Dao\ContentItemDao.cs" />
+    <Compile Include="Data\MSSQL\Dao\TimelineDao.cs" />
     <Compile Include="Data\MSSQL\Entities\ContentItem.cs" />
     <Compile Include="Data\MSSQL\Entities\Timeline.cs" />
     <Compile Include="Entities\ContentItem.cs" />
     <Compile Include="Entities\Timeline.cs" />
-    <Compile Include="Exceptions\ContentItemNotFoundException.cs" />
+    <Compile Include="Exceptions\ContentItemsNotFoundException.cs" />
     <Compile Include="Exceptions\TimelineNotFoundException.cs" />
     <Compile Include="Exceptions\ToManyResultsException.cs" />
     <Compile Include="Global.asax.cs">

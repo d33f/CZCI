@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using ChronoZoom.Backend.Data.MSSQL.Dao;
 using ChronoZoom.Backend.Data.Interfaces;
 
-namespace ChronoZoom.Backend.Tests.Data
+namespace ChronoZoom.Backend.Tests.Data.MSSQL
 {
     [TestClass]
     public class TimelineDaoTest
@@ -16,7 +16,7 @@ namespace ChronoZoom.Backend.Tests.Data
         public void TimelineDao_FindAll_IntegrationTest()
         {
             // Arrange
-            ITimelineDao target = new TimelineMssqlDao();
+            ITimelineDao target = new TimelineDao();
 
             // Act
             Timeline result = target.Find(18);
@@ -30,7 +30,7 @@ namespace ChronoZoom.Backend.Tests.Data
         public void TimelineDao_FindAll_Null_IntegrationTest()
         {
             // Arrange
-            ITimelineDao target = new TimelineMssqlDao();
+            ITimelineDao target = new TimelineDao();
 
             // Act
             Timeline result = target.Find(-1);

@@ -72,8 +72,8 @@
     <Compile Include="Business\TimelineServiceTest.cs" />
     <Compile Include="Controllers\ContentItemControllerTest.cs" />
     <Compile Include="Controllers\TimelineControllerTest.cs" />
-    <Compile Include="Data\TimelineDaoTest.cs" />
-    <Compile Include="Data\ContentItemDaoTest.cs" />
+    <Compile Include="Data\MSSQL\TimelineDaoTest.cs" />
+    <Compile Include="Data\MSSQL\ContentItemDaoTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

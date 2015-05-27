@@ -5,7 +5,7 @@ using System.Web;
 
 namespace ChronoZoom.Backend.Exceptions
 {
-    public class ContentItemNotFoundException : Exception
+    public class ContentItemsNotFoundException : Exception
     {
     }
 }

@@ -22,10 +22,7 @@ namespace ChronoZoom.Backend.Tests.Controllers
             {
                 Id =12
             });
-            Mock<IContentItemService> contentItemMock = new Mock<IContentItemService>(MockBehavior.Strict);
-            contentItemMock.Setup(setup => setup.GetAllForTimeline(It.IsAny<int>())).Returns(new Entities.ContentItem[0]);
-
-            TimelineController target = new TimelineController(mock.Object, contentItemMock.Object);
+            TimelineController target = new TimelineController(mock.Object);
 
             // Act
             IHttpActionResult result = target.Get(12);
@@ -34,6 +31,7 @@ namespace ChronoZoom.Backend.Tests.Controllers
             Assert.IsNotNull(result);
             Assert.IsTrue(result is OkNegotiatedContentResult<Timeline>);
             Assert.AreEqual(12, (result as OkNegotiatedContentResult<Timeline>).Content.Id);
+            mock.Verify(verify => verify.Get(It.IsAny<int>()), Times.Once);
         }
 
         [TestMethod]
@@ -41,9 +39,8 @@ namespace ChronoZoom.Backend.Tests.Controllers
         {
             // Arrange
             Mock<ITimelineService> mock = new Mock<ITimelineService>(MockBehavior.Strict);
-            Mock<IContentItemService> contentItemMock = new Mock<IContentItemService>(MockBehavior.Strict);
             mock.Setup(setup => setup.Get(It.IsAny<int>())).Throws(new TimelineNotFoundException());
-            TimelineController target = new TimelineController(mock.Object, contentItemMock.Object);
+            TimelineController target = new TimelineController(mock.Object);
 
             // Act
             IHttpActionResult result = target.Get(12);
@@ -58,12 +55,171 @@ namespace ChronoZoom.Backend.Tests.Controllers
         {
             // Arrange
             Mock<ITimelineService> mock = new Mock<ITimelineService>(MockBehavior.Strict);
-            Mock<IContentItemService> contentItemMock = new Mock<IContentItemService>(MockBehavior.Strict);
             mock.Setup(setup => setup.Get(It.IsAny<int>())).Throws(new Exception());
-            TimelineController target = new TimelineController(mock.Object, contentItemMock.Object);
+            TimelineController target = new TimelineController(mock.Object);
 
             // Act
             IHttpActionResult result = target.Get(12);
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result is BadRequestErrorMessageResult);
+        }
+
+        public void TimelineController_Put_Test()
+        {
+            // Arrange
+            Mock<ITimelineService> mock = new Mock<ITimelineService>(MockBehavior.Strict);
+            mock.Setup(setup => setup.Add(It.IsAny<Timeline>())).Returns(new Timeline()
+            {
+                Id = 123
+            });
+            TimelineController target = new TimelineController(mock.Object);
+            Timeline timeline = new Timeline()
+            {
+                BeginDate = -1,
+                EndDate = -1,
+                Title = "test",
+                ContentItems = null
+            };
+
+            // Act
+            target.Configuration = new HttpConfiguration();
+            target.Validate<Timeline>(timeline);
+            IHttpActionResult result = target.Put(timeline);
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result is OkNegotiatedContentResult<Timeline>);
+            Assert.AreEqual(123, (result as OkNegotiatedContentResult<Timeline>).Content.Id);
+            mock.Verify(verify => verify.Add(It.IsAny<Timeline>()), Times.Once);
+        }
+
+        [TestMethod]
+        public void TimelineController_Put_Validation_Test()
+        {
+            // Arrange
+            Mock<ITimelineService> mock = new Mock<ITimelineService>(MockBehavior.Strict);
+            mock.Setup(setup => setup.Add(It.IsAny<Timeline>()));
+            TimelineController target = new TimelineController(mock.Object);
+            Timeline timeline = new Timeline()
+            {
+                ContentItems = null
+            };
+
+            // Act
+            target.Configuration = new HttpConfiguration();
+            target.Validate<Timeline>(timeline);
+            IHttpActionResult result = target.Put(timeline);
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result is BadRequestErrorMessageResult);
+            Assert.AreEqual(false, target.ModelState.IsValid);
+            Assert.AreEqual(3, target.ModelState.Count);
+        }
+
+        [TestMethod]
+        public void TimelineController_Put_BadRequest_Test()
+        {
+            // Arrange
+            Mock<ITimelineService> mock = new Mock<ITimelineService>(MockBehavior.Strict);
+            mock.Setup(setup => setup.Add(It.IsAny<Timeline>())).Throws(new Exception());
+            TimelineController target = new TimelineController(mock.Object);
+
+            // Act
+            IHttpActionResult result = target.Put(new Timeline());
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result is BadRequestErrorMessageResult);
+        }
+
+        [TestMethod]
+        public void TimelineController_Post_Test()
+        {
+            // Arrange
+            Mock<ITimelineService> mock = new Mock<ITimelineService>(MockBehavior.Strict);
+            mock.Setup(setup => setup.Update(It.IsAny<Timeline>()));
+            TimelineController target = new TimelineController(mock.Object);
+            Timeline timeline = new Timeline()
+            {
+                Id = 1,
+                BeginDate = -1,
+                EndDate = -1,
+                Title = "test",
+                ContentItems = null
+            };
+
+            // Act
+            target.Configuration = new HttpConfiguration();
+            target.Validate<Timeline>(timeline);
+            IHttpActionResult result = target.Post(timeline);
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result is OkResult);
+            mock.Verify(verify => verify.Update(It.IsAny<Timeline>()), Times.Once);
+        }
+
+        [TestMethod]
+        public void TimelineController_Post_Validation_Test()
+        {
+            // Arrange
+            Mock<ITimelineService> mock = new Mock<ITimelineService>(MockBehavior.Strict);
+            mock.Setup(setup => setup.Update(It.IsAny<Timeline>()));
+            TimelineController target = new TimelineController(mock.Object);
+            Timeline timeline = new Timeline()
+            {
+                ContentItems = null
+            };
+
+            // Act
+            target.Configuration = new HttpConfiguration();
+            target.Validate<Timeline>(timeline);
+            IHttpActionResult result = target.Post(timeline);
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result is BadRequestErrorMessageResult);
+            Assert.AreEqual(false, target.ModelState.IsValid);
+            Assert.AreEqual(3, target.ModelState.Count);
+        }
+
+        [TestMethod]
+        public void TimelineController_Post_InvalidID_Test()
+        {
+            // Arrange
+            Mock<ITimelineService> mock = new Mock<ITimelineService>(MockBehavior.Strict);
+            mock.Setup(setup => setup.Update(It.IsAny<Timeline>()));
+            TimelineController target = new TimelineController(mock.Object);
+            Timeline timeline = new Timeline()
+            {
+                BeginDate = -1,
+                EndDate = -1,
+                Title = "test"
+            };
+
+            // Act
+            target.Configuration = new HttpConfiguration();
+            target.Validate<Timeline>(timeline);
+            IHttpActionResult result = target.Post(timeline);
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result is BadRequestErrorMessageResult);
+        }
+
+        [TestMethod]
+        public void TimelineController_Post_BadRequest_Test()
+        {
+            // Arrange
+            Mock<ITimelineService> mock = new Mock<ITimelineService>(MockBehavior.Strict);
+            mock.Setup(setup => setup.Update(It.IsAny<Timeline>())).Throws(new Exception());
+            TimelineController target = new TimelineController(mock.Object);
+
+            // Act
+            IHttpActionResult result = target.Post(new Timeline());
 
             // Assert
             Assert.IsNotNull(result);

@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using ChronoZoom.Backend.Entities;
 
 namespace ChronoZoom.Backend.Data.Interfaces
 {
     public interface ITimelineDao
     {
-        Backend.Entities.Timeline Find(int id);
+        Timeline Find(int id);
+        Timeline Add(Timeline timeline);
+        void Update(Timeline timeline);
     }
 }

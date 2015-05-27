@@ -9,6 +9,11 @@
 
         // Private fields
         var _contentItems = [];
+        var _oldContentItems = [];
+        var _maxAnimationSteps = 10;
+        var _currentAnimationStep = 0;
+        var _oldRange = [];
+        var _newRange = [];
 
         // Constructor
         function initialize() {
@@ -21,15 +26,14 @@
 
         // Handle on content item changed event
         function onContentItemsChanged() {
-            var oldContentItems = _contentItems;
-
-            // Get and set content items
+            // Get and set old content items and content items
+            _oldContentItems = _contentItems;
             _contentItems = Canvas.ContentItemService.getContentItems();
 
             // Destruct old content items
-            var length = oldContentItems.length;
+            var length = _oldContentItems.length;
             for (var i = 0; i < length; i++) {
-                oldContentItems[i].destructor();
+                _oldContentItems[i].destructor();
             }
 
             // Hide loader
@@ -56,19 +60,40 @@
             // Get current range
             var range = Canvas.Timescale.getRange();
 
+            // Check for animation
+            if (_oldContentItems.length > 0) {
+                // Update current animation step
+                _currentAnimationStep++;
+
+                // Draw all old content items that has childeren first
+                drawContentItemsLoop(_oldContentItems, range, true);
+                drawContentItemsLoop(_oldContentItems, range, false);
+
+                // Check if animation is done
+                if (_currentAnimationStep >= _maxAnimationSteps) {
+                    _oldContentItems = [];
+                }
+
+                //// Update timescale
+                //var rangeBegin = _oldRange.begin + ((_oldRange.begin - _newRange.begin) / _maxAnimationSteps) * _currentAnimationStep;
+                //var rangeEnd = _oldRange.end - ((_oldRange.end - _newRange.end) / _maxAnimationSteps) * _currentAnimationStep;
+                //Canvas.Timescale.setRange(rangeBegin, rangeEnd);
+                //Canvas.Timescale.setRange(_newRange.begin, _newRange.end);
+            }
+
             // Draw all content items that has childeren first
-            drawContentItemsLoop(range, true);
-            drawContentItemsLoop(range, false);
+            drawContentItemsLoop(_contentItems, range, true);
+            drawContentItemsLoop(_contentItems, range, false);
         }
 
         // Draw content item loop
-        function drawContentItemsLoop(range, hasChildren) {
+        function drawContentItemsLoop(contentItems, range, hasChildren) {
             // Check all content items
-            var length = _contentItems.length;
+            var length = contentItems.length;
             for (var i = 0; i < length; i++) {
-                if (_contentItems[i].hasChildren() === hasChildren) {
+                if (contentItems[i].hasChildren() === hasChildren) {
                     // Draw content item
-                    drawContentItem(range, _contentItems[i]);
+                    drawContentItem(range, contentItems[i]);
                 }
             }
         }
@@ -115,10 +140,16 @@
 
         // Handle click on given content item
         function handleClickOnContentItem(clickedContentItem) {
-            // Update timescale and content item service
+            // Calculate new range
             var rangeItem = clickedContentItem.getEndDate() - clickedContentItem.getBeginDate();
             var rangeBegin = clickedContentItem.getBeginDate() - (rangeItem / 20);
             var rangeEnd = clickedContentItem.getEndDate() + (rangeItem / 20);
+
+            // Set old and new range
+            _oldRange = Canvas.Timescale.getRange();            
+            _newRange = { begin: rangeBegin, end: rangeEnd };
+
+            // Update timescale
             Canvas.Timescale.setRange(rangeBegin, rangeEnd);
 
             // Handle event
