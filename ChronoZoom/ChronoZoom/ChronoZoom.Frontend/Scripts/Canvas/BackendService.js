@@ -1,11 +1,11 @@
-﻿var Canvas;
+var Canvas;
 (function (Canvas) {
     (function (BackendService) {
         // Public methods
         BackendService.getTimeline = getTimeline;
         BackendService.getContentItems = getContentItems;      
         // Private fields
-        var _baseUrl = "http://localhost:40001/api/";
+        var _baseUrl = "http://www.kompili.nl/chronozoomApi/api/";
 
         // Get json data from path, execute callback resolve when succesfull and reject if failed. 
         function getJSON(id, path, resolve, reject) {
