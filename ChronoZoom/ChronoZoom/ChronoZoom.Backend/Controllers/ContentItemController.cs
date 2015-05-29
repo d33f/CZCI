@@ -12,6 +12,7 @@ namespace ChronoZoom.Backend.Controllers
     public class ContentItemController : ApiController
     {
         private readonly IContentItemService _service;
+        private string _testString = "testString";
 
         public ContentItemController(IContentItemService service)
         {
