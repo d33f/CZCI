@@ -8,9 +8,9 @@ namespace ChronoZoom.Backend.Data.MSSQL.Dao
     {
         public Timeline Find(int id)
         {
-            using (DatabaseContext query = new DatabaseContext())
+            using (DatabaseContext context = new DatabaseContext())
             {
-                return query.FirstOrDefault<MSSQL.Entities.Timeline, Timeline>("select * from timeline where Id=@id", new { id = id });
+                return context.FirstOrDefault<MSSQL.Entities.Timeline, Timeline>("select * from timeline where Id=@id", new { id = id });
             }
         }
 

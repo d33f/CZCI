@@ -5,7 +5,7 @@ namespace ChronoZoom.Backend.Entities
 {
     public class ContentItem
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
         [Required]
         public decimal? BeginDate { get; set; }
         [Required]
@@ -16,6 +16,6 @@ namespace ChronoZoom.Backend.Entities
         public string Source { get; set; }
         public int Priref { get; set; }
         [Required]
-        public int ParentId { get; set; }
+        public long ParentId { get; set; }
     }
 }
