@@ -47,9 +47,15 @@ namespace ChronoZoom.Backend.Controllers
             {
                 return BadRequest("timeline invalid");
             }
+            if (timeline.Id == 0)
+            {
+                return BadRequest("No id specified");
+            }
+
             try
             {
-                return Ok(_service.Add(timeline));
+                _service.Update(timeline);
+                return Ok();
             }
             catch (Exception)
             {
@@ -69,15 +75,9 @@ namespace ChronoZoom.Backend.Controllers
             {
                 return BadRequest("timeline invalid");
             }
-            if (timeline.Id == 0)
-            {
-                return BadRequest("No id specified");
-            }
-
             try
             {
-                _service.Update(timeline);
-                return Ok();
+                return Ok(_service.Add(timeline));
             }
             catch (Exception)
             {
