@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Configuration;
 using System.Web.Http;
 using ChronoZoom.Backend.Business.Interfaces;
 using ChronoZoom.Backend.Entities;
