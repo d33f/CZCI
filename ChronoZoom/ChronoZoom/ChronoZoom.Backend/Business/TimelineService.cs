@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using System.Collections.Generic;
 using ChronoZoom.Backend.Business.Interfaces;
 using ChronoZoom.Backend.Data.Interfaces;
 using ChronoZoom.Backend.Entities;
