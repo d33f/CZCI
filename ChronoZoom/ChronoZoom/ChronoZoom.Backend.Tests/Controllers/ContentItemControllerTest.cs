@@ -70,10 +70,7 @@ namespace ChronoZoom.Backend.Tests.Controllers
         {
             // Arrange
             Mock<IContentItemService> mock = new Mock<IContentItemService>(MockBehavior.Strict);
-            mock.Setup(setup => setup.Add(It.IsAny<ContentItem>())).Returns(new ContentItem() 
-            {
-                Id = 123
-            });
+            mock.Setup(setup => setup.Update(It.IsAny<ContentItem>()));
             ContentItemController target = new ContentItemController(mock.Object);
             ContentItem item = new ContentItem()
             {
@@ -82,6 +79,7 @@ namespace ChronoZoom.Backend.Tests.Controllers
                 Title = "test",
                 ParentId = 1,
                 HasChildren = false,
+                Id = 1,
                 Priref = -1,
                 Source = string.Empty
             };
@@ -93,9 +91,8 @@ namespace ChronoZoom.Backend.Tests.Controllers
 
             // Assert
             Assert.IsNotNull(result);
-            Assert.IsTrue(result is OkNegotiatedContentResult<ContentItem>);
-            Assert.AreEqual(123, (result as OkNegotiatedContentResult<ContentItem>).Content.Id);
-            mock.Verify(verify => verify.Add(It.IsAny<ContentItem>()), Times.Once);
+            Assert.IsTrue(result is OkResult);
+            mock.Verify(verify => verify.Update(It.IsAny<ContentItem>()), Times.Once);
         }
 
         [TestMethod]
@@ -145,7 +142,10 @@ namespace ChronoZoom.Backend.Tests.Controllers
         {
             // Arrange
             Mock<IContentItemService> mock = new Mock<IContentItemService>(MockBehavior.Strict);
-            mock.Setup(setup => setup.Update(It.IsAny<ContentItem>()));
+            mock.Setup(setup => setup.Add(It.IsAny<ContentItem>())).Returns(new ContentItem()
+            {
+                Id = 123
+            });
             ContentItemController target = new ContentItemController(mock.Object);
             ContentItem item = new ContentItem()
             {
@@ -154,7 +154,6 @@ namespace ChronoZoom.Backend.Tests.Controllers
                 Title = "test",
                 ParentId = 1,
                 HasChildren = false,
-                Id = 1,
                 Priref = -1,
                 Source = string.Empty
             };
@@ -166,8 +165,9 @@ namespace ChronoZoom.Backend.Tests.Controllers
 
             // Assert
             Assert.IsNotNull(result);
-            Assert.IsTrue(result is OkResult);
-            mock.Verify(verify => verify.Update(It.IsAny<ContentItem>()), Times.Once);
+            Assert.IsTrue(result is OkNegotiatedContentResult<ContentItem>);
+            Assert.AreEqual(123, (result as OkNegotiatedContentResult<ContentItem>).Content.Id);
+            mock.Verify(verify => verify.Add(It.IsAny<ContentItem>()), Times.Once);
         }
 
         [TestMethod]

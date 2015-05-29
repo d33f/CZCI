@@ -66,17 +66,16 @@ namespace ChronoZoom.Backend.Tests.Controllers
             Assert.IsTrue(result is BadRequestErrorMessageResult);
         }
 
+        [TestMethod]
         public void TimelineController_Put_Test()
         {
             // Arrange
             Mock<ITimelineService> mock = new Mock<ITimelineService>(MockBehavior.Strict);
-            mock.Setup(setup => setup.Add(It.IsAny<Timeline>())).Returns(new Timeline()
-            {
-                Id = 123
-            });
+            mock.Setup(setup => setup.Update(It.IsAny<Timeline>()));
             TimelineController target = new TimelineController(mock.Object);
             Timeline timeline = new Timeline()
             {
+                Id = 1,
                 BeginDate = -1,
                 EndDate = -1,
                 Title = "test",
@@ -90,9 +89,8 @@ namespace ChronoZoom.Backend.Tests.Controllers
 
             // Assert
             Assert.IsNotNull(result);
-            Assert.IsTrue(result is OkNegotiatedContentResult<Timeline>);
-            Assert.AreEqual(123, (result as OkNegotiatedContentResult<Timeline>).Content.Id);
-            mock.Verify(verify => verify.Add(It.IsAny<Timeline>()), Times.Once);
+            Assert.IsTrue(result is OkResult);
+            mock.Verify(verify => verify.Update(It.IsAny<Timeline>()), Times.Once);
         }
 
         [TestMethod]
@@ -140,11 +138,13 @@ namespace ChronoZoom.Backend.Tests.Controllers
         {
             // Arrange
             Mock<ITimelineService> mock = new Mock<ITimelineService>(MockBehavior.Strict);
-            mock.Setup(setup => setup.Update(It.IsAny<Timeline>()));
+            mock.Setup(setup => setup.Add(It.IsAny<Timeline>())).Returns(new Timeline()
+            {
+                Id = 123
+            });
             TimelineController target = new TimelineController(mock.Object);
             Timeline timeline = new Timeline()
             {
-                Id = 1,
                 BeginDate = -1,
                 EndDate = -1,
                 Title = "test",
@@ -158,8 +158,9 @@ namespace ChronoZoom.Backend.Tests.Controllers
 
             // Assert
             Assert.IsNotNull(result);
-            Assert.IsTrue(result is OkResult);
-            mock.Verify(verify => verify.Update(It.IsAny<Timeline>()), Times.Once);
+            Assert.IsTrue(result is OkNegotiatedContentResult<Timeline>);
+            Assert.AreEqual(123, (result as OkNegotiatedContentResult<Timeline>).Content.Id);
+            mock.Verify(verify => verify.Add(It.IsAny<Timeline>()), Times.Once);
         }
 
         [TestMethod]

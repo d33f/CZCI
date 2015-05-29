@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace ChronoZoom.Backend.Data.MSSQL.Entities
+﻿namespace ChronoZoom.Backend.Data.MSSQL.Entities
 {
     public class ContentItem
     {
