@@ -1,7 +1,6 @@
 using System;
 using ChronoZoom.Backend.Business;
 using ChronoZoom.Backend.Business.Interfaces;
-using ChronoZoom.Backend.Data;
 using ChronoZoom.Backend.Data.Interfaces;
 using Microsoft.Practices.Unity;
 using System.Diagnostics.CodeAnalysis;
