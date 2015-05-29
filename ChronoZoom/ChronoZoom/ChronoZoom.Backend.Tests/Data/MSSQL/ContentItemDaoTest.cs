@@ -21,10 +21,10 @@ namespace ChronoZoom.Backend.Tests.Data.MSSQL
             IContentItemDao target = new ContentItemDao();
 
             // Act
-            IEnumerable<ContentItem> result = target.FindAllBy(3);
+            IEnumerable<ContentItem> result = target.FindAllBy(1034);
 
             // Assert
-            Assert.AreEqual(2, result.Count());
+            Assert.AreEqual(51, result.Count());
         }
 
         [TestMethod]

@@ -8,7 +8,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{20C515C6-8F25-4294-AA08-33A4DE4B525C}"
 	ProjectSection(SolutionItems) = preProject
 		CodeCoverage.runsettings = CodeCoverage.runsettings
-		D:\MyCloud\Desktop\Database.sql = D:\MyCloud\Desktop\Database.sql
+		Database.sql = Database.sql
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChronoZoom.Backend", "ChronoZoom.Backend\ChronoZoom.Backend.csproj", "{EC98BB47-FF09-44EC-883A-9A64FE82CF31}"

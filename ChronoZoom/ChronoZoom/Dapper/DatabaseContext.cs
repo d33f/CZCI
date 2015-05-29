@@ -73,7 +73,7 @@ namespace Dapper
 
         private TEntity UpdateEntityIdentity<TEntity>(TEntity entity, PropertyInfo[] entityProperties, int id)
         {
-            PropertyInfo entityProperty = entityProperties.FirstOrDefault(p => p.Name.ToUpper() == "ID");
+            PropertyInfo entityProperty = entityProperties.FirstOrDefault(p => String.Equals(p.Name, "ID", StringComparison.OrdinalIgnoreCase));
             if (entityProperty != null)
             {
                 entityProperty.SetValue(entity, id);
@@ -81,13 +81,13 @@ namespace Dapper
             return entity;
         }
 
-        public TEntity AddContentItem<TDataEntity, TEntity>(TEntity entity, string[] skipColumns = null) where TDataEntity : new()
+        public TEntity AddContentItem<TDataEntity, TEntity>(TEntity entity) where TDataEntity : new()
         {
             PropertyInfo[] sourceEntityProperties = typeof(TEntity).GetProperties();
             PropertyInfo[] destinationEntityProperties = typeof(TDataEntity).GetProperties();
             TDataEntity dataEntity = MapEntity<TEntity, TDataEntity>(sourceEntityProperties, destinationEntityProperties, entity);
 
-            DynamicParameters parameters = CreateDynamicParameters<TDataEntity>(dataEntity, destinationEntityProperties.Where(w => !skipColumns.Contains(w.Name)).ToArray());
+            DynamicParameters parameters = CreateDynamicParameters<TDataEntity>(dataEntity, destinationEntityProperties.Where(p => !String.Equals(p.Name, "ID", StringComparison.OrdinalIgnoreCase)).ToArray());
 
             parameters.Add("@insertedID", dbType: DbType.Int32, direction: ParameterDirection.Output);
             parameters.Add("@return_value", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
