@@ -5,6 +5,7 @@
     this.getEndDate = getEndDate;
     this.getTitle = getTitle;
     this.getParentContentItem = getParentContentItem;
+    this.getSource = getSource;
     this.getData = getData;
     this.getSize = getSize;
     this.getChildren = getChildren;
@@ -38,11 +39,11 @@
     var _children = [];
 
     var _image = new Image();
-    var _x = 0;
-    var _y = 100;
-    var _width = 0;
-    var _height = 0;
-    var _radius = 0;
+    var _x = data.x !== undefined ? data.x : 0;
+    var _y = data.y !== undefined ? data.y : 100;
+    var _width = data.width !== undefined ? data.width : 0;
+    var _height = data.height !== undefined ? data.height : 0;
+    var _radius = data.radius !== undefined ? data.radius : 0;
     var _isHovered = false;
     var _isFullScreen = false;
     var _linewidth;
@@ -137,6 +138,10 @@
     // Get parentContentItem
     function getParentContentItem() {
         return _parentContentItem;
+    }
+
+    function getSource() {
+        return _sourceURL;
     }
 
     // Get has childeren property
