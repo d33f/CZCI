@@ -7,6 +7,7 @@ using ChronoZoom.Backend.Entities;
 using System.Collections.Generic;
 using ChronoZoom.Backend.Data.Interfaces;
 using ChronoZoom.Backend.Data.MSSQL.Dao;
+using System.Transactions;
 
 namespace ChronoZoom.Backend.Tests.Data.MSSQL
 {
@@ -37,6 +38,28 @@ namespace ChronoZoom.Backend.Tests.Data.MSSQL
 
             // Assert
             Assert.AreEqual(2, result.Count());
+        }
+
+        [TestMethod]
+        public void ContentItemDao_Add_IntegrationTest()
+        {
+            using (var scope = new TransactionScope())
+            {
+                // Arrange
+                IContentItemDao target = new ContentItemDao();
+
+                // Act
+                ContentItem result = target.Add(new ContentItem()
+                {
+                    BeginDate = 1900,
+                    EndDate = 2000,
+                    Title = "Test",
+                    ParentId = 1
+                });
+
+                // Assert
+                Assert.IsTrue(result.Id != 0);
+            }
         }
     }
 }

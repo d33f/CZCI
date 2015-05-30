@@ -1,11 +1,13 @@
-﻿var Canvas;
+var Canvas;
 (function (Canvas) {
     (function (BackendService) {
         // Public methods
         BackendService.getTimeline = getTimeline;
-        BackendService.getContentItems = getContentItems;      
+        BackendService.getContentItems = getContentItems;
+        BackendService.createPersonalTimeLine = createPersonalTimeLine;
         // Private fields
-        var _baseUrl = "http://localhost:40001/api/";
+        var _baseUrl = "http://www.kompili.nl/chronozoomApi/api/";
+        //var _baseUrl = "http://localhost:40001/api/";
 
         // Get json data from path, execute callback resolve when succesfull and reject if failed. 
         function getJSON(id, path, resolve, reject) {
@@ -44,6 +46,31 @@
                 title: json.Title,
                 contentItems: []
             };
+        }
+
+        function createPersonalTimeLine(title, beginDate, endDate) {
+            var xmlHttpRequest = new XMLHttpRequest();
+            var url = _baseUrl + "contentItem";
+            var object = createContentItemFromFormFields(title, beginDate, endDate);
+            xmlHttpRequest.open("POST", url, true);
+
+            //Send the proper header information along with the request
+            xmlHttpRequest.setRequestHeader("Content-type", "application/json");
+            xmlHttpRequest.onreadystatechange = function () {//Call a function when the state changes.
+                if (xmlHttpRequest.readyState == 4 && xmlHttpRequest.status == 200) {
+                    alert(xmlHttpRequest.responseText);
+                }
+            }
+            xmlHttpRequest.send(JSON.stringify(object));
+            
+        }
+
+        function createContentItemFromFormFields(title, beginDate, endDate) {
+            return {
+                Title: title,
+                BeginDate: beginDate,
+                EndDate: endDate
+            }
         }
 
         // Create a timeline object of given json input (convert it to our internal structure)

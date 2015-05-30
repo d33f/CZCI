@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Configuration;
 using System.Web.Http;
 using ChronoZoom.Backend.Business.Interfaces;
 using ChronoZoom.Backend.Entities;
@@ -53,9 +52,15 @@ namespace ChronoZoom.Backend.Controllers
             {
                 return BadRequest("Content item invalid");
             }
+            if (contentItem.Id == 0)
+            {
+                return BadRequest("No id specified");
+            }
+
             try
             {
-                return Ok(_service.Add(contentItem));
+                _service.Update(contentItem);
+                return Ok();
             }
             catch (Exception)
             {
@@ -75,20 +80,15 @@ namespace ChronoZoom.Backend.Controllers
             {
                 return BadRequest("Content item invalid");
             }
-            if (contentItem.Id == 0)
-            {
-                return BadRequest("No id specified");
-            }
-
             try
             {
-                _service.Update(contentItem);
-                return Ok();
+                return Ok(_service.Add(contentItem));
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Console.Write(e.ToString());
                 return BadRequest("An error occured");
-            }
+            } 
         }
     }
 }
