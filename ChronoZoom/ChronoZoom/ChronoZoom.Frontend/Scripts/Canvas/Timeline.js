@@ -10,10 +10,19 @@
         // Private fields
         var _contentItems = [];
         var _oldContentItems = [];
-        var _maxAnimationSteps = 10;
-        var _currentAnimationStep = 0;
         var _oldRange = [];
         var _newRange = [];
+
+        // Animation Variables
+        var _animationTime = 2;
+        var _clickedContentItem;
+        var _deltaLeft;
+        var _deltaRight;
+        var _deltaTop;
+        var _deltaBottom;
+        var _maxAnimationSteps;
+        var _currentAnimationStep = 0;
+        var _fps;
 
         // Constructor
         function initialize() {
@@ -21,13 +30,17 @@
         }
 
         function setTimeline(timelineId) {
-            Canvas.ContentItemService.findTimeline(timelineId);
+            console.log(_contentItems);
+            Canvas.ContentItemService.findTimeline(timelineId);       
         }
 
         // Handle on content item changed event
         function onContentItemsChanged() {
             // Get and set old content items and content items
-            _oldContentItems = _contentItems;
+            if (_contentItems.length > 0) {
+                //console.log(_contentItems);
+                _oldContentItems = _contentItems.slice();
+            }
             _contentItems = Canvas.ContentItemService.getContentItems();
 
             // Destruct old content items
@@ -70,20 +83,46 @@
                 drawContentItemsLoop(_oldContentItems, range, false);
 
                 // Check if animation is done
-                if (_currentAnimationStep >= _maxAnimationSteps) {
-                    _oldContentItems = [];
+                //if (_currentAnimationStep >= _maxAnimationSteps) {
+                //    _oldContentItems = [];
+                //}
+
+
+                // Update timescale
+                /*
+                var position = _clickedContentItem.getPosition();
+                var size = _clickedContentItem.getSize();
+
+                if (_currentAnimationStep == 1) {
+                    _deltaLeft = position.x;
+                    _deltaRight = Canvas.getCanvasContainer().innerWidth - (position.x + size.width);
+                    _fps = Canvas.getFPS();
+                    _maxAnimationSteps = _fps * _animationTime;
                 }
 
-                //// Update timescale
+                var timeElapsed = _currentAnimationStep / _fps;
+
+                if (timeElapsed >= _animationTime) {
+                    _oldContentItems = [];
+                } else {
+                    var beginPosition = _deltaLeft / _maxAnimationSteps;
+                    var endPosition = (position.x + size.width) - (_deltaRight / _maxAnimationSteps);
+                    var beginRange = Canvas.Timescale.getTimeForXPosition(beginPosition);
+                    var endRange = Canvas.Timescale.getTimeForXPosition(endPosition);
+                    Canvas.Timescale.setRange(beginRange, endRange);
+                }
+
                 //var rangeBegin = _oldRange.begin + ((_oldRange.begin - _newRange.begin) / _maxAnimationSteps) * _currentAnimationStep;
                 //var rangeEnd = _oldRange.end - ((_oldRange.end - _newRange.end) / _maxAnimationSteps) * _currentAnimationStep;
                 //Canvas.Timescale.setRange(rangeBegin, rangeEnd);
                 //Canvas.Timescale.setRange(_newRange.begin, _newRange.end);
-            }
+                */
 
-            // Draw all content items that has childeren first
-            drawContentItemsLoop(_contentItems, range, true);
-            drawContentItemsLoop(_contentItems, range, false);
+
+                // Draw all content items that has childeren first
+                drawContentItemsLoop(_contentItems, range, true);
+                drawContentItemsLoop(_contentItems, range, false);
+            }
         }
 
         // Draw content item loop

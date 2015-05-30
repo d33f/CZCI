@@ -4,6 +4,7 @@
     Canvas.getContext = getContext;
     Canvas.getContainer = getContainer;
     Canvas.getCanvasContainer = getCanvasContainer;
+    Canvas.getFPS = getFPS;
     Canvas.setTimeline = setTimeline;
     // Private fields
     var _container;
@@ -33,7 +34,7 @@
         canvasDrawProcessLoop();
 
         // Select default timeline
-        Canvas.ContentItemService.findTimeline(18);
+        Canvas.Timeline.setTimeline(18);
     }
 
     // Set the new timeline
@@ -55,6 +56,10 @@
     // Get the canvas container element
     function getCanvasContainer() {
         return _canvasContainer;
+    }
+
+    function getFPS() {
+        return _requiredElapsed;
     }
 
     // Update the canvas
