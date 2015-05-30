@@ -30,19 +30,16 @@
         }
 
         function setTimeline(timelineId) {
-            console.log(_contentItems);
+            _contentItems = [];
             Canvas.ContentItemService.findTimeline(timelineId);       
         }
 
         // Handle on content item changed event
         function onContentItemsChanged() {
             // Get and set old content items and content items
-            if (_contentItems.length > 0) {
-                //console.log(_contentItems);
-                _oldContentItems = _contentItems.slice();
-            }
+            _oldContentItems = _contentItems;
             _contentItems = Canvas.ContentItemService.getContentItems();
-
+             
             // Destruct old content items
             var length = _oldContentItems.length;
             for (var i = 0; i < length; i++) {
@@ -82,10 +79,14 @@
                 drawContentItemsLoop(_oldContentItems, range, true);
                 drawContentItemsLoop(_oldContentItems, range, false);
 
+                _fps = Canvas.getFPS();
+                _maxAnimationSteps = _fps * _animationTime;
+
                 // Check if animation is done
-                //if (_currentAnimationStep >= _maxAnimationSteps) {
-                //    _oldContentItems = [];
-                //}
+                if (_currentAnimationStep >= _maxAnimationSteps) {
+                    _oldContentItems = [];
+                    console.log(_contentItems);
+                }
 
 
                 // Update timescale
@@ -118,11 +119,11 @@
                 //Canvas.Timescale.setRange(_newRange.begin, _newRange.end);
                 */
 
-
-                // Draw all content items that has childeren first
-                drawContentItemsLoop(_contentItems, range, true);
-                drawContentItemsLoop(_contentItems, range, false);
             }
+            // Draw all content items that has childeren first
+            drawContentItemsLoop(_contentItems, range, true);
+            drawContentItemsLoop(_contentItems, range, false);
+
         }
 
         // Draw content item loop
