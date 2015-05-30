@@ -1,7 +1,7 @@
 ﻿var Canvas;
 (function (Canvas) {
     // Public methods
-    Canvas.getContext = getContext;
+    Canvas.getContext = getContext; 
     Canvas.getContainer = getContainer;
     Canvas.getCanvasContainer = getCanvasContainer;
     Canvas.getFPS = getFPS;
