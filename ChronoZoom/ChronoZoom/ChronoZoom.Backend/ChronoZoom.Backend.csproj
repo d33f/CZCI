@@ -59,10 +59,6 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
-    <Reference Include="Orient.Client, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>DLLs\Orient.Client.dll</HintPath>
-    </Reference>
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -108,7 +104,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="DLLs\Orient.Client.dll" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -117,26 +112,20 @@
     <Compile Include="App_Start\UnityWebApiActivator.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Business\ContentItemService.cs" />
-    <Compile Include="Business\ContentItemServiceMock.cs" />
     <Compile Include="Business\Interfaces\IContentItemService.cs" />
     <Compile Include="Business\Interfaces\ITimelineService.cs" />
     <Compile Include="Business\TimelineService.cs" />
-    <Compile Include="Business\TimelineServiceMock.cs" />
     <Compile Include="Controllers\ContentItemController.cs" />
     <Compile Include="Controllers\TimelineController.cs" />
     <Compile Include="Data\Interfaces\IContentItemDao.cs" />
     <Compile Include="Data\Interfaces\ITimelineDao.cs" />
-    <Compile Include="Data\OrientDb\Contains.cs" />
-    <Compile Include="Data\OrientDb\ContentItem.cs" />
-    <Compile Include="Data\OrientDb\ContentItemDaoOrientDb.cs" />
-    <Compile Include="Data\OrientDb\Factory\ContentItemFactory.cs" />
-    <Compile Include="Data\OrientDb\Factory\TimelineFactory.cs" />
-    <Compile Include="Data\OrientDb\OrientDb.cs" />
-    <Compile Include="Data\OrientDb\Timeline.cs" />
-    <Compile Include="Data\OrientDb\TimelineDaoOrientDb.cs" />
+    <Compile Include="Data\MSSQL\Dao\ContentItemDao.cs" />
+    <Compile Include="Data\MSSQL\Dao\TimelineDao.cs" />
+    <Compile Include="Data\MSSQL\Entities\ContentItem.cs" />
+    <Compile Include="Data\MSSQL\Entities\Timeline.cs" />
     <Compile Include="Entities\ContentItem.cs" />
     <Compile Include="Entities\Timeline.cs" />
-    <Compile Include="Exceptions\ContentItemNotFoundException.cs" />
+    <Compile Include="Exceptions\ContentItemsNotFoundException.cs" />
     <Compile Include="Exceptions\TimelineNotFoundException.cs" />
     <Compile Include="Exceptions\ToManyResultsException.cs" />
     <Compile Include="Global.asax.cs">
@@ -151,6 +140,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+    <None Include="Properties\PublishProfiles\custom.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -164,6 +154,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Dapper\Dapper.csproj">
+      <Project>{19d27040-c51a-4346-8f34-b9d72b3fa5fb}</Project>
+      <Name>Dapper</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -20,11 +20,15 @@
             var title = document.getElementById("titleInput").value;
             var startDate = document.getElementById("startDateInput").value;
             var endDate = document.getElementById("endDateInput").value;
+            var description = document.getElementById("descriptionInput").value;
+
+            Canvas.BackendService.createPersonalTimeLine(title, startDate, endDate);
+
 
             // write output to panel
-            var output = document.getElementById("importOutput")
+            var output = document.getElementById("importOutput");
             if (output.textContent !== undefined) {
-                output.textContent = "Input received: " + title + " " + startDate + " " + endDate;
+                output.textContent = "Input received: " + title + " " + startDate + " " + endDate + " " + description;
             }
         }
 

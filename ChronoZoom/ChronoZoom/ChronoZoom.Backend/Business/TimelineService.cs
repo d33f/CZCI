@@ -1,26 +1,37 @@
-﻿using System.Collections.Generic;
+﻿using System.Linq;
 using ChronoZoom.Backend.Business.Interfaces;
 using ChronoZoom.Backend.Data.Interfaces;
+using ChronoZoom.Backend.Entities;
 
 namespace ChronoZoom.Backend.Business
 {
     public class TimelineService : ITimelineService
     {
-        private ITimelineDao _timelineDao;
+        private readonly ITimelineDao _dao;
+        private readonly IContentItemDao _contentItemDao;
 
-        public TimelineService(ITimelineDao timelineDao)
+        public TimelineService(ITimelineDao dao, IContentItemDao contentItemDao)
         {
-            _timelineDao = timelineDao;
+            _dao = dao;
+            _contentItemDao = contentItemDao;
         }
 
-        public Entities.Timeline Get(string id)
+        public Timeline Get(int id)
         {
-            return _timelineDao.Find(id);
+            Timeline timeline = _dao.Find(id);
+            var contentItems = _contentItemDao.FindAllForTimelineBy(timeline.Id);
+            timeline.ContentItems = contentItems.ToArray();
+            return timeline;
         }
 
-        public void Add(Entities.Timeline timeline)
+        public Timeline Add(Timeline timeline)
         {
-            throw new System.NotImplementedException();
+            return _dao.Add(timeline);
+        }
+
+        public void Update(Timeline timeline)
+        {
+            _dao.Update(timeline);
         }
     }
 }

@@ -7,26 +7,26 @@ namespace ChronoZoom.Backend.Business
 {
     public class ContentItemService : IContentItemService
     {
-        private readonly IContentItemDao _contentItemDao;
+        private readonly IContentItemDao _dao;
 
-        public ContentItemService(IContentItemDao contentItemDao)
+        public ContentItemService(IContentItemDao dao)
         {
-            _contentItemDao = contentItemDao;
+            _dao = dao;
         }
 
-        public IEnumerable<ContentItem> GetAll(string parentContentItemID)
+        public IEnumerable<ContentItem> GetAll(int parentContentItemID)
         {
-            return _contentItemDao.FindAll(parentContentItemID);
+            return _dao.FindAllBy(parentContentItemID);
         }
 
-        public IEnumerable<ContentItem> GetAllForTimeline(string parentContentItemID)
+        public ContentItem Add(ContentItem contentItem)
         {
-            return _contentItemDao.FindAllForTimeline(parentContentItemID);
+            return _dao.Add(contentItem);
         }
 
-        public void Add(ContentItem item)
+        public void Update(ContentItem contentItem)
         {
-            throw new System.NotImplementedException();
+            _dao.Update(contentItem);
         }
     }
 }

@@ -22,7 +22,6 @@
             if (typeof(Storage) !== "undefined") {
                 _cache = window.sessionStorage;
             }
-            //_cache.clear();
         }
 
         // Add listener

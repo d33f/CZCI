@@ -82,7 +82,7 @@
         function clearDisplay() {
             // Clear bread crumbs
             while (_container.firstChild) {
-                // Faster then _container.innerHTML = '';
+                // Faster then updating the innerHTML to nothing
                 _container.removeChild(_container.firstChild);
             }
         }
@@ -106,11 +106,9 @@
             // Don't redirect to your self
             var length = _stack.length;
             if (i !== length - 1) {
-                if (i < length) {
-                    if (!_stack[length - 1].hasChildren()) {
-                        _stack[length - 1].setIsFullScreen(false);
-                        _stack[length - 1] = undefined;
-                    }
+                if (i < length && !_stack[length - 1].hasChildren()) {
+                    _stack[length - 1].setIsFullScreen(false);
+                    _stack[length - 1] = undefined;
                 }
 
                 var contentItem = _stack[i];

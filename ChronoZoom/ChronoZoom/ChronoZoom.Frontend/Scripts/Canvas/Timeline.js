@@ -6,8 +6,23 @@
         Timeline.update = update;
         Timeline.handleClickOnTimeline = handleClickOnTimeline;
         Timeline.setTimeline = setTimeline;
+
         // Private fields
         var _contentItems = [];
+        var _oldContentItems = [];
+        var _oldRange = [];
+        var _newRange = [];
+
+        // Animation Variables
+        var _animationTime = 2;
+        var _clickedContentItem;
+        var _deltaLeft;
+        var _deltaRight;
+        var _deltaTop;
+        var _deltaBottom;
+        var _maxAnimationSteps;
+        var _currentAnimationStep = 0;
+        var _fps;
 
         // Constructor
         function initialize() {
@@ -15,20 +30,23 @@
         }
 
         function setTimeline(timelineId) {
-            Canvas.ContentItemService.findTimeline(timelineId);
+            console.log(_contentItems);
+            Canvas.ContentItemService.findTimeline(timelineId);       
         }
 
         // Handle on content item changed event
         function onContentItemsChanged() {
-            var oldContentItems = _contentItems;
-
-            // Get and set content items
+            // Get and set old content items and content items
+            if (_contentItems.length > 0) {
+                //console.log(_contentItems);
+                _oldContentItems = _contentItems.slice();
+            }
             _contentItems = Canvas.ContentItemService.getContentItems();
 
             // Destruct old content items
-            var length = oldContentItems.length;
+            var length = _oldContentItems.length;
             for (var i = 0; i < length; i++) {
-                oldContentItems[i].destructor();
+                _oldContentItems[i].destructor();
             }
 
             // Hide loader
@@ -46,28 +64,75 @@
 
         // Draw the timeline
         function draw() {
-                drawContentItems();
-                drawToolTip();
-            }
+            drawContentItems();
+            drawToolTip();
+        }
 
         // Draw (visible) content items
         function drawContentItems() {
             // Get current range
             var range = Canvas.Timescale.getRange();
 
-            // Draw all content items that has childeren first
-            drawContentItemsLoop(range, true);
-            drawContentItemsLoop(range, false);
+            // Check for animation
+            if (_oldContentItems.length > 0) {
+                // Update current animation step
+                _currentAnimationStep++;
+
+                // Draw all old content items that has childeren first
+                drawContentItemsLoop(_oldContentItems, range, true);
+                drawContentItemsLoop(_oldContentItems, range, false);
+
+                // Check if animation is done
+                //if (_currentAnimationStep >= _maxAnimationSteps) {
+                //    _oldContentItems = [];
+                //}
+
+
+                // Update timescale
+                /*
+                var position = _clickedContentItem.getPosition();
+                var size = _clickedContentItem.getSize();
+
+                if (_currentAnimationStep == 1) {
+                    _deltaLeft = position.x;
+                    _deltaRight = Canvas.getCanvasContainer().innerWidth - (position.x + size.width);
+                    _fps = Canvas.getFPS();
+                    _maxAnimationSteps = _fps * _animationTime;
+                }
+
+                var timeElapsed = _currentAnimationStep / _fps;
+
+                if (timeElapsed >= _animationTime) {
+                    _oldContentItems = [];
+                } else {
+                    var beginPosition = _deltaLeft / _maxAnimationSteps;
+                    var endPosition = (position.x + size.width) - (_deltaRight / _maxAnimationSteps);
+                    var beginRange = Canvas.Timescale.getTimeForXPosition(beginPosition);
+                    var endRange = Canvas.Timescale.getTimeForXPosition(endPosition);
+                    Canvas.Timescale.setRange(beginRange, endRange);
+                }
+
+                //var rangeBegin = _oldRange.begin + ((_oldRange.begin - _newRange.begin) / _maxAnimationSteps) * _currentAnimationStep;
+                //var rangeEnd = _oldRange.end - ((_oldRange.end - _newRange.end) / _maxAnimationSteps) * _currentAnimationStep;
+                //Canvas.Timescale.setRange(rangeBegin, rangeEnd);
+                //Canvas.Timescale.setRange(_newRange.begin, _newRange.end);
+                */
+
+
+                // Draw all content items that has childeren first
+                drawContentItemsLoop(_contentItems, range, true);
+                drawContentItemsLoop(_contentItems, range, false);
+            }
         }
 
         // Draw content item loop
-        function drawContentItemsLoop(range, hasChildren) {
+        function drawContentItemsLoop(contentItems, range, hasChildren) {
             // Check all content items
-            var length = _contentItems.length;
+            var length = contentItems.length;
             for (var i = 0; i < length; i++) {
-                if (_contentItems[i].hasChildren() === hasChildren) {
+                if (contentItems[i].hasChildren() === hasChildren) {
                     // Draw content item
-                    drawContentItem(range, _contentItems[i]);
+                    drawContentItem(range, contentItems[i]);
                 }
             }
         }
@@ -83,15 +148,17 @@
         function drawToolTip() {
             var _contentItemOnMousePosition = getContentItemOnMousePosition();
 
-            if (_contentItemOnMousePosition !== undefined) {
-                if (!_contentItemOnMousePosition.getFullScreen()) {
-                    Canvas.Tooltip.update(_contentItemOnMousePosition);
-                    Canvas.Tooltip.draw();
-                }
+            if (_contentItemOnMousePosition !== undefined && !_contentItemOnMousePosition.getFullScreen()) {
+                Canvas.Tooltip.update(_contentItemOnMousePosition);
+                Canvas.Tooltip.draw();
             }
 
             var container = Canvas.getCanvasContainer();
-            //container.style.cursor = _contentItemOnMousePosition !== undefined ? 'pointer' : 'default';
+            var cursor = _contentItemOnMousePosition !== undefined ? 'pointer' : 'default';
+            
+            if (container.style.cursor !== cursor) {
+                container.style.cursor = cursor;
+            }
         }
 
         // Handle the click on timeline event
@@ -112,10 +179,16 @@
 
         // Handle click on given content item
         function handleClickOnContentItem(clickedContentItem) {
-            // Update timescale and content item service
+            // Calculate new range
             var rangeItem = clickedContentItem.getEndDate() - clickedContentItem.getBeginDate();
             var rangeBegin = clickedContentItem.getBeginDate() - (rangeItem / 20);
             var rangeEnd = clickedContentItem.getEndDate() + (rangeItem / 20);
+
+            // Set old and new range
+            _oldRange = Canvas.Timescale.getRange();            
+            _newRange = { begin: rangeBegin, end: rangeEnd };
+
+            // Update timescale
             Canvas.Timescale.setRange(rangeBegin, rangeEnd);
 
             // Handle event

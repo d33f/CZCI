@@ -1,9 +1,10 @@
 ﻿var Canvas;
 (function (Canvas) {
     // Public methods
-    Canvas.getContext = getContext;
+    Canvas.getContext = getContext; 
     Canvas.getContainer = getContainer;
     Canvas.getCanvasContainer = getCanvasContainer;
+    Canvas.getFPS = getFPS;
     Canvas.setTimeline = setTimeline;
     // Private fields
     var _container;
@@ -30,9 +31,13 @@
         // Start the mouse pointer and draw process loop
         Canvas.Mousepointer.start();
         Canvas.WindowManager.showLoader(false);
-         canvasDrawProcessLoop();
+        canvasDrawProcessLoop();
+
+        // Select default timeline
+        Canvas.Timeline.setTimeline(18);
     }
 
+    // Set the new timeline
     function setTimeline(timelineId) {
         Canvas.Timeline.setTimeline(timelineId);
         Canvas.PanelManager.showTimelinePanel(false);
@@ -51,6 +56,10 @@
     // Get the canvas container element
     function getCanvasContainer() {
         return _canvasContainer;
+    }
+
+    function getFPS() {
+        return _requiredElapsed;
     }
 
     // Update the canvas

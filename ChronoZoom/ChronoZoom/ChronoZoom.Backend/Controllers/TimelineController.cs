@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Web.Http;
 using ChronoZoom.Backend.Business.Interfaces;
 using ChronoZoom.Backend.Entities;
@@ -12,22 +11,18 @@ namespace ChronoZoom.Backend.Controllers
     [EnableCors(origins: "http://localhost:20000", headers: "*", methods: "GET")]
     public class TimelineController : ApiController
     {
-        private ITimelineService _timelineService;
-        private IContentItemService _contentItemService;
+        private readonly ITimelineService _service;
 
-        public TimelineController(ITimelineService timelineService, IContentItemService contentItemService)
+        public TimelineController(ITimelineService service)
         {
-            _timelineService = timelineService;
-            _contentItemService = contentItemService;
+            _service = service;
         }
 
-        public IHttpActionResult Get(string id)
+        public IHttpActionResult Get(int id)
         {
             try
             {
-                var timeline = _timelineService.Get(id);
-                var contentItems = _contentItemService.GetAllForTimeline(timeline.Id);
-                timeline.ContentItems = contentItems.ToArray();
+                var timeline = _service.Get(id);
                 return Ok(timeline);
             }
             catch (TimelineNotFoundException)
@@ -39,29 +34,55 @@ namespace ChronoZoom.Backend.Controllers
                 return BadRequest("An error occured");
             }
         }
+        
+        /// <summary>
+        /// Create a new timeline
+        /// </summary>
+        /// <param name="item">The timeline</param>
+        /// <returns>The inserted timeline (with id)</returns>
+        [HttpPut]
+        public IHttpActionResult Put(Timeline timeline)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("timeline invalid");
+            }
+            if (timeline.Id == 0)
+            {
+                return BadRequest("No id specified");
+            }
+
+            try
+            {
+                _service.Update(timeline);
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return BadRequest("An error occured");
+            }
+        }
 
         /// <summary>
-        /// Create a new timeline item
+        /// Updates a timeline
         /// </summary>
-        /// <param name="timeline">The timeline item</param>
-        /// <returns>True if succesfully added</returns>
-        //[HttpPut]
-        //public IHttpActionResult Put(Timeline timeline)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest("Timeline item invalid");
-        //    }
-
-        //    try
-        //    {
-        //        _timelineService.Add(timeline);
-        //        return Ok(true);
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return BadRequest("An error occured");
-        //    }
-        //}
+        /// <param name="item">The timeline</param>
+        /// <returns>Status OK if succesfully added</returns>
+        [HttpPost]
+        public IHttpActionResult Post(Timeline timeline)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("timeline invalid");
+            }
+            try
+            {
+                return Ok(_service.Add(timeline));
+            }
+            catch (Exception)
+            {
+                return BadRequest("An error occured");
+            }
+        }
     }
 }

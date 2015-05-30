@@ -8,11 +8,14 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{20C515C6-8F25-4294-AA08-33A4DE4B525C}"
 	ProjectSection(SolutionItems) = preProject
 		CodeCoverage.runsettings = CodeCoverage.runsettings
+		Database.sql = Database.sql
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChronoZoom.Backend", "ChronoZoom.Backend\ChronoZoom.Backend.csproj", "{EC98BB47-FF09-44EC-883A-9A64FE82CF31}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChronoZoom.Backend.Tests", "ChronoZoom.Backend.Tests\ChronoZoom.Backend.Tests.csproj", "{8FFCD964-7AC0-4EFC-8B74-7E196AAD6CB4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dapper", "Dapper\Dapper.csproj", "{19D27040-C51A-4346-8F34-B9D72B3FA5FB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,6 +35,10 @@ Global
 		{8FFCD964-7AC0-4EFC-8B74-7E196AAD6CB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8FFCD964-7AC0-4EFC-8B74-7E196AAD6CB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8FFCD964-7AC0-4EFC-8B74-7E196AAD6CB4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19D27040-C51A-4346-8F34-B9D72B3FA5FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19D27040-C51A-4346-8F34-B9D72B3FA5FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19D27040-C51A-4346-8F34-B9D72B3FA5FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19D27040-C51A-4346-8F34-B9D72B3FA5FB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

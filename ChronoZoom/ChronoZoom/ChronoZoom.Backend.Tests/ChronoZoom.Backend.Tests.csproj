@@ -55,6 +55,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.Web.Extensions" />
@@ -72,8 +73,8 @@
     <Compile Include="Business\TimelineServiceTest.cs" />
     <Compile Include="Controllers\ContentItemControllerTest.cs" />
     <Compile Include="Controllers\TimelineControllerTest.cs" />
-    <Compile Include="Data\TimelineDaoTest.cs" />
-    <Compile Include="Data\ContentItemDaoTest.cs" />
+    <Compile Include="Data\MSSQL\TimelineDaoTest.cs" />
+    <Compile Include="Data\MSSQL\ContentItemDaoTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

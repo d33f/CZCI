@@ -2,7 +2,7 @@
 
 namespace ChronoZoom.Backend.Exceptions
 {
-    public class ToManyResultsException : Exception
+    public class ContentItemsNotFoundException : Exception
     {
     }
 }
