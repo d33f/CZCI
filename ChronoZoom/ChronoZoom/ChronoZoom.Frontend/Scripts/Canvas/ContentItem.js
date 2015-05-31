@@ -219,6 +219,9 @@
     function update(contentItems) {
         _x = Canvas.Timescale.getXPositionForTime(_beginDate);
         _width = Canvas.Timescale.getXPositionForTime(_endDate) - _x;
+        var parentWidth = _parentContentItem.getSize().width;
+        var radius = (parentWidth - (parentWidth / 40)) / 4;
+        _radius = radius < 50 ? radius : 50;
 
         if (_isFullScreen) {
             updateFullScreenContentItem(contentItems);
@@ -425,7 +428,7 @@
             context.stroke();
             context.closePath();
             context.clip();
-            drawImage(context, _x, _y, _width * 2, _height);
+            drawImage(context, _x, _y, _radius * 2, _radius * 2);
             context.beginPath();
             context.arc(_x, _y, _radius, 0, 2 * Math.PI);
             context.clip();
