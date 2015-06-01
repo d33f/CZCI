@@ -5,6 +5,7 @@
     this.getEndDate = getEndDate;
     this.getTitle = getTitle;
     this.getParentContentItem = getParentContentItem;
+    this.getSource = getSource;
     this.getData = getData;
     this.getSize = getSize;
     this.getChildren = getChildren;
@@ -38,11 +39,11 @@
     var _children = [];
 
     var _image = new Image();
-    var _x = 0;
-    var _y = 100;
-    var _width = 0;
-    var _height = 0;
-    var _radius = 0;
+    var _x = data.x !== undefined ? data.x : 0;
+    var _y = data.y !== undefined ? data.y : 100;
+    var _width = data.width !== undefined ? data.width : 0;
+    var _height = data.height !== undefined ? data.height : 0;
+    var _radius = data.radius !== undefined ? data.radius : 0;
     var _isHovered = false;
     var _isFullScreen = false;
     var _linewidth;
@@ -139,6 +140,10 @@
         return _parentContentItem;
     }
 
+    function getSource() {
+        return _sourceURL;
+    }
+
     // Get has childeren property
     function hasChildren() {
         return _hasChildren;
@@ -214,6 +219,11 @@
     function update(contentItems) {
         _x = Canvas.Timescale.getXPositionForTime(_beginDate);
         _width = Canvas.Timescale.getXPositionForTime(_endDate) - _x;
+        /*
+        var parentWidth = _parentContentItem.getSize().width;
+        var radius = (parentWidth - (parentWidth / 40)) / 4;
+        _radius = radius < 50 ? radius : 50;
+        */
 
         if (_isFullScreen) {
             updateFullScreenContentItem(contentItems);
@@ -420,7 +430,7 @@
             context.stroke();
             context.closePath();
             context.clip();
-            drawImage(context, _x, _y, _width * 2, _height);
+            drawImage(context, _x, _y, _radius * 2, _radius * 2);
             context.beginPath();
             context.arc(_x, _y, _radius, 0, 2 * Math.PI);
             context.clip();
