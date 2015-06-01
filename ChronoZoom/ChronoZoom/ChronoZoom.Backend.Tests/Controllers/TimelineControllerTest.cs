@@ -7,6 +7,7 @@ using System.Web.Http;
 using System.Web.Http.Results;
 using ChronoZoom.Backend.Entities;
 using ChronoZoom.Backend.Exceptions;
+using System.Collections.Generic;
 
 namespace ChronoZoom.Backend.Tests.Controllers
 {
@@ -32,6 +33,39 @@ namespace ChronoZoom.Backend.Tests.Controllers
             Assert.IsTrue(result is OkNegotiatedContentResult<Timeline>);
             Assert.AreEqual(12, (result as OkNegotiatedContentResult<Timeline>).Content.Id);
             mock.Verify(verify => verify.Get(It.IsAny<int>()), Times.Once);
+        }
+
+        public void TimelineController_Get_List_Test()
+        {
+            // Arrange
+            Mock<ITimelineService> mock = new Mock<ITimelineService>(MockBehavior.Strict);
+            mock.Setup(setup => setup.List()).Returns(new List<Entities.Timeline>()
+            {
+                new Timeline()
+                {
+                    Id = 1,
+                    BeginDate = 1000,
+                    EndDate = 1500,
+                    Title = "Test 1"
+                },
+                new Timeline()
+                {
+                    Id = 2,
+                    BeginDate = 1555,
+                    EndDate = 1666,
+                    Title = "Test 2"
+                }
+            });
+            TimelineController target = new TimelineController(mock.Object);
+
+            // Act
+            IHttpActionResult result = target.Get();
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result is OkNegotiatedContentResult<Timeline>);
+            Assert.AreEqual(12, (result as OkNegotiatedContentResult<Timeline>).Content.Id);
+            mock.Verify(verify => verify.List(), Times.Once);
         }
 
         [TestMethod]
