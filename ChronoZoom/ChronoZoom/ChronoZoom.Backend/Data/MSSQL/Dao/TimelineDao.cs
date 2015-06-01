@@ -1,6 +1,7 @@
 ﻿using ChronoZoom.Backend.Data.Interfaces;
 using ChronoZoom.Backend.Entities;
 using Dapper;
+using System.Collections.Generic;
 
 namespace ChronoZoom.Backend.Data.MSSQL.Dao
 {
@@ -13,6 +14,16 @@ namespace ChronoZoom.Backend.Data.MSSQL.Dao
                 string query = "DECLARE @root HierarchyId = (SELECT Node FROM [dbo].[ContentItem] WHERE ID = 1);";
                 query += "(SELECT * FROM [dbo].[ContentItem] WHERE Node.GetAncestor(1) = @root AND id = @id)";
                 return context.FirstOrDefault<MSSQL.Entities.ContentItem, Timeline>(query, new { id = id });
+            }
+        }
+
+        public IEnumerable<Timeline> List()
+        {
+            using (DatabaseContext context = new DatabaseContext())
+            {
+                string query = "DECLARE @root HierarchyId = (SELECT Node FROM [dbo].[ContentItem] WHERE ID = 1);";
+                query += "(SELECT * FROM [dbo].[ContentItem] WHERE Node.GetAncestor(1) = @root)";
+                return context.Select<MSSQL.Entities.ContentItem, Timeline>(query, null);
             }
         }
 
