@@ -93,7 +93,7 @@ div.contentItemTitle {
 
 
 /* INPUT PANEL */
-div#inputPanel {
+div#timelinePanel {
     transition: left .6s ease;
     width: 400px;
     background-color: #1B1C1D;
@@ -106,16 +106,16 @@ div#inputPanel {
     padding: 10px;
 }
 
-.inputPanelHidden {
+.timelinePanelHidden {
     left: -420px;
     display: inline;
 }
 
-.inputPanelShow {
+.timelineShow {
     left: -0px;
 }
 
-#inputPanel > h1 {
+#timeline > h1 {
     font-size: 150%;
     width: 33%;
     margin: 0 auto;

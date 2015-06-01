@@ -6,8 +6,8 @@ var Canvas;
         BackendService.getContentItems = getContentItems;
         BackendService.createPersonalTimeLine = createPersonalTimeLine;
         // Private fields
-        var _baseUrl = "http://www.kompili.nl/chronozoomApi/api/";
-        //var _baseUrl = "http://localhost:40001/api/";
+        //var _baseUrl = "http://www.kompili.nl/chronozoomApi/api/";
+        var _baseUrl = "http://localhost:40001/api/";
 
         // Get json data from path, execute callback resolve when succesfull and reject if failed. 
         function getJSON(id, path, resolve, reject) {
@@ -50,7 +50,7 @@ var Canvas;
 
         function createPersonalTimeLine(title, beginDate, endDate) {
             var xmlHttpRequest = new XMLHttpRequest();
-            var url = _baseUrl + "contentItem";
+            var url = _baseUrl + "timeline";
             var object = createContentItemFromFormFields(title, beginDate, endDate);
             xmlHttpRequest.open("POST", url, true);
 
