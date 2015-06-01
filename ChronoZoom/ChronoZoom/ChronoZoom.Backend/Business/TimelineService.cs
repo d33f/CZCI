@@ -2,6 +2,7 @@
 using ChronoZoom.Backend.Business.Interfaces;
 using ChronoZoom.Backend.Data.Interfaces;
 using ChronoZoom.Backend.Entities;
+using System.Collections.Generic;
 
 namespace ChronoZoom.Backend.Business
 {
@@ -22,6 +23,12 @@ namespace ChronoZoom.Backend.Business
             var contentItems = _contentItemDao.FindAllForTimelineBy(timeline.Id);
             timeline.ContentItems = contentItems.ToArray();
             return timeline;
+        }
+
+        public IEnumerable<Timeline> List()
+        {
+           var timelines = _dao.List();
+           return timelines;
         }
 
         public Timeline Add(Timeline timeline)

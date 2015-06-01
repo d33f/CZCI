@@ -5,6 +5,8 @@ using Moq;
 using ChronoZoom.Backend.Data.Interfaces;
 using ChronoZoom.Backend.Exceptions;
 using ChronoZoom.Backend.Entities;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ChronoZoom.Backend.Tests.Business
 {
@@ -39,6 +41,43 @@ namespace ChronoZoom.Backend.Tests.Business
             Assert.AreEqual(2, result.ContentItems.Length);
             mock.Verify(verify => verify.Find(It.IsAny<long>()), Times.Once);
             contentItemMock.Verify(verify => verify.FindAllForTimelineBy(result.Id), Times.Once);
+        }
+
+        [TestMethod]
+        public void TimelineService_Get_List_Test()
+        {
+            // Arrange
+            Mock<ITimelineDao> mock = new Mock<ITimelineDao>(MockBehavior.Strict);
+            mock.Setup(setup => setup.List()).Returns(new List<Timeline>()
+            {
+                new Timeline()
+                {
+                Id = 1,
+                Title = "1ste wereld oorlog",
+                BeginDate = 1914M,
+                EndDate = 1918M,
+                ContentItems = new ContentItem[2]
+                },
+                new Timeline()
+                {
+                Id = 2,
+                Title = "tweede wereldoorlog",
+                BeginDate = 1940M,
+                EndDate = 1945M
+                }
+            });
+            TimelineService target = new TimelineService(mock.Object, null);
+
+            // Act
+            List<Timeline> result = target.List().ToList();
+
+            // Assert
+            Assert.IsNotNull(result[0]);
+            Assert.AreEqual(1, result[0].Id);
+            Assert.AreEqual("1ste wereld oorlog", result[0].Title);
+            Assert.AreEqual(1914M, result[0].BeginDate);
+            Assert.AreEqual(1918M, result[0].EndDate);
+            mock.Verify(verify => verify.List(), Times.Once);
         }
 
         [TestMethod]

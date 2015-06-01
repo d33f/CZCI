@@ -29,9 +29,26 @@ namespace ChronoZoom.Backend.Controllers
             {
                 return NotFound();
             }
-            catch (Exception)
+            catch (Exception exception)
             {
-                return BadRequest("An error occured");
+                return BadRequest("An error occured while retrieving a timeline: " + exception);
+            }
+        }
+
+        public IHttpActionResult Get()
+        {
+            try
+            {
+                var timelines = _service.List();
+                return Ok(timelines);
+            }
+            catch (TimelinesNotFoundException)
+            {
+                return NotFound();
+            }
+            catch (Exception exception)
+            {
+                return BadRequest("An error occured while retrieving a list of timelines: " + exception);
             }
         }
         
