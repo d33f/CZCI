@@ -18,7 +18,7 @@ namespace ChronoZoom.Backend.Tests.Business
         {
             // Arrange
             Mock<IContentItemDao> mock = new Mock<IContentItemDao>(MockBehavior.Strict);
-            mock.Setup(setup => setup.FindAllBy(It.IsAny<int>())).Returns(new ContentItem[] 
+            mock.Setup(setup => setup.FindAllBy(It.IsAny<long>())).Returns(new ContentItem[] 
             {
                 new ContentItem()
                 {
@@ -45,7 +45,7 @@ namespace ChronoZoom.Backend.Tests.Business
             Assert.AreEqual(1945M, resultFirst.EndDate);
             Assert.AreEqual("UrlNaSource", resultFirst.Source);
             Assert.AreEqual(false, resultFirst.HasChildren);
-            mock.Verify(verify => verify.FindAllBy(It.IsAny<int>()), Times.Once);
+            mock.Verify(verify => verify.FindAllBy(It.IsAny<long>()), Times.Once);
         }
 
         [TestMethod]
@@ -54,7 +54,7 @@ namespace ChronoZoom.Backend.Tests.Business
         {
             // Arrange
             Mock<IContentItemDao> mock = new Mock<IContentItemDao>(MockBehavior.Strict);
-            mock.Setup(setup => setup.FindAllBy(It.IsAny<int>())).Throws(new ContentItemsNotFoundException());
+            mock.Setup(setup => setup.FindAllBy(It.IsAny<long>())).Throws(new ContentItemsNotFoundException());
             ContentItemService target = new ContentItemService(mock.Object);
 
             // Act

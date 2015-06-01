@@ -16,5 +16,6 @@ namespace ChronoZoom.Backend.Entities
         public int Priref { get; set; }
         [Required]
         public long ParentId { get; set; }
+        public byte[] Timestamp { get; set; }
     }
 }

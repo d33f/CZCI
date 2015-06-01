@@ -7,7 +7,7 @@ namespace ChronoZoom.Backend.Data.MSSQL.Dao
 {
     public class ContentItemDao : IContentItemDao
     {
-        public IEnumerable<ContentItem> FindAllBy(int parentID)
+        public IEnumerable<ContentItem> FindAllBy(long parentID)
         {
             using (DatabaseContext context = new DatabaseContext())
             {
@@ -18,15 +18,9 @@ namespace ChronoZoom.Backend.Data.MSSQL.Dao
             }
         }
 
-        public IEnumerable<ContentItem> FindAllForTimelineBy(int timelineID)
+        public IEnumerable<ContentItem> FindAllForTimelineBy(long timelineID)
         {
-            using (DatabaseContext context = new DatabaseContext())
-            {
-                string query = "DECLARE @parent hierarchyId = (SELECT TOP 1 Node FROM [dbo].[ContentItem] WHERE Id = @parentId);";
-                query += "(SELECT * FROM [dbo].[ContentItem] WHERE Node.GetAncestor(1) = @parent)";
-
-                return context.Select<MSSQL.Entities.ContentItem, ContentItem>(query, new { parentId = timelineID });
-            }
+            return FindAllBy(timelineID);
         }
 
         public ContentItem Add(ContentItem contentItem)
@@ -39,7 +33,10 @@ namespace ChronoZoom.Backend.Data.MSSQL.Dao
 
         public void Update(ContentItem contentItem)
         {
-            throw new System.NotImplementedException();
+            using (DatabaseContext context = new DatabaseContext())
+            {
+                context.Update<MSSQL.Entities.ContentItem, ContentItem>(contentItem, new string[] { "Id", "Timestamp" });
+            }
         }
     }
 }
