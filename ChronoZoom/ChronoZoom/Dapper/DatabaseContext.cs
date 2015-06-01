@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Collections.Concurrent;
 using System.Reflection;
 using System.Data;
+using Dapper.Exceptions;
 
 namespace Dapper
 {
@@ -87,7 +88,7 @@ namespace Dapper
             PropertyInfo[] destinationEntityProperties = typeof(TDataEntity).GetProperties();
             TDataEntity dataEntity = MapEntity<TEntity, TDataEntity>(sourceEntityProperties, destinationEntityProperties, entity);
 
-            DynamicParameters parameters = CreateDynamicParameters<TDataEntity>(dataEntity, destinationEntityProperties.Where(p => !String.Equals(p.Name, "ID", StringComparison.OrdinalIgnoreCase)).ToArray());
+            DynamicParameters parameters = CreateDynamicParameters<TDataEntity>(dataEntity, destinationEntityProperties.Where(p => !String.Equals(p.Name, "ID", StringComparison.OrdinalIgnoreCase) && !String.Equals(p.Name, "Timestamp", StringComparison.OrdinalIgnoreCase)).ToArray());
 
             parameters.Add("@insertedID", dbType: DbType.Int32, direction: ParameterDirection.Output);
             parameters.Add("@return_value", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
@@ -96,6 +97,23 @@ namespace Dapper
             int id = parameters.Get<int>("@insertedID");
 
             return UpdateEntityIdentity<TEntity>(entity,  typeof(TEntity).GetProperties(), id);
+        }
+
+        public void Update<TDataEntity, TEntity>(TEntity entity, string[] whereColumns) where TDataEntity : new()
+        {
+            PropertyInfo[] destinationEntityProperties = typeof(TDataEntity).GetProperties();
+            PropertyInfo[] sourceEntityProperties = typeof(TEntity).GetProperties();
+
+            TDataEntity dataEntity = MapEntity<TEntity, TDataEntity>(sourceEntityProperties, destinationEntityProperties, entity);
+
+            string tableName = typeof(TDataEntity).Name;
+
+            string[] columns = destinationEntityProperties.Select(property => property.Name).Where(w => !whereColumns.Contains(w)).ToArray();
+            string query = "UPDATE " + tableName + " SET " + String.Join(",", columns.Select(x => x + " = @" + x)) + " WHERE " + String.Join(" AND ", whereColumns.Select(x => x + " = @" + x));
+            if (_connection.Execute(query, dataEntity) != 1)
+            {
+                throw new UpdateFailedException();
+            }
         }
 
         private DynamicParameters CreateDynamicParameters<TDataEntity>(TDataEntity entity, PropertyInfo[] destinationEntityProperties)

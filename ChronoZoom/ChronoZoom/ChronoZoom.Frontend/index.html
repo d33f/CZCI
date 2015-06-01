@@ -14,7 +14,7 @@
             <button class="compact ui button default" onclick="Canvas.PanelManager.handleImportPanel()">Import panel</button>
         </div>
     </div>
-    <div id="inputPanel" class="inputPanelHidden">
+    <div id="timelinePanel" class="timelinePanelHidden">
         <h1>Timelines</h1>
 
 
@@ -35,7 +35,7 @@
             </div>
 
         </div>
-        <div class="compact ui button green small">
+        <div class="compact ui button green small" onclick="Canvas.PanelManager.handleAddTimelineClick(true)">
             <i class="icon add"></i>
             Add Timeline
         </div>

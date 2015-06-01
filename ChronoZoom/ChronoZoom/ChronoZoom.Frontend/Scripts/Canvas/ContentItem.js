@@ -33,6 +33,8 @@
     var _title = data.title;
     var _hasChildren = data.hasChildren;
     var _sourceURL = data.sourceURL;
+    var _sourceRef = data.sourceRef;
+    var _pictureURL = data.pictureURL;
 
     var _data = data;
     var _parentContentItem = parentContentItem;

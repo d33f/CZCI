@@ -82,6 +82,10 @@
       <Project>{EC98BB47-FF09-44EC-883A-9A64FE82CF31}</Project>
       <Name>ChronoZoom.Backend</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Dapper\Dapper.csproj">
+      <Project>{19d27040-c51a-4346-8f34-b9d72b3fa5fb}</Project>
+      <Name>Dapper</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
