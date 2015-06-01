@@ -26,7 +26,7 @@ namespace ChronoZoom.Backend.Tests.Business
                     Title = "Bevrijding",
                     BeginDate = 1945M,
                     EndDate = 1945M,
-                    Source = "UrlNaSource",
+                    SourceURL = "UrlNaSource",
                     HasChildren = false,
                 }
             });
@@ -43,7 +43,7 @@ namespace ChronoZoom.Backend.Tests.Business
             Assert.AreEqual("Bevrijding", resultFirst.Title);
             Assert.AreEqual(1945M, resultFirst.BeginDate);
             Assert.AreEqual(1945M, resultFirst.EndDate);
-            Assert.AreEqual("UrlNaSource", resultFirst.Source);
+            Assert.AreEqual("UrlNaSource", resultFirst.SourceURL);
             Assert.AreEqual(false, resultFirst.HasChildren);
             mock.Verify(verify => verify.FindAllBy(It.IsAny<long>()), Times.Once);
         }
@@ -77,7 +77,7 @@ namespace ChronoZoom.Backend.Tests.Business
                 Title = "Bevrijding",
                 BeginDate = 1945M,
                 EndDate = 1945M,
-                Source = "UrlNaSource",
+                SourceURL = "UrlNaSource",
                 HasChildren = false,
             });
 
@@ -87,7 +87,7 @@ namespace ChronoZoom.Backend.Tests.Business
             Assert.AreEqual("Bevrijding", result.Title);
             Assert.AreEqual(1945M, result.BeginDate);
             Assert.AreEqual(1945M, result.EndDate);
-            Assert.AreEqual("UrlNaSource", result.Source);
+            Assert.AreEqual("UrlNaSource", result.SourceURL);
             Assert.AreEqual(false, result.HasChildren);
             mock.Verify(verify => verify.Add(It.IsAny<ContentItem>()), Times.Once);
         }
