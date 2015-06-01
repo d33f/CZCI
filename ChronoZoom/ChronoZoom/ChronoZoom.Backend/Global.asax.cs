@@ -6,6 +6,8 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Routing;
 using System.Diagnostics.CodeAnalysis;
+using System.Web.Http.Hosting;
+using ChronoZoom.Backend.App_Start;
 
 namespace ChronoZoom.Backend
 {
@@ -15,7 +17,9 @@ namespace ChronoZoom.Backend
         protected void Application_Start()
         {
             GlobalConfiguration.Configure(WebApiConfig.Register);
-            
+
+            GlobalConfiguration.Configuration.Services.Replace(typeof(IHostBufferPolicySelector), new NoBufferPolicySelector());
+
             GlobalConfiguration.Configuration.Formatters.Clear();
             GlobalConfiguration.Configuration.Formatters.Add(new JsonMediaTypeFormatter());
         }
