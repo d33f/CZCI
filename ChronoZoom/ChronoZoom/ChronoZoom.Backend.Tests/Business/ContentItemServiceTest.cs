@@ -18,7 +18,7 @@ namespace ChronoZoom.Backend.Tests.Business
         {
             // Arrange
             Mock<IContentItemDao> mock = new Mock<IContentItemDao>(MockBehavior.Strict);
-            mock.Setup(setup => setup.FindAllBy(It.IsAny<int>())).Returns(new ContentItem[] 
+            mock.Setup(setup => setup.FindAllBy(It.IsAny<long>())).Returns(new ContentItem[] 
             {
                 new ContentItem()
                 {
@@ -26,7 +26,7 @@ namespace ChronoZoom.Backend.Tests.Business
                     Title = "Bevrijding",
                     BeginDate = 1945M,
                     EndDate = 1945M,
-                    Source = "UrlNaSource",
+                    SourceURL = "UrlNaSource",
                     HasChildren = false,
                 }
             });
@@ -43,9 +43,9 @@ namespace ChronoZoom.Backend.Tests.Business
             Assert.AreEqual("Bevrijding", resultFirst.Title);
             Assert.AreEqual(1945M, resultFirst.BeginDate);
             Assert.AreEqual(1945M, resultFirst.EndDate);
-            Assert.AreEqual("UrlNaSource", resultFirst.Source);
+            Assert.AreEqual("UrlNaSource", resultFirst.SourceURL);
             Assert.AreEqual(false, resultFirst.HasChildren);
-            mock.Verify(verify => verify.FindAllBy(It.IsAny<int>()), Times.Once);
+            mock.Verify(verify => verify.FindAllBy(It.IsAny<long>()), Times.Once);
         }
 
         [TestMethod]
@@ -54,7 +54,7 @@ namespace ChronoZoom.Backend.Tests.Business
         {
             // Arrange
             Mock<IContentItemDao> mock = new Mock<IContentItemDao>(MockBehavior.Strict);
-            mock.Setup(setup => setup.FindAllBy(It.IsAny<int>())).Throws(new ContentItemsNotFoundException());
+            mock.Setup(setup => setup.FindAllBy(It.IsAny<long>())).Throws(new ContentItemsNotFoundException());
             ContentItemService target = new ContentItemService(mock.Object);
 
             // Act
@@ -77,7 +77,7 @@ namespace ChronoZoom.Backend.Tests.Business
                 Title = "Bevrijding",
                 BeginDate = 1945M,
                 EndDate = 1945M,
-                Source = "UrlNaSource",
+                SourceURL = "UrlNaSource",
                 HasChildren = false,
             });
 
@@ -87,7 +87,7 @@ namespace ChronoZoom.Backend.Tests.Business
             Assert.AreEqual("Bevrijding", result.Title);
             Assert.AreEqual(1945M, result.BeginDate);
             Assert.AreEqual(1945M, result.EndDate);
-            Assert.AreEqual("UrlNaSource", result.Source);
+            Assert.AreEqual("UrlNaSource", result.SourceURL);
             Assert.AreEqual(false, result.HasChildren);
             mock.Verify(verify => verify.Add(It.IsAny<ContentItem>()), Times.Once);
         }

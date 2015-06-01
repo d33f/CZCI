@@ -5,8 +5,8 @@ namespace ChronoZoom.Backend.Data.Interfaces
 {
     public interface IContentItemDao
     {
-        IEnumerable<ContentItem> FindAllBy(int parentID);
-        IEnumerable<ContentItem> FindAllForTimelineBy(int timelineID);
+        IEnumerable<ContentItem> FindAllBy(long parentID);
+        IEnumerable<ContentItem> FindAllForTimelineBy(long timelineID);
         ContentItem Add(ContentItem contentItem);
         void Update(ContentItem contentItem);
     }

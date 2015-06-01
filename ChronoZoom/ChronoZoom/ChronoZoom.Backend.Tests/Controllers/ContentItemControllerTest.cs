@@ -80,8 +80,8 @@ namespace ChronoZoom.Backend.Tests.Controllers
                 ParentId = 1,
                 HasChildren = false,
                 Id = 1,
-                Priref = -1,
-                Source = string.Empty
+                SourceRef = string.Empty,
+                SourceURL = string.Empty
             };
 
             // Act
@@ -105,8 +105,8 @@ namespace ChronoZoom.Backend.Tests.Controllers
             ContentItem item = new ContentItem()
             {
                 HasChildren = false,
-                Priref = -1,
-                Source = string.Empty
+                SourceRef = string.Empty,
+                SourceURL = string.Empty
             };
 
             // Act
@@ -154,8 +154,8 @@ namespace ChronoZoom.Backend.Tests.Controllers
                 Title = "test",
                 ParentId = 1,
                 HasChildren = false,
-                Priref = -1,
-                Source = string.Empty
+                SourceRef = string.Empty,
+                SourceURL = string.Empty
             };
 
             // Act
@@ -181,8 +181,8 @@ namespace ChronoZoom.Backend.Tests.Controllers
             {
                 HasChildren = false,
                 Id = 0,
-                Priref = -1,
-                Source = string.Empty
+                SourceRef = string.Empty,
+                SourceURL = string.Empty
             };
 
             // Act
@@ -212,8 +212,8 @@ namespace ChronoZoom.Backend.Tests.Controllers
                 ParentId = 1,
                 HasChildren = false,
                 Id = 0,
-                Priref = -1,
-                Source = string.Empty
+                SourceRef = string.Empty,
+                SourceURL = string.Empty
             };
 
             // Act

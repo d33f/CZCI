@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using ChronoZoom.Backend.Data.Interfaces;
 using ChronoZoom.Backend.Data.MSSQL.Dao;
 using System.Transactions;
+using Dapper;
+using Dapper.Exceptions;
 
 namespace ChronoZoom.Backend.Tests.Data.MSSQL
 {
@@ -59,6 +61,60 @@ namespace ChronoZoom.Backend.Tests.Data.MSSQL
 
                 // Assert
                 Assert.IsTrue(result.Id != 0);
+            }
+        }
+
+        [TestMethod]
+        public void ContentItemDao_Update_IntegrationTest()
+        {
+            using (var scope = new TransactionScope())
+            {
+                // Arrange
+                IContentItemDao target = new ContentItemDao();
+                ContentItem contentItem;
+                 
+                using (DatabaseContext context = new DatabaseContext())
+                {
+                    contentItem = context.FirstOrDefault<Backend.Data.MSSQL.Entities.ContentItem, ContentItem>("SELECT * FROM [dbo].[ContentItem] WHERE Id=@Id", new { Id = 1 });
+                }
+                    
+                // Act
+                target.Update(contentItem);
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(UpdateFailedException))]
+        public void ContentItemDao_Update_Exception_IntegrationTest()
+        {
+            using (var scope = new TransactionScope())
+            {
+                // Arrange
+                IContentItemDao target = new ContentItemDao();
+
+                // Act
+                target.Update(new ContentItem());
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(UpdateFailedException))]
+        public void ContentItemDao_Update_TimestampChanged_IntegrationTest()
+        {
+            using (var scope = new TransactionScope())
+            {
+                // Arrange
+                IContentItemDao target = new ContentItemDao();
+                ContentItem contentItem;
+
+                using (DatabaseContext context = new DatabaseContext())
+                {
+                    contentItem = context.FirstOrDefault<Backend.Data.MSSQL.Entities.ContentItem, ContentItem>("SELECT * FROM [dbo].[ContentItem] WHERE Id=@Id", new { Id = 1 });
+                }
+                contentItem.Timestamp[0]++;
+
+                // Act
+                target.Update(contentItem);
             }
         }
     }
