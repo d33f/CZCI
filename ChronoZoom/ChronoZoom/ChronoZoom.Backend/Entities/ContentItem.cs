@@ -12,10 +12,11 @@ namespace ChronoZoom.Backend.Entities
         [Required]
         public string Title { get; set; }
         public bool HasChildren { get; set; }
-        public string Source { get; set; }
-        public int Priref { get; set; }
+        public string PictureURL { get; set; }
         [Required]
         public long ParentId { get; set; }
+        public string SourceURL { get; set; }
+        public string SourceRef { get; set; }
         public byte[] Timestamp { get; set; }
     }
 }

@@ -5,6 +5,7 @@ var Canvas;
         BackendService.getTimeline = getTimeline;
         BackendService.getContentItems = getContentItems;
         BackendService.createPersonalTimeLine = createPersonalTimeLine;
+
         // Private fields
         var _baseUrl = "http://www.kompili.nl/chronozoomApi/api/";
         //var _baseUrl = "http://localhost:40001/api/";
@@ -82,7 +83,9 @@ var Canvas;
                 title: json.Title,
                 depth: json.Depth,
                 hasChildren: json.HasChildren,
-                sourceURL: json.Source
+                sourceURL: json.SourceURL,
+                sourceRef: json.SourceRef,
+                pictureURL: json.PictureURL,
             }, parentContentItem);
         };
 
