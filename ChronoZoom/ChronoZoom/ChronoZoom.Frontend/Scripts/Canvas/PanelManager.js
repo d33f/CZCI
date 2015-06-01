@@ -5,10 +5,13 @@
         PanelManager.showTimelinePanel = showTimelinePanel;
         PanelManager.handleImportPanel = handleImportPanel;
         PanelManager.handleImportPanelInput = handleImportPanelInput;
+        PanelManager.handleAddTimelineClick = handleAddTimelineClick;
+
+        var showTimeLineImport;
 
         function showTimelinePanel(showPanel) {
-            var inputPanel = document.getElementById('inputPanel');
-            inputPanel.className = showPanel ? 'inputPanelShow' : 'inputPanelHidden';
+            var inputPanel = document.getElementById('timelinePanel');
+            inputPanel.className = showPanel ? 'timelinePanelShow' : 'timelinePanelHidden';
         }
 
         function handleImportPanel() {
@@ -30,6 +33,21 @@
             if (output.textContent !== undefined) {
                 output.textContent = "Input received: " + title + " " + startDate + " " + endDate + " " + description;
             }
+        }
+
+        function handleAddTimelineClick(showImportPanel) {
+            var importPanel = document.getElementById('importPanel');
+
+            if (importPanel.className = 'importPanelHidden') {
+                console.log('hide');
+                importPanel.className = 'importPanelShow';
+            }
+            else {
+                console.log('show');
+                importPanel.className = 'importPanelShow';
+            }
+
+            //importPanel.className = showImportPanel ? 'importPanelShow' : 'importPanelHidden';
         }
 
     })(Canvas.PanelManager || (Canvas.PanelManager = {}));
