@@ -5,6 +5,7 @@ var Canvas;
         BackendService.getTimeline = getTimeline;
         BackendService.getContentItems = getContentItems;
         BackendService.createPersonalTimeLine = createPersonalTimeLine;
+        BackendService.getAllTimelines = getAllTimelines;
 
         // Private fields
         //var _baseUrl = "http://www.kompili.nl/chronozoomApi/api/";
@@ -89,8 +90,9 @@ var Canvas;
             }, parentContentItem);
         };
 
+
         // Get timeline
-        function getTimeline(timelineId,resolve, reject) {
+        function getTimeline(timelineId, resolve, reject) {
             getJSON(timelineId,'timeline', function (json) {
                 // Create a timeline object
                 var timeline = createTimelineObject(json);
@@ -117,6 +119,26 @@ var Canvas;
             });
         }
 
+        
+        // Get timeline
+        function getAllTimelines(resolve, reject) {
+            getJSON('','timeline', function (json) {
+                // Create a timeline object
+                var timelines = [];
+
+                for (var i = 0; i < json.length; i++) {
+                    var timeline = createTimelineObject(json[i]);
+                    timelines.push(timeline);
+                }
+
+                console.log(timelines);
+                // Resolve result
+                resolve(timelines);
+            }, function (error) {
+                reject(error);
+            });
+        }
+
         // Get content items for parent content item 
         function getContentItems(parentContentItem, resolve, reject) {
             getJSON(parentContentItem.getId(),'contentitem', function (json) {
@@ -136,6 +158,7 @@ var Canvas;
                 reject(error);
             });
         }
+
     })(Canvas.BackendService || (Canvas.BackendService = {}));
     var BackendService = Canvas.BackendService;
 })(Canvas || (Canvas = {}));

@@ -33,6 +33,9 @@
         Canvas.WindowManager.showLoader(false);
         canvasDrawProcessLoop();
 
+        //Add timelines to Panel
+        Canvas.PanelManager.addTimelines();
+
         // Select default timeline
         Canvas.Timeline.setTimeline(18);
     }
