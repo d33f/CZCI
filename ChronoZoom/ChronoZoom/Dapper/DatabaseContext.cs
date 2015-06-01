@@ -150,7 +150,7 @@ namespace Dapper
 
             foreach (PropertyInfo sourceEntityProperty in sourceEntityProperties)
             {
-                PropertyInfo entityProperty = destinationEntityProperties.FirstOrDefault(p => p.Name == sourceEntityProperty.Name && p.PropertyType.IsAssignableFrom(sourceEntityProperty.PropertyType));
+                PropertyInfo entityProperty = destinationEntityProperties.FirstOrDefault(p => p.Name == sourceEntityProperty.Name);
                 if (entityProperty != null)
                 {
                     Object value = sourceEntityProperty.GetValue(data);
