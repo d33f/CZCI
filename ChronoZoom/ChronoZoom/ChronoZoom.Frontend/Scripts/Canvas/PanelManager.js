@@ -39,7 +39,6 @@
             var importPanel = document.getElementById('importPanel');
 
             if (importPanel.className = 'importPanelHidden') {
-                console.log('hide');
                 importPanel.className = 'importPanelShow';
             }
             else {
