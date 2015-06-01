@@ -108,13 +108,17 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\NoBufferPolicySelector.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\UnityWebApiActivator.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Business\BatchService.cs" />
     <Compile Include="Business\ContentItemService.cs" />
+    <Compile Include="Business\Interfaces\IBatchService.cs" />
     <Compile Include="Business\Interfaces\IContentItemService.cs" />
     <Compile Include="Business\Interfaces\ITimelineService.cs" />
     <Compile Include="Business\TimelineService.cs" />
+    <Compile Include="Controllers\BatchController.cs" />
     <Compile Include="Controllers\ContentItemController.cs" />
     <Compile Include="Controllers\TimelineController.cs" />
     <Compile Include="Data\Interfaces\IContentItemDao.cs" />

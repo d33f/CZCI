@@ -51,12 +51,12 @@ namespace ChronoZoom.Backend.Controllers
                 return BadRequest("An error occured while retrieving a list of timelines: " + exception);
             }
         }
-        
+
         /// <summary>
-        /// Create a new timeline
+        /// Updates a timeline
         /// </summary>
         /// <param name="item">The timeline</param>
-        /// <returns>The inserted timeline (with id)</returns>
+        /// <returns>Status OK if succesfully added</returns>
         [HttpPut]
         public IHttpActionResult Put(Timeline timeline)
         {
@@ -81,10 +81,10 @@ namespace ChronoZoom.Backend.Controllers
         }
 
         /// <summary>
-        /// Updates a timeline
+        /// Create a new timeline
         /// </summary>
         /// <param name="item">The timeline</param>
-        /// <returns>Status OK if succesfully added</returns>
+        /// <returns>The inserted timeline (with id)</returns>
         [HttpPost]
         public IHttpActionResult Post(Timeline timeline)
         {
