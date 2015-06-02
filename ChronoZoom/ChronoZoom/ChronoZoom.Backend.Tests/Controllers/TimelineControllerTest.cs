@@ -34,7 +34,7 @@ namespace ChronoZoom.Backend.Tests.Controllers
             Assert.AreEqual(12, (result as OkNegotiatedContentResult<Timeline>).Content.Id);
             mock.Verify(verify => verify.Get(It.IsAny<int>()), Times.Once);
         }
-
+        [TestMethod]
         public void TimelineController_Get_List_Test()
         {
             // Arrange
@@ -63,8 +63,7 @@ namespace ChronoZoom.Backend.Tests.Controllers
 
             // Assert
             Assert.IsNotNull(result);
-            Assert.IsTrue(result is OkNegotiatedContentResult<Timeline>);
-            Assert.AreEqual(12, (result as OkNegotiatedContentResult<Timeline>).Content.Id);
+            Assert.IsTrue(result is OkNegotiatedContentResult<IEnumerable<Timeline>>);
             mock.Verify(verify => verify.List(), Times.Once);
         }
 

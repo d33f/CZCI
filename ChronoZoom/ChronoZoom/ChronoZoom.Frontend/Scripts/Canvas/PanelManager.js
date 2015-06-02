@@ -6,6 +6,7 @@
         PanelManager.handleImportPanel = handleImportPanel;
         PanelManager.handleImportPanelInput = handleImportPanelInput;
         PanelManager.handleAddTimelineClick = handleAddTimelineClick;
+        PanelManager.addTimelines = addTimelines;
 
         var showTimeLineImport;
 
@@ -33,6 +34,17 @@
             if (output.textContent !== undefined) {
                 output.textContent = "Input received: " + title + " " + startDate + " " + endDate + " " + description;
             }
+        }
+
+        function addTimelines() {
+            Canvas.BackendService.getAllTimelines(function (timelines) {
+                for (var i = 0; i < timelines.length; i++) {
+                    console.log(timelines[i].title);
+                }
+
+            }, function (error) {
+                console.log("Error getting al timelines");
+            });
         }
 
         function handleAddTimelineClick(showImportPanel) {
