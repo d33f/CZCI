@@ -63,7 +63,7 @@
                 var newLink = document.createElement('a');
                 newLink.setAttribute('class', 'header');
                 //newLink.setAttribute('href', '#');
-                newLink.setAttribute('onclick', 'Canvas.setTimeline("18")');
+                newLink.setAttribute('onclick', 'Canvas.setTimeline('+array[i].id +')');
 
                 // Get and set the text of the item 
                 var caption = document.createTextNode(array[i].title);
