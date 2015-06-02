@@ -17,7 +17,6 @@
     <div id="timelinePanel" class="timelinePanelHidden">
         <h1>Timelines</h1>
 
-
         <div class="ui divided list inverted">
             <div class="item">
                 <i class="list layout icon"></i>
@@ -34,6 +33,8 @@
                 </div>
             </div>
 
+            <div id="timelineList">
+            </div>
         </div>
         <div class="compact ui button green small" onclick="Canvas.PanelManager.handleAddTimelineClick(true)">
             <i class="icon add"></i>
@@ -69,8 +70,11 @@
         </div>
  
         <div id="importOutput">
-
         </div>
+
+        <div id="testTimelines">
+        </div>
+
     </div>
     <div id="canvasContainer">
         <canvas id="canvas"></canvas>
