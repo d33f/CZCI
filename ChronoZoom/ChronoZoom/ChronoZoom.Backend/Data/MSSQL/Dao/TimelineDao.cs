@@ -1,5 +1,6 @@
 ﻿using ChronoZoom.Backend.Data.Interfaces;
 using ChronoZoom.Backend.Entities;
+using ChronoZoom.Backend.Exceptions;
 using Dapper;
 using System.Collections.Generic;
 
@@ -13,17 +14,23 @@ namespace ChronoZoom.Backend.Data.MSSQL.Dao
             {
                 string query = "DECLARE @root HierarchyId = (SELECT Node FROM [dbo].[ContentItem] WHERE ID = 1);";
                 query += "(SELECT * FROM [dbo].[ContentItem] WHERE Node.GetAncestor(1) = @root AND id = @id)";
-                return context.FirstOrDefault<MSSQL.Entities.ContentItem, Timeline>(query, new { id = id });
+                Timeline timeline = context.FirstOrDefault<MSSQL.Entities.ContentItem, Timeline>(query, new { id = id });
+                if (timeline == null)
+                {
+                    throw new TimelineNotFoundException();
+                }
+                return timeline;
             }
         }
 
-        public IEnumerable<Timeline> List()
+        public IEnumerable<Timeline> FindAllPublicTimelines()
         {
             using (DatabaseContext context = new DatabaseContext())
             {
                 string query = "DECLARE @root HierarchyId = (SELECT Node FROM [dbo].[ContentItem] WHERE ID = 1);";
                 query += "(SELECT * FROM [dbo].[ContentItem] WHERE Node.GetAncestor(1) = @root)";
-                return context.Select<MSSQL.Entities.ContentItem, Timeline>(query, null);
+                IEnumerable<Timeline> timelines = context.Select<MSSQL.Entities.ContentItem, Timeline>(query, null);
+                return timelines != null ? timelines : new Timeline[0];
             }
         }
 

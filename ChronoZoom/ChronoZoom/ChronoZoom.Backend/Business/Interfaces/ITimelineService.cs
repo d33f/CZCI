@@ -6,7 +6,7 @@ namespace ChronoZoom.Backend.Business.Interfaces
     public interface ITimelineService
     {
         Timeline Get(int id);
-        IEnumerable<Timeline> List();
+        IEnumerable<Timeline> GetAllPublicTimelinesWithoutContentItems();
         Timeline Add(Timeline timeline);
         void Update(Timeline timeline);
     }

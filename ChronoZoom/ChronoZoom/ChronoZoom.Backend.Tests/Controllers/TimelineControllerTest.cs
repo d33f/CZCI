@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ChronoZoom.Backend.Controllers;
 using ChronoZoom.Backend.Business.Interfaces;
@@ -34,39 +35,7 @@ namespace ChronoZoom.Backend.Tests.Controllers
             Assert.AreEqual(12, (result as OkNegotiatedContentResult<Timeline>).Content.Id);
             mock.Verify(verify => verify.Get(It.IsAny<int>()), Times.Once);
         }
-        [TestMethod]
-        public void TimelineController_Get_List_Test()
-        {
-            // Arrange
-            Mock<ITimelineService> mock = new Mock<ITimelineService>(MockBehavior.Strict);
-            mock.Setup(setup => setup.List()).Returns(new List<Entities.Timeline>()
-            {
-                new Timeline()
-                {
-                    Id = 1,
-                    BeginDate = 1000,
-                    EndDate = 1500,
-                    Title = "Test 1"
-                },
-                new Timeline()
-                {
-                    Id = 2,
-                    BeginDate = 1555,
-                    EndDate = 1666,
-                    Title = "Test 2"
-                }
-            });
-            TimelineController target = new TimelineController(mock.Object);
-
-            // Act
-            IHttpActionResult result = target.Get();
-
-            // Assert
-            Assert.IsNotNull(result);
-            Assert.IsTrue(result is OkNegotiatedContentResult<IEnumerable<Timeline>>);
-            mock.Verify(verify => verify.List(), Times.Once);
-        }
-
+        
         [TestMethod]
         public void TimelineController_Get_NotFound_Test()
         {
@@ -98,6 +67,57 @@ namespace ChronoZoom.Backend.Tests.Controllers
             Assert.IsNotNull(result);
             Assert.IsTrue(result is BadRequestErrorMessageResult);
         }
+
+        [TestMethod]
+        public void TimelineController_GetAll_Test()
+        {
+            // Arrange
+            Mock<ITimelineService> mock = new Mock<ITimelineService>(MockBehavior.Strict);
+            mock.Setup(setup => setup.GetAllPublicTimelinesWithoutContentItems()).Returns(new List<Entities.Timeline>()
+            {
+                new Timeline()
+                {
+                    Id = 1,
+                    BeginDate = 1000,
+                    EndDate = 1500,
+                    Title = "Test 1"
+                },
+                new Timeline()
+                {
+                    Id = 2,
+                    BeginDate = 1555,
+                    EndDate = 1666,
+                    Title = "Test 2"
+                }
+            });
+            TimelineController target = new TimelineController(mock.Object);
+
+            // Act
+            IHttpActionResult result = target.Get();
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result is OkNegotiatedContentResult<IEnumerable<Timeline>>);
+            Assert.AreEqual(2, ((OkNegotiatedContentResult<IEnumerable<Timeline>>) result).Content.Count());
+            mock.Verify(verify => verify.GetAllPublicTimelinesWithoutContentItems(), Times.Once);
+        }
+
+        [TestMethod]
+        public void TimelineController_GetAll_BadRequest_Test()
+        {
+            // Arrange
+            Mock<ITimelineService> mock = new Mock<ITimelineService>(MockBehavior.Strict);
+            mock.Setup(setup => setup.Get(It.IsAny<int>())).Throws(new Exception());
+            TimelineController target = new TimelineController(mock.Object);
+
+            // Act
+            IHttpActionResult result = target.Get();
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result is BadRequestErrorMessageResult);
+        }
+
 
         [TestMethod]
         public void TimelineController_Put_Test()

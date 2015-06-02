@@ -30,10 +30,6 @@ namespace ChronoZoom.Backend.Controllers
                 var contentItems = _service.GetAll(id);
                 return Ok(contentItems);
             }
-            catch (ContentItemsNotFoundException)
-            {
-                return NotFound();
-            }
             catch (Exception)
             {
                 return BadRequest("An error occured");

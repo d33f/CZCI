@@ -49,19 +49,6 @@ namespace ChronoZoom.Backend.Tests.Business
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ContentItemsNotFoundException))]
-        public void ContentItemService_GetAll_NotFoundException_Test()
-        {
-            // Arrange
-            Mock<IContentItemDao> mock = new Mock<IContentItemDao>(MockBehavior.Strict);
-            mock.Setup(setup => setup.FindAllBy(It.IsAny<long>())).Throws(new ContentItemsNotFoundException());
-            ContentItemService target = new ContentItemService(mock.Object);
-
-            // Act
-            target.GetAll(-1);
-        }
-
-        [TestMethod]
         public void ContentItemService_Add_Test()
         {
             // Arrange

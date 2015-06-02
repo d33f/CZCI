@@ -14,7 +14,8 @@ namespace ChronoZoom.Backend.Data.MSSQL.Dao
                 string query = "DECLARE @parent hierarchyId = (SELECT TOP 1 Node FROM [dbo].[ContentItem] WHERE Id = @parentId);";
                 query += "(SELECT * FROM [dbo].[ContentItem] WHERE Node.GetAncestor(1) = @parent)";
                 
-                return context.Select<MSSQL.Entities.ContentItem, ContentItem>(query, new { parentId = parentID });
+                IEnumerable<ContentItem> contentItems = context.Select<MSSQL.Entities.ContentItem, ContentItem>(query, new { parentId = parentID });
+                return contentItems != null ? contentItems : new ContentItem[0];
             }
         }
 

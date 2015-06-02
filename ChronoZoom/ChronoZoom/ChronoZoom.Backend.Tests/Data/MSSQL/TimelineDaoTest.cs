@@ -9,6 +9,7 @@ using ChronoZoom.Backend.Data.Interfaces;
 using System.Transactions;
 using Dapper;
 using Dapper.Exceptions;
+using ChronoZoom.Backend.Exceptions;
 
 namespace ChronoZoom.Backend.Tests.Data.MSSQL
 {
@@ -30,16 +31,14 @@ namespace ChronoZoom.Backend.Tests.Data.MSSQL
         }
 
         [TestMethod]
-        public void TimelineDao_FindAll_Null_IntegrationTest()
+        [ExpectedException(typeof(TimelineNotFoundException))]
+        public void TimelineDao_FindAll_NotFoundException_IntegrationTest()
         {
             // Arrange
             ITimelineDao target = new TimelineDao();
 
             // Act
             Timeline result = target.Find(-1);
-
-            // Assert
-            Assert.IsNull(result);
         }
 
         [TestMethod]

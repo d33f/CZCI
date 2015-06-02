@@ -34,22 +34,6 @@ namespace ChronoZoom.Backend.Tests.Controllers
         }
 
         [TestMethod]
-        public void ContentItemController_Get_NotFound_Test()
-        {
-            // Arrange
-            Mock<IContentItemService> mock = new Mock<IContentItemService>(MockBehavior.Strict);
-            mock.Setup(setup => setup.GetAll(It.IsAny<int>())).Throws(new ContentItemsNotFoundException());
-            ContentItemController target = new ContentItemController(mock.Object);
-
-            // Act
-            IHttpActionResult result = target.Get(1);
-
-            // Assert
-            Assert.IsNotNull(result);
-            Assert.IsTrue(result is NotFoundResult);
-        }
-
-        [TestMethod]
         public void ContentItemController_Get_BadRequest_Test()
         {
             // Arrange
