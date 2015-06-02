@@ -42,41 +42,60 @@
                     console.log(timelines[i].title);
                 }
 
-
                 document.getElementById('timelineList').appendChild(makeUnorderedList(timelines));
 
             }, function (error) {
-                console.log("Error getting al timelines");
+                console.log("Error getting all timelines");
             });
         }
 
         // Create UL from all the timelines
         function makeUnorderedList(array) {
+
+            // Create div element
+            var divElement = document.createElement('div');
+            divElement.setAttribute('class','ui divided list inverted');
+
             // Create the list element
-            var list = document.createElement('ul');
+            //var list = document.createElement('ul');
 
             for (var i = 0; i < array.length; i++) {
-                // Create list item
-                var item = document.createElement('li');
+
+                // Create item
+                var item = document.createElement('div');
+                item.setAttribute('class', 'item');
+                // Create icon
+                var icon = document.createElement('i');
+                icon.setAttribute('class', 'list layout icon');
+
+                // Combine icon with item
+                item.appendChild(icon);
 
                 // Setup structure and set contents
+
+                // Set div for each content item
+                var divContentElement = document.createElement('div');
+                divContentElement.setAttribute('class', 'content');
+
                 var newLink = document.createElement('a');
                 newLink.setAttribute('class', 'header');
-                //newLink.setAttribute('href', '#');
                 newLink.setAttribute('onclick', 'Canvas.setTimeline('+array[i].id +')');
 
                 // Get and set the text of the item 
                 var caption = document.createTextNode(array[i].title);
                 newLink.appendChild(caption);
 
-                item.appendChild(newLink);
+                // Add item to divContentElement
+                divContentElement.appendChild(newLink);
+                item.appendChild(divContentElement);
 
 
                 // Add it to the list
-                list.appendChild(item);
+                //list.appendChild(item);
+                divElement.appendChild(item);
 
             }
-            return list;
+            return divElement;
         }
 
         function handleAddTimelineClick(showImportPanel) {
