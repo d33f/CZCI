@@ -69,6 +69,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Business\BatchServiceTest.cs" />
     <Compile Include="Business\ContentItemServiceTest.cs" />
     <Compile Include="Business\TimelineServiceTest.cs" />
     <Compile Include="Controllers\ContentItemControllerTest.cs" />
