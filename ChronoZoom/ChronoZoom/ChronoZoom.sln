@@ -1,12 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChronoZoom.Frontend", "ChronoZoom.Frontend\ChronoZoom.Frontend.csproj", "{AF9CFD07-2149-47E2-880A-9AE897D9AB78}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{20C515C6-8F25-4294-AA08-33A4DE4B525C}"
 	ProjectSection(SolutionItems) = preProject
+		batch.txt = batch.txt
 		CodeCoverage.runsettings = CodeCoverage.runsettings
 		Database.sql = Database.sql
 		Development branch test.txt = Development branch test.txt
