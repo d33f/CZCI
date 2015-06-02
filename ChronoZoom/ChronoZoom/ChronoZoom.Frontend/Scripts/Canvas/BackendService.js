@@ -129,10 +129,17 @@ var Canvas;
                 // Create list item
                 var item = document.createElement('li');
 
+                // Setup structure and set contents
+                var newLink = document.createElement('a');
+                newLink.setAttribute('class', 'header');
+                newLink.setAttribute('href', '#');
 
-                // Set it contents
-                item.appendChild(document.createTextNode(array[i].title));
-                item.appendChild(document.createElement('a'));
+                // Get and set the text of the item 
+                var caption = document.createTextNode(array[i].title);
+                newLink.appendChild(caption);
+
+                item.appendChild(newLink);
+
 
                 // Add it to the list
                 list.appendChild(item);
