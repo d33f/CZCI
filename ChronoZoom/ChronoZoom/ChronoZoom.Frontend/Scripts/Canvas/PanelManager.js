@@ -42,9 +42,41 @@
                     console.log(timelines[i].title);
                 }
 
+
+                document.getElementById('timelineList').appendChild(makeUnorderedList(timelines));
+
             }, function (error) {
                 console.log("Error getting al timelines");
             });
+        }
+
+        // Create UL from all the timelines
+        function makeUnorderedList(array) {
+            // Create the list element
+            var list = document.createElement('ul');
+
+            for (var i = 0; i < array.length; i++) {
+                // Create list item
+                var item = document.createElement('li');
+
+                // Setup structure and set contents
+                var newLink = document.createElement('a');
+                newLink.setAttribute('class', 'header');
+                //newLink.setAttribute('href', '#');
+                newLink.setAttribute('onclick', 'Canvas.setTimeline("18")');
+
+                // Get and set the text of the item 
+                var caption = document.createTextNode(array[i].title);
+                newLink.appendChild(caption);
+
+                item.appendChild(newLink);
+
+
+                // Add it to the list
+                list.appendChild(item);
+
+            }
+            return list;
         }
 
         function handleAddTimelineClick(showImportPanel) {

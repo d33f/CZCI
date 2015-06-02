@@ -10,7 +10,7 @@ var Canvas;
         // Private fields
         //var _baseUrl = "http://www.kompili.nl/chronozoomApi/api/";
         var _baseUrl = "http://localhost:40001/api/";
-        var _timelines = [];
+
 
         // Get json data from path, execute callback resolve when succesfull and reject if failed. 
         function getJSON(id, path, resolve, reject) {
@@ -120,51 +120,22 @@ var Canvas;
             });
         }
 
-        // Create UL from all the timelines
-        function makeUnorderedList(array) {
-            // Create the list element
-            var list = document.createElement('ul');
-
-            for (var i = 0; i < array.length; i++) {
-                // Create list item
-                var item = document.createElement('li');
-
-                // Setup structure and set contents
-                var newLink = document.createElement('a');
-                newLink.setAttribute('class', 'header');
-                newLink.setAttribute('href', '#');
-
-                // Get and set the text of the item 
-                var caption = document.createTextNode(array[i].title);
-                newLink.appendChild(caption);
-
-                item.appendChild(newLink);
-
-
-                // Add it to the list
-                list.appendChild(item);
-                
-            }
-            return list;
-        }
-
         
         // Get timeline
         function getAllTimelines(resolve, reject) {
             getJSON('','timeline', function (json) {
                 // Create a timeline object
+                var timelines = [];
 
                 for (var i = 0; i < json.length; i++) {
                     var timeline = createTimelineObject(json[i]);
-                    _timelines.push(timeline);
+                    timelines.push(timeline);
                 }
 
-                console.log(_timelines);
-
-                document.getElementById('timelineList').appendChild(makeUnorderedList(_timelines));
+                console.log(timelines);
 
                 // Resolve result
-                resolve(_timelines);
+                resolve(timelines);
             }, function (error) {
                 reject(error);
             });
