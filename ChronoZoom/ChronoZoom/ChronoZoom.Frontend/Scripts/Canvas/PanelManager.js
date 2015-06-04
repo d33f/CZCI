@@ -42,12 +42,28 @@
             // write output to panel
             var output = document.getElementById("importOutput");
             if (output.textContent !== undefined) {
+                // Input validation
+                console.log('startdate value: ' + startDate);
+                console.log('enddate value:' + endDate);
+
+
+                if (title == "" || startDate == "" || endDate == "") {
+                    output.textContent = "Please check your input! Input is not correct.";
+                }
+                else {
                 output.textContent = "Input received: " + title + " " + startDate + " " + endDate + " " + description;
+                    // Refresh timeline panel
+                    addTimelines();
             }
+        }
         }
 
         function addTimelines() {
             Canvas.BackendService.getAllTimelines(function (timelines) {
+                for (var i = 0; i < timelines.length; i++) {
+                    console.log(timelines[i].title);
+                }
+
                 document.getElementById('timelineList').appendChild(makeUnorderedList(timelines));
             }, function (error) {
                 console.log("Error getting all timelines");
@@ -60,9 +76,6 @@
             // Create div element
             var divElement = document.createElement('div');
             divElement.setAttribute('class','ui divided list inverted');
-
-            // Create the list element
-            //var list = document.createElement('ul');
 
             for (var i = 0; i < array.length; i++) {
 
@@ -82,11 +95,12 @@
                 var divContentElement = document.createElement('div');
                 divContentElement.setAttribute('class', 'content');
 
+                // Set A class
                 var newLink = document.createElement('a');
                 newLink.setAttribute('class', 'header');
                 newLink.setAttribute('onclick', 'Canvas.setTimeline(' + array[i].id + '); Canvas.PanelManager.hideBothPanels();');
 
-                // Get and set the text of the item 
+                // Get and set the text of the item and append the text content to the A class
                 var caption = document.createTextNode(array[i].title);
                 newLink.appendChild(caption);
 
@@ -94,9 +108,7 @@
                 divContentElement.appendChild(newLink);
                 item.appendChild(divContentElement);
 
-
-                // Add it to the list
-                //list.appendChild(item);
+                // Add it to the top level div element
                 divElement.appendChild(item);
 
             }
