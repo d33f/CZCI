@@ -11,7 +11,7 @@
         <div id="timerange"></div>
         <div id="menuButtons">
             <button class="compact ui button default" onclick="Canvas.PanelManager.showTimelinePanel(true)">My Timelines</button>
-            <button class="compact ui button default" onclick="Canvas.PanelManager.handleImportPanel()">Import panel</button>
+            <button class="compact ui button default" onclick="Canvas.PanelManager.showImportPanel(true)">Import panel</button>
         </div>
     </div>
     <div id="timelinePanel" class="timelinePanelHidden">
@@ -20,7 +20,7 @@
             <div id="timelineList">
             </div>
 
-        <div class="compact ui button green small" onclick="Canvas.PanelManager.handleAddTimelineClick(true)">
+        <div class="compact ui button green small" onclick="Canvas.PanelManager.showImportPanel()">
             <i class="icon add"></i>
             Add Timeline
         </div>
@@ -50,7 +50,7 @@
                 <label>Description</label>
                 <textarea id="descriptionInput" placeholder="Timeline description"></textarea>
             </div>
-            <div class="ui submit button green" onclick="Canvas.PanelManager.handleImportPanelInput()">Create timeline!</div>
+            <div class="ui submit button green" onclick="Canvas.PanelManager.showImportPanel(true)">Create timeline!</div>
         </div>
  
         <div id="importOutput">

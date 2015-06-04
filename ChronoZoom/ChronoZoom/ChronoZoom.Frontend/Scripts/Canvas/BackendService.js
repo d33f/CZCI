@@ -61,7 +61,7 @@ var Canvas;
             xmlHttpRequest.setRequestHeader("Content-type", "application/json");
             xmlHttpRequest.onreadystatechange = function () {//Call a function when the state changes.
                 if (xmlHttpRequest.readyState == 4 && xmlHttpRequest.status == 200) {
-                    alert(xmlHttpRequest.responseText);
+                    alert("Added the timeline");
                 }
             }
             xmlHttpRequest.send(JSON.stringify(object));
