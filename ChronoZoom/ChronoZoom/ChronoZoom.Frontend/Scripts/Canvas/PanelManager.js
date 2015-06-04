@@ -28,11 +28,22 @@
 
             Canvas.BackendService.createPersonalTimeLine(title, startDate, endDate);
 
-
             // write output to panel
             var output = document.getElementById("importOutput");
             if (output.textContent !== undefined) {
-                output.textContent = "Input received: " + title + " " + startDate + " " + endDate + " " + description;
+                // Input validation
+                console.log('startdate value: ' + startDate);
+                console.log('enddate value:' + endDate);
+
+
+                if (title == "" || startDate == "" || endDate == "") {
+                    output.textContent = "Please check your input! Input is not correct.";
+                }
+                else {
+                    output.textContent = "Input received: " + title + " " + startDate + " " + endDate + " " + description;
+                    // Refresh timeline panel
+                    addTimelines();
+                }
             }
         }
 
@@ -42,6 +53,12 @@
                     console.log(timelines[i].title);
                 }
 
+                // Clear existing content
+                var node = document.getElementById('timelineList');
+                while (node.hasChildNodes()) {
+                    node.removeChild(node.firstChild);
+                }
+                // Generate new content for timeline displaying
                 document.getElementById('timelineList').appendChild(makeUnorderedList(timelines));
 
             }, function (error) {
@@ -55,9 +72,6 @@
             // Create div element
             var divElement = document.createElement('div');
             divElement.setAttribute('class','ui divided list inverted');
-
-            // Create the list element
-            //var list = document.createElement('ul');
 
             for (var i = 0; i < array.length; i++) {
 
@@ -77,11 +91,12 @@
                 var divContentElement = document.createElement('div');
                 divContentElement.setAttribute('class', 'content');
 
+                // Set A class
                 var newLink = document.createElement('a');
                 newLink.setAttribute('class', 'header');
                 newLink.setAttribute('onclick', 'Canvas.setTimeline('+array[i].id +')');
 
-                // Get and set the text of the item 
+                // Get and set the text of the item and append the text content to the A class
                 var caption = document.createTextNode(array[i].title);
                 newLink.appendChild(caption);
 
@@ -89,9 +104,7 @@
                 divContentElement.appendChild(newLink);
                 item.appendChild(divContentElement);
 
-
-                // Add it to the list
-                //list.appendChild(item);
+                // Add it to the top level div element
                 divElement.appendChild(item);
 
             }

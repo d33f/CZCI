@@ -27,39 +27,39 @@
     </div>
     <div id="importPanel" class="importPanelHidden">
         <h1>Add Timeline</h1>
-        <div class="ui error inverted form segment">
-            <div class="ui error message">
-                <div class="header">Not possible</div>
-                <p>At this moment it is not possible to add a personal timeline</p>
-            </div>
-            <div class="field">
-                <label>Title</label>
-                <input id="titleInput" placeholder="Timeline title" type="text">
-            </div>
-            <div class="two fields">
-                <div class="field">
-                    <label>Begin date</label>
-                    <input id="startDateInput" placeholder="Begin date" type="number">
+            <div class="ui error inverted form segment">
+                <div class="ui error message">
+                    <div class="header">Not possible</div>
+                    <p>At this moment it is not possible to add a personal timeline</p>
                 </div>
                 <div class="field">
-                    <label>End date</label>
-                    <input id="endDateInput" placeholder="End date" type="number">
+                    <label>Title</label>
+                    <input id="titleInput" placeholder="Timeline title" type="text" required />
                 </div>
+                <div class="two fields">
+                    <div class="field">
+                        <label>Begin date</label>
+                        <input id="startDateInput" placeholder="Timeline begin date" type="number" required />
+                    </div>
+                    <div class="field">
+                        <label>End date</label>
+                        <input id="endDateInput" placeholder="Timeline end date" type="number" required />
+                    </div>
+                </div>
+                <div class="field">
+                    <label>Description</label>
+                    <textarea id="descriptionInput" placeholder="Timeline description"></textarea>
+                </div>
+                <input type="button" class="ui submit button green" id="btnsubmit" value="Create timeline!" onclick="Canvas.PanelManager.handleImportPanelInput()" />
             </div>
-            <div class="field">
-                <label>Description</label>
-                <textarea id="descriptionInput" placeholder="Timeline description"></textarea>
+
+            <div id="importOutput">
             </div>
-            <div class="ui submit button green" onclick="Canvas.PanelManager.handleImportPanelInput()">Create timeline!</div>
-        </div>
- 
-        <div id="importOutput">
-        </div>
 
-        <div id="testTimelines">
-        </div>
+            <div id="testTimelines">
+            </div>
 
-    </div>
+</div>
     <div id="canvasContainer">
         <canvas id="canvas"></canvas>
 
