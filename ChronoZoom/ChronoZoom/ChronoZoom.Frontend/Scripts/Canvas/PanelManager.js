@@ -6,10 +6,9 @@
         PanelManager.showImportPanel = showImportPanel;
         PanelManager.hideBothPanels = hideBothPanels;
         PanelManager.handleImportPanelInput = handleImportPanelInput;
+        PanelManager.handleTimelineBtnClick = handleTimelineBtnClick;
+        PanelManager.handleImportBtnClick = handleImportBtnClick;
         PanelManager.addTimelines = addTimelines;
-
-        var showTimeLineImport;
-
 
         //Show the timeline panel on the left side of the screen
         function showTimelinePanel(showPanel) {
@@ -19,7 +18,6 @@
 
         //Show the import panel on the right side of the screen
         function showImportPanel(showPanel) {
-            console.log(showPanel, "showpanel");
             var inputPanel = document.getElementById('importPanel');
             inputPanel.className = showPanel ? 'importPanelShow' : 'importPanelHidden';
         }
@@ -27,6 +25,28 @@
         function hideBothPanels() {
             showTimelinePanel(false);
             showImportPanel(false);
+        }
+
+        function handleImportBtnClick() {
+            var inputPanel = document.getElementById('importPanel');
+            if (inputPanel.className === 'importPanelHidden') {
+                showImportPanel(true);
+            }
+            else{
+                showImportPanel(false);
+            }
+
+        }
+
+        function handleTimelineBtnClick() {
+            var inputPanel = document.getElementById('timelinePanel');
+            if (inputPanel.className === 'timelinePanelShow') {
+                showTimelinePanel(false);
+            }
+            else {
+                showTimelinePanel(true);
+            }
+
         }
 
 
@@ -43,26 +63,22 @@
             var output = document.getElementById("importOutput");
             if (output.textContent !== undefined) {
                 // Input validation
-                console.log('startdate value: ' + startDate);
-                console.log('enddate value:' + endDate);
 
 
                 if (title == "" || startDate == "" || endDate == "") {
                     output.textContent = "Please check your input! Input is not correct.";
                 }
                 else {
-                output.textContent = "Input received: " + title + " " + startDate + " " + endDate + " " + description;
                     // Refresh timeline panel
                     addTimelines();
+                    showImportPanel(false);
+                    showTimelinePanel(true);
             }
         }
         }
 
         function addTimelines() {
             Canvas.BackendService.getAllTimelines(function (timelines) {
-                for (var i = 0; i < timelines.length; i++) {
-                    console.log(timelines[i].title);
-                }
 
                 // Clear existing content
                 var node = document.getElementById('timelineList');
