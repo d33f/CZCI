@@ -64,6 +64,12 @@
                     console.log(timelines[i].title);
                 }
 
+                // Clear existing content
+                var node = document.getElementById('timelineList');
+                while (node.hasChildNodes()) {
+                    node.removeChild(node.firstChild);
+                }
+                // Generate new content for timeline displaying
                 document.getElementById('timelineList').appendChild(makeUnorderedList(timelines));
             }, function (error) {
                 console.log("Error getting all timelines");
