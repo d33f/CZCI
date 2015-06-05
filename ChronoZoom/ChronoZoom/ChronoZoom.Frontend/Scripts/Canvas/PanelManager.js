@@ -3,23 +3,54 @@
     (function (PanelManager) {
         // Public methods
         PanelManager.showTimelinePanel = showTimelinePanel;
-        PanelManager.handleImportPanel = handleImportPanel;
+        PanelManager.showImportPanel = showImportPanel;
+        PanelManager.hideBothPanels = hideBothPanels;
         PanelManager.handleImportPanelInput = handleImportPanelInput;
-        PanelManager.handleAddTimelineClick = handleAddTimelineClick;
+        PanelManager.handleTimelineBtnClick = handleTimelineBtnClick;
+        PanelManager.handleImportBtnClick = handleImportBtnClick;
         PanelManager.addTimelines = addTimelines;
 
-        var showTimeLineImport;
-
+        //Show the timeline panel on the left side of the screen
         function showTimelinePanel(showPanel) {
             var inputPanel = document.getElementById('timelinePanel');
             inputPanel.className = showPanel ? 'timelinePanelShow' : 'timelinePanelHidden';
         }
 
-        function handleImportPanel() {
-            var importPanel = document.getElementById('importPanel');
-            importPanel.className = importPanel.className === 'importPanelHidden' ? 'importPanelShow' : 'importPanelHidden';
+        //Show the import panel on the right side of the screen
+        function showImportPanel(showPanel) {
+            var inputPanel = document.getElementById('importPanel');
+            inputPanel.className = showPanel ? 'importPanelShow' : 'importPanelHidden';
         }
 
+        function hideBothPanels() {
+            showTimelinePanel(false);
+            showImportPanel(false);
+        }
+
+        function handleImportBtnClick() {
+            var inputPanel = document.getElementById('importPanel');
+            if (inputPanel.className === 'importPanelHidden') {
+                showImportPanel(true);
+            }
+            else{
+                showImportPanel(false);
+            }
+
+        }
+
+        function handleTimelineBtnClick() {
+            var inputPanel = document.getElementById('timelinePanel');
+            if (inputPanel.className === 'timelinePanelShow') {
+                showTimelinePanel(false);
+            }
+
+            else {
+                showTimelinePanel(true);
+            }
+        }
+
+
+        //Handle the input of the timeline import panel
         function handleImportPanelInput() {
             var title = document.getElementById("titleInput").value;
             var startDate = document.getElementById("startDateInput").value;
@@ -28,18 +59,33 @@
 
             Canvas.BackendService.createPersonalTimeLine(title, startDate, endDate);
 
-
             // write output to panel
             var output = document.getElementById("importOutput");
             if (output.textContent !== undefined) {
-                output.textContent = "Input received: " + title + " " + startDate + " " + endDate + " " + description;
+                // Input validation
+
+                if (title == "" || startDate == "" || endDate == "") {
+                    output.textContent = "Please check your input! Input is not correct.";
+                }
+                else {
+                    // Refresh timeline panel
+                    addTimelines();
+                    showImportPanel(false);
+                    showTimelinePanel(true);
+                }
             }
         }
 
         function addTimelines() {
             Canvas.BackendService.getAllTimelines(function (timelines) {
-                document.getElementById('timelineList').appendChild(makeUnorderedList(timelines));
 
+                // Clear existing content
+                var node = document.getElementById('timelineList');
+                while (node.hasChildNodes()) {
+                    node.removeChild(node.firstChild);
+                }
+                // Generate new content for timeline displaying
+                document.getElementById('timelineList').appendChild(makeUnorderedList(timelines));
             }, function (error) {
                 console.log("Error getting all timelines");
             });
@@ -51,9 +97,6 @@
             // Create div element
             var divElement = document.createElement('div');
             divElement.setAttribute('class','ui divided list inverted');
-
-            // Create the list element
-            //var list = document.createElement('ul');
 
             for (var i = 0; i < array.length; i++) {
 
@@ -73,11 +116,12 @@
                 var divContentElement = document.createElement('div');
                 divContentElement.setAttribute('class', 'content');
 
+                // Set A class
                 var newLink = document.createElement('a');
                 newLink.setAttribute('class', 'header');
-                newLink.setAttribute('onclick', 'Canvas.setTimeline('+array[i].id +')');
+                newLink.setAttribute('onclick', 'Canvas.setTimeline(' + array[i].id + '); Canvas.PanelManager.hideBothPanels();');
 
-                // Get and set the text of the item 
+                // Get and set the text of the item and append the text content to the A class
                 var caption = document.createTextNode(array[i].title);
                 newLink.appendChild(caption);
 
@@ -85,27 +129,11 @@
                 divContentElement.appendChild(newLink);
                 item.appendChild(divContentElement);
 
-
-                // Add it to the list
-                //list.appendChild(item);
+                // Add it to the top level div element
                 divElement.appendChild(item);
-
             }
+
             return divElement;
-        }
-
-        function handleAddTimelineClick(showImportPanel) {
-            var importPanel = document.getElementById('importPanel');
-
-            if (importPanel.className = 'importPanelHidden') {
-                importPanel.className = 'importPanelShow';
-            }
-            else {
-                console.log('show');
-                importPanel.className = 'importPanelShow';
-            }
-
-            //importPanel.className = showImportPanel ? 'importPanelShow' : 'importPanelHidden';
         }
 
     })(Canvas.PanelManager || (Canvas.PanelManager = {}));

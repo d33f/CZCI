@@ -55,17 +55,16 @@ var Canvas;
             var xmlHttpRequest = new XMLHttpRequest();
             var url = _baseUrl + "timeline";
             var object = createContentItemFromFormFields(title, beginDate, endDate);
-            xmlHttpRequest.open("POST", url, true);
+            xmlHttpRequest.open("POST", url, false);
 
             //Send the proper header information along with the request
             xmlHttpRequest.setRequestHeader("Content-type", "application/json");
             xmlHttpRequest.onreadystatechange = function () {//Call a function when the state changes.
                 if (xmlHttpRequest.readyState == 4 && xmlHttpRequest.status == 200) {
-                    alert(xmlHttpRequest.responseText);
+                    return true;
                 }
             }
             xmlHttpRequest.send(JSON.stringify(object));
-            
         }
 
         function createContentItemFromFormFields(title, beginDate, endDate) {
@@ -113,7 +112,7 @@ var Canvas;
                 }, undefined);
 
                 var contentItem = createContentItemObject(json.RootContentItem, parentContentItem);
-                timeline.contentItems.push(contentItem);
+                    timeline.contentItems.push(contentItem);
 
                 // Resolve result
                 resolve(timeline);
@@ -148,7 +147,7 @@ var Canvas;
 
                 // Convert all content items
                 var contentItem = createContentItemObject(json, parentContentItem);
-                contentItems.push(contentItem);
+                    contentItems.push(contentItem);
 
                 // Resolve result
                 resolve(contentItems);

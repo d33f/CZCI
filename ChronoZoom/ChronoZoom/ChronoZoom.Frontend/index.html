@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>ChronoZoom</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.12.2/semantic.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.12.2/semantic.css" />
     <link rel="icon" href="Resources/favicon.ico" />
 </head>
 <body>
@@ -10,56 +10,65 @@
         <div id="title"></div>
         <div id="timerange"></div>
         <div id="menuButtons">
-            <button class="compact ui button default" onclick="Canvas.PanelManager.showTimelinePanel(true)">My Timelines</button>
-            <button class="compact ui button default" onclick="Canvas.PanelManager.handleImportPanel()">Import panel</button>
+            <button class="compact ui button default" onclick="Canvas.PanelManager.handleTimelineBtnClick()">My Timelines</button>
+            <button class="compact ui button default" onclick="Canvas.PanelManager.handleImportBtnClick()">Import panel</button>
         </div>
     </div>
     <div id="timelinePanel" class="timelinePanelHidden">
         <h1>Timelines</h1>
-
-            <div id="timelineList">
+        <div id="timelineList"></div>
+        <div style="padding-top:15px; float: right">
+            <div class="compact ui button green small right" onclick="Canvas.PanelManager.showImportPanel(true); Canvas.PanelManager.showTimelinePanel(false)">
+                <i class="icon add"></i>
+                Add Timeline
             </div>
-
-        <div class="compact ui button green small" onclick="Canvas.PanelManager.handleAddTimelineClick(true)">
-            <i class="icon add"></i>
-            Add Timeline
         </div>
     </div>
+
     <div id="importPanel" class="importPanelHidden">
-        <h1>Add Timeline</h1>
+        <h1>Add new item</h1>
         <div class="ui error inverted form segment">
-            <div class="ui error message">
-                <div class="header">Not possible</div>
-                <p>At this moment it is not possible to add a personal timeline</p>
+            <div class="two fields">
+                <div class="field">
+                    <label>Item</label>
+                    <div class="circle"></div>
+                    <input type="radio" name="contentItem" value="contentItem">
+                </div>
+                <div class="field">
+                    <label>Timeline</label>
+                    <div class="rectangle"></div>
+                    <input type="radio" name="contentItem" value="contentItem">
+                </div>
             </div>
+
             <div class="field">
                 <label>Title</label>
-                <input id="titleInput" placeholder="Timeline title" type="text">
+                <input id="titleInput" placeholder="Timeline title" type="text" required />
             </div>
             <div class="two fields">
                 <div class="field">
                     <label>Begin date</label>
-                    <input id="startDateInput" placeholder="Begin date" type="number">
+                    <input id="startDateInput" placeholder="Timeline begin date" type="number" required />
                 </div>
                 <div class="field">
                     <label>End date</label>
-                    <input id="endDateInput" placeholder="End date" type="number">
+                    <input id="endDateInput" placeholder="Timeline end date" type="number" required />
                 </div>
             </div>
             <div class="field">
                 <label>Description</label>
                 <textarea id="descriptionInput" placeholder="Timeline description"></textarea>
             </div>
-            <div class="ui submit button green" onclick="Canvas.PanelManager.handleImportPanelInput()">Create timeline!</div>
+            <input type="button" class="ui submit button green" id="btnsubmit" value="Create timeline!" onclick="Canvas.PanelManager.handleImportPanelInput()" />
         </div>
- 
+
         <div id="importOutput">
         </div>
 
         <div id="testTimelines">
         </div>
-
     </div>
+
     <div id="canvasContainer">
         <canvas id="canvas"></canvas>
 
