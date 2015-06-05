@@ -11,7 +11,6 @@ var Canvas;
         var _baseUrl = "https://www.kompili.nl/chronozoomApi/api/";
         //var _baseUrl = "http://localhost:40001/api/";
 
-
         // Get json data from path, execute callback resolve when succesfull and reject if failed. 
         function getJSON(id, path, resolve, reject) {
             // Create new instance of XMLHttpRequest and open requested path (async)
@@ -112,7 +111,7 @@ var Canvas;
                 }, undefined);
 
                 var contentItem = createContentItemObject(json.RootContentItem, parentContentItem);
-                    timeline.contentItems.push(contentItem);
+                timeline.contentItems.push(contentItem);
 
                 // Resolve result
                 resolve(timeline);
@@ -146,8 +145,9 @@ var Canvas;
                 var contentItems = [];
 
                 // Convert all content items
-                var contentItem = createContentItemObject(json, parentContentItem);
-                    contentItems.push(contentItem);
+                for (var i = 0; i < json.Children.length; i++) {
+                    contentItems.push(createContentItemObject(json.Children[i], parentContentItem));
+                }
 
                 // Resolve result
                 resolve(contentItems);
