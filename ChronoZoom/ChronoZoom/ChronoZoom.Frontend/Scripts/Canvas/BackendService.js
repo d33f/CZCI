@@ -130,7 +130,6 @@ var Canvas;
                     var timeline = createTimelineObject(json[i]);
                     timelines.push(timeline);
                 }
-
                 console.log(timelines);
 
                 // Resolve result

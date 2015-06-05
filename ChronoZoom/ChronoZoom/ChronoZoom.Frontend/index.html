@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>ChronoZoom</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.12.2/semantic.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.12.2/semantic.css" />
     <link rel="icon" href="Resources/favicon.ico" />
 </head>
 <body>
@@ -26,8 +26,21 @@
     </div>
 
     <div id="importPanel" class="importPanelHidden">
-        <h1>Add Timeline</h1>
+        <h1>Add new item</h1>
         <div class="ui error inverted form segment">
+            <div class="two fields">
+                <div class="field">
+                    <label>Item</label>
+                    <div class="circle"></div>
+                    <input type="radio" name="contentItem" value="contentItem">
+                </div>
+                <div class="field">
+                    <label>Timeline</label>
+                    <div class="rectangle"></div>
+                    <input type="radio" name="contentItem" value="contentItem">
+                </div>
+            </div>
+
             <div class="field">
                 <label>Title</label>
                 <input id="titleInput" placeholder="Timeline title" type="text" required />
