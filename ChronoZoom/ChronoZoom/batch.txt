@@ -1,0 +1,7 @@
+{"BeginDate": 1900, "EndDate": 2000, "Title": "19de eeuw"}
+{"Id": 1, "ParentId": 0, "BeginDate": 1914, "EndDate": 1918, "Title": "1ste wereld oorlog", "PictureURL": [], "SourceURL": "", "SourceRef": ""}
+{"Id": 2, "ParentId": 1, "BeginDate": 1914, "EndDate": 1914, "Title": "Inval", "PictureURL": ["http://img.wikipedia.nl/bla.jpg", "http://other.image.url"], "SourceURL": "", "SourceRef": ""}
+{"Id": 3, "ParentId": 1, "BeginDate": 1918, "EndDate": 1918, "Title": "Bevrijding", "PictureURL": [], "SourceURL": "", "SourceRef": ""}
+{"Id": 4, "ParentId": 0, "BeginDate": 1940, "EndDate": 1945, "Title": "2de wereld oorlog", "PictureURL": [], "SourceURL": "", "SourceRef": ""}
+{"Id": 5, "ParentId": 4, "BeginDate": 1940, "EndDate": 1940, "Title": "Inval", "PictureURL": [], "SourceURL": "", "SourceRef": ""}
+{"Id": 6, "ParentId": 4, "BeginDate": 1945, "EndDate": 1945, "Title": "Bevrijding", "PictureURL": [], "SourceURL": "", "SourceRef": ""}

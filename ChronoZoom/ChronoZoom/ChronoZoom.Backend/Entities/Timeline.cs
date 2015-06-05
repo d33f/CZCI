@@ -11,7 +11,10 @@ namespace ChronoZoom.Backend.Entities
         public decimal? EndDate { get; set; }
         [Required]
         public string Title { get; set; }
-        public ContentItem[] ContentItems { get; set; }
         public byte[] Timestamp { get; set; }
+        public bool IsPublic { get; set; }
+        public long RootContentItemId { get; set; }
+
+        public ContentItem RootContentItem { get; set; }        
     }
 }

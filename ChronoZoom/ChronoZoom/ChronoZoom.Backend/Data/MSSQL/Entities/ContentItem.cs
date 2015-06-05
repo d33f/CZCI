@@ -6,8 +6,9 @@
         public decimal BeginDate { get; set; }
         public decimal EndDate { get; set; }
         public string Title { get; set; }
+        public string Description { get; set; }
         public bool HasChildren { get; set; }
-        public string PictureURL { get; set; }
+        public string PictureURLs { get; set; }
         public long ParentId { get; set; }
         public string SourceURL { get; set; }
         public string SourceRef { get; set; }

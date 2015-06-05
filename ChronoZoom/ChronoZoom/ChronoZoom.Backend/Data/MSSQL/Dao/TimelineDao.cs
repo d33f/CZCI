@@ -1,6 +1,8 @@
 ﻿using ChronoZoom.Backend.Data.Interfaces;
 using ChronoZoom.Backend.Entities;
+using ChronoZoom.Backend.Exceptions;
 using Dapper;
+using System.Collections.Generic;
 
 namespace ChronoZoom.Backend.Data.MSSQL.Dao
 {
@@ -10,9 +12,22 @@ namespace ChronoZoom.Backend.Data.MSSQL.Dao
         {
             using (DatabaseContext context = new DatabaseContext())
             {
-                string query = "DECLARE @root HierarchyId = (SELECT Node FROM [dbo].[ContentItem] WHERE ID = 1);";
-                query += "(SELECT * FROM [dbo].[ContentItem] WHERE Node.GetAncestor(1) = @root AND id = @id)";
-                return context.FirstOrDefault<MSSQL.Entities.ContentItem, Timeline>(query, new { id = id });
+                string query = "SELECT TOP 1 [Timeline].[Id],[RootContentItemId],[IsPublic],[BeginDate],[EndDate],[Title],[Description],[Timeline].[Timestamp] FROM [dbo].[Timeline] JOIN [dbo].[ContentItem] ON [dbo].[Timeline].[RootContentItemId] = [dbo].[ContentItem].[Id] where [Timeline].[Id] = @id";
+                Timeline timeline = context.FirstOrDefault<MSSQL.Entities.TimelineJoinContentItem, Timeline>(query, new { id = id });
+                if (timeline == null)
+                {
+                    throw new TimelineNotFoundException();
+                }
+                return timeline;
+            }
+        }
+
+        public IEnumerable<Timeline> FindAllPublicTimelines()
+        {
+            using (DatabaseContext context = new DatabaseContext())
+            {
+                string query = "SELECT [Timeline].[Id],[RootContentItemId],[IsPublic],[BeginDate],[EndDate],[Title],[Description],[Timeline].[Timestamp] FROM [dbo].[Timeline] JOIN [dbo].[ContentItem] ON [dbo].[Timeline].[RootContentItemId] = [dbo].[ContentItem].[Id] where IsPublic=1";
+                return context.Select<MSSQL.Entities.TimelineJoinContentItem, Timeline>(query);
             }
         }
 
@@ -30,9 +45,9 @@ namespace ChronoZoom.Backend.Data.MSSQL.Dao
                 };
 
                 contentItem = context.AddContentItem<MSSQL.Entities.ContentItem, ContentItem>(contentItem);
-                timeline.Id = contentItem.Id;
+                timeline.RootContentItemId = contentItem.Id;
 
-                return timeline;
+                return context.Add<MSSQL.Entities.Timeline, Timeline>(timeline, new string[] { "Id", "Timestamp" });
             }
         }
 

@@ -22,7 +22,7 @@ namespace ChronoZoom.Backend.Controllers
         {
             try
             {
-                var timeline = _service.Get(id);
+                Timeline timeline = _service.Get(id);
                 return Ok(timeline);
             }
             catch (TimelineNotFoundException)
@@ -34,12 +34,25 @@ namespace ChronoZoom.Backend.Controllers
                 return BadRequest("An error occured");
             }
         }
-        
+
+        public IHttpActionResult Get()
+        {
+            try
+            {
+                var timelines = _service.GetAllPublicTimelinesWithoutContentItems();
+                return Ok(timelines);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("An error occured");
+            }
+        }
+
         /// <summary>
-        /// Create a new timeline
+        /// Updates a timeline
         /// </summary>
         /// <param name="item">The timeline</param>
-        /// <returns>The inserted timeline (with id)</returns>
+        /// <returns>Status OK if succesfully added</returns>
         [HttpPut]
         public IHttpActionResult Put(Timeline timeline)
         {
@@ -64,10 +77,10 @@ namespace ChronoZoom.Backend.Controllers
         }
 
         /// <summary>
-        /// Updates a timeline
+        /// Create a new timeline
         /// </summary>
         /// <param name="item">The timeline</param>
-        /// <returns>Status OK if succesfully added</returns>
+        /// <returns>The inserted id of timeline</returns>
         [HttpPost]
         public IHttpActionResult Post(Timeline timeline)
         {
@@ -77,7 +90,8 @@ namespace ChronoZoom.Backend.Controllers
             }
             try
             {
-                return Ok(_service.Add(timeline));
+                timeline = _service.Add(timeline);
+                return Ok(timeline.Id);
             }
             catch (Exception)
             {

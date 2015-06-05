@@ -27,12 +27,8 @@ namespace ChronoZoom.Backend.Controllers
         {
             try
             {
-                var contentItems = _service.GetAll(id);
-                return Ok(contentItems);
-            }
-            catch (ContentItemsNotFoundException)
-            {
-                return NotFound();
+                ContentItem contentItem = _service.Find(id, 1);
+                return Ok(contentItem);
             }
             catch (Exception)
             {
@@ -41,10 +37,10 @@ namespace ChronoZoom.Backend.Controllers
         }
 
         /// <summary>
-        /// Create a new content item
+        /// Updates a content item
         /// </summary>
         /// <param name="contentItem">The content item</param>
-        /// <returns>The inserted content item (with id)</returns>
+        /// <returns>Status OK if succesfully added</returns>
         [HttpPut]
         public IHttpActionResult Put(ContentItem contentItem)
         {
@@ -69,10 +65,10 @@ namespace ChronoZoom.Backend.Controllers
         }
 
         /// <summary>
-        /// Updates a content item
+        /// Create a new content item
         /// </summary>
         /// <param name="contentItem">The content item</param>
-        /// <returns>Status OK if succesfully added</returns>
+        /// <returns>The inserted content item (with id)</returns>
         [HttpPost]
         public IHttpActionResult Post(ContentItem contentItem)
         {
@@ -86,7 +82,6 @@ namespace ChronoZoom.Backend.Controllers
             }
             catch (Exception e)
             {
-                Console.Write(e.ToString());
                 return BadRequest("An error occured");
             } 
         }

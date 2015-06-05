@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ChronoZoom.Backend.Business;
 using Moq;
 using ChronoZoom.Backend.Data.Interfaces;
 using ChronoZoom.Backend.Exceptions;
 using ChronoZoom.Backend.Entities;
+using System.Collections.Generic;
+
 
 namespace ChronoZoom.Backend.Tests.Business
 {
@@ -19,12 +22,16 @@ namespace ChronoZoom.Backend.Tests.Business
             mock.Setup(setup => setup.Find(It.IsAny<long>())).Returns(new Timeline()
             {
                 Id = 1,
+                RootContentItemId = 123,
                 Title = "1ste wereld oorlog",
                 BeginDate = 1914M,
                 EndDate = 1918M
             });
             Mock<IContentItemDao> contentItemMock = new Mock<IContentItemDao>(MockBehavior.Strict);
-            contentItemMock.Setup(setup => setup.FindAllForTimelineBy(It.IsAny<long>())).Returns(new ContentItem[2]);
+            contentItemMock.Setup(setup => setup.Find(It.IsAny<long>(), It.IsAny<int>())).Returns(new ContentItem()
+            {
+                Children = new ContentItem[2]
+            });
             TimelineService target = new TimelineService(mock.Object, contentItemMock.Object);
 
             // Act
@@ -32,13 +39,14 @@ namespace ChronoZoom.Backend.Tests.Business
 
             // Assert
             Assert.IsNotNull(result);
-            Assert.AreEqual(1, result.Id);
+            Assert.AreEqual((long)1, result.Id);
             Assert.AreEqual("1ste wereld oorlog", result.Title);
             Assert.AreEqual(1914M, result.BeginDate);
             Assert.AreEqual(1918M, result.EndDate);
-            Assert.AreEqual(2, result.ContentItems.Length);
+            Assert.IsNotNull(result.RootContentItem);
+            Assert.AreEqual(2, result.RootContentItem.Children.Count());
             mock.Verify(verify => verify.Find(It.IsAny<long>()), Times.Once);
-            contentItemMock.Verify(verify => verify.FindAllForTimelineBy(result.Id), Times.Once);
+            contentItemMock.Verify(verify => verify.Find(result.RootContentItemId, It.IsAny<int>()), Times.Once);
         }
 
         [TestMethod]
@@ -56,21 +64,65 @@ namespace ChronoZoom.Backend.Tests.Business
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ContentItemsNotFoundException))]
-        public void TimelineService_Get_ContentItemsNotFoundException_Test()
+        [ExpectedException(typeof(Exception))]
+        public void TimelineService_Get_Exception_Test()
         {
             // Arrange
             Mock<ITimelineDao> mock = new Mock<ITimelineDao>(MockBehavior.Strict);
-            mock.Setup(setup => setup.Find(It.IsAny<long>())).Returns(new Timeline()
-            {
-                Id = 1
-            });
             Mock<IContentItemDao> contentItemMock = new Mock<IContentItemDao>(MockBehavior.Strict);
-            contentItemMock.Setup(setup => setup.FindAllForTimelineBy(It.IsAny<long>())).Throws(new ContentItemsNotFoundException());
+            mock.Setup(setup => setup.Find(It.IsAny<long>())).Throws(new Exception());
             TimelineService target = new TimelineService(mock.Object, contentItemMock.Object);
 
             // Act
-            target.Get(-1);
+            target.Get(1);
+        }
+
+        [TestMethod]
+        public void TimelineService_GetAllPublicTimelinesWithoutContentItems_Test()
+        {
+            // Arrange
+            Mock<ITimelineDao> mock = new Mock<ITimelineDao>(MockBehavior.Strict);
+            mock.Setup(setup => setup.FindAllPublicTimelines()).Returns(new List<Timeline>()
+            {
+                new Timeline()
+                {
+                    Id = 1,
+                    Title = "1ste wereld oorlog",
+                    BeginDate = 1914M,
+                    EndDate = 1918M,
+                    IsPublic = true
+                },
+                new Timeline()
+            });
+            TimelineService target = new TimelineService(mock.Object, null);
+
+            // Act
+            IEnumerable<Timeline> result = target.GetAllPublicTimelinesWithoutContentItems();
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(2, result.Count());
+            Timeline firstResult = result.First();
+            Assert.AreEqual((long)1, firstResult.Id);
+            Assert.AreEqual("1ste wereld oorlog", firstResult.Title);
+            Assert.AreEqual(1914M, firstResult.BeginDate);
+            Assert.AreEqual(1918M, firstResult.EndDate);
+            Assert.AreEqual(null, firstResult.RootContentItem);
+            mock.Verify(verify => verify.FindAllPublicTimelines(), Times.Once);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void TimelineService_GetAllPublicTimelinesWithoutContentItems_Exception_Test()
+        {
+            // Arrange
+            Mock<ITimelineDao> mock = new Mock<ITimelineDao>(MockBehavior.Strict);
+            Mock<IContentItemDao> contentItemMock = new Mock<IContentItemDao>(MockBehavior.Strict);
+            mock.Setup(setup => setup.FindAllPublicTimelines()).Throws(new Exception());
+            TimelineService target = new TimelineService(mock.Object, contentItemMock.Object);
+
+            // Act
+            target.GetAllPublicTimelinesWithoutContentItems();
         }
 
         [TestMethod]

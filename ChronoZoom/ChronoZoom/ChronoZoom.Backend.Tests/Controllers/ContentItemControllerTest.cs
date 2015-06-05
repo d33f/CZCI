@@ -20,7 +20,10 @@ namespace ChronoZoom.Backend.Tests.Controllers
         {
             // Arrange
             Mock<IContentItemService> mock = new Mock<IContentItemService>(MockBehavior.Strict);
-            mock.Setup(setup => setup.GetAll(It.IsAny<int>())).Returns(new Entities.ContentItem[2]);
+            mock.Setup(setup => setup.Find(It.IsAny<long>(), It.IsAny<int>())).Returns(new ContentItem()
+            {
+                Children = new ContentItem[2]
+            });
             ContentItemController target = new ContentItemController(mock.Object);
 
             // Act
@@ -28,25 +31,9 @@ namespace ChronoZoom.Backend.Tests.Controllers
 
             // Assert
             Assert.IsNotNull(result);
-            Assert.IsTrue(result is OkNegotiatedContentResult<IEnumerable<ContentItem>>);
-            Assert.AreEqual(2, (result as OkNegotiatedContentResult<IEnumerable<ContentItem>>).Content.Count());
-            mock.Verify(verify => verify.GetAll(It.IsAny<int>()), Times.Once);
-        }
-
-        [TestMethod]
-        public void ContentItemController_Get_NotFound_Test()
-        {
-            // Arrange
-            Mock<IContentItemService> mock = new Mock<IContentItemService>(MockBehavior.Strict);
-            mock.Setup(setup => setup.GetAll(It.IsAny<int>())).Throws(new ContentItemsNotFoundException());
-            ContentItemController target = new ContentItemController(mock.Object);
-
-            // Act
-            IHttpActionResult result = target.Get(1);
-
-            // Assert
-            Assert.IsNotNull(result);
-            Assert.IsTrue(result is NotFoundResult);
+            Assert.IsTrue(result is OkNegotiatedContentResult<ContentItem>);
+            Assert.AreEqual(2, (result as OkNegotiatedContentResult<ContentItem>).Content.Children.Length);
+            mock.Verify(verify => verify.Find(It.IsAny<long>(), It.IsAny<int>()), Times.Once);
         }
 
         [TestMethod]
@@ -54,7 +41,7 @@ namespace ChronoZoom.Backend.Tests.Controllers
         {
             // Arrange
             Mock<IContentItemService> mock = new Mock<IContentItemService>(MockBehavior.Strict);
-            mock.Setup(setup => setup.GetAll(It.IsAny<int>())).Throws(new Exception());
+            mock.Setup(setup => setup.Find(It.IsAny<long>(), It.IsAny<int>())).Throws(new Exception());
             ContentItemController target = new ContentItemController(mock.Object);
 
             // Act

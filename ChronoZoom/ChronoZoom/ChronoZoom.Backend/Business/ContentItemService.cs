@@ -14,9 +14,9 @@ namespace ChronoZoom.Backend.Business
             _dao = dao;
         }
 
-        public IEnumerable<ContentItem> GetAll(int parentContentItemID)
+        public ContentItem Find(long id, int depth)
         {
-            return _dao.FindAllBy(parentContentItemID);
+            return _dao.Find(id, depth);
         }
 
         public ContentItem Add(ContentItem contentItem)
