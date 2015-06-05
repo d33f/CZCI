@@ -132,7 +132,7 @@ namespace ChronoZoom.Backend.Tests.Controllers
                 BeginDate = -1,
                 EndDate = -1,
                 Title = "test",
-                ContentItems = null
+                RootContentItem = null
             };
 
             // Act
@@ -155,7 +155,7 @@ namespace ChronoZoom.Backend.Tests.Controllers
             TimelineController target = new TimelineController(mock.Object);
             Timeline timeline = new Timeline()
             {
-                ContentItems = null
+                RootContentItem = null
             };
 
             // Act
@@ -201,7 +201,7 @@ namespace ChronoZoom.Backend.Tests.Controllers
                 BeginDate = -1,
                 EndDate = -1,
                 Title = "test",
-                ContentItems = null
+                RootContentItem = null
             };
 
             // Act
@@ -211,8 +211,8 @@ namespace ChronoZoom.Backend.Tests.Controllers
 
             // Assert
             Assert.IsNotNull(result);
-            Assert.IsTrue(result is OkNegotiatedContentResult<Timeline>);
-            Assert.AreEqual(123, (result as OkNegotiatedContentResult<Timeline>).Content.Id);
+            Assert.IsTrue(result is OkNegotiatedContentResult<long>);
+            Assert.AreEqual((long)123, (result as OkNegotiatedContentResult<long>).Content);
             mock.Verify(verify => verify.Add(It.IsAny<Timeline>()), Times.Once);
         }
 
@@ -225,7 +225,7 @@ namespace ChronoZoom.Backend.Tests.Controllers
             TimelineController target = new TimelineController(mock.Object);
             Timeline timeline = new Timeline()
             {
-                ContentItems = null
+                RootContentItem = null
             };
 
             // Act

@@ -17,29 +17,35 @@ namespace ChronoZoom.Backend.Tests.Data.MSSQL
     public class ContentItemDaoTest
     {
         [TestMethod]
-        public void ContentItemDao_FindAll_IntegrationTest()
+        public void ContentItemDao_Find_IntegrationTest()
         {
             // Arrange
             IContentItemDao target = new ContentItemDao();
 
             // Act
-            IEnumerable<ContentItem> result = target.FindAllBy(1034);
+            ContentItem result = target.Find(18, 1);
 
             // Assert
-            Assert.AreEqual(51, result.Count());
+            Assert.IsNotNull(result);
+            Assert.AreEqual(2, result.Children.Count());
+            Assert.AreEqual(0, result.Children[0].Children.Count());
+            Assert.AreEqual(0, result.Children[1].Children.Count());
         }
 
         [TestMethod]
-        public void ContentItemDao_FindAllForTimeline_IntegrationTest()
+        public void ContentItemDao_Find_Depth2_IntegrationTest()
         {
             // Arrange
             IContentItemDao target = new ContentItemDao();
 
             // Act
-            IEnumerable<ContentItem> result = target.FindAllForTimelineBy(18);
+            ContentItem result = target.Find(18, 2);
 
             // Assert
-            Assert.AreEqual(2, result.Count());
+            Assert.IsNotNull(result);
+            Assert.AreEqual(2, result.Children.Count());
+            Assert.AreEqual(4, result.Children[0].Children.Count());
+            Assert.AreEqual(4, result.Children[1].Children.Count());
         }
 
         [TestMethod]

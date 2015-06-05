@@ -5,7 +5,7 @@ namespace ChronoZoom.Backend.Business.Interfaces
 {
     public interface IContentItemService
     {
-        IEnumerable<ContentItem> GetAll(int parentContentItemID);
+        ContentItem Find(long id, int depth);
         ContentItem Add(ContentItem contentItem);
         void Update(ContentItem contentItem);
     }

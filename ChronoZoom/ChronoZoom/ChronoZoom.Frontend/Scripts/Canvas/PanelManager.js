@@ -38,10 +38,6 @@
 
         function addTimelines() {
             Canvas.BackendService.getAllTimelines(function (timelines) {
-                for (var i = 0; i < timelines.length; i++) {
-                    console.log(timelines[i].title);
-                }
-
                 document.getElementById('timelineList').appendChild(makeUnorderedList(timelines));
 
             }, function (error) {

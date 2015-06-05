@@ -27,8 +27,8 @@ namespace ChronoZoom.Backend.Controllers
         {
             try
             {
-                var contentItems = _service.GetAll(id);
-                return Ok(contentItems);
+                ContentItem contentItem = _service.Find(id, 1);
+                return Ok(contentItem);
             }
             catch (Exception)
             {

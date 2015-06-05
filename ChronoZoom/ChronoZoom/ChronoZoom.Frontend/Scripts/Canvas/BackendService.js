@@ -8,7 +8,7 @@ var Canvas;
         BackendService.getAllTimelines = getAllTimelines;
 
         // Private fields
-        //var _baseUrl = "http://www.kompili.nl/chronozoomApi/api/";
+        //var _baseUrl = "https://www.kompili.nl/chronozoomApi/api/";
         var _baseUrl = "http://localhost:40001/api/";
 
 
@@ -78,7 +78,7 @@ var Canvas;
 
         // Create a timeline object of given json input (convert it to our internal structure)
         function createContentItemObject(json, parentContentItem) {
-            return new ContentItem({
+            var contentItem = new ContentItem({
                 id: json.Id,
                 beginDate: json.BeginDate,
                 endDate: json.EndDate,
@@ -89,8 +89,14 @@ var Canvas;
                 sourceRef: json.SourceRef,
                 pictureURL: json.PictureURL,
             }, parentContentItem);
-        };
 
+            // Convert all content items
+            for (var i = 0; i < json.Children.length; i++) {
+                createContentItemObject(json.Children[i], contentItem);
+            }
+
+            return contentItem;
+        };
 
         // Get timeline
         function getTimeline(timelineId, resolve, reject) {
@@ -106,12 +112,8 @@ var Canvas;
                     hasChildren: true
                 }, undefined);
 
-                // Convert all content items
-                for (var i = 0; i < json.ContentItems.length; i++) {
-                    // Create and add content item object
-                    var contentItem = createContentItemObject(json.ContentItems[i], parentContentItem);
-                    timeline.contentItems.push(contentItem);
-                }
+                var contentItem = createContentItemObject(json.RootContentItem, parentContentItem);
+                timeline.contentItems.push(contentItem);
 
                 // Resolve result
                 resolve(timeline);
@@ -120,7 +122,6 @@ var Canvas;
             });
         }
 
-        
         // Get timeline
         function getAllTimelines(resolve, reject) {
             getJSON('','timeline', function (json) {
@@ -132,8 +133,6 @@ var Canvas;
                     timelines.push(timeline);
                 }
 
-                console.log(timelines);
-
                 // Resolve result
                 resolve(timelines);
             }, function (error) {
@@ -143,16 +142,13 @@ var Canvas;
 
         // Get content items for parent content item 
         function getContentItems(parentContentItem, resolve, reject) {
-            getJSON(parentContentItem.getId(),'contentitem', function (json) {
+            getJSON(parentContentItem.getId(), 'contentitem', function (json) {
                 // Create empty array
                 var contentItems = [];
 
                 // Convert all content items
-                for (var i = 0; i < json.length; i++) {
-                    // Create and add content item object
-                    var contentItem = createContentItemObject(json[i], parentContentItem);
-                    contentItems.push(contentItem);
-                }
+                var contentItem = createContentItemObject(json, parentContentItem);
+                contentItems.push(contentItem);
 
                 // Resolve result
                 resolve(contentItems);

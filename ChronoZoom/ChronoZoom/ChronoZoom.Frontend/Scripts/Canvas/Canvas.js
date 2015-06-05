@@ -37,7 +37,7 @@
         Canvas.PanelManager.addTimelines();
 
         // Select default timeline
-        Canvas.Timeline.setTimeline(18);
+        Canvas.Timeline.setTimeline(2);
     }
 
     // Set the new timeline

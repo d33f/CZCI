@@ -27,7 +27,8 @@ namespace ChronoZoom.Backend.Business
                     ConcurrentBag<ContentItem> contentItems = new ConcurrentBag<ContentItem>();
                     while ((line = streamReader.ReadLine()) != null)
                     {
-                        tasks.Add(Task.Factory.StartNew(() => contentItems.Add(CreateContentItem(line))));
+                        string s = line;
+                        tasks.Add(Task.Factory.StartNew(() => contentItems.Add(CreateContentItem(s))));
                     }
 
                     Task.WaitAll(tasks.ToArray());
@@ -54,7 +55,6 @@ namespace ChronoZoom.Backend.Business
         private ContentItem CreateContentItem(string s)
         {
             JObject json = JObject.Parse(s);
-
             return new ContentItem()
             {
                 Id = (long)json["Id"],
@@ -63,8 +63,9 @@ namespace ChronoZoom.Backend.Business
                 BeginDate = (decimal)json["BeginDate"],
                 EndDate = (decimal)json["EndDate"],
                 Title = (string)json["Title"],
+                Description = "__NOT_IMPLEMENTED__",
                 HasChildren = (bool)json["HasChildren"],
-                PictureURL = (string)json["PictureURL"],
+                PictureURLs = json["PictureURL"].ToObject<string[]>(),
                 SourceURL = (string)json["SourceURL"],
                 SourceRef = (string)json["SourceRef"]
             };

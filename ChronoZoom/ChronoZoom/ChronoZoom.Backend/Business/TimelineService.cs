@@ -20,8 +20,7 @@ namespace ChronoZoom.Backend.Business
         public Timeline Get(int id)
         {
             Timeline timeline = _dao.Find(id);
-            var contentItems = _contentItemDao.FindAllForTimelineBy(timeline.Id);
-            timeline.ContentItems = contentItems.ToArray();
+            timeline.RootContentItem = _contentItemDao.Find(timeline.RootContentItemId, 1);
             return timeline;
         }
 

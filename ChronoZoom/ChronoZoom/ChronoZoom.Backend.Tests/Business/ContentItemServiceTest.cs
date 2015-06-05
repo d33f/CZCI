@@ -14,38 +14,35 @@ namespace ChronoZoom.Backend.Tests.Business
     public class ContentItemServiceTest
     {
         [TestMethod]
-        public void ContentItemService_GetAll_Test()
+        public void ContentItemService_Find_Test()
         {
             // Arrange
             Mock<IContentItemDao> mock = new Mock<IContentItemDao>(MockBehavior.Strict);
-            mock.Setup(setup => setup.FindAllBy(It.IsAny<long>())).Returns(new ContentItem[] 
+            mock.Setup(setup => setup.Find(It.IsAny<long>(), It.IsAny<int>())).Returns(new ContentItem
             {
-                new ContentItem()
-                {
-                    Id = 1,
-                    Title = "Bevrijding",
-                    BeginDate = 1945M,
-                    EndDate = 1945M,
-                    SourceURL = "UrlNaSource",
-                    HasChildren = false,
-                }
+                Id = 1,
+                Title = "Bevrijding",
+                BeginDate = 1945M,
+                EndDate = 1945M,
+                SourceURL = "UrlNaSource",
+                HasChildren = true,
+                Children = new ContentItem[2]
             });
             ContentItemService target = new ContentItemService(mock.Object);
 
             // Act
-            IEnumerable<ContentItem> result = target.GetAll(1);
+            ContentItem result = target.Find(1, 1);
 
             // Assert
             Assert.IsNotNull(result);
-            Assert.AreEqual(1, result.Count());
-            ContentItem resultFirst = result.First();
-            Assert.AreEqual(1, resultFirst.Id);
-            Assert.AreEqual("Bevrijding", resultFirst.Title);
-            Assert.AreEqual(1945M, resultFirst.BeginDate);
-            Assert.AreEqual(1945M, resultFirst.EndDate);
-            Assert.AreEqual("UrlNaSource", resultFirst.SourceURL);
-            Assert.AreEqual(false, resultFirst.HasChildren);
-            mock.Verify(verify => verify.FindAllBy(It.IsAny<long>()), Times.Once);
+            Assert.AreEqual(1, result.Id);
+            Assert.AreEqual("Bevrijding", result.Title);
+            Assert.AreEqual(1945M, result.BeginDate);
+            Assert.AreEqual(1945M, result.EndDate);
+            Assert.AreEqual("UrlNaSource", result.SourceURL);
+            Assert.AreEqual(true, result.HasChildren);
+            Assert.AreEqual(2, result.Children.Length);
+            mock.Verify(verify => verify.Find(It.IsAny<long>(), It.IsAny<int>()), Times.Once);
         }
 
         [TestMethod]

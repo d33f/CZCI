@@ -126,6 +126,8 @@
     <Compile Include="Data\MSSQL\Dao\ContentItemDao.cs" />
     <Compile Include="Data\MSSQL\Dao\TimelineDao.cs" />
     <Compile Include="Data\MSSQL\Entities\ContentItem.cs" />
+    <Compile Include="Data\MSSQL\Entities\Timeline.cs" />
+    <Compile Include="Data\MSSQL\Entities\TimelineJoinContentItem.cs" />
     <Compile Include="Entities\ContentItem.cs" />
     <Compile Include="Entities\Timeline.cs" />
     <Compile Include="Exceptions\TimelineNotFoundException.cs" />

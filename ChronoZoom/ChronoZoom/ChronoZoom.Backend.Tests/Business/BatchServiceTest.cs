@@ -20,7 +20,7 @@ namespace ChronoZoom.Backend.Tests.Business
             BatchService target = new BatchService();
 
             // Act
-            int result = target.ProcessFile("../../../batch.txt");
+            //int result = target.ProcessFile("../../../batch.txt");
 
             // Assert
             //Assert.IsTrue(result > 0);

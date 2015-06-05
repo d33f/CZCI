@@ -17,22 +17,22 @@ namespace ChronoZoom.Backend.Tests.Data.MSSQL
     public class TimelineDaoTest
     {
         [TestMethod]
-        public void TimelineDao_FindAll_IntegrationTest()
+        public void TimelineDao_Find_IntegrationTest()
         {
             // Arrange
             ITimelineDao target = new TimelineDao();
 
             // Act
-            Timeline result = target.Find(18);
+            Timeline result = target.Find(1);
 
             // Assert
             Assert.IsNotNull(result);
-            Assert.AreEqual(18, result.Id);
+            Assert.AreEqual(1, result.Id);
         }
 
         [TestMethod]
         [ExpectedException(typeof(TimelineNotFoundException))]
-        public void TimelineDao_FindAll_NotFoundException_IntegrationTest()
+        public void TimelineDao_Find_NotFoundException_IntegrationTest()
         {
             // Arrange
             ITimelineDao target = new TimelineDao();
@@ -54,7 +54,8 @@ namespace ChronoZoom.Backend.Tests.Data.MSSQL
                 {
                     BeginDate = 1900,
                     EndDate = 2000,
-                    Title = "Test"
+                    Title = "Test",
+                    IsPublic = true,
                 });
 
                 // Assert

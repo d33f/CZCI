@@ -11,6 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		CodeCoverage.runsettings = CodeCoverage.runsettings
 		Database.sql = Database.sql
 		Development branch test.txt = Development branch test.txt
+		Procedure.sql = Procedure.sql
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChronoZoom.Backend", "ChronoZoom.Backend\ChronoZoom.Backend.csproj", "{EC98BB47-FF09-44EC-883A-9A64FE82CF31}"

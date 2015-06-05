@@ -9,6 +9,8 @@ using System.Collections.Concurrent;
 using System.Reflection;
 using System.Data;
 using Dapper.Exceptions;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 namespace Dapper
 {
@@ -44,20 +46,34 @@ namespace Dapper
             return MapEntities<TDataEntity, TEntity>(results);
         }
 
-        public TEntity Add<TDataEntity, TEntity>(TEntity entity, string[] skipColumns = null) where TDataEntity : new()
+        public TDataEntity Add<TDataEntity>(TDataEntity entity, string[] skipColumns = null)
         {
             if (skipColumns == null)
             {
                 skipColumns = new string[] { "Id", "ID" };
             }
 
-            PropertyInfo[] destinationEntityProperties = typeof(TDataEntity).GetProperties();
-            
-            string tableName = typeof(TDataEntity).Name;
-            string[] columns = destinationEntityProperties.Select(property => property.Name).Where(w => !skipColumns.Contains(w)).ToArray();
-            string query = "INSERT INTO " + tableName + " (" + String.Join(",", columns) + ")Values(" + String.Join(",", columns.Select(x => x = "@" + x)) + ")";
+            PropertyInfo[] dataEntityProperties = typeof(TDataEntity).GetProperties();
 
-            return Add<TDataEntity, TEntity>(query, entity);
+            string tableName = typeof(TDataEntity).Name;
+            string[] columns = dataEntityProperties.Select(property => property.Name).Where(w => !skipColumns.Contains(w)).ToArray();
+            string query = "INSERT INTO " + tableName + " (" + String.Join(",", columns) + ")Values(" + String.Join(",", columns.Select(x => x = "@" + x)) + ")";
+            query += (query.EndsWith(";") ? "" : ";") + "SELECT CAST(SCOPE_IDENTITY() as int)";
+            IEnumerable<int> results = _connection.Query<int>(query, entity);
+
+            return UpdateEntityIdentity<TDataEntity>(entity, dataEntityProperties, results.First());
+        }
+
+
+        public TEntity Add<TDataEntity, TEntity>(TEntity entity, string[] skipColumns = null) where TDataEntity : new()
+        {
+            PropertyInfo[] destinationEntityProperties = typeof(TDataEntity).GetProperties();
+            PropertyInfo[] sourceEntityProperties = typeof(TEntity).GetProperties();
+
+            TDataEntity dataEntity = MapEntity<TEntity, TDataEntity>(sourceEntityProperties, destinationEntityProperties, entity);
+            dataEntity = Add<TDataEntity>(dataEntity, skipColumns);
+
+            return UpdateEntityIdentity<TEntity, TDataEntity>(entity, sourceEntityProperties, dataEntity, destinationEntityProperties);
         }
 
         public TEntity Add<TDataEntity, TEntity>(string query, TEntity entity) where TDataEntity : new()
@@ -66,13 +82,26 @@ namespace Dapper
             PropertyInfo[] sourceEntityProperties = typeof(TEntity).GetProperties();
 
             TDataEntity dataEntity = MapEntity<TEntity, TDataEntity>(sourceEntityProperties, destinationEntityProperties, entity);
+            
             query += (query.EndsWith(";") ? "" : ";") + "SELECT CAST(SCOPE_IDENTITY() as int)";
             IEnumerable<int> results = _connection.Query<int>(query, dataEntity);
 
-            return UpdateEntityIdentity<TEntity>(entity, sourceEntityProperties, results.First());
+            return UpdateEntityIdentity<TEntity, TDataEntity>(entity, sourceEntityProperties, dataEntity, destinationEntityProperties);
         }
 
-        private TEntity UpdateEntityIdentity<TEntity>(TEntity entity, PropertyInfo[] entityProperties, int id)
+        private TEntity UpdateEntityIdentity<TEntity, TDataEntity>(TEntity entity, PropertyInfo[] entityProperties, TDataEntity dataEntity, PropertyInfo[] dataEntityProperties)
+        {
+            PropertyInfo dataEntityProperty = dataEntityProperties.FirstOrDefault(p => String.Equals(p.Name, "ID", StringComparison.OrdinalIgnoreCase));
+            if (dataEntityProperty != null)
+            {
+                long id = (long)dataEntityProperty.GetValue(dataEntity);
+                return UpdateEntityIdentity<TEntity>(entity, entityProperties, id);
+            }
+
+            return entity;
+        }
+
+        private TEntity UpdateEntityIdentity<TEntity>(TEntity entity, PropertyInfo[] entityProperties, long id)
         {
             PropertyInfo entityProperty = entityProperties.FirstOrDefault(p => String.Equals(p.Name, "ID", StringComparison.OrdinalIgnoreCase));
             if (entityProperty != null)
@@ -154,7 +183,19 @@ namespace Dapper
                 if (entityProperty != null)
                 {
                     Object value = sourceEntityProperty.GetValue(data);
-                    entityProperty.SetValue(entity, value);
+
+                    if(sourceEntityProperty.PropertyType == typeof(String[]) && entityProperty.PropertyType == typeof(String))
+                    {
+                        entityProperty.SetValue(entity, JsonConvert.SerializeObject(value));
+                    }
+                    else if (sourceEntityProperty.PropertyType == typeof(String) && entityProperty.PropertyType == typeof(String[]))
+                    {
+                        entityProperty.SetValue(entity, JArray.Parse((string)value).ToObject<string[]>());
+                    }
+                    else
+                    {
+                        entityProperty.SetValue(entity, value);
+                    }
                 }
             }
 
