@@ -43,10 +43,10 @@
             if (inputPanel.className === 'timelinePanelShow') {
                 showTimelinePanel(false);
             }
+
             else {
                 showTimelinePanel(true);
             }
-
         }
 
 
@@ -64,7 +64,6 @@
             if (output.textContent !== undefined) {
                 // Input validation
 
-
                 if (title == "" || startDate == "" || endDate == "") {
                     output.textContent = "Please check your input! Input is not correct.";
                 }
@@ -73,8 +72,8 @@
                     addTimelines();
                     showImportPanel(false);
                     showTimelinePanel(true);
+                }
             }
-        }
         }
 
         function addTimelines() {
@@ -132,8 +131,8 @@
 
                 // Add it to the top level div element
                 divElement.appendChild(item);
-
             }
+
             return divElement;
         }
 

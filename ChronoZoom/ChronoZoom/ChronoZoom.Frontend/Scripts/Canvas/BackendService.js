@@ -65,7 +65,6 @@ var Canvas;
                 }
             }
             xmlHttpRequest.send(JSON.stringify(object));
-            
         }
 
         function createContentItemFromFormFields(title, beginDate, endDate) {

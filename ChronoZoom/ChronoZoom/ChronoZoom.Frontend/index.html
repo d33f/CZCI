@@ -16,46 +16,46 @@
     </div>
     <div id="timelinePanel" class="timelinePanelHidden">
         <h1>Timelines</h1>
-
-            <div id="timelineList">
+        <div id="timelineList"></div>
+        <div style="padding-top:15px; float: right">
+            <div class="compact ui button green small right" onclick="Canvas.PanelManager.showImportPanel(true); Canvas.PanelManager.showTimelinePanel(false)">
+                <i class="icon add"></i>
+                Add Timeline
             </div>
-
-        <div class="compact ui button green small" onclick="Canvas.PanelManager.showImportPanel(true); Canvas.PanelManager.showTimelinePanel(false)">
-            <i class="icon add"></i>
-            Add Timeline
         </div>
     </div>
+
     <div id="importPanel" class="importPanelHidden">
         <h1>Add Timeline</h1>
-            <div class="ui error inverted form segment">
+        <div class="ui error inverted form segment">
+            <div class="field">
+                <label>Title</label>
+                <input id="titleInput" placeholder="Timeline title" type="text" required />
+            </div>
+            <div class="two fields">
                 <div class="field">
-                    <label>Title</label>
-                    <input id="titleInput" placeholder="Timeline title" type="text" required />
-                </div>
-                <div class="two fields">
-                    <div class="field">
-                        <label>Begin date</label>
-                        <input id="startDateInput" placeholder="Timeline begin date" type="number" required />
-                    </div>
-                    <div class="field">
-                        <label>End date</label>
-                        <input id="endDateInput" placeholder="Timeline end date" type="number" required />
-                    </div>
+                    <label>Begin date</label>
+                    <input id="startDateInput" placeholder="Timeline begin date" type="number" required />
                 </div>
                 <div class="field">
-                    <label>Description</label>
-                    <textarea id="descriptionInput" placeholder="Timeline description"></textarea>
+                    <label>End date</label>
+                    <input id="endDateInput" placeholder="Timeline end date" type="number" required />
                 </div>
-                <input type="button" class="ui submit button green" id="btnsubmit" value="Create timeline!" onclick="Canvas.PanelManager.handleImportPanelInput()" />
             </div>
-
-            <div id="importOutput">
+            <div class="field">
+                <label>Description</label>
+                <textarea id="descriptionInput" placeholder="Timeline description"></textarea>
             </div>
+            <input type="button" class="ui submit button green" id="btnsubmit" value="Create timeline!" onclick="Canvas.PanelManager.handleImportPanelInput()" />
+        </div>
 
-            <div id="testTimelines">
-            </div>
+        <div id="importOutput">
+        </div>
 
-</div>
+        <div id="testTimelines">
+        </div>
+    </div>
+
     <div id="canvasContainer">
         <canvas id="canvas"></canvas>
 
