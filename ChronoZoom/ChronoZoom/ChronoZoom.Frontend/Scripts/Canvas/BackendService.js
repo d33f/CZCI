@@ -51,10 +51,10 @@ var Canvas;
             };
         }
 
-        function createPersonalTimeLine(title, beginDate, endDate) {
+        function createPersonalTimeLine(title, beginDate, endDate, description) {
             var xmlHttpRequest = new XMLHttpRequest();
             var url = _baseUrl + "timeline";
-            var object = createContentItemFromFormFields(title, beginDate, endDate);
+            var object = createContentItemFromFormFields(title, beginDate, endDate, description);
             xmlHttpRequest.open("POST", url, false);
 
             //Send the proper header information along with the request
@@ -67,11 +67,12 @@ var Canvas;
             xmlHttpRequest.send(JSON.stringify(object));
         }
 
-        function createContentItemFromFormFields(title, beginDate, endDate) {
+        function createContentItemFromFormFields(title, beginDate, endDate, description) {
             return {
                 Title: title,
                 BeginDate: beginDate,
-                EndDate: endDate
+                EndDate: endDate,
+                Description: description
             }
         }
 
