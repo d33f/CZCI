@@ -53,3 +53,8 @@ C:\Users\Richard\Source\Repos\ChronoZoom02062015\ChronoZoom\ChronoZoom\ChronoZoo
 C:\Users\Richard\Source\Repos\ChronoZoom02062015\ChronoZoom\ChronoZoom\ChronoZoom.Frontend\obj\Debug\ChronoZoom.Frontend.dll
 C:\Users\Richard\Source\Repos\ChronoZoom02062015\ChronoZoom\ChronoZoom\ChronoZoom.Frontend\obj\Debug\ChronoZoom.Frontend.pdb
 C:\Users\Richard\Source\Repos\ChronoZoom02062015\ChronoZoom\ChronoZoom\ChronoZoom.Frontend\bin\ChronoZoom.Frontend.dll.config
+C:\Users\Richard\Documents\GitHub\CZCI\ChronoZoom\ChronoZoom\ChronoZoom.Frontend\bin\ChronoZoom.Frontend.dll.config
+C:\Users\Richard\Documents\GitHub\CZCI\ChronoZoom\ChronoZoom\ChronoZoom.Frontend\bin\ChronoZoom.Frontend.dll
+C:\Users\Richard\Documents\GitHub\CZCI\ChronoZoom\ChronoZoom\ChronoZoom.Frontend\bin\ChronoZoom.Frontend.pdb
+C:\Users\Richard\Documents\GitHub\CZCI\ChronoZoom\ChronoZoom\ChronoZoom.Frontend\obj\Debug\ChronoZoom.Frontend.dll
+C:\Users\Richard\Documents\GitHub\CZCI\ChronoZoom\ChronoZoom\ChronoZoom.Frontend\obj\Debug\ChronoZoom.Frontend.pdb
