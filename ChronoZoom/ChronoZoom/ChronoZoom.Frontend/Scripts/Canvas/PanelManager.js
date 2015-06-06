@@ -100,9 +100,6 @@
 
             for (var i = 0; i < array.length; i++) {
 
-                //console.log(array[i].)
-                array[i].description = "<Description goes here>"
-
                 // Create item
                 var item = document.createElement('div');
                 item.setAttribute('class', 'item');

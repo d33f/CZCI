@@ -47,6 +47,7 @@ var Canvas;
                 beginDate: json.BeginDate,
                 endDate: json.EndDate,
                 title: json.Title,
+                description: json.RootContentItem.Description,
                 contentItems: []
             };
         }
@@ -103,12 +104,12 @@ var Canvas;
             getJSON(timelineId,'timeline', function (json) {
                 // Create a timeline object
                 var timeline = createTimelineObject(json);
-
                 var parentContentItem = new ContentItem({
                     id: 0,
                     beginDate: timeline.beginDate,
                     endDate: timeline.endDate,
                     title: timeline.title,
+                    description: timeline.Description,
                     hasChildren: true
                 }, undefined);
 
