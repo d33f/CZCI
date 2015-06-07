@@ -18,5 +18,7 @@ Web.config connection string (default is student live server, if you want to use
 
 - https://www.dropbox.com/s/4um8zjevnnrorv9/webconfig.png?dl=0
 
-# BUGS
-At this moment it is not possible to use ChronoZoom in Firefox
+# Live
+At this moment ChronoZoom CI is hosted on http://www.kompili.nl/Chronozoom
+
+A complete overview of our work can be found on: http://www.kompili.nl/czportal/
