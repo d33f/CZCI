@@ -9,14 +9,14 @@ Please make sure that you have downloaded the latest release (at the top of the 
 Now click on the ZIP icon under the title of the job.
 
 Please follow the steps being shown in the Quickstart ChronoZoom.pdf
-- This file can be found here: https://www.dropbox.com/s/hrh6e0tmk564nte/Quickstart%20ChronoZoom.pdf?dl=0
+- This file can be found here: [a link](https://www.kompili.nl/czportal/QuickstartChronoZoom.pdf)
 
 Script to create the database structure
-- https://github.com/d33f/CZCI/blob/master/database.sql
+- [a link](https://github.com/d33f/CZCI/blob/master/database.sql)
 
 Web.config connection string (default is student live server, if you want to use your own SQL server, replace the existing connection string)
 
-- https://www.dropbox.com/s/4um8zjevnnrorv9/webconfig.png?dl=0
+- [a link](https://www.kompili.nl/czportal/webconfig.png)
 
 # Live
 At this moment ChronoZoom CI is hosted on http://www.kompili.nl/Chronozoom
