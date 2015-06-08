@@ -187,7 +187,7 @@
             setContentItems(timeline.contentItems);
 
             // Be sure that there is no full screen active
-            Canvas.ContentItemService.setIsFullScreen(false);
+            Canvas.Timeline.stopFullScreenContentItemMode();
 
             // Set title and range of the window
             Canvas.WindowManager.setTitle(timeline.title);

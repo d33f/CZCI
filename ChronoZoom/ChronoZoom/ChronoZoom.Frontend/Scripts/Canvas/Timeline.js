@@ -6,12 +6,14 @@
         Timeline.update = update;
         Timeline.handleClickOnTimeline = handleClickOnTimeline;
         Timeline.setTimeline = setTimeline;
+        Timeline.stopFullScreenContentItemMode = stopFullScreenContentItemMode;
 
         // Private fields
         var _contentItems = [];
         var _oldContentItems = [];
         var _oldRange = [];
         var _newRange = [];
+        var _fullscreenContentItem;
 
         // Animation Variables
         var _animationTime = 1;
@@ -222,6 +224,11 @@
 
             // Mark content item as fullscreen mode
             contentItem.setIsFullScreen(true);
+            _fullscreenContentItem = ContentItem;
+        }
+
+        function stopFullScreenContentItemMode() {
+            _fullscreenContentItem.setIsFullScreen(false);
         }
 
         // Handle click on content item with children
