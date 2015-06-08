@@ -22,6 +22,10 @@
         function showLoader(isVisible) {
             document.getElementById('loader').style.visibility = isVisible ? 'visible' : 'hidden';
         }
+
+        window.onresize = function(e) {
+            Canvas.resetWindowWidthAndHeight();
+        }
     })(Canvas.WindowManager || (Canvas.WindowManager = {}));
     var WindowManager = Canvas.WindowManager;
 })(Canvas || (Canvas = {}));

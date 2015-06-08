@@ -6,6 +6,7 @@
     Canvas.getCanvasContainer = getCanvasContainer;
     Canvas.getFPS = getFPS;
     Canvas.setTimeline = setTimeline;
+    Canvas.resetWindowWidthAndHeight = resetWindowWidthAndHeight;
     // Private fields
     var _container;
     var _canvasContainer;
@@ -44,6 +45,11 @@
     function setTimeline(timelineId) {
         Canvas.Timeline.setTimeline(timelineId);
         Canvas.PanelManager.showTimelinePanel(false);
+    }
+
+    function resetWindowWidthAndHeight() {
+        _canvasContainer.width = window.innerWidth;
+        _canvasContainer.height = window.innerHeight;
     }
 
     // Get the (canvas) context
