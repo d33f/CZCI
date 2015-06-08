@@ -109,7 +109,7 @@ var Canvas;
                     beginDate: timeline.beginDate,
                     endDate: timeline.endDate,
                     title: timeline.title,
-                    description: timeline.Description,
+                    description: timeline.description,
                     hasChildren: true
                 }, undefined);
 
