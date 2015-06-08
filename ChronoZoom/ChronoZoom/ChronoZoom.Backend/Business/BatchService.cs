@@ -1,4 +1,5 @@
 ﻿using ChronoZoom.Backend.Business.Interfaces;
+using ChronoZoom.Backend.Data.Interfaces;
 using ChronoZoom.Backend.Entities;
 using Newtonsoft.Json.Linq;
 using System;
@@ -14,7 +15,16 @@ namespace ChronoZoom.Backend.Business
 {
     public class BatchService : IBatchService
     {
-        public int ProcessFile(string filename)
+        private readonly IContentItemDao _contentItemDao;
+        private readonly ITimelineDao _timelineDao;
+
+        public BatchService(IContentItemDao contentItemDao, ITimelineDao timelineDao)
+        {
+            _contentItemDao = contentItemDao;
+            _timelineDao = timelineDao;
+        }
+
+        public long ProcessFile(string filename)
         {
             using (FileStream fileStream = File.OpenRead(filename))
             {
@@ -23,24 +33,101 @@ namespace ChronoZoom.Backend.Business
                     string line = streamReader.ReadLine();
                     Timeline timeline = CreateTimeline(line);
 
-                    List<Task> tasks = new List<Task>();
-                    ConcurrentBag<ContentItem> contentItems = new ConcurrentBag<ContentItem>();
-                    while ((line = streamReader.ReadLine()) != null)
-                    {
-                        string s = line;
-                        tasks.Add(Task.Factory.StartNew(() => contentItems.Add(CreateContentItem(s))));
-                    }
+                    ConcurrentDictionary<long, long> idTranslation = new ConcurrentDictionary<long, long>();
+                    idTranslation.GetOrAdd(0, timeline.RootContentItemId);
 
-                    Task.WaitAll(tasks.ToArray());
+                    CreateContentitems(streamReader, line, idTranslation);
 
-                    var x = timeline;
-                    var y = contentItems;
-                    return -1;
+                    return timeline.Id;
                 }
             }
         }
 
-        private Timeline CreateTimeline(string s)
+        private void CreateContentitems(StreamReader streamReader, string line, ConcurrentDictionary<long, long> idTranslation)
+        {
+            List<Task> tasks = new List<Task>();
+            ConcurrentBag<ContentItem> contentItems = new ConcurrentBag<ContentItem>();
+            List<ContentItem> failedContentItems;
+
+            int buffer = 100;
+            while ((line = streamReader.ReadLine()) != null)
+            {
+                string currentLine = line;
+                tasks.Add(Task.Factory.StartNew(() => CreateContentItem(idTranslation, contentItems, currentLine)));
+
+                if (tasks.Count() > buffer)
+                {
+                    Task.WaitAll(tasks.ToArray());
+                    tasks.Clear();
+
+                    failedContentItems = RetryAddingContentItems(idTranslation, contentItems);
+                    contentItems = new ConcurrentBag<ContentItem>();
+                    foreach (ContentItem failedContentItem in failedContentItems)
+                    {
+                        contentItems.Add(failedContentItem);
+                    }
+                }
+            }
+
+            Task.WaitAll(tasks.ToArray());
+
+            failedContentItems = RetryAddingContentItems(idTranslation, contentItems);
+            if (failedContentItems.Count > 0)
+            {
+                throw new Exception(String.Format("Failed to process {0} content items", failedContentItems.Count));
+            }
+        }
+
+        private List<ContentItem> RetryAddingContentItems(ConcurrentDictionary<long, long> idTranslation, ConcurrentBag<ContentItem> contentItems)
+        {
+            List<ContentItem> failedContentItems = new List<ContentItem>();
+            foreach (ContentItem contentItem in contentItems.OrderBy(o => o.Id))
+            {
+                if (!TrySaveContentItem(idTranslation, contentItem))
+                {
+                    failedContentItems.Add(contentItem);
+                }
+            }
+            return failedContentItems;
+        }
+
+        private void CreateContentItem(ConcurrentDictionary<long, long> idTranslation, ConcurrentBag<ContentItem> contentItems, string currentLine)
+        {
+            ContentItem contentItem = ConvertJSONToContentItem(currentLine);
+
+            if (!TrySaveContentItem(idTranslation, contentItem))
+            {
+                contentItems.Add(contentItem);
+            }
+        }
+
+        private object _trySaveContentItemLock = new object();
+        private bool TrySaveContentItem(ConcurrentDictionary<long, long> idTranslation, ContentItem contentItem)
+        {
+            long parentID;
+            if (idTranslation.TryGetValue(contentItem.ParentId, out parentID))
+            {
+                long id = contentItem.Id;
+
+                contentItem.Id = 0;
+                contentItem.ParentId = parentID;
+
+                _contentItemDao.Add(contentItem);
+                idTranslation.TryAdd(id, contentItem.Id);
+
+                return true;
+            }
+
+            return false;
+        }
+
+        private Timeline CreateTimeline(string line)
+        {
+            Timeline timeline = ConvertJSONToTimeline(line);
+            return _timelineDao.Add(timeline);
+        }
+
+        private Timeline ConvertJSONToTimeline(string s)
         {
             JObject json = JObject.Parse(s);
 
@@ -48,11 +135,13 @@ namespace ChronoZoom.Backend.Business
             {
                 BeginDate = (decimal)json["BeginDate"],
                 EndDate = (decimal)json["EndDate"],
-                Title = (string)json["Title"]
+                Title = (string)json["Title"],
+                Description = (string)json["Description"],
+                IsPublic = (bool)json["IsPublic"]
             };
         }
 
-        private ContentItem CreateContentItem(string s)
+        private ContentItem ConvertJSONToContentItem(string s)
         {
             JObject json = JObject.Parse(s);
             return new ContentItem()
@@ -63,9 +152,9 @@ namespace ChronoZoom.Backend.Business
                 BeginDate = (decimal)json["BeginDate"],
                 EndDate = (decimal)json["EndDate"],
                 Title = (string)json["Title"],
-                Description = "__NOT_IMPLEMENTED__",
+                Description = (string)json["Description"],
                 HasChildren = (bool)json["HasChildren"],
-                PictureURLs = json["PictureURL"].ToObject<string[]>(),
+                PictureURLs = json["PictureURLs"].ToObject<string[]>(),
                 SourceURL = (string)json["SourceURL"],
                 SourceRef = (string)json["SourceRef"]
             };

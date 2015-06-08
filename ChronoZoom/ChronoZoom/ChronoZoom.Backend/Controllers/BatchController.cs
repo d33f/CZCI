@@ -41,7 +41,7 @@ namespace ChronoZoom.Backend.Controllers
                 MultipartFormDataStreamProvider streamProvider = new MultipartFormDataStreamProvider(_serverUploadFolder);
                 await Request.Content.ReadAsMultipartAsync(streamProvider);
 
-                int timelineID = _service.ProcessFile(streamProvider.FileData[0].LocalFileName);
+                long timelineID = _service.ProcessFile(streamProvider.FileData[0].LocalFileName);
 
                 return Ok(timelineID);
             }

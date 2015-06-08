@@ -10,13 +10,15 @@ CREATE PROCEDURE spAddContentItem
 	@hasChildren bit,
 	@pictureURLs nvarchar(max),
 	@sourceURL nvarchar(max),
-	@sourceRef bigint,
+	@sourceRef nvarchar(100),
 
 	-- Return the added Id
 	@insertedId int OUTPUT
 AS
+	BEGIN TRANSACTION
+
 	-- Get parent node and last child node
-	DECLARE @parent hierarchyId = (SELECT Node FROM [dbo].[ContentItem] WHERE Id = @parentId)
+	DECLARE @parent hierarchyId = (SELECT Node FROM [dbo].[ContentItem] WITH (TABLOCKX) WHERE Id = @parentId)
 	DECLARE @lastChild hierarchyId = (SELECT TOP 1 Node FROM [dbo].[ContentItem] WHERE Node.GetAncestor(1) = @parent order by Id desc)
 
 	-- Insert the new content item
@@ -25,5 +27,7 @@ AS
 
 	-- Get the Id of the inserted content item
 	SELECT @insertedId = SCOPE_IDENTITY()
+
+	COMMIT TRANSACTION
 RETURN
 GO

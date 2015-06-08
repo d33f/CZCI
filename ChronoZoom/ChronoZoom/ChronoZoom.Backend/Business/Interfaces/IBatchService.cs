@@ -8,6 +8,6 @@ namespace ChronoZoom.Backend.Business.Interfaces
 {
     public interface IBatchService
     {
-        int ProcessFile(string filename);
+        long ProcessFile(string filename);
     }
 }
