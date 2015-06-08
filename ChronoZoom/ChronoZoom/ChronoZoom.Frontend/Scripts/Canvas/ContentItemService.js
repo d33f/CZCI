@@ -236,7 +236,8 @@
                         beginDate: json.beginDate,
                         endDate: json.endDate,
                         title: json.title,
-                        contentItems: contentItems
+                        contentItems: contentItems,
+                        backgroundUrl : json.backgroundUrl
                     };
                 }
             }
