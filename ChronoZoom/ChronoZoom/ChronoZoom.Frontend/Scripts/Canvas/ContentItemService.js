@@ -206,7 +206,8 @@
                     endDate: timeline.endDate,
                     title: timeline.title,
                     contentItems: items,
-                    parentContentItem: timeline.contentItems[0].getParentContentItem().getData()
+                    parentContentItem: timeline.contentItems[0].getParentContentItem().getData(),
+                    backgroundUrl : timeline.backgroundUrl
                 }));
             }
         }
