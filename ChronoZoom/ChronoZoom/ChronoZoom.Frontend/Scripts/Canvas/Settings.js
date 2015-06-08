@@ -9,6 +9,9 @@
         Settings.getYearmarkerFont =                getYearmarkerFont;
         Settings.getYearmarkerFontColor =           getYearmarkerFontColor;
 
+        // General
+        Settings.getDefaultTimelineBackground = getDefaultTimelineBackground;
+
         // Font getters
         Settings.getTimescaleTickLabelFont = getTimescaleTickLabelFont;
 
@@ -26,7 +29,7 @@
         var yearmarkerFontColor =           "white";
 
         // Font fields
-        var timescaleTickLabelFont =        "18px Tahoma";
+        var timescaleTickLabelFont =        "14px Tahoma";
         var yearmarkerFont =                "Consolas";
 
         // Font size
@@ -73,6 +76,11 @@
         //Size getters
         function getTimescaleHeight() {
             return timescaleHeight;
+        }
+
+        //Default getters
+        function getDefaultTimelineBackground() {
+            return "../Resources/Space.jpg";
         }
     })(Canvas.Settings || (Canvas.Settings = {}));
     var Settings = Canvas.Settings;
