@@ -80,7 +80,7 @@
 
         //Default getters
         function getDefaultTimelineBackground() {
-            return "../Resources/Space.jpg";
+            return "./Resources/Space.jpg";
         }
     })(Canvas.Settings || (Canvas.Settings = {}));
     var Settings = Canvas.Settings;
