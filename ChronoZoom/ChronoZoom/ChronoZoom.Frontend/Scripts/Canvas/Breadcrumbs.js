@@ -92,11 +92,15 @@
             // Add crumbs
             var length = _stack.length;
             for (var i = 0; i < length; i++) {
-                var breadcrumb = document.createElement("a");
+                var breadcrumb = i === length-1 ? document.createElement("div") : document.createElement("a");
+                breadcrumb.className = i === length-1 ? "active section" : "section";
                 breadcrumb.appendChild(document.createTextNode(_stack[i].getTitle()));
                 breadcrumb.title = _stack[i].getTitle();
                 breadcrumb.href = "javascript:Canvas.Breadcrumbs.redirect(" + i + ")";
-                _container.appendChild(document.createTextNode(" » "));
+                
+                var divider = document.createElement("i");
+                divider.className = "right chevron icon divider";
+                _container.appendChild(divider);
                 _container.appendChild(breadcrumb);
             }
         }

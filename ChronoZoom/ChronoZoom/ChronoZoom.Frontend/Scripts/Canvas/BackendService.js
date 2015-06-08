@@ -46,7 +46,8 @@ var Canvas;
                 beginDate: json.BeginDate,
                 endDate: json.EndDate,
                 title: json.Title,
-                contentItems: []
+                contentItems: [],
+                backgroundUrl :json.BackgroundUrl
             };
         }
 
