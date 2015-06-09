@@ -42,7 +42,7 @@ namespace ChronoZoom.Backend.Controllers
                 var timelines = _service.GetAllPublicTimelinesWithoutContentItems();
                 return Ok(timelines);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return BadRequest("An error occured");
             }

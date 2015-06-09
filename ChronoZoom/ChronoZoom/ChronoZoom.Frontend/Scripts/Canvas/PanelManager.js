@@ -57,7 +57,7 @@
             var endDate = document.getElementById("endDateInput").value;
             var description = document.getElementById("descriptionInput").value;
 
-            Canvas.BackendService.createPersonalTimeLine(title, startDate, endDate);
+            Canvas.BackendService.createPersonalTimeLine(title, startDate, endDate, description);
 
             // write output to panel
             var output = document.getElementById("importOutput");
@@ -125,8 +125,11 @@
                 var caption = document.createTextNode(array[i].title);
                 newLink.appendChild(caption);
 
+                var description = document.createTextNode(array[i].description);
+
                 // Add item to divContentElement
                 divContentElement.appendChild(newLink);
+                divContentElement.appendChild(description);
                 item.appendChild(divContentElement);
 
                 // Add it to the top level div element

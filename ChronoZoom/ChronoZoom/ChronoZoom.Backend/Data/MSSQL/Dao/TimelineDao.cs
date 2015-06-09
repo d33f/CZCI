@@ -28,6 +28,7 @@ namespace ChronoZoom.Backend.Data.MSSQL.Dao
             {
                 string query = "SELECT [Timeline].[Id],BackgroundUrl,[RootContentItemId],[IsPublic],[BeginDate],[EndDate],[Title],[Description],[Timeline].[Timestamp] FROM [dbo].[Timeline] JOIN [dbo].[ContentItem] ON [dbo].[Timeline].[RootContentItemId] = [dbo].[ContentItem].[Id] where IsPublic=1";
                 return context.Select<MSSQL.Entities.TimelineJoinContentItem, Timeline>(query);
+
             }
         }
 
