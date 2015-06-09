@@ -228,7 +228,7 @@
         }
 
         function stopFullScreenContentItemMode() {
-            _fullscreenContentItem.setIsFullScreen(false);
+            if(_fullscreenContentItem !== undefined) _fullscreenContentItem.setIsFullScreen(false);
         }
 
         // Handle click on content item with children
