@@ -5,9 +5,8 @@
         PanelManager.showTimelinePanel = showTimelinePanel;
         PanelManager.showItemPanel = showItemPanel;
         PanelManager.hideBothPanels = hideBothPanels;
-        PanelManager.handleImportPanelInput = handleImportPanelInput;
+        PanelManager.handleItemPanelInput = handleItemPanelInput;
         PanelManager.handleTimelineBtnClick = handleTimelineBtnClick;
-        PanelManager.handleImportBtnClick = handleImportBtnClick;
         PanelManager.addTimelines = addTimelines;
         PanelManager.imageUrlFieldShow = imageUrlFieldShow;
 
@@ -28,17 +27,6 @@
             showItemPanel(false);
         }
 
-        function handleImportBtnClick() {
-            var inputPanel = document.getElementById('itemPanel');
-            if (inputPanel.className === 'itemPanelHidden') {
-                showItemPanel(true);
-            }
-            else{
-                showItemPanel(false);
-            }
-
-        }
-
         function handleTimelineBtnClick() {
             var inputPanel = document.getElementById('timelinePanel');
             if (inputPanel.className === 'timelinePanelShow') {
@@ -57,7 +45,7 @@
         }
 
         //Handle the input of the timeline import panel
-        function handleImportPanelInput() {
+        function handleItemPanelInput() {
             var title = document.getElementById("titleInput").value;
             var startDate = document.getElementById("startDateInput").value;
             var endDate = document.getElementById("endDateInput").value;
