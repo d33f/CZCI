@@ -32,7 +32,6 @@
             if (inputPanel.className === 'timelinePanelShow') {
                 showTimelinePanel(false);
             }
-
             else {
                 showTimelinePanel(true);
                 showItemPanel(false);
@@ -73,7 +72,6 @@
 
         function addTimelines() {
             Canvas.BackendService.getAllTimelines(function (timelines) {
-
                 // Clear existing content
                 var node = document.getElementById('timelineList');
                 while (node.hasChildNodes()) {
