@@ -9,6 +9,7 @@
         PanelManager.handleTimelineBtnClick = handleTimelineBtnClick;
         PanelManager.handleImportBtnClick = handleImportBtnClick;
         PanelManager.addTimelines = addTimelines;
+        PanelManager.imageUrlFieldShow = imageUrlFieldShow;
 
         //Show the timeline panel on the left side of the screen
         function showTimelinePanel(showPanel) {
@@ -49,6 +50,11 @@
             }
         }
 
+        function imageUrlFieldShow(showField) {
+            console.log(showField);
+            var imageUrlField = document.getElementById('imageUrl');
+            imageUrlField.disabled = showField;
+        }
 
         //Handle the input of the timeline import panel
         function handleImportPanelInput() {

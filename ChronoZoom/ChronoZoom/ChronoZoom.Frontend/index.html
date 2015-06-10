@@ -33,12 +33,12 @@
                 <div class="field">
                     <label>Item</label>
                     <div class="circle"></div>
-                    <input type="radio" name="contentItem" value="contentItem">
+                    <input type="radio" name="select" value="contentItem" onchange="Canvas.PanelManager.imageUrlFieldShow(false)" required>
                 </div>
                 <div class="field">
                     <label>Timeline</label>
                     <div class="rectangle"></div>
-                    <input type="radio" name="contentItem" value="contentItem">
+                    <input type="radio" name="select" value="timeline" onchange="Canvas.PanelManager.imageUrlFieldShow(true)" required>
                 </div>
             </div>
 
@@ -55,6 +55,10 @@
                     <label>End date</label>
                     <input id="endDateInput" placeholder="End date" type="number" required />
                 </div>
+            </div>
+            <div class="field">
+                <label>Image url</label>
+                <input id="imageUrl" placeholder="None" type="url" />
             </div>
             <div class="field">
                 <label>Description</label>
