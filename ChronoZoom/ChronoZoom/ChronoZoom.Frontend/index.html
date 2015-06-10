@@ -18,15 +18,16 @@
         <h1>Timelines</h1>
         <div id="timelineList"></div>
         <div style="padding-top:15px; float: right">
-            <div class="compact ui button green small right" onclick="Canvas.PanelManager.showImportPanel(true); Canvas.PanelManager.showTimelinePanel(false)">
+            <div class="compact ui button green small right" onclick="Canvas.PanelManager.showItemPanel(true); Canvas.PanelManager.showTimelinePanel(false)">
                 <i class="icon add"></i>
                 Add Timeline
             </div>
+            <div class="compact negative ui button" onclick="Canvas.PanelManager.showTimelinePanel(false)">Close</div>
         </div>
     </div>
 
-    <div id="importPanel" class="importPanelHidden">
-        <h1>Add new item</h1>
+    <div id="itemPanel" class="itemPanelHidden">
+        <h1>Add item</h1>
         <div class="ui error inverted form segment">
             <div class="two fields">
                 <div class="field">
@@ -59,13 +60,16 @@
                 <label>Description</label>
                 <textarea id="descriptionInput" placeholder="Timeline description"></textarea>
             </div>
-            <input type="button" class="ui submit button green" id="btnsubmit" value="Create timeline!" onclick="Canvas.PanelManager.handleImportPanelInput()" />
-        </div>
+            <div style="padding-top:15px; float: right">
+                <div class="compact ui button green small right" onclick="Canvas.PanelManager.handleImportPanelInput()">
+                    <i class="icon add"></i>
+                    Add item
+                </div>
+                <div class="compact negative ui button" onclick="Canvas.PanelManager.showItemPanel(false)">Close</div>
+            </div>
+            </div>
 
         <div id="importOutput">
-        </div>
-
-        <div id="testTimelines">
         </div>
     </div>
 

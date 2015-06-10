@@ -139,9 +139,8 @@ div#timelinePanel {
 }
 
 /* Import PANEL */
-div#importPanel {
-    transition: right .6s ease;
-    font-size: 20px;
+div#itemPanel {
+    transition: left .6s ease;
     width: 400px;
     background-color: #1B1C1D;
     color: #e0e0e0;
@@ -150,15 +149,16 @@ div#importPanel {
     bottom: 0;
     height: 100%;
     z-index: 1500;
+    padding: 10px;
 }
 
-.importPanelHidden {
+.itemPanelHidden {
     right: -420px;
     display: inline;
 }
 
-.importPanelShow {
-    right: -0px;
+.itemPanelShow {
+    left: -0px;
 }
 
 #importPanel > h1 {

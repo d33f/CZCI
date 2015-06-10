@@ -3,7 +3,7 @@
     (function (PanelManager) {
         // Public methods
         PanelManager.showTimelinePanel = showTimelinePanel;
-        PanelManager.showImportPanel = showImportPanel;
+        PanelManager.showItemPanel = showItemPanel;
         PanelManager.hideBothPanels = hideBothPanels;
         PanelManager.handleImportPanelInput = handleImportPanelInput;
         PanelManager.handleTimelineBtnClick = handleTimelineBtnClick;
@@ -17,23 +17,23 @@
         }
 
         //Show the import panel on the right side of the screen
-        function showImportPanel(showPanel) {
-            var inputPanel = document.getElementById('importPanel');
-            inputPanel.className = showPanel ? 'importPanelShow' : 'importPanelHidden';
+        function showItemPanel(showPanel) {
+            var inputPanel = document.getElementById('itemPanel');
+            inputPanel.className = showPanel ? 'itemPanelShow' : 'itemPanelHidden';
         }
 
         function hideBothPanels() {
             showTimelinePanel(false);
-            showImportPanel(false);
+            showItemPanel(false);
         }
 
         function handleImportBtnClick() {
-            var inputPanel = document.getElementById('importPanel');
-            if (inputPanel.className === 'importPanelHidden') {
-                showImportPanel(true);
+            var inputPanel = document.getElementById('itemPanel');
+            if (inputPanel.className === 'itemPanelHidden') {
+                showItemPanel(true);
             }
             else{
-                showImportPanel(false);
+                showItemPanel(false);
             }
 
         }
