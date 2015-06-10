@@ -37,6 +37,8 @@
                 return String(time * -1) + " BC";
             }
 
+            time = Math.round(time);
+
             // Check if not rounded time and if period span is smaller then the amount of ticks
             if (time !== Math.round(time) && (_range.end - _range.begin) < getTicks()) {
                 var date = convertTimeToDate(time);
