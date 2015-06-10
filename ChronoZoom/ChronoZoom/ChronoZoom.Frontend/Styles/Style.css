@@ -153,7 +153,7 @@ div#itemPanel {
 }
 
 .itemPanelHidden {
-    right: -420px;
+    left: -420px;
     display: inline;
 }
 

@@ -35,6 +35,7 @@
 
             else {
                 showTimelinePanel(true);
+                showItemPanel(false);
             }
         }
 
