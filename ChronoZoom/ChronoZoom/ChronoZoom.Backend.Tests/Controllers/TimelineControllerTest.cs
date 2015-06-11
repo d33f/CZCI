@@ -73,21 +73,19 @@ namespace ChronoZoom.Backend.Tests.Controllers
         {
             // Arrange
             Mock<ITimelineService> mock = new Mock<ITimelineService>(MockBehavior.Strict);
-            mock.Setup(setup => setup.GetAllPublicTimelinesWithoutContentItems()).Returns(new List<Entities.Timeline>()
+            mock.Setup(setup => setup.GetAllTimelineSummariesForPublicTimelines()).Returns(new List<Entities.TimelineSummary>()
             {
-                new Timeline()
+                new TimelineSummary()
                 {
                     Id = 1,
-                    BeginDate = 1000,
-                    EndDate = 1500,
-                    Title = "Test 1"
+                    Title = "Test 1",
+                    Description = "Test"
                 },
-                new Timeline()
+                new TimelineSummary()
                 {
                     Id = 2,
-                    BeginDate = 1555,
-                    EndDate = 1666,
-                    Title = "Test 2"
+                    Title = "Test 2",
+                    Description = "Test"
                 }
             });
             TimelineController target = new TimelineController(mock.Object);
@@ -97,9 +95,9 @@ namespace ChronoZoom.Backend.Tests.Controllers
 
             // Assert
             Assert.IsNotNull(result);
-            Assert.IsTrue(result is OkNegotiatedContentResult<IEnumerable<Timeline>>);
-            Assert.AreEqual(2, ((OkNegotiatedContentResult<IEnumerable<Timeline>>) result).Content.Count());
-            mock.Verify(verify => verify.GetAllPublicTimelinesWithoutContentItems(), Times.Once);
+            Assert.IsTrue(result is OkNegotiatedContentResult<IEnumerable<TimelineSummary>>);
+            Assert.AreEqual(2, ((OkNegotiatedContentResult<IEnumerable<TimelineSummary>>)result).Content.Count());
+            mock.Verify(verify => verify.GetAllTimelineSummariesForPublicTimelines(), Times.Once);
         }
 
         [TestMethod]
