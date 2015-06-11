@@ -51,11 +51,19 @@ namespace ChronoZoom.Backend.Controllers
         {
             if (ModelState.IsValid)
             {
-                bool registered = _service.Register(register.Email, register.Password, register.Screenname);
-                if (registered)
+                try
                 {
-                    return Ok();
+                    bool registered = _service.Register(register.Email, register.Password, register.Screenname);
+                    if (registered)
+                    {
+                        return Ok();
+                    }
                 }
+                catch (AlreadyExistsException)
+                {
+                    return Ok("Not allowed, email or screenname already exists");
+                }
+                
             }
             else
             {

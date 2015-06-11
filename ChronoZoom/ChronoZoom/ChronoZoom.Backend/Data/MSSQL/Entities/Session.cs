@@ -9,6 +9,7 @@ namespace ChronoZoom.Backend.Data.MSSQL.Entities
     {
         public Guid Token { get; set; }
         public DateTime Timestamp { get; set; }
+        public long AccountId { get; set; }
 
         public string TokenString {
             get { return Token.ToString("N"); }

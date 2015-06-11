@@ -26,12 +26,12 @@ namespace ChronoZoom.Backend.Data.MSSQL.Dao
             }
         }
 
-        public bool CreateSession(string token, DateTime timestamp)
+        public bool CreateSession(string token, DateTime timestamp, long accountId)
         {
             using (var context = new DatabaseContext())
             {
-                const string query = "insert into session(token,timestamp) values(@token,@timestamp); select @@rowcount";
-                return context.SingleOrDefault<int>(query, new {token, timestamp}) > 0;
+                const string query = "insert into session(token,timestamp,accountid) values(@token,@timestamp,@accountid); select @@rowcount";
+                return context.SingleOrDefault<int>(query, new {token, timestamp,accountId}) > 0;
             }
         }
 
@@ -54,12 +54,40 @@ namespace ChronoZoom.Backend.Data.MSSQL.Dao
             }
         }
 
+        public bool RemoveSession(long accountId)
+        {
+            using (var context = new DatabaseContext())
+            {
+                const string query = "delete from session where accountId = @id; select @@rowcount";
+                var rowcount = context.SingleOrDefault<int>(query, new { id = accountId });
+                return rowcount > 0;
+            }
+        }
+
         public bool UpdateSessionTime(string token, DateTime newTime)
         {
             using (var context = new DatabaseContext())
             {
                 const string query = "Update session set timestamp =@timestamp where token = @token; select @@rowcount";
                 return context.SingleOrDefault<int>(query, new {token, newTime}) > 0;
+            }
+        }
+
+        public bool EmailExists(string email)
+        {
+            using (var context = new DatabaseContext())
+            {
+                const string query = "Select count(*) as found from account where email=@email";
+                return context.SingleOrDefault<int>(query, new {email}) > 0;
+            }
+        }
+
+        public bool ScreennameExists(string screenname)
+        {
+            using (var context = new DatabaseContext())
+            {
+                const string query = "Select count(*) as found from account where screenname=@screenname";
+                return context.SingleOrDefault<int>(query, new { screenname }) > 0;
             }
         }
     }

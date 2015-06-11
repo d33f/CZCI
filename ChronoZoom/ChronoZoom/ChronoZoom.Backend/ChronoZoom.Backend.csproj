@@ -140,6 +140,7 @@
     <Compile Include="Entities\ContentItem.cs" />
     <Compile Include="Entities\Account.cs" />
     <Compile Include="Entities\Timeline.cs" />
+    <Compile Include="Exceptions\AlreadyExistsException.cs" />
     <Compile Include="Exceptions\LoginFailedException.cs" />
     <Compile Include="Exceptions\TimelineNotFoundException.cs" />
     <Compile Include="Filters\ValidateToken.cs" />

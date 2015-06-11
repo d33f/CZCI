@@ -27,21 +27,23 @@ namespace ChronoZoom.Backend.Business
             //TODO : CHECK IF MEMBER EXISTS AND NOT IS NULL
             if (Verify(member.Salt, member.Hash, password))
             {
-                guid = CreateSession();
+                _accountDao.RemoveSession(member.Id); //Remove all old sessions from this user
+                guid = CreateSession(member.Id);
             }
 
             return guid;
         }
 
-        private Guid CreateSession()
+        private Guid CreateSession(long accountId)
         {
             var guid = Guid.NewGuid();
-            var session = _accountDao.CreateSession(guid.ToString("N"), DateTime.UtcNow);
+            var session = _accountDao.CreateSession(guid.ToString("N"), DateTime.UtcNow,accountId);
             return guid;
         }
 
         public bool Register(string email, string password, string screenname)
         {
+            if (_accountDao.EmailExists(email) || _accountDao.ScreennameExists(screenname)) throw new AlreadyExistsException();
             var salt = GenerateSalt(40);
             var hash = GenerateHash(salt, password);
             return _accountDao.Register(email, screenname, salt, hash);
