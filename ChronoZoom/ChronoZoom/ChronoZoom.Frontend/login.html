@@ -1,0 +1,84 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script>
+        var _baseUrl = "http://localhost:40001/api/";
+        function login() {
+            var email = document.getElementById("email").value;
+            var password = document.getElementById("password").value;
+            email = "riichardje@live.no";
+            password = "asd";
+            var dto = { "Email": email, "Password": password };
+
+            $.ajax({
+                url: "http://localhost:40001/api/account/login",
+                type: 'post',
+                dataTtpye: 'application/json; charset=utf-8',
+                success: function(data) {
+                    document.cookie = "token=" + data;
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data: JSON.stringify(dto)
+            });
+
+            //var request = new XMLHttpRequest();
+            //request.open("POST", _baseUrl + "account/", true);
+            //request.setRequestHeader("Content-type", "application/json");
+            //request.onreadystatechange = function () {
+            //    if (request.status === 200) {
+            //        document.cookie = "token=" + request.responseText;
+            //    }
+            //}
+            //request.send(JSON.stringify(dto));
+        };
+
+        function register() {
+            var email = document.getElementById("email").value;
+            var password = document.getElementById("password").value;
+            var screenname = "";
+            email = "riiichardje@live.no";
+            password = "asd";
+            screenname = "RichardCZ";
+            var dto = { "Email": email, "Password": password , "Screenname" : screenname};
+
+            $.ajax({
+                url: "http://localhost:40001/api/account/register",
+                type: 'post',
+                dataTtpye: 'application/json; charset=utf-8',
+                success: function (data) {
+
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data: JSON.stringify(dto)
+            });
+        };
+
+        function logout() {
+            $.ajax({
+                url: "http://localhost:40001/api/account/login",
+                type: 'post',
+                dataTtpye: 'application/json; charset=utf-8',
+                success: function (data) {
+
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data:JSON.stringify(getCookie("token"))
+            });
+        }
+    </script>
+</head>
+<body>
+    <input id="email" type="text" placeholder="email" />
+    <input id="password" type="password" placeholder="password" />
+<input type="submit" onclick="login()" value="Login"/>
+    <input type="submit" onclick="register()" value="Register" />
+</body>
+</html>

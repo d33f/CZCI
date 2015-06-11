@@ -6,6 +6,7 @@ using System.Web;
 using ChronoZoom.Backend.Business.Interfaces;
 using ChronoZoom.Backend.Data.Interfaces;
 using ChronoZoom.Backend.Data.MSSQL.Entities;
+using ChronoZoom.Backend.Exceptions;
 
 namespace ChronoZoom.Backend.Business
 {
@@ -22,6 +23,8 @@ namespace ChronoZoom.Backend.Business
         {
             Guid guid = Guid.Empty;
             var member = _accountDao.GetMember(email);
+            if (member == null) throw new LoginFailedException();
+            //TODO : CHECK IF MEMBER EXISTS AND NOT IS NULL
             if (Verify(member.Salt, member.Hash, password))
             {
                 guid = CreateSession();
@@ -70,7 +73,8 @@ namespace ChronoZoom.Backend.Business
 
         private bool Verify(string userSalt, string userHash, string loginPassword)
         {
-            return GenerateHash(userSalt, loginPassword) == userHash;
+            var hash = GenerateHash(userSalt, loginPassword);
+            return hash == userHash;
         }
 
         private string GenerateSalt(int size)

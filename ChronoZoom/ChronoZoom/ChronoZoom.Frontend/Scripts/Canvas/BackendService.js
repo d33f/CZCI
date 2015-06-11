@@ -6,10 +6,59 @@ var Canvas;
         BackendService.getContentItems = getContentItems;
         BackendService.createPersonalTimeLine = createPersonalTimeLine;
         BackendService.getAllTimelines = getAllTimelines;
+        BackendService.login = login;
+        BackendService.register = register;
+        BackendService.logout = logout;
 
         // Private fields
         //var _baseUrl = "http://www.kompili.nl/chronozoomApi/api/";
         var _baseUrl = "http://localhost:40001/api/";
+
+        function login() {
+            var username = document.getElementById("username").innerText;
+            var password = Document.getElementById("password").innerText;
+
+            var dto = { Username: username, Password: password };
+            var request = new XMLHttpRequest();
+            request.open("POST", _baseUrl + "account/login", false);
+            request.setRequestHeader("Content-type", "application/json");
+            request.onload = function() {
+                if (request.status === 200) {
+                    document.cookie = "token=" + request.responseText;
+                }
+            }
+            request.send(JSON.stringify(dto));
+        };
+
+        function register(email, password, screenname) {
+            var dto = { Email: email, Password: password, Screenname: screenname };
+            var request = new XMLHttpRequest();
+            request.open("POST", _baseUrl + "account/register", false);
+            request.setRequestHeader("Content-type", "application/json");
+            request.onload = function () {
+                if (request.status === 200) {
+                    //TODO: notify user
+                }
+            }
+            request.send(JSON.stringify(dto));
+        };
+
+        function logout() {
+            var request = new XMLHttpRequest();
+            request.open("POST", _baseUrl + "account/register", false);
+            request.setRequestHeader("Content-type", "application/json");
+            request.onload = function () {
+                if (request.status === 200) {
+                    //TODO: notify user
+                }
+            }
+            request.send(JSON.stringify(getCookie("token")));
+        }
+
+        function getCookie(name) {
+            match = document.cookie.match(new RegExp(name + '=([^;]+)'));
+            if (match) return match[1];
+        }
 
         // Get json data from path, execute callback resolve when succesfull and reject if failed. 
         function getJSON(id, path, resolve, reject) {

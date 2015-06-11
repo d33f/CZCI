@@ -8,7 +8,7 @@ namespace ChronoZoom.Backend.Data.MSSQL.Dao
     public class AccountDao : IAccountDao
     {
 
-        public bool Register(string email, string screenname,string hash, string salt)
+        public bool Register(string email, string screenname,string salt, string hash)
         {
             using(var context = new DatabaseContext())
             {

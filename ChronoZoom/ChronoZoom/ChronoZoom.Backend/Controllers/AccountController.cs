@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using System.Web.Http.Results;
 using ChronoZoom.Backend.Business.Interfaces;
 using ChronoZoom.Backend.DTO;
@@ -12,6 +8,7 @@ using ChronoZoom.Backend.Exceptions;
 
 namespace ChronoZoom.Backend.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class AccountController : ApiController
     {
         private readonly IAccountService _service;
@@ -22,11 +19,12 @@ namespace ChronoZoom.Backend.Controllers
         }
 
         [HttpPost]
-        public IHttpActionResult Login([FromBody]LoginDto login)
+        [ActionName("login")]
+        public IHttpActionResult Login(LoginDto login)
         {
             try
             {
-                Guid guid = _service.Login(login.Username, login.Password);
+                Guid guid = _service.Login(login.Email, login.Password);
                 return Ok(guid);
             }
             catch (LoginFailedException ex)
@@ -36,6 +34,7 @@ namespace ChronoZoom.Backend.Controllers
         }
 
         [HttpPost]
+        [ActionName("logout")]
         public IHttpActionResult Logout([FromBody] string token)
         {
             bool loggedout = _service.Logout(token);
@@ -47,7 +46,8 @@ namespace ChronoZoom.Backend.Controllers
         }
 
         [HttpPost]
-        public IHttpActionResult Register([FromBody] RegisterDto register)
+        [ActionName("register")]
+        public IHttpActionResult Register(RegisterDto register)
         {
             if (ModelState.IsValid)
             {
@@ -59,7 +59,7 @@ namespace ChronoZoom.Backend.Controllers
             }
             else
             {
-                return new InvalidModelStateResult(ModelState,this);
+                return new InvalidModelStateResult(ModelState, this);
             }
             return BadRequest();
         }
