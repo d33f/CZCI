@@ -17,11 +17,32 @@
         <h1>Timelines</h1>
         <div id="timelineList"></div>
         <div style="padding-top:15px; float: right">
-            <div class="compact ui button green small right" onclick="Canvas.PanelManager.showItemPanel(true); Canvas.PanelManager.showTimelinePanel(false)">
+            <div class="compact ui button green small right" onclick="Canvas.PanelManager.showImportPanel(true); Canvas.PanelManager.showTimelinePanel(false)">
                 <i class="icon add"></i>
-                Add item
+                Add timeline
             </div>
             <div class="compact negative ui button" onclick="Canvas.PanelManager.showTimelinePanel(false)">Close</div>
+        </div>
+    </div>
+
+    <div id="importPanel" class="importPanelHidden">
+        <div class="field">
+            <label>Title</label>
+            <input id="titleInput" placeholder="Timeline title" type="text" required />
+        </div>
+        <div class="two fields">
+            <div class="field">
+                <label>Begin date</label>
+                <input id="startDateInput" placeholder="Begin date" type="number" required />
+            </div>
+            <div class="field">
+                <label>End date</label>
+                <input id="endDateInput" placeholder="End date" type="number" required />
+            </div>
+        </div>
+        <div class="field">
+            <label>Image url</label>
+            <input id="imageUrl" placeholder="None" type="url" />
         </div>
     </div>
 

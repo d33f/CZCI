@@ -10,6 +10,7 @@
         PanelManager.addTimelines = addTimelines;
         PanelManager.imageUrlFieldShow = imageUrlFieldShow;
         PanelManager.updateAddItemPanel = updateAddItemPanel;
+        PanelManager.showImportPanel = showImportPanel;
 
         var rootItem;
         var currentItem;
@@ -19,6 +20,11 @@
         function showTimelinePanel(showPanel) {
             var inputPanel = document.getElementById('timelinePanel');
             inputPanel.className = showPanel ? 'timelinePanelShow' : 'timelinePanelHidden';
+        }
+
+        function showImportPanel(showPanel) {
+            var panel = document.getElementById('importPanel');
+            panel.className = importPanel ? 'importPanelShow' : 'importPanelHidden';
         }
 
         function getCurrentItems() {
