@@ -39,6 +39,11 @@ namespace Dapper
             return MapEntity<TDataEntity, TEntity>(dataEntityProperties, entityProperties, result);
         }
 
+        public T SingleOrDefault<T>(string query, object param = null) where T : new()
+        {
+            return _connection.Query<T>(query, param).SingleOrDefault();
+        }
+
         public IEnumerable<TEntity> Select<TDataEntity, TEntity>(string query, object param = null) where TEntity : new()
         {
             IEnumerable<TDataEntity> results = _connection.Query<TDataEntity>(query, param);

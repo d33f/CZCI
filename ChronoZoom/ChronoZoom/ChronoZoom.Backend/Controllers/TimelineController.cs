@@ -4,6 +4,7 @@ using ChronoZoom.Backend.Business.Interfaces;
 using ChronoZoom.Backend.Entities;
 using ChronoZoom.Backend.Exceptions;
 using System.Web.Http.Cors;
+using ChronoZoom.Backend.Filters;
 
 namespace ChronoZoom.Backend.Controllers
 {
@@ -18,6 +19,7 @@ namespace ChronoZoom.Backend.Controllers
             _service = service;
         }
 
+        [ValidateToken]
         public IHttpActionResult Get(int id)
         {
             try

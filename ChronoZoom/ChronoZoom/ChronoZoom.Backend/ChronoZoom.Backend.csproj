@@ -112,25 +112,37 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\UnityWebApiActivator.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Business\AccountService.cs" />
     <Compile Include="Business\BatchService.cs" />
     <Compile Include="Business\ContentItemService.cs" />
+    <Compile Include="Business\Interfaces\IAccountService.cs" />
     <Compile Include="Business\Interfaces\IBatchService.cs" />
     <Compile Include="Business\Interfaces\IContentItemService.cs" />
     <Compile Include="Business\Interfaces\ITimelineService.cs" />
     <Compile Include="Business\TimelineService.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BatchController.cs" />
     <Compile Include="Controllers\ContentItemController.cs" />
     <Compile Include="Controllers\TimelineController.cs" />
+    <Compile Include="Data\Interfaces\IAccountDao.cs" />
     <Compile Include="Data\Interfaces\IContentItemDao.cs" />
     <Compile Include="Data\Interfaces\ITimelineDao.cs" />
+    <Compile Include="Data\MSSQL\Dao\AccountDao.cs" />
     <Compile Include="Data\MSSQL\Dao\ContentItemDao.cs" />
     <Compile Include="Data\MSSQL\Dao\TimelineDao.cs" />
     <Compile Include="Data\MSSQL\Entities\ContentItem.cs" />
+    <Compile Include="Data\MSSQL\Entities\Account.cs" />
+    <Compile Include="Data\MSSQL\Entities\Session.cs" />
     <Compile Include="Data\MSSQL\Entities\Timeline.cs" />
     <Compile Include="Data\MSSQL\Entities\TimelineJoinContentItem.cs" />
+    <Compile Include="DTO\LoginDto.cs" />
+    <Compile Include="DTO\RegisterDto.cs" />
     <Compile Include="Entities\ContentItem.cs" />
+    <Compile Include="Entities\Account.cs" />
     <Compile Include="Entities\Timeline.cs" />
+    <Compile Include="Exceptions\LoginFailedException.cs" />
     <Compile Include="Exceptions\TimelineNotFoundException.cs" />
+    <Compile Include="Filters\ValidateToken.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

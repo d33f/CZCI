@@ -46,6 +46,8 @@ namespace ChronoZoom.Backend
             container.RegisterType<ITimelineService, TimelineService>();
             container.RegisterType<IContentItemService, ContentItemService>();
             container.RegisterType<IBatchService, BatchService>();
+            container.RegisterType<IAccountService, AccountService>();
+            container.RegisterType<IAccountDao, AccountDao>();
         }
     }
 }
