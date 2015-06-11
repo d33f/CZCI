@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace ChronoZoom.Backend.Controllers
 {
-    [EnableCors(origins: "http://localhost:20000", headers: "*", methods: "*")]
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class BatchController : ApiController
     {
         private readonly string _serverUploadFolder = Path.GetTempPath();
