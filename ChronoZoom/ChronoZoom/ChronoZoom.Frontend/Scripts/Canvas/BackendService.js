@@ -8,23 +8,23 @@ var Canvas;
         BackendService.getAllTimelines = getAllTimelines;
 
         // Private fields
-        //var _baseUrl = "https://www.kompili.nl/chronozoomApi/api/";
+        //var _baseUrl = "http://www.kompili.nl/chronozoomApi/api/";
         var _baseUrl = "http://localhost:40001/api/";
 
         // Get json data from path, execute callback resolve when succesfull and reject if failed. 
         function getJSON(id, path, resolve, reject) {
             // Create new instance of XMLHttpRequest and open requested path (async)
             var xmlHttpRequest = new XMLHttpRequest();
-            xmlHttpRequest.open("GET", _baseUrl + path +'/'+ id, true);
+            xmlHttpRequest.open("GET", _baseUrl + path + '/' + id, true);
             xmlHttpRequest.setRequestHeader("Content-Type", "application/json");
 
             // Ready event
-            xmlHttpRequest.onload = function() {
+            xmlHttpRequest.onload = function () {
                 // Check http status code and resolve the promise with the response text when valid
                 if (xmlHttpRequest.status === 200) {
                     resolve(JSON.parse(xmlHttpRequest.response));
                 }
-                // Otherwise reject with the status text
+                    // Otherwise reject with the status text
                 else {
                     reject(Error(xmlHttpRequest.statusText));
                 }
@@ -46,32 +46,9 @@ var Canvas;
                 beginDate: json.BeginDate,
                 endDate: json.EndDate,
                 title: json.Title,
-                contentItems: []
+                contentItems: [],
+                backgroundURL: json.BackgroundURL
             };
-        }
-
-        function createPersonalTimeLine(title, beginDate, endDate) {
-            var xmlHttpRequest = new XMLHttpRequest();
-            var url = _baseUrl + "timeline";
-            var object = createContentItemFromFormFields(title, beginDate, endDate);
-            xmlHttpRequest.open("POST", url, false);
-
-            //Send the proper header information along with the request
-            xmlHttpRequest.setRequestHeader("Content-type", "application/json");
-            xmlHttpRequest.onreadystatechange = function () {//Call a function when the state changes.
-                if (xmlHttpRequest.readyState == 4 && xmlHttpRequest.status == 200) {
-                    return true;
-                }
-            }
-            xmlHttpRequest.send(JSON.stringify(object));
-        }
-
-        function createContentItemFromFormFields(title, beginDate, endDate) {
-            return {
-                Title: title,
-                BeginDate: beginDate,
-                EndDate: endDate
-            }
         }
 
         // Create a timeline object of given json input (convert it to our internal structure)
@@ -81,11 +58,11 @@ var Canvas;
                 beginDate: json.BeginDate,
                 endDate: json.EndDate,
                 title: json.Title,
-                depth: json.Depth,
+                description: json.Description,
                 hasChildren: json.HasChildren,
                 sourceURL: json.SourceURL,
                 sourceRef: json.SourceRef,
-                pictureURL: json.PictureURL,
+                pictureURLs: json.PictureURLs,
             }, parentContentItem);
 
             // Convert all content items
@@ -98,7 +75,7 @@ var Canvas;
 
         // Get timeline
         function getTimeline(timelineId, resolve, reject) {
-            getJSON(timelineId,'timeline', function (json) {
+            getJSON(timelineId, 'timeline', function (json) {
                 // Create a timeline object
                 var timeline = createTimelineObject(json);
 
@@ -122,7 +99,7 @@ var Canvas;
 
         // Get timeline
         function getAllTimelines(resolve, reject) {
-            getJSON('','timeline', function (json) {
+            getJSON('', 'timeline', function (json) {
                 // Create a timeline object
                 var timelines = [];
 
@@ -154,6 +131,31 @@ var Canvas;
             }, function (error) {
                 reject(error);
             });
+        }
+
+
+        function createPersonalTimeLine(title, beginDate, endDate) {
+            var xmlHttpRequest = new XMLHttpRequest();
+            var url = _baseUrl + "timeline";
+            var object = createContentItemFromFormFields(title, beginDate, endDate);
+            xmlHttpRequest.open("POST", url, false);
+
+            //Send the proper header information along with the request
+            xmlHttpRequest.setRequestHeader("Content-type", "application/json");
+            xmlHttpRequest.onreadystatechange = function () {//Call a function when the state changes.
+                if (xmlHttpRequest.readyState == 4 && xmlHttpRequest.status == 200) {
+                    return true;
+                }
+            }
+            xmlHttpRequest.send(JSON.stringify(object));
+        }
+
+        function createContentItemFromFormFields(title, beginDate, endDate) {
+            return {
+                Title: title,
+                BeginDate: beginDate,
+                EndDate: endDate
+            }
         }
 
     })(Canvas.BackendService || (Canvas.BackendService = {}));
