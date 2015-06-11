@@ -26,12 +26,7 @@ namespace ChronoZoom.Backend.Business
 
         public IEnumerable<TimelineSummary> GetAllTimelineSummariesForPublicTimelines()
         {
-           IEnumerable<Timeline> timelines = _dao.FindAllPublicTimelines();
-            foreach(Timeline timeline in timelines)
-            {
-                timeline.RootContentItem = _contentItemDao.Find(timeline.RootContentItemId, 1);
-            }
-           return timelines;
+            return _dao.FindAllPublicTimelines();
         }
 
         public Timeline Add(Timeline timeline)
