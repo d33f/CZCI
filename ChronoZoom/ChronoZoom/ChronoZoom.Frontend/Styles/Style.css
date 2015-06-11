@@ -140,7 +140,6 @@ div#timelinePanel {
 
 /* Import PANEL */
 div#itemPanel {
-    transition: left .6s ease;
     width: 400px;
     background-color: #1B1C1D;
     color: #e0e0e0;

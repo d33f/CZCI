@@ -9,6 +9,11 @@
         PanelManager.handleTimelineBtnClick = handleTimelineBtnClick;
         PanelManager.addTimelines = addTimelines;
         PanelManager.imageUrlFieldShow = imageUrlFieldShow;
+        PanelManager.updateAddItemPanel = updateAddItemPanel;
+
+        var rootItem;
+        var currentItem;
+        var itemPanelShown;
 
         //Show the timeline panel on the left side of the screen
         function showTimelinePanel(showPanel) {
@@ -16,8 +21,25 @@
             inputPanel.className = showPanel ? 'timelinePanelShow' : 'timelinePanelHidden';
         }
 
+        function getCurrentItems() {
+            rootItem = Canvas.Breadcrumbs.getRootItem();
+            currentItem = Canvas.Breadcrumbs.getCurrentItem();
+        }
+
+        function updateAddItemPanel() {
+            if (itemPanelShown) {
+                var timelineLabel = document.getElementById('timelineName');
+                var itemLabel = document.getElementById('itemName');
+                getCurrentItems();
+                timelineLabel.innerHTML = rootItem.getTitle();
+                itemLabel.innerHTML = currentItem.getTitle();
+            }
+        }
+
         //Show the import panel on the right side of the screen
         function showItemPanel(showPanel) {
+            itemPanelShown = showPanel;
+            updateAddItemPanel();
             var inputPanel = document.getElementById('itemPanel');
             inputPanel.className = showPanel ? 'itemPanelShow' : 'itemPanelHidden';
         }
@@ -39,7 +61,6 @@
         }
 
         function imageUrlFieldShow(showField) {
-            console.log(showField);
             var imageUrlField = document.getElementById('imageUrl');
             imageUrlField.disabled = showField;
         }

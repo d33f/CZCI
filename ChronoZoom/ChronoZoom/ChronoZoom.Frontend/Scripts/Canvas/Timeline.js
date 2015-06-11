@@ -57,7 +57,8 @@
             */
 
             _contentItems = Canvas.ContentItemService.getContentItems();
-             
+            Canvas.PanelManager.updateAddItemPanel();
+
             // Destruct old content items
             var length = _oldContentItems.length;
             for (var i = 0; i < length; i++) {
