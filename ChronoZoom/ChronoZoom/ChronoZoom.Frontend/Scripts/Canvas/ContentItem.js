@@ -65,6 +65,7 @@
         // Add child to parent
         if (_parentContentItem !== undefined) {
             _parentContentItem.addChild(instance);
+            _y = _parentContentItem.getPosition().y + 30;
         }
 
         // Check if it has no children
@@ -334,11 +335,6 @@
 
     // Update y position
     function updateYPosition(contentItems) {
-        // Start at y position of parent if set
-        if (_parentContentItem !== undefined) {
-            _y = _parentContentItem.getPosition().y + 30;
-        }
-
         var length = contentItems.length;
         for (var i = 0; i < length; i++) {
             // Don't collide on your self!
@@ -557,10 +553,6 @@
             bX2 = position.x + size.width;
             bY2 = position.y + size.height;
         }
-
-        //if (_title === "Adolphi, Christoffel" && contentItem.getTitle() === "Alphonse Picard et fils") {
-        //    console.log(aY2 + " < " + position.y + "   " + _y + " > " + bY2 + "   " + aX2 + " < " + position.x + "   " + _x + " > " + bX2);
-        //}
 
         return !(aY2 < position.y || _y > bY2 || aX2 < position.x || _x > bX2);
     }
