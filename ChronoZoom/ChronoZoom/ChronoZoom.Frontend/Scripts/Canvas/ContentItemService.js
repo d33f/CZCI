@@ -20,7 +20,7 @@
             _contentItemChangedEvent = document.createEvent('Event');
             _contentItemChangedEvent.initEvent('contentItemChanged', true, true);
 
-            if (typeof(Storage) !== "undefined") {
+            if (typeof (Storage) !== "undefined") {
                 _cache = window.sessionStorage;
             }
             _cache.clear();
@@ -46,7 +46,7 @@
         function findContentItemsByParentContent(parentContentItem) {
             // Set breadcrumb
             Canvas.Breadcrumbs.setContentItem(parentContentItem);
-            
+
             // Get cached data
             var cachedData = getContentItemsFromCache(parentContentItem);
             if (cachedData !== undefined) {
@@ -147,7 +147,7 @@
                 setTimeline(cachedData);
             } else {
                 // Get from backend service
-                Canvas.BackendService.getTimeline(timelineId,function (timeline) {
+                Canvas.BackendService.getTimeline(timelineId, function (timeline) {
                     // Cache the timeline
                     addTimelineToCache(timeline.id, timeline);
 
@@ -160,9 +160,21 @@
         }
 
         // Set the new timeline
+        function setBackground(backgroundUrl) {
+            if (!!backgroundUrl) {
+                document.getElementById("canvas").style.backgroundImage = "url('" + backgroundUrl + "')";
+            } else {
+                backgroundUrl = Canvas.Settings.getDefaultTimelineBackground();
+                document.getElementById("canvas").style.backgroundImage = "url('" + backgroundUrl + "')";
+            }
+        }
+
         function setTimeline(timeline) {
             // Set current timeline id
             _timelineID = timeline.id;
+
+            // Set the background if a background exists
+            setBackground(timeline.backgroundUrl);
 
             // Set timeline range
             Canvas.Timescale.setRange(timeline.beginDate, timeline.endDate);
@@ -174,11 +186,15 @@
             // Set content items
             setContentItems(timeline.contentItems);
 
+            // Be sure that there is no full screen active
+            Canvas.Timeline.stopFullScreenContentItemMode();
+
             // Set title and range of the window
             Canvas.WindowManager.setTitle(timeline.title);
-            Canvas.WindowManager.setTimeRange(timeline.beginDate + ' - ' + timeline.endDate);
+            Canvas.WindowManager.setTimeRange(timeline.beginDate + " - " + timeline.endDate);
         }
 
+        // Set the background of the canvas/timeline
         // Add timeline to cache
         function addTimelineToCache(timelineID, timeline) {
             // Check for caching
@@ -193,7 +209,8 @@
                     endDate: timeline.endDate,
                     title: timeline.title,
                     contentItems: items,
-                    parentContentItem: timeline.contentItems[0].getParentContentItem().getData()
+                    parentContentItem: timeline.contentItems[0].getParentContentItem().getData(),
+                    backgroundUrl : timeline.backgroundUrl
                 }));
             }
         }
@@ -222,7 +239,8 @@
                         beginDate: json.beginDate,
                         endDate: json.endDate,
                         title: json.title,
-                        contentItems: contentItems
+                        contentItems: contentItems,
+                        backgroundUrl : json.backgroundUrl
                     };
                 }
             }
