@@ -13,7 +13,7 @@
         var _oldContentItems = [];
         var _oldRange = [];
         var _newRange = [];
-        var _fullscreenContentItem = {};
+        var _fullscreenContentItem;
 
         // Animation Variables
         var _animationTime = 1;
