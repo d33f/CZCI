@@ -10,7 +10,7 @@
         PanelManager.addTimelines = addTimelines;
         PanelManager.imageUrlFieldShow = imageUrlFieldShow;
         PanelManager.updateAddItemPanel = updateAddItemPanel;
-        PanelManager.showImportPanel = showImportPanel;
+        PanelManager.showaddTimelinePanel = showaddTimelinePanel;
 
         var rootItem;
         var currentItem;
@@ -22,9 +22,10 @@
             inputPanel.className = showPanel ? 'timelinePanelShow' : 'timelinePanelHidden';
         }
 
-        function showPanel(showPanel) {
+        //Show the panel for adding timelines
+        function showaddTimelinePanel(showPanel) {
             var panel = document.getElementById('addTimelinePanel');
-            panel.className = showPanel ? 'importPanelShow' : 'importPanelHidden';
+            panel.className = showPanel ? 'addTimelinePanelShow' : 'addTimelinePanelHidden';
         }
 
         function getCurrentItems() {
@@ -46,8 +47,8 @@
         function showItemPanel(showPanel) {
             itemPanelShown = showPanel;
             updateAddItemPanel();
-            var inputPanel = document.getElementById('itemPanel');
-            inputPanel.className = showPanel ? 'itemPanelShow' : 'itemPanelHidden';
+            var inputPanel = document.getElementById('addItemPanel');
+            inputPanel.className = showPanel ? 'addItemPanelShow' : 'addItemPanelHidden';
         }
 
         function hideBothPanels() {

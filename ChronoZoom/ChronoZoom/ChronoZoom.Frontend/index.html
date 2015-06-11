@@ -10,6 +10,7 @@
         <div id="title"></div>
         <div id="timerange"></div>
         <div id="menuButtons">
+            <button class="compact ui button default" onclick="Canvas.PanelManager.showAddItemPanel(true)">Add item</button>
             <button class="compact ui button default" onclick="Canvas.PanelManager.handleTimelineBtnClick()">My Timelines</button>
         </div>
     </div>
@@ -17,7 +18,7 @@
         <h1>Timelines</h1>
         <div id="timelineList"></div>
         <div style="padding-top:15px; float: right">
-            <div class="compact ui button green small right" onclick="Canvas.PanelManager.showImportPanel(true); Canvas.PanelManager.showTimelinePanel(false)">
+            <div class="compact ui button green small right" onclick="Canvas.PanelManager.showaddTimelinePanel(true); Canvas.PanelManager.showTimelinePanel(false)">
                 <i class="icon add"></i>
                 Add timeline
             </div>
@@ -26,23 +27,39 @@
     </div>
 
     <div id="addTimelinePanel" class="addTimelinePanelHidden">
-        <div class="field">
-            <label>Title</label>
-            <input id="titleInput" placeholder="Timeline title" type="text" required />
-        </div>
-        <div class="two fields">
+        <h1>Add timeline</h1>
+        <div class="ui error inverted form segment">
             <div class="field">
-                <label>Begin date</label>
-                <input id="startDateInput" placeholder="Begin date" type="number" required />
+                <label>Title</label>
+                <input id="titleInput" placeholder="Timeline title" type="text" required />
+            </div>
+            <div class="two fields">
+                <div class="field">
+                    <label>Begin date</label>
+                    <input id="startDateInput" placeholder="Begin date" type="number" required />
+                </div>
+                <div class="field">
+                    <label>End date</label>
+                    <input id="endDateInput" placeholder="End date" type="number" required />
+                </div>
             </div>
             <div class="field">
-                <label>End date</label>
-                <input id="endDateInput" placeholder="End date" type="number" required />
+                <label>Background image url</label>
+                <input id="imageUrl" placeholder="None" type="url" />
+            </div>
+            <div class="field">
+                <label>Description</label>
+                <textarea id="descriptionInput" placeholder="Timeline description"></textarea>
+            </div>
+            <div style="padding-top:15px; float: right">
+                <div class="compact ui button green small right" onclick="Canvas.PanelManager.handleItemPanelInput()">
+                    <i class="icon add"></i>
+                    Add timeline
+                </div>
+                <div class="compact negative ui button" onclick="Canvas.PanelManager.showaddTimelinePanel(false)">Close</div>
             </div>
         </div>
-        <div class="field">
-            <label>Image url</label>
-            <input id="imageUrl" placeholder="None" type="url" />
+        <div id="importOutput">
         </div>
     </div>
 
@@ -97,9 +114,28 @@
                 </div>
                 <div class="compact negative ui button" onclick="Canvas.PanelManager.showItemPanel(false)">Close</div>
             </div>
-            </div>
+        </div>
 
         <div id="importOutput">
+        </div>
+    </div>
+
+    <div class="ui modal">
+        <i class="close icon"></i>
+        <div class="header">
+            Modal Title
+        </div>
+        <div class="content">
+            <div class="image">
+                An image can appear on left or an icon
+            </div>
+            <div class="description">
+                A description can appear on the right
+            </div>
+        </div>
+        <div class="actions">
+            <div class="ui button">Cancel</div>
+            <div class="ui button">OK</div>
         </div>
     </div>
 
