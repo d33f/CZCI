@@ -278,14 +278,16 @@
             imageWrapper.appendChild(image);
             wrapper.appendChild(imageWrapper);
 
-            for (var i = 1; i < _pictureURLs.length; i++) {
-                var smallImages = document.createElement('img');
-                smallImages.setAttribute('src', _pictureURLs[i]);
-                smallImages.setAttribute('width', '25%');
-                smallImages.setAttribute('height', '25%');
-                imageWrapper.appendChild(smallImages);
+            if (_pictureURLs.length > 2) {
+                var length = _pictureURLs.length;
+                for (var i = 1; i < length; i++) {
+                    var smallImages = document.createElement('img');
+                    smallImages.setAttribute('src', _pictureURLs[i]);
+                    smallImages.setAttribute('width', '25%');
+                    smallImages.setAttribute('height', '25%');
+                    imageWrapper.appendChild(smallImages);
+                }
             }
-
             // Create text wrapper
             var textWrapper = createElementWithClass('div', 'content');
             textWrapper.appendChild(createElementWithClass('div', 'text'));
