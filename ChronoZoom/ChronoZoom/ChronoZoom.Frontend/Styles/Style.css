@@ -78,7 +78,6 @@ div.contentItemText {
     width: 100%;
     overflow-y: auto;
     color: white;
-    background: black;
 }
 
 div.contentItemTitle {
@@ -90,7 +89,6 @@ div.contentItemTitle {
     font-size: 25px;
     text-align: center;
     color: white;
-    background: black;
 }
 
 
