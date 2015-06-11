@@ -35,7 +35,7 @@
             // Get and set old content items and content items
             _contentItems = Canvas.ContentItemService.getContentItems();
 
-            console.log(_contentItems);
+            console.log(_contentItems.length);
 
             // Hide loader
             Canvas.WindowManager.showLoader(false);
@@ -79,9 +79,9 @@
         // Draw given content item on canvas if in (current) range
         function drawContentItem(range, contentItem) {
             // Check if content item visible in current range
-            if (contentItem.getBeginDate() >= range.begin || contentItem.getEndDate() <= range.end) {
+            //if (contentItem.getBeginDate() >= range.begin || contentItem.getEndDate() <= range.end) {
                 contentItem.draw();
-            }
+            //}
         }
 
         function drawToolTip() {
