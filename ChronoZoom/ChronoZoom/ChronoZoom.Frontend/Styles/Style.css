@@ -141,7 +141,6 @@ div#timelinePanel {
 /* Import PANEL */
 div#importPanel {
     transition: right .6s ease;
-    font-size: 20px;
     width: 400px;
     background-color: #1B1C1D;
     color: #e0e0e0;
