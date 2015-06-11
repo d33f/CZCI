@@ -174,7 +174,7 @@
             _timelineID = timeline.id;
 
             // Set the background if a background exists
-            setBackground(timeline.backgroundUrl);
+            setBackground(timeline.backgroundURL);
 
             // Set timeline range
             Canvas.Timescale.setRange(timeline.beginDate, timeline.endDate);

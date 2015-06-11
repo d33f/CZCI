@@ -24,7 +24,7 @@ namespace ChronoZoom.Backend.Business
             return timeline;
         }
 
-        public IEnumerable<Timeline> GetAllPublicTimelinesWithoutContentItems()
+        public IEnumerable<TimelineSummary> GetAllTimelineSummariesForPublicTimelines()
         {
            IEnumerable<Timeline> timelines = _dao.FindAllPublicTimelines();
             foreach(Timeline timeline in timelines)

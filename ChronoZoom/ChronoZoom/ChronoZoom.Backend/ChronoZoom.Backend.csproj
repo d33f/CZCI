@@ -129,6 +129,7 @@
     <Compile Include="Data\MSSQL\Entities\Timeline.cs" />
     <Compile Include="Data\MSSQL\Entities\TimelineJoinContentItem.cs" />
     <Compile Include="Entities\ContentItem.cs" />
+    <Compile Include="Entities\TimelineSummary.cs" />
     <Compile Include="Entities\Timeline.cs" />
     <Compile Include="Exceptions\TimelineNotFoundException.cs" />
     <Compile Include="Global.asax.cs">

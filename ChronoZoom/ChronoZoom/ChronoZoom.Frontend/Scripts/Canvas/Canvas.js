@@ -39,7 +39,7 @@
         Canvas.PanelManager.addTimelines();
 
         // Select default timeline
-        Canvas.Timeline.setTimeline(2);
+        Canvas.Timeline.setTimeline(3); // 2
     }
 
     // Set the new timeline
@@ -85,8 +85,8 @@
         getContext().clearRect(0, 0, _canvasContainer.width, _canvasContainer.height);
 
         // Draw all components
-        Canvas.Timescale.draw();
         Canvas.Timeline.draw();
+        Canvas.Timescale.draw();
     }
 
     // The canvas draw loop

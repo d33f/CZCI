@@ -17,6 +17,6 @@ namespace ChronoZoom.Backend.Entities
         public long RootContentItemId { get; set; }
 
         public ContentItem RootContentItem { get; set; }
-        public string BackgroundUrl { get; set; }
+        public string BackgroundURL { get; set; }
     }
 }
