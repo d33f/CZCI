@@ -38,8 +38,7 @@
 
         // Handle on content item changed event
         function onContentItemsChanged() {
-            // Get and set old content items and content items
-
+            // Set old content items with the current content items
             _oldContentItems = _contentItems;
             /*
             if (_contentItems.length > 0) {
