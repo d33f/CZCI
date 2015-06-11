@@ -138,7 +138,7 @@ var Canvas;
         function createPersonalTimeLine(title, beginDate, endDate) {
             var xmlHttpRequest = new XMLHttpRequest();
             var url = _baseUrl + "timeline";
-            var object = createContentItemFromFormFields(title, beginDate, endDate);
+            var object = createTimelineFromFormFields(title, beginDate, endDate);
             xmlHttpRequest.open("POST", url, false);
 
             //Send the proper header information along with the request
@@ -151,7 +151,7 @@ var Canvas;
             xmlHttpRequest.send(JSON.stringify(object));
         }
 
-        function createContentItemFromFormFields(title, beginDate, endDate) {
+        function createTimelineFromFormFields(title, beginDate, endDate) {
             return {
                 Title: title,
                 BeginDate: beginDate,

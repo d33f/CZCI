@@ -3,14 +3,12 @@
     (function (PanelManager) {
         // Public methods
         PanelManager.showTimelinePanel = showTimelinePanel;
-        PanelManager.showItemPanel = showItemPanel;
-        PanelManager.hideBothPanels = hideBothPanels;
         PanelManager.handleItemPanelInput = handleItemPanelInput;
-        PanelManager.handleTimelineBtnClick = handleTimelineBtnClick;
         PanelManager.addTimelines = addTimelines;
         PanelManager.imageUrlFieldShow = imageUrlFieldShow;
         PanelManager.updateAddItemPanel = updateAddItemPanel;
         PanelManager.showaddTimelinePanel = showaddTimelinePanel;
+        PanelManager.showAddItemPanel = showAddItemPanel;
 
         var rootItem;
         var currentItem;
@@ -22,15 +20,18 @@
             inputPanel.className = showPanel ? 'timelinePanelShow' : 'timelinePanelHidden';
         }
 
-        //Show the panel for adding timelines
+        //Show the panel for adding new timelines on the left side of the screen
         function showaddTimelinePanel(showPanel) {
             var panel = document.getElementById('addTimelinePanel');
             panel.className = showPanel ? 'addTimelinePanelShow' : 'addTimelinePanelHidden';
         }
 
-        function getCurrentItems() {
-            rootItem = Canvas.Breadcrumbs.getRootItem();
-            currentItem = Canvas.Breadcrumbs.getCurrentItem();
+        //Show the panel for adding new items on the left side of the screen
+        function showAddItemPanel(showPanel) {
+            itemPanelShown = showPanel;
+            updateAddItemPanel();
+            var inputPanel = document.getElementById('addItemPanel');
+            inputPanel.className = showPanel ? 'addItemPanelShow' : 'addItemPanelHidden';
         }
 
         function updateAddItemPanel() {
@@ -43,19 +44,11 @@
             }
         }
 
-        //Show the import panel on the right side of the screen
-        function showItemPanel(showPanel) {
-            itemPanelShown = showPanel;
-            updateAddItemPanel();
-            var inputPanel = document.getElementById('addItemPanel');
-            inputPanel.className = showPanel ? 'addItemPanelShow' : 'addItemPanelHidden';
+        function getCurrentItems() {
+            rootItem = Canvas.Breadcrumbs.getRootItem();
+            currentItem = Canvas.Breadcrumbs.getCurrentItem();
         }
-
-        function hideBothPanels() {
-            showTimelinePanel(false);
-            showItemPanel(false);
-        }
-
+        /*
         function handleTimelineBtnClick() {
             var inputPanel = document.getElementById('timelinePanel');
             if (inputPanel.className === 'timelinePanelShow') {
@@ -63,9 +56,8 @@
             }
             else {
                 showTimelinePanel(true);
-                showItemPanel(false);
             }
-        }
+        }*/
 
         function imageUrlFieldShow(showField) {
             var imageUrlField = document.getElementById('imageUrl');
