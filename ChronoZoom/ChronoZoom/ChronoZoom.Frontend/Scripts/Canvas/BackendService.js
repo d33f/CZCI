@@ -8,7 +8,7 @@ var Canvas;
         BackendService.getAllTimelines = getAllTimelines;
 
         // Private fields
-        var _baseUrl = "https://www.kompili.nl/chronozoomApi/api/";
+        var _baseUrl = "http://www.kompili.nl/chronozoomApi/api/";
         //var _baseUrl = "http://localhost:40001/api/";
 
         // Get json data from path, execute callback resolve when succesfull and reject if failed. 
@@ -46,7 +46,8 @@ var Canvas;
                 beginDate: json.BeginDate,
                 endDate: json.EndDate,
                 title: json.Title,
-                contentItems: []
+                contentItems: [],
+                backgroundUrl :json.BackgroundUrl
             };
         }
 

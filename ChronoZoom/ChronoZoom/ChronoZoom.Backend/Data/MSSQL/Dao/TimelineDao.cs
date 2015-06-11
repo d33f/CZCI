@@ -12,7 +12,7 @@ namespace ChronoZoom.Backend.Data.MSSQL.Dao
         {
             using (DatabaseContext context = new DatabaseContext())
             {
-                string query = "SELECT TOP 1 [Timeline].[Id],[RootContentItemId],[IsPublic],[BeginDate],[EndDate],[Title],[Description],[Timeline].[Timestamp] FROM [dbo].[Timeline] JOIN [dbo].[ContentItem] ON [dbo].[Timeline].[RootContentItemId] = [dbo].[ContentItem].[Id] where [Timeline].[Id] = @id";
+                string query = "SELECT TOP 1 [Timeline].[Id], BackgroundUrl,[RootContentItemId],[IsPublic],[BeginDate],[EndDate],[Title],[Description],[Timeline].[Timestamp] FROM [dbo].[Timeline] JOIN [dbo].[ContentItem] ON [dbo].[Timeline].[RootContentItemId] = [dbo].[ContentItem].[Id] where [Timeline].[Id] = @id";
                 Timeline timeline = context.FirstOrDefault<MSSQL.Entities.TimelineJoinContentItem, Timeline>(query, new { id = id });
                 if (timeline == null)
                 {
@@ -26,7 +26,7 @@ namespace ChronoZoom.Backend.Data.MSSQL.Dao
         {
             using (DatabaseContext context = new DatabaseContext())
             {
-                string query = "SELECT [Timeline].[Id],[RootContentItemId],[IsPublic],[BeginDate],[EndDate],[Title],[Description],[Timeline].[Timestamp] FROM [dbo].[Timeline] JOIN [dbo].[ContentItem] ON [dbo].[Timeline].[RootContentItemId] = [dbo].[ContentItem].[Id] where IsPublic=1";
+                string query = "SELECT [Timeline].[Id],BackgroundUrl,[RootContentItemId],[IsPublic],[BeginDate],[EndDate],[Title],[Description],[Timeline].[Timestamp] FROM [dbo].[Timeline] JOIN [dbo].[ContentItem] ON [dbo].[Timeline].[RootContentItemId] = [dbo].[ContentItem].[Id] where IsPublic=1";
                 return context.Select<MSSQL.Entities.TimelineJoinContentItem, Timeline>(query);
             }
         }

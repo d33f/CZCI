@@ -9,7 +9,7 @@
         // Set the title (top of screen)
         function setTitle(timelineTitle) {
             var title = document.getElementById("title");
-            title.innerHTML = ""+timelineTitle;
+            title.innerHTML = "" + timelineTitle;
         }
 
         // Set the time range of the timeline
@@ -22,6 +22,12 @@
         function showLoader(isVisible) {
             document.getElementById('loader').style.visibility = isVisible ? 'visible' : 'hidden';
         }
+
+        // Resize listener
+        window.onresize = function (e) {
+            Canvas.resetWindowWidthAndHeight();
+        }
+
     })(Canvas.WindowManager || (Canvas.WindowManager = {}));
     var WindowManager = Canvas.WindowManager;
 })(Canvas || (Canvas = {}));
