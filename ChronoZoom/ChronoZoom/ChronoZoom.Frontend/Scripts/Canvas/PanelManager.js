@@ -22,9 +22,9 @@
             inputPanel.className = showPanel ? 'timelinePanelShow' : 'timelinePanelHidden';
         }
 
-        function showImportPanel(showPanel) {
-            var panel = document.getElementById('importPanel');
-            panel.className = importPanel ? 'importPanelShow' : 'importPanelHidden';
+        function showPanel(showPanel) {
+            var panel = document.getElementById('addTimelinePanel');
+            panel.className = showPanel ? 'importPanelShow' : 'importPanelHidden';
         }
 
         function getCurrentItems() {
