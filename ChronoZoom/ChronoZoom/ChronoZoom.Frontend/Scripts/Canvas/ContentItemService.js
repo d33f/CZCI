@@ -47,6 +47,9 @@
             // Set breadcrumb
             Canvas.Breadcrumbs.setContentItem(parentContentItem);
 
+            // Clear children
+            parentContentItem.clearChildren();
+
             // Get cached data
             var cachedData = getContentItemsFromCache(parentContentItem);
             if (cachedData !== undefined) {
@@ -84,17 +87,21 @@
 
                 // Check if data is found
                 if (data !== null) {
+                    console.log(data.toString());
                     // Clear children
                     parentContentItem.clearChildren();
 
                     // Parse json and create content items from cache
                     var contentItems = convertDataArrayToContentItems(JSON.parse(data), parentContentItem);
 
-                    // Add parent content item to response
-                    contentItems.push(parentContentItem);
+                    // Add parent content item to response 
+                    var length = contentItems.length;
+                    for (var i = 0; i < length; i++) {
+                        parentContentItem.addChild(contentItems[i]);
+                    }
 
-                    // Return response
-                    return contentItems;
+                    // Return response 
+                    return [parentContentItem];
                 }
             }
 

@@ -382,6 +382,7 @@
             if (contentItems[i].getId() !== _id) {
                 while (collidesContentItem(contentItems[i])) {
                     _y += contentItems[i].getSize().height + 10;
+                    //console.log("collide");
                 }
             }
         }
