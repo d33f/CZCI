@@ -16,17 +16,18 @@ namespace ChronoZoom.Backend
 
             // Web API routes
             config.MapHttpAttributeRoutes();
-
+            config.Routes.MapHttpRoute(
+    name: "DefaultApi",
+    routeTemplate: "api/{controller}/{id}",
+        defaults: null,
+constraints: new { id = @"^\d+$" } // Only integers 
+);
             config.Routes.MapHttpRoute(
                 name: "ActionApi",
                 routeTemplate: "api/{controller}/{action}",
-                defaults: new { id = RouteParameter.Optional }
+                defaults: new { }
 );
-            config.Routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
-            );
+
         }
     }
 }

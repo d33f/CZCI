@@ -19,7 +19,6 @@ namespace ChronoZoom.Backend.Controllers
             _service = service;
         }
 
-        [ValidateToken]
         public IHttpActionResult Get(int id)
         {
             try
