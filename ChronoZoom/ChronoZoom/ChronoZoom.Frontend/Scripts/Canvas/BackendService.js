@@ -5,6 +5,7 @@ var Canvas;
         BackendService.getTimeline = getTimeline;
         BackendService.getContentItems = getContentItems;
         BackendService.createPersonalTimeLine = createPersonalTimeLine;
+        BackendService.createPersonalContentItem = createPersonalContentItem;
         BackendService.getAllTimelines = getAllTimelines;
 
         // Private fields
@@ -138,7 +139,7 @@ var Canvas;
         function createPersonalTimeLine(title, beginDate, endDate) {
             var xmlHttpRequest = new XMLHttpRequest();
             var url = _baseUrl + "timeline";
-            var object = createTimelineFromFormFields(title, beginDate, endDate);
+            var object = createTimelineObjectFormFields(title, beginDate, endDate);
             xmlHttpRequest.open("POST", url, false);
 
             //Send the proper header information along with the request
@@ -151,13 +152,45 @@ var Canvas;
             xmlHttpRequest.send(JSON.stringify(object));
         }
 
-        function createTimelineFromFormFields(title, beginDate, endDate) {
+        function createTimelineObjectFormFields(title, beginDate, endDate) {
             return {
                 Title: title,
                 BeginDate: beginDate,
                 EndDate: endDate
             }
         }
+
+        function createPersonalContentItem(beginDate, endDate, title, description, hasChildren, imageUrl, parentContentItemId) {
+            var xmlHttpRequest = new XMLHttpRequest();
+            var url = _baseUrl + "contentitem";
+            var object = createContentItemObjectFormField(beginDate, endDate, title, description, imageUrl, hasChildren, parentContentItemId);
+            xmlHttpRequest.open("POST", url, false);
+
+            //Send the proper header information along with the request
+            xmlHttpRequest.setRequestHeader("Content-type", "application/json");
+            xmlHttpRequest.onreadystatechange = function () {//Call a function when the state changes.
+                if (xmlHttpRequest.readyState == 4 && xmlHttpRequest.status == 200) {
+                    return true;
+                }
+            }
+            xmlHttpRequest.send(JSON.stringify(object));
+        }
+
+        function createContentItemObjectFormField(beginDate, endDate, title, description, hasChildren, imageUrl, parentContentItemId) {
+            console.log(parentContentItemId);
+            return{
+                beginDate: beginDate,
+                endDate: endDate,
+                title: title,
+                description: description,
+                HasChildren: hasChildren,
+                ParentId: parentContentItemId,
+                //sourceURL: json.SourceURL,
+                //sourceRef: json.SourceRef,
+               // pictureURLs: json.PictureURLs,
+            }
+        }
+
 
     })(Canvas.BackendService || (Canvas.BackendService = {}));
     var BackendService = Canvas.BackendService;

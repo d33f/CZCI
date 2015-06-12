@@ -3,12 +3,13 @@
     (function (PanelManager) {
         // Public methods
         PanelManager.showTimelinePanel = showTimelinePanel;
-        PanelManager.handleItemPanelInput = handleItemPanelInput;
+        PanelManager.handleAddTimelineInput = handleAddTimelineInput;
         PanelManager.addTimelines = addTimelines;
         PanelManager.imageUrlFieldShow = imageUrlFieldShow;
         PanelManager.updateAddItemPanel = updateAddItemPanel;
         PanelManager.showaddTimelinePanel = showaddTimelinePanel;
         PanelManager.showAddItemPanel = showAddItemPanel;
+        PanelManager.handleAddContentItemInput = handleAddContentItemInput;
 
         var rootItem;
         var currentItem;
@@ -65,7 +66,7 @@
         }
 
         //Handle the input of the timeline import panel
-        function handleItemPanelInput() {
+        function handleAddTimelineInput() {
             var title = document.getElementById("titleInput").value;
             var startDate = document.getElementById("startDateInput").value;
             var endDate = document.getElementById("endDateInput").value;
@@ -150,6 +151,26 @@
             }
 
             return divElement;
+        }
+
+        function handleAddContentItemInput() {
+            var hasChildren;
+            var radios = document.getElementsByName('select');
+            if (radios[0].checked) {
+                hasChildren = false;
+            }
+            else {
+                hasChildren = true;
+            }
+            
+            var title = document.getElementById("titleInputContentItem").value;
+            var startDate = document.getElementById("startDateInputContentItem").value;
+            var endDate = document.getElementById("endDateInputContentItem").value;
+            var description = document.getElementById("descriptionInputContentItem").value;
+            var imageUrl = document.getElementById("imageUrlContentItem").value;
+
+            var parentId = currentItem.getId();
+            Canvas.BackendService.createPersonalContentItem(startDate, endDate, title, description, hasChildren, imageUrl, parentId);
         }
 
     })(Canvas.PanelManager || (Canvas.PanelManager = {}));

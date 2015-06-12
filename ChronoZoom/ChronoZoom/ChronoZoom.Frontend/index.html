@@ -52,7 +52,7 @@
                 <textarea id="descriptionInput" placeholder="Timeline description"></textarea>
             </div>
             <div style="padding-top:15px; float: right">
-                <div class="compact ui button green small right" onclick="Canvas.PanelManager.handleItemPanelInput()">
+                <div class="compact ui button green small right" onclick="Canvas.PanelManager.handleAddTimelineInput()">
                     <i class="icon add"></i>
                     Add timeline
                 </div>
@@ -76,39 +76,39 @@
                 <div class="field">
                     <label>Item</label>
                     <div class="circle"></div>
-                    <input type="radio" name="select" value="contentItem" onchange="Canvas.PanelManager.imageUrlFieldShow(false)" required>
+                    <input type="radio" id="circleRadioButton" name="select" value="contentItem" onchange="Canvas.PanelManager.imageUrlFieldShow(false)" required>
                 </div>
                 <div class="field">
                     <label>Timeline</label>
                     <div class="rectangle"></div>
-                    <input type="radio" name="select" value="timeline" onchange="Canvas.PanelManager.imageUrlFieldShow(true)" required>
+                    <input type="radio" id="rectangleRadioButton"  name="select" value="timeline" onchange="Canvas.PanelManager.imageUrlFieldShow(true)" required>
                 </div>
             </div>
 
             <div class="field">
                 <label>Title</label>
-                <input id="titleInput" placeholder="Timeline title" type="text" required />
+                <input id="titleInputContentItem" placeholder="Timeline title" type="text" required />
             </div>
             <div class="two fields">
                 <div class="field">
                     <label>Begin date</label>
-                    <input id="startDateInput" placeholder="Begin date" type="number" required />
+                    <input id="startDateInputContentItem" placeholder="Begin date" type="number" required />
                 </div>
                 <div class="field">
                     <label>End date</label>
-                    <input id="endDateInput" placeholder="End date" type="number" required />
+                    <input id="endDateInputContentItem" placeholder="End date" type="number" required />
                 </div>
             </div>
             <div class="field">
                 <label>Image url</label>
-                <input id="imageUrl" placeholder="None" type="url" />
+                <input id="imageUrlContentItem" placeholder="None" type="url" />
             </div>
             <div class="field">
                 <label>Description</label>
-                <textarea id="descriptionInput" placeholder="Timeline description"></textarea>
+                <textarea id="descriptionInputContentItem" placeholder="Timeline description"></textarea>
             </div>
             <div style="padding-top:15px; float: right">
-                <div class="compact ui button green small right" onclick="Canvas.PanelManager.handleItemPanelInput()">
+                <div class="compact ui button green small right" onclick="Canvas.PanelManager.handleAddContentItemInput()">
                     <i class="icon add"></i>
                     Add item
                 </div>
