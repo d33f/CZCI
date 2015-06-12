@@ -42,7 +42,8 @@ namespace ChronoZoom.Backend.Data.MSSQL.Dao
                     EndDate = timeline.EndDate,
                     HasChildren = true,
                     Title = timeline.Title,
-                    Description = timeline.Description
+                    Description = timeline.Description,
+                    PictureURLs = new string[] { "Empty"}
                 };
 
                 contentItem = context.AddContentItem<MSSQL.Entities.ContentItem, ContentItem>(contentItem);
