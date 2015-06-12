@@ -31,8 +31,18 @@
         function showAddItemPanel(showPanel) {
             itemPanelShown = showPanel;
             updateAddItemPanel();
-            var inputPanel = document.getElementById('addItemPanel');
-            inputPanel.className = showPanel ? 'addItemPanelShow' : 'addItemPanelHidden';
+            var addItemPanel = document.getElementById('addItemPanel');
+            addItemPanel.className = showPanel ? 'addItemPanelShow' : 'addItemPanelHidden';
+
+            if (!showPanel) {
+                clearAddItemPanel();
+            }
+
+        }
+
+        function clearAddItemPanel() {
+            var errorMessages = document.getElementById("importOutputAddItem");
+            errorMessages.innerHTML = "";
         }
 
         function updateAddItemPanel() {
@@ -40,8 +50,7 @@
                 var timelineLabel = document.getElementById('timelineName');
                 var itemLabel = document.getElementById('itemName');
                 getCurrentItems();
-                timelineLabel.innerHTML = rootItem.getTitle();
-                itemLabel.innerHTML = currentItem.getTitle();
+                itemLabel.innerHTML = currentItem.getTitle() + " ( " + currentItem.getBeginDate() + " - " + currentItem.getEndDate() + " )";
             }
         }
 
@@ -178,21 +187,52 @@
             if (radios[0].checked) {
                 hasChildren = false;
             }
-            else {
+            else if (radios[1].checked) {
                 hasChildren = true;
             }
-            
+
             var title = document.getElementById("titleInputContentItem").value;
             var startDate = document.getElementById("startDateInputContentItem").value;
             var endDate = document.getElementById("endDateInputContentItem").value;
             var description = document.getElementById("descriptionInputContentItem").value;
-
-            var imageUrl = document.getElementById("imageUrlContentItem").value;;
+            var imageUrl = document.getElementById("imageUrlContentItem").value;
             var pictureURLs = new Array();
             pictureURLs.push(imageUrl)
-
             var parentId = currentItem.getId();
-            Canvas.BackendService.createPersonalContentItem(startDate, endDate, title, description, hasChildren, parentId, pictureURLs);
+            var parentIdBeginDate = currentItem.getBeginDate();
+            var parentIdEndDate = currentItem.getEndDate();
+
+            var output = document.getElementById("importOutputAddItem");
+            var errorMessage = "Error message";
+            var correctValues;
+
+            if (hasChildren === "" || hasChildren === undefined) {
+                errorMessage = errorMessage + "<li>Use the radio button to select an item type! </li>";
+                correctValues = false;
+            }
+            if (title === "") {
+                errorMessage = errorMessage + "<li>Enter a title!</li>";
+                correctValues = false;
+            }
+            if (startDate < parentIdBeginDate || endDate > parentIdEndDate || startDate === "" || endDate === "") {
+                errorMessage = errorMessage + "<li>Begin and enddate not between " + parentIdBeginDate + " and " + parentIdEndDate + "</li>";
+                correctValues = false;
+            }
+            if (parentId === "" || parentId === null) {
+                errorMessage = errorMessage + "<li>" + "Cannot find parentId, cannot add this item! </li>";
+                correctValues = false;
+            }
+            if (parentId === 0) {
+                errorMessage = errorMessage + "<li>Parentid is 0 </li>";
+                correctValues = false;
+            }
+            
+            if (correctValues !== false) {
+                Canvas.BackendService.createPersonalContentItem(startDate, endDate, title, description, hasChildren, parentId, pictureURLs);
+            }
+            else {
+                output.innerHTML = errorMessage;
+            }
         }
     })(Canvas.PanelManager || (Canvas.PanelManager = {}));
     var PanelManager = Canvas.PanelManager;

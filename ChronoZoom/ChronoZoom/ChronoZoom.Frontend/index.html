@@ -68,24 +68,17 @@
     </div>
 
     <div id="addItemPanel" class="addItemPanelHidden">
-        <h1>Add item</h1>
-        <div class="field">
-            <label>Timeline: </label>
-            <label id="timelineName"></label><br />
-            <label>Item: </label>
-            <label id="itemName"></label>
-        </div>
+        <h1>Add item to:</h1>
+        <h3 id="itemName"></h3>
         <div class="ui error inverted form segment">
             <div class="two fields">
                 <div class="field">
-                    <label>Item</label>
                     <div class="circle"></div>
                     <input type="radio" id="circleRadioButton" name="select" value="contentItem" onchange="Canvas.PanelManager.imageUrlFieldShow(false)" required>
                 </div>
                 <div class="field">
-                    <label>Timeline</label>
                     <div class="rectangle"></div>
-                    <input type="radio" id="rectangleRadioButton"  name="select" value="timeline" onchange="Canvas.PanelManager.imageUrlFieldShow(true)" required>
+                    <input type="radio" id="rectangleRadioButton" name="select" value="timeline" onchange="Canvas.PanelManager.imageUrlFieldShow(true)" required>
                 </div>
             </div>
 
@@ -120,7 +113,9 @@
             </div>
         </div>
 
-        <div id="importOutput">
+        
+        <div id="importOutputAddItem" style="color: yellow">
+            <ul></ul>
         </div>
     </div>
 

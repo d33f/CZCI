@@ -6,6 +6,7 @@ var Canvas;
         BackendService.getContentItems = getContentItems;
         BackendService.createPersonalTimeLine = createPersonalTimeLine;
         BackendService.createPersonalContentItem = createPersonalContentItem;
+
         BackendService.getAllTimelines = getAllTimelines;
 
         // Private fields
@@ -182,15 +183,13 @@ var Canvas;
 
         function createContentItemObjectFormField(beginDate, endDate, title, description, hasChildren, parentContentItemId, pictureURLs) {
             console.log(parentContentItemId);
-            return{
+            return {
                 beginDate: beginDate,
                 endDate: endDate,
                 title: title,
                 description: description,
                 hasChildren: hasChildren,
                 parentId: parentContentItemId,
-                //sourceURL: json.SourceURL,
-                //sourceRef: json.SourceRef,
                 pictureURLs: pictureURLs,
             }
         }
