@@ -34,7 +34,7 @@
     var _hasChildren = data.hasChildren;
     var _sourceURL = data.sourceURL;
     var _sourceRef = data.sourceRef;
-    var _pictureURL = data.pictureURL;
+    var _pictureURLs = data.pictureURLs;
 
     var _data = data;
     var _parentContentItem = parentContentItem;
@@ -65,57 +65,20 @@
         // Add child to parent
         if (_parentContentItem !== undefined) {
             _parentContentItem.addChild(instance);
-            _y = _parentContentItem.getPosition().y + 30;
         }
 
         // Check if it has no children
         if (!_hasChildren) {
-            // Get content item element 
+            // Get content item element
             _radius = 50;
-            _width = (_radius * 2); 
+            _width = (_radius * 2);
             _height = (_radius * 2);
-
-            var element = document.getElementById('contentItem_' + _id);
-
-            // Create new content item element if it doesn't exist
-            if (element == null) {
-                // Create content item element
-                element = createElementWithClass('div', 'contentItem');
-                element.id = 'contentItem_' + _id;
-
-                // Create wrapper and text within the content item element
-                var wrapper = createElementWithClass('div', 'contentItemWrapper');
-                wrapper.appendChild(createElementWithClass('div', 'contentItemTitle'))
-                wrapper.appendChild(createElementWithClass('div', 'contentItemText'));
-                element.appendChild(wrapper);
-                
-
-                // Get the canvas container element and add the child
-                var container = document.getElementById('canvasContainer');
-                container.appendChild(element);
-            } 
-
-            // Store element as container
-            _container = element;
         }
     }
 
     // Destructor
     function destructor() {
-        // Get content item element
-        var element = document.getElementById('contentItem_' + _id);
-        if (element !== null) {
-            // Get the canvas container element and remove this content item container
-            var container = document.getElementById('canvasContainer');
-            container.removeChild(element);
-        }
-    }
-
-    // Create (DOM) element with class
-    function createElementWithClass(element, classname) {
-        var domElement = document.createElement(element);
-        domElement.classList.add(classname);
-        return domElement;
+        removeDOMElement();
     }
 
     // Get id property
@@ -183,7 +146,7 @@
     function setIsFullScreen(isFullScreen) {
         _isFullScreen = isFullScreen;
         if (!_isFullScreen) {
-            updateContainer();
+            removeDOMElement();
         }
     }
 
@@ -229,7 +192,7 @@
         */
 
         if (_isFullScreen) {
-            updateFullScreenContentItem(contentItems);
+            updateFullScreenContentItem();
         } else {
             if (_parentContentItem !== undefined) {
                 checkSpacing();
@@ -240,8 +203,6 @@
             _height = 100;
 
             updateChildren();
-
-            updateContainer();
         }
 
         var position = Canvas.Mousepointer.getPosition();
@@ -252,7 +213,7 @@
     function checkSpacing() {
         // Get position of the parent
         var positionParent = _parentContentItem.getPosition();
-        
+
         // ContentItem with children spacing, the check exclude the root content item
         if (positionParent.x !== 0 && positionParent.y !== 0) {
             updateHorizontalSpacing(positionParent);
@@ -286,34 +247,109 @@
         }
     }
 
+
+    // Create (DOM) element with class
+    function createElementWithClass(element, classname) {
+        var domElement = document.createElement(element);
+        domElement.classList.add(classname);
+        return domElement;
+    }
+
+    // Create DOM element for fullscreen content item
+    function createDOMElementForFullscreenContentItem() {
+        var element = document.getElementById('contentItem_' + _id);
+
+        // Create new content item element if it doesn't exist
+        if (element == null) {
+            // Create content item element
+            element = createElementWithClass('div', 'contentItem');
+            element.id = 'contentItem_' + _id;
+
+            // Create wrapper with title
+            var wrapper = createElementWithClass('div', 'wrapper');
+            wrapper.appendChild(createElementWithClass('div', 'title'))
+
+            // Create image wrapper
+            var images = createElementWithClass('div', 'images');
+            var image = document.createElement('img');
+            image.setAttribute('name', 'largeImage');
+            image.setAttribute('src', _pictureURLs[0]);
+            image.setAttribute('width', '100%');
+            image.setAttribute('height', '60%');
+            images.appendChild(image);
+            wrapper.appendChild(images);
+
+            var thumbnails = createElementWithClass('div', 'thumbnails');
+
+            var length = _pictureURLs.length;
+            for (var i = 0; i < length; i++) {
+                var smallImages = document.createElement('img');
+                smallImages.setAttribute('src', _pictureURLs[i]);
+                smallImages.setAttribute('name', 'smallImage' + i);
+                smallImages.setAttribute('height', '100%');
+                smallImages.setAttribute('onmouseover', 'largeImage.src=smallImage' + i + '.src');
+                thumbnails.appendChild(smallImages);
+            }
+
+            images.appendChild(thumbnails);
+
+            // Create text wrapper
+            var textWrapper = createElementWithClass('div', 'content');
+            textWrapper.appendChild(createElementWithClass('div', 'text'));
+            wrapper.appendChild(textWrapper);
+
+            // Add wrapper to element
+            element.appendChild(wrapper);
+
+            // Get the canvas container element and add the child
+            var container = document.getElementById('canvasContainer');
+            container.appendChild(element);
+        }
+
+        // Store element as container
+        _container = element;
+    }
+
+    // Remove the dom element
+    function removeDOMElement() {
+        // Get content item element
+        var element = document.getElementById('contentItem_' + _id);
+        if (element !== null) {
+            // Get the canvas container element and remove this content item container
+            var container = document.getElementById('canvasContainer');
+            container.removeChild(element);
+        }
+    }
+
     // Update full screen content item
-    function updateFullScreenContentItem(contentItems) {
+    function updateFullScreenContentItem() {
+        // Make sure dom element is available
+        createDOMElementForFullscreenContentItem();
+
         var canvasContainer = Canvas.getCanvasContainer();
         var canvasHeight = canvasContainer.height - 100;
 
-        _radius = ((canvasContainer.width > canvasHeight ? canvasHeight : canvasContainer.width) / 2) - 10;
+        _radius = (canvasContainer.width * 0.4);
         _width = (_radius * 2);
         _height = (_radius * 2);
 
         _x = (canvasContainer.width / 2) - _radius;
-        _y = 100; // Reset
+        _y = (canvasContainer.height / 2) - _radius;
 
-        updateContainer();
+        updateDOMElement(canvasHeight);
 
-        _container.getElementsByClassName("contentItemTitle")[0].innerHTML = _title;
-        _container.getElementsByClassName("contentItemText")[0].innerHTML = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui.";
+        _container.getElementsByClassName("title")[0].innerHTML = _title;
+        _container.getElementsByClassName("text")[0].innerHTML = _data.description == "" ? "Nvt" : _data.description;
     }
 
     // Update (DOM) container element
-    function updateContainer() {
-        if (!_hasChildren && _container !== undefined) {
-            _container.style.top = _y + "px";
-            _container.style.left = _x + "px";
-            _container.style.width = (_radius * 2) + "px";
-            _container.style.height = (_radius * 1.40) + "px";
-            _container.style.display = _isFullScreen ? "block" : "none";
-            //_container.style.pointerEvents = "none";
-        }
+    function updateDOMElement(canvasHeight) {
+        _container.style.top = "110px";
+        _container.style.left = _x + "px";
+        _container.style.width = (_radius * 2) + "px";
+        _container.style.height = canvasHeight + "px";
+        //_container.style.display = "block";
+        //_container.style.pointerEvents = "none";
     }
 
     // Update it's children and calculate height
@@ -335,6 +371,11 @@
 
     // Update y position
     function updateYPosition(contentItems) {
+        // Start at y position of parent if set
+        if (_parentContentItem !== undefined) {
+            _y = _parentContentItem.getPosition().y + 30;
+        }
+
         var length = contentItems.length;
         for (var i = 0; i < length; i++) {
             // Don't collide on your self!
@@ -393,10 +434,10 @@
     // Draw content item without childeren
     function drawContentItemWithoutChildren(context) {
         _width = _width > 0 ? -_width : 50;
-        
+
         if (_isFullScreen) {
             context.beginPath();
-            context.fillStyle = 'black';
+            context.fillStyle = 'rgba(0, 0, 0, 0.8)';
             context.arc(_x + _radius, _y + _radius, _radius, 0, 2 * Math.PI);
             context.fill();
             _linewidth = _isHovered ? 3 : 1;
@@ -406,13 +447,13 @@
             context.closePath();
 
             context.beginPath();
-            var centerPointX = _x + _radius;
-            var centerPointY = _y + _radius;
-            var rectX = centerPointX - ((_radius * 0.9) * Math.cos(0.7853981634));
-            var rectY = centerPointY - ((_radius * 0.9) * Math.sin(0.7853981634));
-            var rectWidth = (centerPointX - rectX) * 2;
-            var rectHeight = (centerPointY - rectY) * 1.2;
-            drawImage(context, rectX, rectY, rectWidth, rectHeight);
+            //var centerPointX = _x + _radius;
+            //var centerPointY = _y + _radius;
+            ////var rectX = centerPointX - ((_radius * 0.9) * Math.cos(0.7853981634));
+            //var rectY = centerPointY - ((_radius * 0.9) * Math.sin(0.7853981634));
+            //var rectWidth = (centerPointX - rectX) * 2;
+            //var rectHeight = (centerPointY - rectY) * 1.2;
+            //drawImage(context, (_x + (_radius * 0.5)), 120, _radius, _radius * 0.8);
 
             context.strokeStyle = 'white';
             context.stroke();
@@ -442,12 +483,12 @@
         try {
             context.drawImage(_image, x, y, width, height);
         }
-        catch(ex) {
+        catch (ex) {
             _image.src = 'resources/no_image.jpg';
             context.drawImage(_image, x, y, width, height);
         }
     }
-    
+
     // Draw child content items
     function drawChildren() {
         var length = _children.length;
@@ -537,7 +578,7 @@
         if (!_hasChildren && contentItem.hasChildren()) {
             aX2 = _x + (_radius * 2);
             aY2 = _y + (_radius * 2);
-            
+
             bX2 = position.x + size.width;
             bY2 = position.y + size.height;
         } else if (_hasChildren && !contentItem.hasChildren()) {
@@ -575,22 +616,17 @@
         // distance between centerpointY and y
         var deltaY = centerpointAY >= centerpointBY ? centerpointAY - centerpointBY : centerpointBY - centerpointAY;
 
-        var distance;
 
-        if (deltaY !== 0 && deltaX !== 0) {
-            // angle between centerpoint and given position (in radial)
-            var angle = Math.atan(deltaY / deltaX);
+        // angle between centerpoint and given position (in radial)
+        var angle = Math.atan(deltaY / deltaX);
 
-            // sinus value of angle
-            var sinangle = Math.sin(angle);
+        // sinus value of angle
+        var sinangle = Math.sin(angle);
 
-            // distance between centerpoint and given position
-            distance = deltaY / sinangle;
-        } else {
-            distance = deltaX !== 0 ? deltaX : deltaY;
-        }
+        // distance between centerpoint and given position
+        var distance = deltaY / sinangle;
 
-        // check distance between centerpoints
+        // is mousepoint in circle
         distance = (deltaX === 0 && deltaY === 0) ? 0 : distance;
         return ((_radius + bRadius) >= distance);
     }
