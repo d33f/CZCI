@@ -133,7 +133,8 @@
                 // Set A class
                 var newLink = document.createElement('a');
                 newLink.setAttribute('class', 'header');
-                newLink.setAttribute('onclick', 'Canvas.setTimeline(' + array[i].id + '); Canvas.PanelManager.hideBothPanels();');
+                newLink.setAttribute('onclick', 'Canvas.setTimeline(' + array[i].id + ');');
+                //newLink.setAttribute('onclick', 'Canvas.setTimeline(' + array[i].id + '); Canvas.PanelManager.hideBothPanels();');
 
                 // Get and set the text of the item and append the text content to the A class
                 var caption = document.createTextNode(array[i].title);
@@ -167,12 +168,14 @@
             var startDate = document.getElementById("startDateInputContentItem").value;
             var endDate = document.getElementById("endDateInputContentItem").value;
             var description = document.getElementById("descriptionInputContentItem").value;
-            var imageUrl = document.getElementById("imageUrlContentItem").value;
+
+            var imageUrl = document.getElementById("imageUrlContentItem").value;;
+            var pictureURLs = new Array();
+            pictureURLs.push(imageUrl)
 
             var parentId = currentItem.getId();
-            Canvas.BackendService.createPersonalContentItem(startDate, endDate, title, description, hasChildren, imageUrl, parentId);
+            Canvas.BackendService.createPersonalContentItem(startDate, endDate, title, description, hasChildren, parentId, pictureURLs);
         }
-
     })(Canvas.PanelManager || (Canvas.PanelManager = {}));
     var PanelManager = Canvas.PanelManager;
 })(Canvas || (Canvas = {}));

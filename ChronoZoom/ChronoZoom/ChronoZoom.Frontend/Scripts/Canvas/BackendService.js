@@ -160,10 +160,10 @@ var Canvas;
             }
         }
 
-        function createPersonalContentItem(beginDate, endDate, title, description, hasChildren, imageUrl, parentContentItemId) {
+        function createPersonalContentItem(beginDate, endDate, title, description, hasChildren, parentContentItemId, pictureURLs) {
             var xmlHttpRequest = new XMLHttpRequest();
             var url = _baseUrl + "contentitem";
-            var object = createContentItemObjectFormField(beginDate, endDate, title, description, imageUrl, hasChildren, parentContentItemId);
+            var object = createContentItemObjectFormField(beginDate, endDate, title, description, hasChildren, parentContentItemId, pictureURLs);
             xmlHttpRequest.open("POST", url, false);
 
             //Send the proper header information along with the request
@@ -176,18 +176,18 @@ var Canvas;
             xmlHttpRequest.send(JSON.stringify(object));
         }
 
-        function createContentItemObjectFormField(beginDate, endDate, title, description, hasChildren, imageUrl, parentContentItemId) {
+        function createContentItemObjectFormField(beginDate, endDate, title, description, hasChildren, parentContentItemId, pictureURLs) {
             console.log(parentContentItemId);
             return{
                 beginDate: beginDate,
                 endDate: endDate,
                 title: title,
                 description: description,
-                HasChildren: hasChildren,
-                ParentId: parentContentItemId,
+                hasChildren: hasChildren,
+                parentId: parentContentItemId,
                 //sourceURL: json.SourceURL,
                 //sourceRef: json.SourceRef,
-               // pictureURLs: json.PictureURLs,
+                pictureURLs: pictureURLs,
             }
         }
 
