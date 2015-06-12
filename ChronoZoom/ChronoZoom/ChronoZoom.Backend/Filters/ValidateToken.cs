@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
 using ChronoZoom.Backend.Business.Interfaces;
+using ChronoZoom.Backend.Entities;
 
 namespace ChronoZoom.Backend.Filters
 {
@@ -31,6 +33,9 @@ namespace ChronoZoom.Backend.Filters
                 {
                     if (_accountService.IsTokenValid(tokens.First()))
                     {
+                        Account account = _accountService.GetAccountByToken(tokens.First());
+                        HttpContext.Current.User = account;
+                        Thread.CurrentPrincipal = account;
                         base.OnAuthorization(actionContext);
                     }
                     else

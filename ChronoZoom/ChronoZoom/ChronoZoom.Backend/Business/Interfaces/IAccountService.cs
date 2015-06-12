@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ChronoZoom.Backend.Entities;
 
 namespace ChronoZoom.Backend.Business.Interfaces
 {
@@ -12,5 +13,6 @@ namespace ChronoZoom.Backend.Business.Interfaces
         bool Register(string email, string password, string screenname);
         bool Logout(string token);
         bool IsTokenValid(string first);
+        Account GetAccountByToken(string sessiontoken);
     }
 }

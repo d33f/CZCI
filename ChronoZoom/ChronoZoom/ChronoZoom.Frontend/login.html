@@ -20,7 +20,8 @@
                     document.cookie = "token=" + data;
                 },
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'token': getCookie("token")
                 },
                 data: JSON.stringify(dto)
             });
@@ -72,6 +73,11 @@
                 },
                 data:JSON.stringify(getCookie("token"))
             });
+        }
+
+        function getCookie(name) {
+            match = document.cookie.match(new RegExp(name + '=([^;]+)'));
+            if (match) return match[1];
         }
     </script>
 </head>

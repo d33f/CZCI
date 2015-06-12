@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using System.Web.Http.Results;
 using ChronoZoom.Backend.Business.Interfaces;
 using ChronoZoom.Backend.DTO;
+using ChronoZoom.Backend.Entities;
 using ChronoZoom.Backend.Exceptions;
+using ChronoZoom.Backend.Filters;
 
 namespace ChronoZoom.Backend.Controllers
 {
@@ -18,10 +21,12 @@ namespace ChronoZoom.Backend.Controllers
             _service = service;
         }
 
+        [ValidateToken]
         [HttpPost]
         [ActionName("login")]
         public IHttpActionResult Login(LoginDto login)
         {
+            var account = HttpContext.Current.User as Account;
             try
             {
                 Guid guid = _service.Login(login.Email, login.Password);

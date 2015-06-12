@@ -17,7 +17,7 @@ namespace ChronoZoom.Backend.Data.MSSQL.Dao
             }
         }
 
-        public Account GetMember(string email)
+        public Account GetAccountByEmail(string email)
         {
             using (var context = new DatabaseContext())
             {
@@ -64,12 +64,12 @@ namespace ChronoZoom.Backend.Data.MSSQL.Dao
             }
         }
 
-        public bool UpdateSessionTime(string token, DateTime newTime)
+        public bool UpdateSessionTime(string token, DateTime timestamp)
         {
             using (var context = new DatabaseContext())
             {
-                const string query = "Update session set timestamp =@timestamp where token = @token; select @@rowcount";
-                return context.SingleOrDefault<int>(query, new {token, newTime}) > 0;
+                const string query = "Update session set timestamp=@timestamp where token = @token; select @@rowcount";
+                return context.SingleOrDefault<int>(query, new { timestamp,token }) > 0;
             }
         }
 
@@ -88,6 +88,15 @@ namespace ChronoZoom.Backend.Data.MSSQL.Dao
             {
                 const string query = "Select count(*) as found from account where screenname=@screenname";
                 return context.SingleOrDefault<int>(query, new { screenname }) > 0;
+            }
+        }
+
+        public Account GetAccountByToken(string sessionToken)
+        {
+            using (var context = new DatabaseContext())
+            {
+                const string query = "Select * from account where id =(select id from session where token=@sessionToken)";
+                return context.SingleOrDefault<Account>(query, new { sessionToken });
             }
         }
     }

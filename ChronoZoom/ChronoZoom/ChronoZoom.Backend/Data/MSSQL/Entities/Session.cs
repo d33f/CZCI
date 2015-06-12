@@ -12,7 +12,7 @@ namespace ChronoZoom.Backend.Data.MSSQL.Entities
         public long AccountId { get; set; }
 
         public string TokenString {
-            get { return Token.ToString("N"); }
+            get { return Token.ToString(); }
             set { Token = new Guid(value); }
         }
     }

@@ -7,6 +7,7 @@ using ChronoZoom.Backend.Business.Interfaces;
 using ChronoZoom.Backend.Data.Interfaces;
 using ChronoZoom.Backend.Data.MSSQL.Entities;
 using ChronoZoom.Backend.Exceptions;
+using Account = ChronoZoom.Backend.Entities.Account;
 
 namespace ChronoZoom.Backend.Business
 {
@@ -22,7 +23,7 @@ namespace ChronoZoom.Backend.Business
         public Guid Login(string email, string password)
         {
             Guid guid = Guid.Empty;
-            var member = _accountDao.GetMember(email);
+            var member = _accountDao.GetAccountByEmail(email);
             if (member == null) throw new LoginFailedException();
             //TODO : CHECK IF MEMBER EXISTS AND NOT IS NULL
             if (Verify(member.Salt, member.Hash, password))
@@ -37,7 +38,7 @@ namespace ChronoZoom.Backend.Business
         private Guid CreateSession(long accountId)
         {
             var guid = Guid.NewGuid();
-            var session = _accountDao.CreateSession(guid.ToString("N"), DateTime.UtcNow,accountId);
+            var session = _accountDao.CreateSession(guid.ToString(), DateTime.UtcNow,accountId);
             return guid;
         }
 
@@ -90,6 +91,7 @@ namespace ChronoZoom.Backend.Business
         public bool IsTokenValid(string token)
         {
             Session session = _accountDao.GetSession(token);
+            if (session == null) return false;
             TimeSpan span = DateTime.UtcNow - session.Timestamp;
             if (span.Minutes > 20)
             {
@@ -101,6 +103,18 @@ namespace ChronoZoom.Backend.Business
             if (!parsed) return false;
             _accountDao.UpdateSessionTime(token,DateTime.UtcNow);
             return true;
+        }
+
+        public Account GetAccountByToken(string sessiontoken)
+        {
+            var accountByToken = _accountDao.GetAccountByToken(sessiontoken);
+            Account acc = new Account
+            {
+                Email = accountByToken.Email,
+                Id = accountByToken.Id,
+                Screenname = accountByToken.Screenname
+            };
+            return acc;
         }
     }
 }
