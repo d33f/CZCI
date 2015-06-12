@@ -186,7 +186,7 @@ namespace Dapper
 
                     if(sourceEntityProperty.PropertyType == typeof(String[]) && entityProperty.PropertyType == typeof(String))
                     {
-                        entityProperty.SetValue(entity, JsonConvert.SerializeObject(value));
+                        entityProperty.SetValue(entity, value != null && (value as String[]).Length > 0 ? JsonConvert.SerializeObject(value) : "[]");
                     }
                     else if (sourceEntityProperty.PropertyType == typeof(String) && entityProperty.PropertyType == typeof(String[]))
                     {
