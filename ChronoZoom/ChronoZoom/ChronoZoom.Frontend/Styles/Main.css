@@ -1,0 +1,37 @@
+﻿.ui.slide.reveal > .hidden.content {
+    margin-top: 30px;
+}
+.ui.segment.slide.down.instant.reveal {
+    height: 150px;
+    width: 150px;
+}
+.ui.slide.reveal {
+    white-space: normal;
+    text-align: center;
+    background-color: white;
+    border-radius: 5px;
+    
+}
+body {
+        position: relative;
+    background: url('../Resources/Space.jpg');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    width: 100%;
+}
+html {
+        padding: 15px;
+}
+.ui.segment {
+    background-color: rgba(255, 255, 255, .4);
+}
+h1 {
+    color: #f1f1f1;
+}
+.ui.grid {
+    margin-top: 1.5rem;
+}
+.timelineBox {
+    margin: 5px;
+    border: 1px solid #777;
+}

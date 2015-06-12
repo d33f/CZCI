@@ -3,6 +3,9 @@
 <head>
     <title></title>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.12.2/semantic.css" />
+    <link href="Styles/Style.css" rel="stylesheet" />
+    <link href="Styles/Main.css" rel="stylesheet" />
     <script>
         var _baseUrl = "http://localhost:40001/api/";
         function login() {
@@ -16,7 +19,7 @@
                 url: "http://localhost:40001/api/account/login",
                 type: 'post',
                 dataTtpye: 'application/json; charset=utf-8',
-                success: function(data) {
+                success: function (data) {
                     document.cookie = "token=" + data;
                 },
                 headers: {
@@ -44,7 +47,7 @@
             email = "riiichardje@live.no";
             password = "asd";
             screenname = "RichardCZ";
-            var dto = { "Email": email, "Password": password , "Screenname" : screenname};
+            var dto = { "Email": email, "Password": password, "Screenname": screenname };
 
             $.ajax({
                 url: "http://localhost:40001/api/account/register",
@@ -71,7 +74,7 @@
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                data:JSON.stringify(getCookie("token"))
+                data: JSON.stringify(getCookie("token"))
             });
         }
 
@@ -82,9 +85,98 @@
     </script>
 </head>
 <body>
-    <input id="email" type="text" placeholder="email" />
-    <input id="password" type="password" placeholder="password" />
-<input type="submit" onclick="login()" value="Login"/>
-    <input type="submit" onclick="register()" value="Register" />
+<!--<div class="ui segment">
+    <input id="email" type="text" placeholder="email"/>
+    <input id="password" type="password" placeholder="password"/>
+    <input type="submit" onclick="login()" value="Login"/>
+    <input type="submit" onclick="register()" value="Register"/>
+
+</div>-->
+<h1>ChronoClick v1.0</h1>
+    <div class="ui divider"></div>
+    <div class="ui two column grid">
+        <div class="column">
+            <div class="ui segment">
+                <h1>Public Timelines</h1>
+                <div class="ui  slide right instant reveal timelineBox">
+                    <div class="ui top attached label">Amsterdam museum</div>
+                    <div class="visible content ">
+                        <img src="http://topwalls.net/wp-content/uploads/2013/05/Amsterdam-Museum.jpg" height="125" width="150" class="ui image">
+                    </div>
+                    <div class="hidden content">
+                        This timeline shows many items of the amsterdam museum
+                    </div>
+                </div>
+
+                <div class="ui slide right instant reveal timelineBox">
+                    <div class="ui top attached label">WW I and II</div>
+                    <div class="visible content ">
+                        <img src="http://www.tacticasistrategia.ro/wp-content/uploads/ngg_featured/1671172-escadrila.jpg" height="125" width="150" class="ui image">
+                    </div>
+                    <div class="hidden content">
+                        World War I (WWI or WW1), also known as the First World War or the Great War, was a global war centred in Europe that began on 28 July 1914 and lasted until 11 November 1918. More than 9 million combatants and 7 million civilians died as a result of the war, a casualty rate exacerbated by the belligerents' technological and industrial sophistication, and tactical stalemate. It was one of the deadliest conflicts in history, paving the way for major political changes, including revolutions in many of the nations involved
+                    </div>
+                </div>
+
+                <div class="ui slide right instant reveal timelineBox">
+                    <div class="ui top attached label">WW I and II</div>
+                    <div class="visible content ">
+                        <img src="http://www.tacticasistrategia.ro/wp-content/uploads/ngg_featured/1671172-escadrila.jpg" height="125" width="150" class="ui image">
+                    </div>
+                    <div class="hidden content">
+                        World War I (WWI or WW1), also known as the First World War or the Great War, was a global war centred in Europe that began on 28 July 1914 and lasted until 11 November 1918. More than 9 million combatants and 7 million civilians died as a result of the war, a casualty rate exacerbated by the belligerents' technological and industrial sophistication, and tactical stalemate. It was one of the deadliest conflicts in history, paving the way for major political changes, including revolutions in many of the nations involved
+                    </div>
+                </div>
+
+                <div class="ui slide right instant reveal timelineBox">
+                    <div class="ui top attached label">WW I and II</div>
+                    <div class="visible content ">
+                        <img src="http://www.tacticasistrategia.ro/wp-content/uploads/ngg_featured/1671172-escadrila.jpg" height="125" width="150" class="ui image">
+                    </div>
+                    <div class="hidden content">
+                        World War I (WWI or WW1), also known as the First World War or the Great War, was a global war centred in Europe that began on 28 July 1914 and lasted until 11 November 1918. More than 9 million combatants and 7 million civilians died as a result of the war, a casualty rate exacerbated by the belligerents' technological and industrial sophistication, and tactical stalemate. It was one of the deadliest conflicts in history, paving the way for major political changes, including revolutions in many of the nations involved
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="column">
+            <div class="ui segment">
+                <h1>Login</h1>
+                <div class="ui two column middle aligned relaxed fitted stackable grid">
+                    <div class="column">
+                        <div class="ui form segment">
+                            <div class="field">
+                                <label>Username</label>
+                                <div class="ui left icon input">
+                                    <input type="text" placeholder="Username">
+                                    <i class="user icon"></i>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label>Password</label>
+                                <div class="ui left icon input">
+                                    <input type="password">
+                                    <i class="lock icon"></i>
+                                </div>
+                            </div>
+                            <div class="ui blue submit button">Login</div>
+                        </div>
+                    </div>
+                    <div class="ui vertical divider">
+                        Or
+                    </div>
+                    <div class="center aligned column">
+                        <div class="huge green ui labeled icon button">
+                            <i class="signup icon"></i>
+                            Sign Up
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 </body>
 </html>

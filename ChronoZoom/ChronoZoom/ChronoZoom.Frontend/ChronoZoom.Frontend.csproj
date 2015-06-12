@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="login.html" />
+    <Content Include="Styles\Main.css" />
     <Content Include="upload.html" />
     <Content Include="index.html" />
     <None Include="Properties\PublishProfiles\custom.pubxml" />
