@@ -72,6 +72,7 @@
             var endDate = document.getElementById("endDateInput").value;
             var description = document.getElementById("descriptionInput").value;
             var imageUrl = document.getElementById("imageUrlInput").value;
+            var 
 
             Canvas.BackendService.createPersonalTimeLine(title, startDate, endDate, description, imageUrl);
 

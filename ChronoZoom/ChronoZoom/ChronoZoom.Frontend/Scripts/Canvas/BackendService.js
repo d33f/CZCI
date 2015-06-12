@@ -49,7 +49,8 @@ var Canvas;
                 title: json.Title,
                 contentItems: [],
                 description: json.Description,
-                backgroundURL: json.BackgroundURL
+                backgroundURL: json.BackgroundURL,
+                isPublic: json.IsPublic
             };
         }
 
@@ -136,10 +137,10 @@ var Canvas;
         }
 
 
-        function createPersonalTimeLine(title, beginDate, endDate, description, imageUrl) {
+        function createPersonalTimeLine(title, beginDate, endDate, description, imageUrl, isPublic) {
             var xmlHttpRequest = new XMLHttpRequest();
             var url = _baseUrl + "timeline";
-            var object = createTimelineObjectFormFields(title, beginDate, endDate, description, imageUrl);
+            var object = createTimelineObjectFormFields(title, beginDate, endDate, description, imageUrl, isPublic);
             xmlHttpRequest.open("POST", url, false);
 
             //Send the proper header information along with the request
@@ -152,13 +153,14 @@ var Canvas;
             xmlHttpRequest.send(JSON.stringify(object));
         }
 
-        function createTimelineObjectFormFields(title, beginDate, endDate, description, imageUrl) {
+        function createTimelineObjectFormFields(title, beginDate, endDate, description, imageUrl, isPublic) {
             return {
                 Title: title,
                 BeginDate: beginDate,
                 EndDate: endDate,
                 Description: description,
-                BackgroundUrl: imageUrl
+                BackgroundUrl: imageUrl,
+                IsPublic: isPublic
             }
         }
 
