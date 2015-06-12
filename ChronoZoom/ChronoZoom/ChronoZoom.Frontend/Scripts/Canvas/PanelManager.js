@@ -41,8 +41,15 @@
         }
 
         function clearAddItemPanel() {
-            var errorMessages = document.getElementById("importOutputAddItem");
-            errorMessages.innerHTML = "";
+            document.getElementById("importOutputAddItem").innerHTML = "";
+            document.getElementById("titleInputContentItem").value = "";
+            document.getElementById("startDateInputContentItem").value = "";
+            document.getElementById("endDateInputContentItem").value = "";
+            document.getElementById("descriptionInputContentItem").value = "";
+            document.getElementById("imageUrlContentItem").value = "";
+            var radios = document.getElementsByName('select')
+            radios[0].checked = false;
+            radios[1].checked = false;
         }
 
         function updateAddItemPanel() {
