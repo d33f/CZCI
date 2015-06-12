@@ -69,7 +69,7 @@
 
         // Check if it has no children
         if (!_hasChildren) {
-            // Get content item element
+            // Get content item element 
             _radius = 50;
             _width = (_radius * 2);
             _height = (_radius * 2);
