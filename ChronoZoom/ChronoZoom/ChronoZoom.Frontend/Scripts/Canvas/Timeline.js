@@ -12,7 +12,7 @@
         var _contentItems = [];
         var _oldRange = [];
         var _newRange = [];
-        var _fullscreenContentItem = {};
+        var _fullscreenContentItem;
 
         // Constructor
         function initialize() {
@@ -31,9 +31,10 @@
             for (var i = 0; i < length; i++) {
                 _contentItems[i].destructor();
             }
-
             // Get and set old content items and content items
             _contentItems = Canvas.ContentItemService.getContentItems();
+
+            console.log(_contentItems);
 
             // Hide loader
             Canvas.WindowManager.showLoader(false);
@@ -150,7 +151,7 @@
         }
 
         function stopFullScreenContentItemMode() {
-            if (_fullscreenContentItem  instanceof ContentItem) _fullscreenContentItem.setIsFullScreen(false);
+            if (_fullscreenContentItem  !== undefined) _fullscreenContentItem.setIsFullScreen(false);
         }
 
         // Handle click on content item with children
