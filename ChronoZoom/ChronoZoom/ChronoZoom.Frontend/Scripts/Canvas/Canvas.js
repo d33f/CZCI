@@ -85,8 +85,8 @@
         getContext().clearRect(0, 0, _canvasContainer.width, _canvasContainer.height);
 
         // Draw all components
-        Canvas.Timescale.draw();
         Canvas.Timeline.draw();
+        Canvas.Timescale.draw();
     }
 
     // The canvas draw loop

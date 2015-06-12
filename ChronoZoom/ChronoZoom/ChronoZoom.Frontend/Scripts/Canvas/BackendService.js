@@ -86,7 +86,7 @@ var Canvas;
                 hasChildren: json.HasChildren,
                 sourceURL: json.SourceURL,
                 sourceRef: json.SourceRef,
-                pictureURL: json.PictureURL,
+                pictureURLs: json.PictureURLs,
             }, parentContentItem);
 
             // Convert all content items

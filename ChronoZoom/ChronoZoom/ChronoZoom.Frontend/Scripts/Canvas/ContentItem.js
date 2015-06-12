@@ -273,7 +273,7 @@
             var images = createElementWithClass('div', 'images');
             var image = document.createElement('img');
             image.setAttribute('name', 'largeImage');
-            image.setAttribute('src', _pictureURLs[0]);
+            image.setAttribute('src', _pictureURLs.length > 0 ? _pictureURLs[0] : 'resources/no_image.jpg');
             image.setAttribute('width', '100%');
             image.setAttribute('height', '60%');
             images.appendChild(image);
