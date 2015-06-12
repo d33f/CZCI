@@ -41,7 +41,7 @@ namespace ChronoZoom.Backend.Tests.Business
 
             // Act
             long result = target.ProcessFile("../../../batch.txt");
-
+            
             // Assert
             Assert.AreEqual(10, result);
             Assert.AreEqual((long)11210, ID);

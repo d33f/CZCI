@@ -31,10 +31,12 @@ namespace ChronoZoom.Backend.Business
                 using (StreamReader streamReader = new StreamReader(fileStream, Encoding.UTF8, true, 128)) 
                 {
                     string line = streamReader.ReadLine();
-                    Timeline timeline = CreateTimeline(line);
+                    Timeline timeline = ConvertJSONToTimeline(line);
+                    long timelineID = timeline.Id;
+                    timeline = _timelineDao.Add(timeline);
 
-                    ConcurrentDictionary<long, long> idTranslation = new ConcurrentDictionary<long, long>();
-                    idTranslation.GetOrAdd(0, timeline.RootContentItemId);
+                    Dictionary<long, long> idTranslation = new Dictionary<long, long>();
+                    idTranslation.Add(timelineID, timeline.RootContentItemId);
 
                     CreateContentitems(streamReader, line, idTranslation);
 
@@ -43,42 +45,28 @@ namespace ChronoZoom.Backend.Business
             }
         }
 
-        private void CreateContentitems(StreamReader streamReader, string line, ConcurrentDictionary<long, long> idTranslation)
+        private void CreateContentitems(StreamReader streamReader, string line, Dictionary<long, long> idTranslation)
         {
-            List<Task> tasks = new List<Task>();
-            ConcurrentBag<ContentItem> contentItems = new ConcurrentBag<ContentItem>();
-            List<ContentItem> failedContentItems;
+            List<ContentItem> failedContentItems = new List<ContentItem>();
 
-            int buffer = 100;
             while ((line = streamReader.ReadLine()) != null)
             {
-                string currentLine = line;
-                tasks.Add(Task.Factory.StartNew(() => CreateContentItem(idTranslation, contentItems, currentLine)));
+                ContentItem contentItem = ConvertJSONToContentItem(line);
 
-                if (tasks.Count() > buffer)
+                if (!TrySaveContentItem(idTranslation, contentItem))
                 {
-                    Task.WaitAll(tasks.ToArray());
-                    tasks.Clear();
-
-                    failedContentItems = RetryAddingContentItems(idTranslation, contentItems);
-                    contentItems = new ConcurrentBag<ContentItem>();
-                    foreach (ContentItem failedContentItem in failedContentItems)
-                    {
-                        contentItems.Add(failedContentItem);
-                    }
+                    failedContentItems.Add(contentItem);
                 }
             }
-
-            Task.WaitAll(tasks.ToArray());
-
-            failedContentItems = RetryAddingContentItems(idTranslation, contentItems);
+            
+            failedContentItems = TryAddingContentItems(idTranslation, failedContentItems);
             if (failedContentItems.Count > 0)
             {
                 throw new Exception(String.Format("Failed to process {0} content items", failedContentItems.Count));
             }
         }
 
-        private List<ContentItem> RetryAddingContentItems(ConcurrentDictionary<long, long> idTranslation, ConcurrentBag<ContentItem> contentItems)
+        private List<ContentItem> TryAddingContentItems(Dictionary<long, long> idTranslation, IEnumerable<ContentItem> contentItems)
         {
             List<ContentItem> failedContentItems = new List<ContentItem>();
             foreach (ContentItem contentItem in contentItems.OrderBy(o => o.Id))
@@ -91,18 +79,7 @@ namespace ChronoZoom.Backend.Business
             return failedContentItems;
         }
 
-        private void CreateContentItem(ConcurrentDictionary<long, long> idTranslation, ConcurrentBag<ContentItem> contentItems, string currentLine)
-        {
-            ContentItem contentItem = ConvertJSONToContentItem(currentLine);
-
-            if (!TrySaveContentItem(idTranslation, contentItem))
-            {
-                contentItems.Add(contentItem);
-            }
-        }
-
-        private object _trySaveContentItemLock = new object();
-        private bool TrySaveContentItem(ConcurrentDictionary<long, long> idTranslation, ContentItem contentItem)
+        private bool TrySaveContentItem(Dictionary<long, long> idTranslation, ContentItem contentItem)
         {
             long parentID;
             if (idTranslation.TryGetValue(contentItem.ParentId, out parentID))
@@ -113,18 +90,12 @@ namespace ChronoZoom.Backend.Business
                 contentItem.ParentId = parentID;
 
                 _contentItemDao.Add(contentItem);
-                idTranslation.TryAdd(id, contentItem.Id);
+                idTranslation.Add(id, contentItem.Id);
 
                 return true;
             }
 
             return false;
-        }
-
-        private Timeline CreateTimeline(string line)
-        {
-            Timeline timeline = ConvertJSONToTimeline(line);
-            return _timelineDao.Add(timeline);
         }
 
         private Timeline ConvertJSONToTimeline(string s)
@@ -133,6 +104,7 @@ namespace ChronoZoom.Backend.Business
 
             return new Timeline()
             {
+                Id = (long)json["Id"],
                 BeginDate = (decimal)json["BeginDate"],
                 EndDate = (decimal)json["EndDate"],
                 Title = (string)json["Title"],
