@@ -72,9 +72,9 @@
             var endDate = document.getElementById("endDateInput").value;
             var description = document.getElementById("descriptionInput").value;
             var imageUrl = document.getElementById("imageUrlInput").value;
-            var 
+            var isParent = document.getElementById("isParentInput").value;
 
-            Canvas.BackendService.createPersonalTimeLine(title, startDate, endDate, description, imageUrl);
+            Canvas.BackendService.createPersonalTimeLine(title, startDate, endDate, description, imageUrl, isParent);
 
             // write output to panel
             var output = document.getElementById("importOutput");
