@@ -74,6 +74,21 @@
             var imageUrl = document.getElementById("imageUrlInput").value;
             var isParent = document.getElementById("isParentInput").value;
 
+            // assign boolean value to checkbox
+            if (isParent == 'on')
+            {
+                alert('isParent = true');
+                isParent = true;
+            }
+            else if (isParent == 'off')
+            {
+                isParent = false;
+            }
+            else
+            {
+                isParent = null;
+            }
+
             Canvas.BackendService.createPersonalTimeLine(title, startDate, endDate, description, imageUrl, isParent);
 
             // write output to panel
