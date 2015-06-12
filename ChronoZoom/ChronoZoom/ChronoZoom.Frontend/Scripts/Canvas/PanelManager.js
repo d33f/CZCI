@@ -7,7 +7,7 @@
         PanelManager.addTimelines = addTimelines;
         PanelManager.imageUrlFieldShow = imageUrlFieldShow;
         PanelManager.updateAddItemPanel = updateAddItemPanel;
-        PanelManager.showaddTimelinePanel = showaddTimelinePanel;
+        PanelManager.showAddTimelinePanel = showAddTimelinePanel;
         PanelManager.showAddItemPanel = showAddItemPanel;
         PanelManager.handleAddContentItemInput = handleAddContentItemInput;
 
@@ -22,7 +22,7 @@
         }
 
         //Show the panel for adding new timelines on the left side of the screen
-        function showaddTimelinePanel(showPanel) {
+        function showAddTimelinePanel(showPanel) {
             var panel = document.getElementById('addTimelinePanel');
             panel.className = showPanel ? 'addTimelinePanelShow' : 'addTimelinePanelHidden';
         }
@@ -61,7 +61,7 @@
         }*/
 
         function imageUrlFieldShow(showField) {
-            var imageUrlField = document.getElementById('imageUrl');
+            var imageUrlField = document.getElementById('imageUrlInput');
             imageUrlField.disabled = showField;
         }
 
@@ -71,21 +71,23 @@
             var startDate = document.getElementById("startDateInput").value;
             var endDate = document.getElementById("endDateInput").value;
             var description = document.getElementById("descriptionInput").value;
+            var imageUrl = document.getElementById("imageUrlInput").value;
 
-            Canvas.BackendService.createPersonalTimeLine(title, startDate, endDate, description);
+            Canvas.BackendService.createPersonalTimeLine(title, startDate, endDate, description, imageUrl);
 
             // write output to panel
             var output = document.getElementById("importOutput");
             if (output.textContent !== undefined) {
                 // Input validation
 
-                if (title == "" || startDate == "" || endDate == "") {
+                if (title == "" || startDate == "" || endDate == "" || description == "" || imageUrl == "") {
                     output.textContent = "Please check your input! Input is not correct.";
                 }
                 else {
                     // Refresh timeline panel
                     addTimelines();
-                    showImportPanel(false);
+                    alert('Timeline added');
+                    showAddTimelinePanel(false);
                     showTimelinePanel(true);
                 }
             }
