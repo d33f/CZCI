@@ -65,13 +65,14 @@
         // Add child to parent
         if (_parentContentItem !== undefined) {
             _parentContentItem.addChild(instance);
+            _y = _parentContentItem.getPosition().y + 30;
         }
 
         // Check if it has no children
         if (!_hasChildren) {
-            // Get content item element
+            // Get content item element 
             _radius = 50;
-            _width = (_radius * 2);
+            _width = (_radius * 2); 
             _height = (_radius * 2);
 
             var element = document.getElementById('contentItem_' + _id);
@@ -334,11 +335,6 @@
 
     // Update y position
     function updateYPosition(contentItems) {
-        // Start at y position of parent if set
-        if (_parentContentItem !== undefined) {
-            _y = _parentContentItem.getPosition().y + 30;
-        }
-
         var length = contentItems.length;
         for (var i = 0; i < length; i++) {
             // Don't collide on your self!
@@ -579,17 +575,22 @@
         // distance between centerpointY and y
         var deltaY = centerpointAY >= centerpointBY ? centerpointAY - centerpointBY : centerpointBY - centerpointAY;
 
+        var distance;
 
-        // angle between centerpoint and given position (in radial)
-        var angle = Math.atan(deltaY / deltaX);
+        if (deltaY !== 0 && deltaX !== 0) {
+            // angle between centerpoint and given position (in radial)
+            var angle = Math.atan(deltaY / deltaX);
 
-        // sinus value of angle
-        var sinangle = Math.sin(angle);
+            // sinus value of angle
+            var sinangle = Math.sin(angle);
 
-        // distance between centerpoint and given position
-        var distance = deltaY / sinangle;
+            // distance between centerpoint and given position
+            distance = deltaY / sinangle;
+        } else {
+            distance = deltaX !== 0 ? deltaX : deltaY;
+        }
 
-        // is mousepoint in circle
+        // check distance between centerpoints
         distance = (deltaX === 0 && deltaY === 0) ? 0 : distance;
         return ((_radius + bRadius) >= distance);
     }
