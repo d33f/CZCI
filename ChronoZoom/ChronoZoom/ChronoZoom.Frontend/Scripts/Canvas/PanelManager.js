@@ -81,24 +81,9 @@
             var endDate = document.getElementById("endDateInput").value;
             var description = document.getElementById("descriptionInput").value;
             var imageUrl = document.getElementById("imageUrlInput").value;
-            var isParent = document.getElementById("isParentInput").value;
+            var isPublic = document.getElementById("isPublicInput").checked;
 
-            // assign boolean value to checkbox
-            if (isParent == 'on')
-            {
-                alert('isParent = true');
-                isParent = true;
-            }
-            else if (isParent == 'off')
-            {
-                isParent = false;
-            }
-            else
-            {
-                isParent = null;
-            }
-
-            Canvas.BackendService.createPersonalTimeLine(title, startDate, endDate, description, imageUrl, isParent);
+            Canvas.BackendService.createPersonalTimeLine(title, startDate, endDate, description, imageUrl, isPublic);
 
             // write output to panel
             var output = document.getElementById("importOutput");
