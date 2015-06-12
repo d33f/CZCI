@@ -26,11 +26,8 @@
 
         // Handle on content item changed event
         function onContentItemsChanged() {
-            // Destruct old content items
-            var length = _contentItems.length;
-            for (var i = 0; i < length; i++) {
-                _contentItems[i].destructor();
-            }
+            _contentItems = [];
+
             // Get and set old content items and content items
             _contentItems = Canvas.ContentItemService.getContentItems();
 
