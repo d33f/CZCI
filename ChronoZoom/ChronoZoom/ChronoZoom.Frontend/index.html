@@ -105,9 +105,13 @@
                 <textarea id="descriptionInputContentItem" placeholder="Timeline description"></textarea>
             </div>
             <div style="padding-top:15px; float: right">
-                <div class="compact ui button green small right" onclick="Canvas.PanelManager.handleAddContentItemInput()">
+                <div class="compact ui button green small right" onclick="Canvas.PanelManager.handleAddContentItemInput(); Canvas.PanelManager.clearAddItemPanel()">
                     <i class="icon add"></i>
                     Add item
+                </div>
+                <div class="compact ui button green small right" onclick="Canvas.PanelManager.handleAddContentItemInput(); Canvas.PanelManager.clearAddItemPanel()">
+                    <i class="icon add"></i>
+                    Add + new entry
                 </div>
                 <div class="compact negative ui button" onclick="Canvas.PanelManager.showAddItemPanel(false)">Close</div>
             </div>

@@ -10,6 +10,7 @@
         PanelManager.showAddTimelinePanel = showAddTimelinePanel;
         PanelManager.showAddItemPanel = showAddItemPanel;
         PanelManager.handleAddContentItemInput = handleAddContentItemInput;
+        PanelManager.clearAddItemPanel = clearAddItemPanel;
 
         var rootItem;
         var currentItem;
@@ -210,6 +211,12 @@
                 errorMessage = errorMessage + "<li>Begin and enddate not between " + parentIdBeginDate + " and " + parentIdEndDate + "</li>";
                 correctValues = false;
             }
+
+            if (startDate > endDate) {
+                errorMessage = errorMessage + "<li> Start date bigger then end date</li>";
+                correctValues = false;
+            }
+
             if (parentId === "" || parentId === null) {
                 errorMessage = errorMessage + "<li>" + "Cannot find parentId, cannot add this item! </li>";
                 correctValues = false;
@@ -218,9 +225,11 @@
                 errorMessage = errorMessage + "<li>Parentid is 0 </li>";
                 correctValues = false;
             }
+
+
             
             if (correctValues !== false) {
-                Canvas.BackendService.createPersonalContentItem(startDate, endDate, title, description, hasChildren, parentId, pictureURLs);
+                Canvas.BackendService.createPersonalContentItem(startDate, endDate, title, description, hasChildren, currentItem, pictureURLs);
             }
             else {
                 output.innerHTML = errorMessage;

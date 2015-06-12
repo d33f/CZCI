@@ -77,6 +77,27 @@ var Canvas;
             return contentItem;
         };
 
+        // Create a timeline object of given json input (convert it to our internal structure)
+        function createAddedContentItem(json, parentContentItem) {
+            var contentItem = new ContentItem({
+                id: json.Id,
+                beginDate: json.BeginDate,
+                endDate: json.EndDate,
+                title: json.Title,
+                children: 0,
+                description: json.Description,
+                hasChildren: json.HasChildren,
+                sourceURL: json.SourceURL,
+                sourceRef: json.SourceRef,
+                pictureURLs: json.PictureURLs,
+            }, parentContentItem);
+
+            console.log(parentContentItem);
+
+            return contentItem;
+        };
+
+
         // Get timeline
         function getTimeline(timelineId, resolve, reject) {
             getJSON(timelineId, 'timeline', function (json) {
@@ -165,9 +186,11 @@ var Canvas;
             }
         }
 
-        function createPersonalContentItem(beginDate, endDate, title, description, hasChildren, parentContentItemId, pictureURLs) {
+        function createPersonalContentItem(beginDate, endDate, title, description, hasChildren, parentContentItem, pictureURLs) {
             var xmlHttpRequest = new XMLHttpRequest();
             var url = _baseUrl + "contentitem";
+            var parentContentItemId = parentContentItem.getId();
+            console.log("create" + parentContentItemId);
             var object = createContentItemObjectFormField(beginDate, endDate, title, description, hasChildren, parentContentItemId, pictureURLs);
             xmlHttpRequest.open("POST", url, false);
 
@@ -175,6 +198,8 @@ var Canvas;
             xmlHttpRequest.setRequestHeader("Content-type", "application/json");
             xmlHttpRequest.onreadystatechange = function () {//Call a function when the state changes.
                 if (xmlHttpRequest.readyState == 4 && xmlHttpRequest.status == 200) {
+                    var contentItem = createAddedContentItem(JSON.parse(xmlHttpRequest.response), parentContentItem);
+                    Canvas.ContentItemService.addContentItem(contentItem);
                     return true;
                 }
             }
