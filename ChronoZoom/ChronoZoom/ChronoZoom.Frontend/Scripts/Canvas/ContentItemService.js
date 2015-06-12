@@ -94,7 +94,7 @@
                     // Parse json and create content items from cache
                     var contentItems = convertDataArrayToContentItems(JSON.parse(data), parentContentItem);
 
-                    // Add parent content item to response
+                    // Add parent content item to response 
                     var length = contentItems.length;
                     for (var i = 0; i < length; i++) {
                         parentContentItem.addChild(contentItems[i]);
