@@ -57,3 +57,4 @@ C:\Users\Anthony\Source\Repos\CZCI\ChronoZoom\ChronoZoom\ChronoZoom.Frontend\bin
 C:\Users\Anthony\Source\Repos\CZCI\ChronoZoom\ChronoZoom\ChronoZoom.Frontend\bin\ChronoZoom.Frontend.pdb
 C:\Users\Anthony\Source\Repos\CZCI\ChronoZoom\ChronoZoom\ChronoZoom.Frontend\obj\Debug\ChronoZoom.Frontend.dll
 C:\Users\Anthony\Source\Repos\CZCI\ChronoZoom\ChronoZoom\ChronoZoom.Frontend\obj\Debug\ChronoZoom.Frontend.pdb
+C:\Users\Anthony\Source\Repos\CZCI\ChronoZoom\ChronoZoom\ChronoZoom.Frontend\obj\Debug\ChronoZoom.Frontend.csprojResolveAssemblyReference.cache
