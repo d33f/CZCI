@@ -7,7 +7,6 @@
         ContentItemService.findTimeline = findTimeline;
         ContentItemService.findContentItemsByParentContent = findContentItemsByParentContent;
         ContentItemService.deepCopy = deepCopy;
-        ContentItemService.contentItemChanged = contentItemChanged;
 
         // Private fields
         var _contentItems = [];
@@ -40,10 +39,6 @@
         // Set content items
         function setContentItems(contentItems) {
             _contentItems = contentItems;
-            document.dispatchEvent(_contentItemChangedEvent);
-        }
-
-        function contentItemChanged() {
             document.dispatchEvent(_contentItemChangedEvent);
         }
 

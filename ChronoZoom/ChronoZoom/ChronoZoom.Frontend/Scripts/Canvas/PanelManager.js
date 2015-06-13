@@ -15,6 +15,7 @@
         var rootItem;
         var currentItem;
         var itemPanelShown;
+        var addItemPanelcorrectValues;
 
         //Show the timeline panel on the left side of the screen
         function showTimelinePanel(showPanel) {
@@ -29,14 +30,25 @@
         }
 
         //Show the panel for adding new items on the left side of the screen
-        function showAddItemPanel(showPanel) {
+        function showAddItemPanel(showPanel, button) {
             itemPanelShown = showPanel;
             updateAddItemPanel();
             var addItemPanel = document.getElementById('addItemPanel');
-            addItemPanel.className = showPanel ? 'addItemPanelShow' : 'addItemPanelHidden';
-
-            if (!showPanel) {
-                clearAddItemPanel();
+            console.log(button);
+            if (button === 'addItem') {
+                if (!showPanel && addItemPanelcorrectValues !== false) {
+                    addItemPanel.className = 'addItemPanelHidden';
+                    clearAddItemPanel();
+                }
+            }
+            else {
+                if (!showPanel) {
+                    addItemPanel.className = 'addItemPanelHidden';
+                    clearAddItemPanel();
+                }
+                else if (showPanel) {
+                    addItemPanel.className = 'addItemPanelShow';
+                }
             }
 
         }
@@ -197,6 +209,7 @@
 
             var output = document.getElementById("importOutputAddItem");
             var errorMessage = "Error message";
+            
             var correctValues;
 
             if (hasChildren === "" || hasChildren === undefined) {
@@ -226,12 +239,14 @@
                 correctValues = false;
             }
 
-            if (correctValues !== false) {
+            addItemPanelcorrectValues = correctValues;
+
+            if (addItemPanelcorrectValues !== false) {
+                errorMessage = "";
                 Canvas.BackendService.createPersonalContentItem(startDate, endDate, title, description, hasChildren, currentItem, pictureURLs);
             }
-            else {
-                output.innerHTML = errorMessage;
-            }
+
+            output.innerHTML = errorMessage;
         }
     })(Canvas.PanelManager || (Canvas.PanelManager = {}));
     var PanelManager = Canvas.PanelManager;

@@ -198,7 +198,7 @@ var Canvas;
                 if (xmlHttpRequest.readyState == 4 && xmlHttpRequest.status == 200) {
                     var contentItem = createAddedContentItem(JSON.parse(xmlHttpRequest.response));
                     parentContentItem.addChild(contentItem);
-                    Canvas.ContentItemService.contentItemChanged();
+                    parentContentItem.draw();
                     return true;
                 }
             }
