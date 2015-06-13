@@ -92,8 +92,6 @@ var Canvas;
                 pictureURLs: json.PictureURLs,
             }, parentContentItem);
 
-            console.log(parentContentItem);
-
             return contentItem;
         };
 
@@ -198,8 +196,9 @@ var Canvas;
             xmlHttpRequest.setRequestHeader("Content-type", "application/json");
             xmlHttpRequest.onreadystatechange = function () {//Call a function when the state changes.
                 if (xmlHttpRequest.readyState == 4 && xmlHttpRequest.status == 200) {
-                    var contentItem = createAddedContentItem(JSON.parse(xmlHttpRequest.response), parentContentItem);
-                    Canvas.ContentItemService.addContentItem(contentItem);
+                    var contentItem = createAddedContentItem(JSON.parse(xmlHttpRequest.response));
+                    parentContentItem.addChild(contentItem);
+                    Canvas.ContentItemService.contentItemChanged();
                     return true;
                 }
             }
@@ -207,7 +206,6 @@ var Canvas;
         }
 
         function createContentItemObjectFormField(beginDate, endDate, title, description, hasChildren, parentContentItemId, pictureURLs) {
-            console.log(parentContentItemId);
             return {
                 beginDate: beginDate,
                 endDate: endDate,

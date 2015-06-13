@@ -226,8 +226,6 @@
                 correctValues = false;
             }
 
-
-            
             if (correctValues !== false) {
                 Canvas.BackendService.createPersonalContentItem(startDate, endDate, title, description, hasChildren, currentItem, pictureURLs);
             }
