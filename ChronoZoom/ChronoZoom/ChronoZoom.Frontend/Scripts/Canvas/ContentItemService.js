@@ -87,7 +87,6 @@
 
                 // Check if data is found
                 if (data !== null) {
-                    console.log(data.toString());
                     // Clear children
                     parentContentItem.clearChildren();
 
