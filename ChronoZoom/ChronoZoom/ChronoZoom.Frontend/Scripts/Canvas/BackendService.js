@@ -197,8 +197,9 @@ var Canvas;
             xmlHttpRequest.onreadystatechange = function () {//Call a function when the state changes.
                 if (xmlHttpRequest.readyState == 4 && xmlHttpRequest.status == 200) {
                     var contentItem = createAddedContentItem(JSON.parse(xmlHttpRequest.response));
+                    console.log(parentContentItem.getTitle());
                     parentContentItem.addChild(contentItem);
-                    parentContentItem.draw();
+                    ContentItemService.findContentItemsByParentContent(parentContentItem);
                     return true;
                 }
             }

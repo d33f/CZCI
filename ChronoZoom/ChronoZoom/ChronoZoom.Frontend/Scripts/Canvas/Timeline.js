@@ -56,6 +56,7 @@
             */
 
             _contentItems = Canvas.ContentItemService.getContentItems();
+            console.log(_contentItems);
             Canvas.PanelManager.updateAddItemPanel();
 
             // Destruct old content items

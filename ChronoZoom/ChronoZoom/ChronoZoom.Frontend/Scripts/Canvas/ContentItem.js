@@ -185,6 +185,7 @@
     function update(contentItems) {
         _x = Canvas.Timescale.getXPositionForTime(_beginDate);
         _width = Canvas.Timescale.getXPositionForTime(_endDate) - _x;
+
         /*
         var parentWidth = _parentContentItem.getSize().width;
         var radius = (parentWidth - (parentWidth / 40)) / 4;

@@ -112,6 +112,7 @@
                 // Store in cache as json
                 _cache.setItem("C" + parentContentItemID, JSON.stringify(items));
             }
+
         }
 
         // Convert content items to array by getting all the data objects from each content item
