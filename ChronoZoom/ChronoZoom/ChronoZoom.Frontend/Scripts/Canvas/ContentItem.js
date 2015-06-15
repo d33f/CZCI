@@ -74,7 +74,7 @@
             _width = (_radius * 2);
             _height = (_radius * 2);
         }
-    }
+        }
 
     // Destructor
     function destructor() {
@@ -185,6 +185,7 @@
     function update(contentItems) {
         _x = Canvas.Timescale.getXPositionForTime(_beginDate);
         _width = Canvas.Timescale.getXPositionForTime(_endDate) - _x;
+
         /*
         var parentWidth = _parentContentItem.getSize().width;
         var radius = (parentWidth - (parentWidth / 40)) / 4;
@@ -213,7 +214,7 @@
     function checkSpacing() {
         // Get position of the parent
         var positionParent = _parentContentItem.getPosition();
-
+        
         // ContentItem with children spacing, the check exclude the root content item
         if (positionParent.x !== 0 && positionParent.y !== 0) {
             updateHorizontalSpacing(positionParent);
@@ -304,6 +305,58 @@
             // Get the canvas container element and add the child
             var container = document.getElementById('canvasContainer');
             container.appendChild(element);
+    }
+
+
+    // Create (DOM) element with class
+    function createElementWithClass(element, classname) {
+        var domElement = document.createElement(element);
+        domElement.classList.add(classname);
+        return domElement;
+    }
+
+    // Create DOM element for fullscreen content item
+    function createDOMElementForFullscreenContentItem() {
+        var element = document.getElementById('contentItem_' + _id);
+
+        // Create new content item element if it doesn't exist
+        if (element == null) {
+            // Create content item element
+            element = createElementWithClass('div', 'contentItem');
+            element.id = 'contentItem_' + _id;
+
+            // Create wrapper with title
+            var wrapper = createElementWithClass('div', 'wrapper');
+            wrapper.appendChild(createElementWithClass('div', 'title'))
+
+            // Create image wrapper
+            var imageWrapper = createElementWithClass('div', 'images');
+            var image = document.createElement('img');
+            image.setAttribute('src', _pictureURLs[0]);
+            image.setAttribute('width', '100%');
+            image.setAttribute('height', '60%');
+            imageWrapper.appendChild(image);
+            wrapper.appendChild(imageWrapper);
+
+            for (var i = 1; i < _pictureURLs.length; i++) {
+                var smallImages = document.createElement('img');
+                smallImages.setAttribute('src', _pictureURLs[i]);
+                smallImages.setAttribute('width', '25%');
+                smallImages.setAttribute('height', '25%');
+                imageWrapper.appendChild(smallImages);
+            }
+
+            // Create text wrapper
+            var textWrapper = createElementWithClass('div', 'content');
+            textWrapper.appendChild(createElementWithClass('div', 'text'));
+            wrapper.appendChild(textWrapper);
+
+            // Add wrapper to element
+            element.appendChild(wrapper);
+
+            // Get the canvas container element and add the child
+            var container = document.getElementById('canvasContainer');
+            container.appendChild(element);
         }
 
         // Store element as container
@@ -345,12 +398,12 @@
     // Update (DOM) container element
     function updateDOMElement(canvasHeight) {
         _container.style.top = "110px";
-        _container.style.left = _x + "px";
-        _container.style.width = (_radius * 2) + "px";
+            _container.style.left = _x + "px";
+            _container.style.width = (_radius * 2) + "px";
         _container.style.height = canvasHeight + "px";
         //_container.style.display = "block";
-        //_container.style.pointerEvents = "none";
-    }
+            //_container.style.pointerEvents = "none";
+        }
 
     // Update it's children and calculate height
     function updateChildren() {
@@ -435,7 +488,7 @@
     // Draw content item without childeren
     function drawContentItemWithoutChildren(context) {
         _width = _width > 0 ? -_width : 50;
-
+        
         if (_isFullScreen) {
             context.beginPath();
             context.fillStyle = 'rgba(0, 0, 0, 0.8)';
@@ -489,7 +542,7 @@
             context.drawImage(_image, x, y, width, height);
         }
     }
-
+    
     // Draw child content items
     function drawChildren() {
         var length = _children.length;
@@ -579,7 +632,7 @@
         if (!_hasChildren && contentItem.hasChildren()) {
             aX2 = _x + (_radius * 2);
             aY2 = _y + (_radius * 2);
-
+            
             bX2 = position.x + size.width;
             bY2 = position.y + size.height;
         } else if (_hasChildren && !contentItem.hasChildren()) {

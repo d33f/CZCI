@@ -39,7 +39,7 @@
         Canvas.PanelManager.addTimelines();
 
         // Select default timeline
-        Canvas.Timeline.setTimeline(2);
+        Canvas.Timeline.setTimeline(3); // 2
     }
 
     // Set the new timeline

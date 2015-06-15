@@ -5,26 +5,28 @@ var Canvas;
         BackendService.getTimeline = getTimeline;
         BackendService.getContentItems = getContentItems;
         BackendService.createPersonalTimeLine = createPersonalTimeLine;
+        BackendService.createPersonalContentItem = createPersonalContentItem;
+
         BackendService.getAllTimelines = getAllTimelines;
 
         // Private fields
-        var _baseUrl = "http://www.kompili.nl/chronozoomApi/api/";
-        //var _baseUrl = "http://localhost:40001/api/";
+        //var _baseUrl = "http://www.kompili.nl/chronozoomApi/api/";
+        var _baseUrl = "http://localhost:40001/api/";
 
         // Get json data from path, execute callback resolve when succesfull and reject if failed. 
         function getJSON(id, path, resolve, reject) {
             // Create new instance of XMLHttpRequest and open requested path (async)
             var xmlHttpRequest = new XMLHttpRequest();
-            xmlHttpRequest.open("GET", _baseUrl + path +'/'+ id, true);
+            xmlHttpRequest.open("GET", _baseUrl + path + '/' + id, true);
             xmlHttpRequest.setRequestHeader("Content-Type", "application/json");
 
             // Ready event
-            xmlHttpRequest.onload = function() {
+            xmlHttpRequest.onload = function () {
                 // Check http status code and resolve the promise with the response text when valid
                 if (xmlHttpRequest.status === 200) {
                     resolve(JSON.parse(xmlHttpRequest.response));
                 }
-                // Otherwise reject with the status text
+                    // Otherwise reject with the status text
                 else {
                     reject(Error(xmlHttpRequest.statusText));
                 }
@@ -47,32 +49,10 @@ var Canvas;
                 endDate: json.EndDate,
                 title: json.Title,
                 contentItems: [],
-                backgroundUrl :json.BackgroundUrl
+                description: json.Description,
+                backgroundURL: json.BackgroundURL,
+                isPublic: json.IsPublic
             };
-        }
-
-        function createPersonalTimeLine(title, beginDate, endDate) {
-            var xmlHttpRequest = new XMLHttpRequest();
-            var url = _baseUrl + "timeline";
-            var object = createContentItemFromFormFields(title, beginDate, endDate);
-            xmlHttpRequest.open("POST", url, false);
-
-            //Send the proper header information along with the request
-            xmlHttpRequest.setRequestHeader("Content-type", "application/json");
-            xmlHttpRequest.onreadystatechange = function () {//Call a function when the state changes.
-                if (xmlHttpRequest.readyState == 4 && xmlHttpRequest.status == 200) {
-                    return true;
-                }
-            }
-            xmlHttpRequest.send(JSON.stringify(object));
-        }
-
-        function createContentItemFromFormFields(title, beginDate, endDate) {
-            return {
-                Title: title,
-                BeginDate: beginDate,
-                EndDate: endDate
-            }
         }
 
         // Create a timeline object of given json input (convert it to our internal structure)
@@ -82,7 +62,7 @@ var Canvas;
                 beginDate: json.BeginDate,
                 endDate: json.EndDate,
                 title: json.Title,
-                depth: json.Depth,
+                description: json.Description,
                 hasChildren: json.HasChildren,
                 sourceURL: json.SourceURL,
                 sourceRef: json.SourceRef,
@@ -97,9 +77,28 @@ var Canvas;
             return contentItem;
         };
 
+        // Create a timeline object of given json input (convert it to our internal structure)
+        function createAddedContentItem(json, parentContentItem) {
+            var contentItem = new ContentItem({
+                id: json.Id,
+                beginDate: json.BeginDate,
+                endDate: json.EndDate,
+                title: json.Title,
+                children: 0,
+                description: json.Description,
+                hasChildren: json.HasChildren,
+                sourceURL: json.SourceURL,
+                sourceRef: json.SourceRef,
+                pictureURLs: json.PictureURLs,
+            }, parentContentItem);
+
+            return contentItem;
+        };
+
+
         // Get timeline
         function getTimeline(timelineId, resolve, reject) {
-            getJSON(timelineId,'timeline', function (json) {
+            getJSON(timelineId, 'timeline', function (json) {
                 // Create a timeline object
                 var timeline = createTimelineObject(json);
 
@@ -123,7 +122,7 @@ var Canvas;
 
         // Get timeline
         function getAllTimelines(resolve, reject) {
-            getJSON('','timeline', function (json) {
+            getJSON('', 'timeline', function (json) {
                 // Create a timeline object
                 var timelines = [];
 
@@ -156,6 +155,69 @@ var Canvas;
                 reject(error);
             });
         }
+
+
+        function createPersonalTimeLine(title, beginDate, endDate, description, imageUrl, isPublic) {
+            var xmlHttpRequest = new XMLHttpRequest();
+            var url = _baseUrl + "timeline";
+            var object = createTimelineObjectFormFields(title, beginDate, endDate, description, imageUrl, isPublic);
+            xmlHttpRequest.open("POST", url, false);
+
+            //Send the proper header information along with the request
+            xmlHttpRequest.setRequestHeader("Content-type", "application/json");
+            xmlHttpRequest.onreadystatechange = function () {//Call a function when the state changes.
+                if (xmlHttpRequest.readyState == 4 && xmlHttpRequest.status == 200) {
+                    return true;
+                }
+            }
+            xmlHttpRequest.send(JSON.stringify(object));
+        }
+
+        function createTimelineObjectFormFields(title, beginDate, endDate, description, imageUrl, isPublic) {
+            return {
+                Title: title,
+                BeginDate: beginDate,
+                EndDate: endDate,
+                Description: description,
+                BackgroundUrl: imageUrl,
+                IsPublic: isPublic
+            }
+        }
+
+        function createPersonalContentItem(beginDate, endDate, title, description, hasChildren, parentContentItem, pictureURLs) {
+            var xmlHttpRequest = new XMLHttpRequest();
+            var url = _baseUrl + "contentitem";
+            var parentContentItemId = parentContentItem.getId();
+            console.log("create" + parentContentItemId);
+            var object = createContentItemObjectFormField(beginDate, endDate, title, description, hasChildren, parentContentItemId, pictureURLs);
+            xmlHttpRequest.open("POST", url, false);
+
+            //Send the proper header information along with the request
+            xmlHttpRequest.setRequestHeader("Content-type", "application/json");
+            xmlHttpRequest.onreadystatechange = function () {//Call a function when the state changes.
+                if (xmlHttpRequest.readyState == 4 && xmlHttpRequest.status == 200) {
+                    var contentItem = createAddedContentItem(JSON.parse(xmlHttpRequest.response));
+                    console.log(parentContentItem.getTitle());
+                    parentContentItem.addChild(contentItem);
+                    ContentItemService.findContentItemsByParentContent(parentContentItem);
+                    return true;
+                }
+            }
+            xmlHttpRequest.send(JSON.stringify(object));
+        }
+
+        function createContentItemObjectFormField(beginDate, endDate, title, description, hasChildren, parentContentItemId, pictureURLs) {
+            return {
+                beginDate: beginDate,
+                endDate: endDate,
+                title: title,
+                description: description,
+                hasChildren: hasChildren,
+                parentId: parentContentItemId,
+                pictureURLs: pictureURLs,
+            }
+        }
+
 
     })(Canvas.BackendService || (Canvas.BackendService = {}));
     var BackendService = Canvas.BackendService;

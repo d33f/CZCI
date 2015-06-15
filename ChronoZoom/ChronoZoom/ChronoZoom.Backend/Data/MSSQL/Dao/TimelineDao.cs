@@ -22,12 +22,12 @@ namespace ChronoZoom.Backend.Data.MSSQL.Dao
             }
         }
 
-        public IEnumerable<Timeline> FindAllPublicTimelines()
+        public IEnumerable<TimelineSummary> FindAllPublicTimelines()
         {
             using (DatabaseContext context = new DatabaseContext())
             {
-                string query = "SELECT [Timeline].[Id],BackgroundUrl,[RootContentItemId],[IsPublic],[BeginDate],[EndDate],[Title],[Description],[Timeline].[Timestamp] FROM [dbo].[Timeline] JOIN [dbo].[ContentItem] ON [dbo].[Timeline].[RootContentItemId] = [dbo].[ContentItem].[Id] where IsPublic=1";
-                return context.Select<MSSQL.Entities.TimelineJoinContentItem, Timeline>(query);
+                string query = "SELECT [Timeline].[Id],[Title],[Description] FROM [dbo].[Timeline] JOIN [dbo].[ContentItem] ON [dbo].[Timeline].[RootContentItemId] = [dbo].[ContentItem].[Id] where IsPublic=1";
+                return context.Select<MSSQL.Entities.TimelineJoinContentItem, TimelineSummary>(query);
             }
         }
 
@@ -41,7 +41,9 @@ namespace ChronoZoom.Backend.Data.MSSQL.Dao
                     BeginDate = timeline.BeginDate,
                     EndDate = timeline.EndDate,
                     HasChildren = true,
-                    Title = timeline.Title
+                    Title = timeline.Title,
+                    Description = timeline.Description,
+                    PictureURLs = new string[1]
                 };
 
                 contentItem = context.AddContentItem<MSSQL.Entities.ContentItem, ContentItem>(contentItem);
