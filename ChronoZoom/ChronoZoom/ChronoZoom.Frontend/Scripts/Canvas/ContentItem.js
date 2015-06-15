@@ -438,9 +438,10 @@
         _y = (canvasContainer.height / 2) - _radius;
 
         updateDOMElement(canvasHeight);
-
-        document.getElementsByClassName("title").innerHTML = _title;
-        document.getElementsByClassName("text").innerHTML = _data.description == "" ? "Nvt" : _data.description;
+        
+        var contentItem = document.getElementById(_container.id);
+        contentItem.getElementsByClassName("contentItemTitle").innerHTML = _title;
+        contentItem.getElementsByClassName("contentItemText").innerHTML = _data.description == "" ? "" : _data.description;
     }
 
     // Update (DOM) container element
