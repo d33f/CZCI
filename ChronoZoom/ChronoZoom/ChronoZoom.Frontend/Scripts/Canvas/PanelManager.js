@@ -34,7 +34,6 @@
             itemPanelShown = showPanel;
             updateAddItemPanel();
             var addItemPanel = document.getElementById('addItemPanel');
-            console.log(button);
             if (button === 'addItem') {
                 if (!showPanel && addItemPanelcorrectValues !== false) {
                     addItemPanel.className = 'addItemPanelHidden';

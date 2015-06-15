@@ -317,6 +317,7 @@
     }
 
     // Create DOM element for fullscreen content item
+        // Create DOM element for fullscreen content item
     function createDOMElementForFullscreenContentItem() {
         var element = document.getElementById('contentItem_' + _id);
 
@@ -331,21 +332,28 @@
             wrapper.appendChild(createElementWithClass('div', 'title'))
 
             // Create image wrapper
-            var imageWrapper = createElementWithClass('div', 'images');
+            var images = createElementWithClass('div', 'images');
             var image = document.createElement('img');
-            image.setAttribute('src', _pictureURLs[0]);
+            image.setAttribute('name', 'largeImage');
+            image.setAttribute('src', _pictureURLs.length > 0 ? _pictureURLs[0] : 'resources/no_image.jpg');
             image.setAttribute('width', '100%');
             image.setAttribute('height', '60%');
-            imageWrapper.appendChild(image);
-            wrapper.appendChild(imageWrapper);
+            images.appendChild(image);
+            wrapper.appendChild(images);
 
-            for (var i = 1; i < _pictureURLs.length; i++) {
+            var thumbnails = createElementWithClass('div', 'thumbnails');
+
+            var length = _pictureURLs.length;
+            for (var i = 0; i < length; i++) {
                 var smallImages = document.createElement('img');
                 smallImages.setAttribute('src', _pictureURLs[i]);
-                smallImages.setAttribute('width', '25%');
-                smallImages.setAttribute('height', '25%');
-                imageWrapper.appendChild(smallImages);
+                smallImages.setAttribute('name', 'smallImage' + i);
+                smallImages.setAttribute('height', '100%');
+                smallImages.setAttribute('onmouseover', 'largeImage.src=smallImage' + i + '.src');
+                thumbnails.appendChild(smallImages);
             }
+
+            images.appendChild(thumbnails);
 
             // Create text wrapper
             var textWrapper = createElementWithClass('div', 'content');
@@ -359,9 +367,6 @@
             var container = document.getElementById('canvasContainer');
             container.appendChild(element);
         }
-
-        // Store element as container
-        _container = element;
     }
 
     // Remove the dom element
