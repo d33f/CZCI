@@ -74,7 +74,7 @@
             _width = (_radius * 2);
             _height = (_radius * 2);
         }
-        }
+    }
 
     // Destructor
     function destructor() {
@@ -305,6 +305,7 @@
             // Get the canvas container element and add the child
             var container = document.getElementById('canvasContainer');
             container.appendChild(element);
+        }
     }
 
 
