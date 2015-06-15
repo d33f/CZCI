@@ -439,18 +439,18 @@
 
         updateDOMElement(canvasHeight);
 
-        _container.getElementsByClassName("title")[0].innerHTML = _title;
-        _container.getElementsByClassName("text")[0].innerHTML = _data.description == "" ? "Nvt" : _data.description;
+        document.getElementsByClassName("title").innerHTML = _title;
+        document.getElementsByClassName("text").innerHTML = _data.description == "" ? "Nvt" : _data.description;
     }
 
     // Update (DOM) container element
     function updateDOMElement(canvasHeight) {
-        _container.style.top = "110px";
+            _container.style.top = "110px";
             _container.style.left = _x + "px";
             _container.style.width = (_radius * 2) + "px";
-        _container.style.height = canvasHeight + "px";
-        //_container.style.display = "block";
-            //_container.style.pointerEvents = "none";
+            _container.style.height = canvasHeight + "px";
+            _container.style.display = "block";
+            _container.style.pointerEvents = "none";
         }
 
     // Update it's children and calculate height
