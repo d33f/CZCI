@@ -1,0 +1,155 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>ChronoZoom</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.12.2/semantic.css" />
+    <link rel="icon" href="Resources/favicon.ico" />
+</head>
+<body>
+    <div id="header">
+        <div id="title"></div>
+        <div id="timerange"></div>
+        <div id="menuButtons">
+            <button class="compact ui button default" onclick="Canvas.PanelManager.showAddItemPanel(true)">Add item</button>
+            <button class="compact ui button default" onclick="Canvas.PanelManager.showTimelinePanel(true)">My Timelines</button>
+        </div>
+    </div>
+    <div id="timelinePanel" class="timelinePanelHidden">
+        <h1>Timelines</h1>
+        <div id="timelineList"></div>
+        <div style="padding-top:15px; float: right">
+            <div class="compact ui button green small right" onclick="Canvas.PanelManager.showAddTimelinePanel(true); Canvas.PanelManager.showTimelinePanel(false)">
+                <i class="icon add"></i>
+                Add timeline
+            </div>
+            <div class="compact negative ui button" onclick="Canvas.PanelManager.showTimelinePanel(false)">Close</div>
+        </div>
+    </div>
+
+    <div id="addTimelinePanel" class="addTimelinePanelHidden">
+        <h1>Add timeline</h1>
+        <div class="ui error inverted form segment">
+            <div class="field">
+                <label>Title</label>
+                <input id="titleInput" placeholder="Timeline title" type="text" required />
+            </div>
+            <div class="two fields">
+                <div class="field">
+                    <label>Begin date</label>
+                    <input id="startDateInput" placeholder="Begin date" type="number" required />
+                </div>
+                <div class="field">
+                    <label>End date</label>
+                    <input id="endDateInput" placeholder="End date" type="number" required />
+                </div>
+            </div>
+            <div class="field">
+                <label>Background image url</label>
+                <input id="imageUrlInput" placeholder="Enter background URL" type="text" />
+            </div>
+            <div class="field">
+                <label>Description</label>
+                <textarea id="descriptionInput" placeholder="Timeline description"></textarea>
+            </div>
+            <div class="field">
+                <label>Make timeline public</label>
+                <input id="isPublicInput" type="checkbox"/>
+            </div>
+            <div style="padding-top:15px; float: right">
+                <div class="compact ui button green small right" onclick="Canvas.PanelManager.handleAddTimelineInput()">
+                    <i class="icon add"></i>
+                    Add timeline
+                </div>
+                <div class="compact negative ui button" onclick="Canvas.PanelManager.showAddTimelinePanel(false)">Close</div>
+            </div>
+        </div>
+        <div id="importOutput">
+        </div>
+    </div>
+
+    <div id="addItemPanel" class="addItemPanelHidden">
+        <h1>Add item to:</h1>
+        <h3 id="itemName"></h3>
+        <div class="ui error inverted form segment">
+            <div class="two fields">
+                <div class="field">
+                    <div class="circle"></div>
+                    <input type="radio" id="circleRadioButton" name="select" value="contentItem" onchange="Canvas.PanelManager.imageUrlFieldShow(false)" required>
+                </div>
+                <div class="field">
+                    <div class="rectangle"></div>
+                    <input type="radio" id="rectangleRadioButton" name="select" value="timeline" onchange="Canvas.PanelManager.imageUrlFieldShow(true)" required>
+                </div>
+            </div>
+
+            <div class="field">
+                <label>Title</label>
+                <input id="titleInputContentItem" placeholder="Timeline title" type="text" required />
+            </div>
+            <div class="two fields">
+                <div class="field">
+                    <label>Begin date</label>
+                    <input id="startDateInputContentItem" placeholder="Begin date" type="number" required />
+                </div>
+                <div class="field">
+                    <label>End date</label>
+                    <input id="endDateInputContentItem" placeholder="End date" type="number" required />
+                </div>
+            </div>
+            <div class="field">
+                <label>Image url</label>
+                <input id="imageUrlContentItem" placeholder="None" type="url" />
+            </div>
+            <div class="field">
+                <label>Description</label>
+                <textarea id="descriptionInputContentItem" placeholder="Timeline description"></textarea>
+            </div>
+            <div style="padding-top:15px; float: right">
+                <div class="compact ui button green small right" onclick="Canvas.PanelManager.handleAddContentItemInput(); Canvas.PanelManager.showAddItemPanel(false, 'addItem')">
+                    <i class="icon add"></i>
+                    Add item
+                </div>
+                <div class="compact ui button green small right" onclick="Canvas.PanelManager.handleAddContentItemInput(); Canvas.PanelManager.clearAddItemPanel()">
+                    <i class="icon add"></i>
+                    Add + new entry
+                </div>
+                <div class="compact negative ui button" onclick="Canvas.PanelManager.showAddItemPanel(false)">Close</div>
+            </div>
+        </div>
+
+        
+        <div id="importOutputAddItem" style="color: yellow">
+            <ul></ul>
+        </div>
+    </div>
+
+    <div id="canvasContainer">
+        <div id="breadcrumbs" class="ui large breadcrumb">
+        </div>
+
+        <canvas id="canvas"></canvas>
+
+        <div id="loader" class="">
+            <div class="ui active dimmer">
+                <div class="ui medium text loader">Loading timeline</div>
+            </div>
+        </div>
+    </div>
+    <script src="Scripts/Canvas/Settings.js"></script>
+    <script src="Scripts/Canvas/WindowManager.js"></script>
+    <script src="Scripts/Canvas/PanelManager.js"></script>
+    <script src="Scripts/Canvas/ContentItem.js"></script>
+    <script src="Scripts/Canvas/BackendService.js"></script>
+    <script src="Scripts/Canvas/PublicAPIService.js"></script>
+    <script src="Scripts/Canvas/Yearmarker.js"></script>
+    <script src="Scripts/Canvas/Timescale.js"></script>
+    <script src="Scripts/Canvas/Breadcrumbs.js"></script>
+    <script src="Scripts/Canvas/ContentItemService.js"></script>
+    <script src="Scripts/Canvas/ContentItemEnricher.js"></script>
+    <script src="Scripts/Canvas/Timeline.js"></script>
+    <script src="Scripts/Canvas/Mousepointer.js"></script>
+    <script src="Scripts/Canvas/Canvas.js"></script>
+    <script src="Scripts/Canvas/Tooltip.js"></script>
+    <link href="Styles/Style.css" rel="stylesheet" />
+</body>
+</html>
