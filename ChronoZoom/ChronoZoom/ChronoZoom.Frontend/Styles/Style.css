@@ -1,4 +1,4 @@
-html, body {
+﻿html, body {
     padding: 0;
     margin: 0;
     height: 100%;
@@ -60,54 +60,39 @@ canvas {
 
 div.contentItem {
     position: absolute;
+    border-radius: 50%;
 }
 
-div.contentItem > .wrapper {
-    position: relative;
-	top: 5%;
-	left: 5%;
-    width: 90%;
-    height: 85%;
+div.contentItemWrapper {
+    position: absolute;
+    width: 70%;
+    height: 70%;
+    left: 15%;
 }
 
-div.contentItem > .wrapper > .title {
-    position: relative;
-    width: 100%;
-    height: 10%;
-    font-size: 22px;
-    text-align: center;
-    font-weight: bold;
-    color: white;
-}
-
-div.contentItem > .wrapper > .images, div.contentItem > .wrapper > .content {
-    width: 50%;
-	height: 90%;
-	color: white;
-	float: left;
-}
-div.contentItem > .wrapper > .content > .text {
-	padding: 10px;
+div.contentItemText {
     overflow: auto;
+    position: absolute;
+    top: 135%;
+    height: 48%;
+    width: 100%;
+    overflow-y: auto;
+    color: white;
+    background: black;
 }
 
-div.contentItem > .wrapper > .images > .thumbnails {
-	height: 20%;
-	overflow-x: hidden;
-	overflow-y: hidden;
+div.contentItemTitle {
+    position: absolute;
+    top: 28%;
+    height: 20%;
+    width: 60%;
+    left: 20%;
+    font-size: 25px;
+    text-align: center;
+    color: white;
+    background: black;
 }
 
-div.contentItem > .wrapper > .images > .thumbnails > img {
-    margin-top: 5px;
-	height: 140%;
-    width: 32.5%;
-    margin-left: 0.8%;
-    cursor: pointer;
-}
-
-div.contentItem > .wrapper > .images > .thumbnails > img:first-child {
-    margin-left: 0;
-}
 
 /* INPUT PANEL */
 div#timelinePanel {
@@ -142,6 +127,27 @@ div#timelinePanel {
     border: 1px solid #ccc;
 }
 
+div#addItemPanel{
+    width: 400px;
+    background-color: #1B1C1D;
+    color: #e0e0e0;
+    position: absolute;
+    top: 40px;
+    bottom: 0;
+    height: 100%;
+    z-index: 1500;
+    padding: 10px;
+}
+
+.addItemPanelShow {
+    left: -0px;
+}
+
+.addItemPanelHidden {
+    left: -420px;
+    display: inline;
+}
+
 .timelinePanelShow {
     left: -0px;
 }
@@ -154,8 +160,7 @@ div#timelinePanel {
 }
 
 /* Import PANEL */
-div#importPanel {
-    transition: right .6s ease;
+div#addTimelinePanel {
     width: 400px;
     background-color: #1B1C1D;
     color: #e0e0e0;
@@ -164,15 +169,16 @@ div#importPanel {
     bottom: 0;
     height: 100%;
     z-index: 1500;
+    padding: 10px;
 }
 
-.importPanelHidden {
-    right: -420px;
+.addTimelinePanelHidden {
+    left: -420px;
     display: inline;
 }
 
-.importPanelShow {
-    right: -0px;
+.addTimelinePanelShow {
+    left: -0px;
 }
 
 #importPanel > h1 {
@@ -205,6 +211,8 @@ div#importPanel {
             #importPanel ul li a:hover {
                 background-color: rgb(60,60,60);
             }
+
+
 
 
 /* Menu */

@@ -1,4 +1,4 @@
-function ContentItem(data, parentContentItem) {
+﻿function ContentItem(data, parentContentItem) {
     // Public properties
     this.getId = getId;
     this.getBeginDate = getBeginDate;
@@ -58,11 +58,8 @@ function ContentItem(data, parentContentItem) {
         // Set image
         _image.src = 'resources/no_image.jpg';
         _image.onload = function () { };
-        if (_pictureURLs !== undefined) {
-            if(_pictureURLs.length > 0){
-                _image.src = _pictureURLs[0];
-            }
-            
+        if (_sourceURL !== undefined) {
+            _image.src = _sourceURL;
         }
 
         // Add child to parent
@@ -188,6 +185,7 @@ function ContentItem(data, parentContentItem) {
     function update(contentItems) {
         _x = Canvas.Timescale.getXPositionForTime(_beginDate);
         _width = Canvas.Timescale.getXPositionForTime(_endDate) - _x;
+
         /*
         var parentWidth = _parentContentItem.getSize().width;
         var radius = (parentWidth - (parentWidth / 40)) / 4;
@@ -273,29 +271,22 @@ function ContentItem(data, parentContentItem) {
             wrapper.appendChild(createElementWithClass('div', 'title'))
 
             // Create image wrapper
-            var images = createElementWithClass('div', 'images');
+            var imageWrapper = createElementWithClass('div', 'images');
             var image = document.createElement('img');
-            image.setAttribute('name', 'largeImage');
             image.setAttribute('src', _pictureURLs[0]);
             image.setAttribute('width', '100%');
             image.setAttribute('height', '60%');
-            images.appendChild(image);
-            wrapper.appendChild(images);
+            imageWrapper.appendChild(image);
+            wrapper.appendChild(imageWrapper);
 
-            var thumbnails = createElementWithClass('div', 'thumbnails');
-
-            var length = _pictureURLs.length;
-            for (var i = 0; i < length; i++) {
+            for (var i = 1; i < _pictureURLs.length; i++) {
                 var smallImages = document.createElement('img');
                 smallImages.setAttribute('src', _pictureURLs[i]);
-                smallImages.setAttribute('name', 'smallImage' + i);
-                smallImages.setAttribute('height', '100%');
-                smallImages.setAttribute('onmouseover', 'largeImage.src=smallImage' + i + '.src');
-                thumbnails.appendChild(smallImages);
+                smallImages.setAttribute('width', '25%');
+                smallImages.setAttribute('height', '25%');
+                imageWrapper.appendChild(smallImages);
             }
 
-            images.appendChild(thumbnails);
-        
             // Create text wrapper
             var textWrapper = createElementWithClass('div', 'content');
             textWrapper.appendChild(createElementWithClass('div', 'text'));

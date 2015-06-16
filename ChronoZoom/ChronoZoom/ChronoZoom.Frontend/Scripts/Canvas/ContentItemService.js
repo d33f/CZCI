@@ -47,9 +47,6 @@
             // Set breadcrumb
             Canvas.Breadcrumbs.setContentItem(parentContentItem);
 
-            // Clear children
-            parentContentItem.clearChildren();
-
             // Get cached data
             var cachedData = getContentItemsFromCache(parentContentItem);
             if (cachedData !== undefined) {
@@ -93,14 +90,11 @@
                     // Parse json and create content items from cache
                     var contentItems = convertDataArrayToContentItems(JSON.parse(data), parentContentItem);
 
-                    // Add parent content item to response 
-                    var length = contentItems.length;
-                    for (var i = 0; i < length; i++) {
-                        parentContentItem.addChild(contentItems[i]);
-                    }
+                    // Add parent content item to response
+                    contentItems.push(parentContentItem);
 
-                    // Return response 
-                    return [parentContentItem];
+                    // Return response
+                    return contentItems;
                 }
             }
 
@@ -118,6 +112,7 @@
                 // Store in cache as json
                 _cache.setItem("C" + parentContentItemID, JSON.stringify(items));
             }
+
         }
 
         // Convert content items to array by getting all the data objects from each content item
@@ -180,7 +175,7 @@
             _timelineID = timeline.id;
 
             // Set the background if a background exists
-            setBackground(timeline.backgroundUrl);
+            setBackground(timeline.backgroundURL);
 
             // Set timeline range
             Canvas.Timescale.setRange(timeline.beginDate, timeline.endDate);

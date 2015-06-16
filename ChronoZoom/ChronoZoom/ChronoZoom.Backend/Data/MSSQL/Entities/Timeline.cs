@@ -11,5 +11,6 @@ namespace ChronoZoom.Backend.Data.MSSQL.Entities
         public long RootContentItemId { get; set; }
         public bool IsPublic { get; set; }
         public byte[] Timestamp { get; set; }
+        public string BackgroundURL { get; set; }
     }
 }

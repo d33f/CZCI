@@ -7,7 +7,7 @@ using System.Web.Http.Cors;
 
 namespace ChronoZoom.Backend.Controllers
 {
-    [EnableCors(origins: "*", headers: "*", methods: "*")]
+    [EnableCors(origins: "http://localhost:20000", headers: "*", methods: "*")]
     public class ContentItemController : ApiController
     {
         private readonly IContentItemService _service;

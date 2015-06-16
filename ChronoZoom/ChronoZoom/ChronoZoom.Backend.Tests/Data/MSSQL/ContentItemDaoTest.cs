@@ -44,7 +44,7 @@ namespace ChronoZoom.Backend.Tests.Data.MSSQL
             // Assert
             Assert.IsNotNull(result);
             Assert.AreEqual(2, result.Children.Count());
-            Assert.AreEqual(5, result.Children[0].Children.Count());
+            Assert.AreEqual(4, result.Children[0].Children.Count());
             Assert.AreEqual(4, result.Children[1].Children.Count());
         }
 
