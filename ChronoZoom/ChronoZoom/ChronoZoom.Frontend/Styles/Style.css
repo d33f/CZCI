@@ -121,6 +121,7 @@ div#timelinePanel {
     height: 100%;
     z-index: 1500;
     padding: 10px;
+    overflow:auto;
 }
 
 .timelinePanelHidden {
