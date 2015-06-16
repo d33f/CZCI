@@ -58,8 +58,11 @@ function ContentItem(data, parentContentItem) {
         // Set image
         _image.src = 'resources/no_image.jpg';
         _image.onload = function () { };
-        if (_sourceURL !== undefined) {
-            _image.src = _sourceURL;
+        if (_pictureURLs !== undefined) {
+            if(_pictureURLs.length > 0){
+                _image.src = _pictureURLs[0];
+            }
+            
         }
 
         // Add child to parent
