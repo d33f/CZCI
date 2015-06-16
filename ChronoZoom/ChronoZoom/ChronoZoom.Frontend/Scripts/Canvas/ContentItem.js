@@ -76,27 +76,27 @@
         }
         
          var element = document.getElementById('contentItem_' + _id);
--
--            // Create new content item element if it doesn't exist
--            if (element == null) {
--                // Create content item element
--                element = createElementWithClass('div', 'contentItem');
--                element.id = 'contentItem_' + _id;
--
--                // Create wrapper and text within the content item element
--                var wrapper = createElementWithClass('div', 'contentItemWrapper');
--                wrapper.appendChild(createElementWithClass('div', 'contentItemTitle'))
--                wrapper.appendChild(createElementWithClass('div', 'contentItemText'));
--                element.appendChild(wrapper);
--                
--
--                // Get the canvas container element and add the child
--                var container = document.getElementById('canvasContainer');
--                container.appendChild(element);
--            } 
--
--            // Store element as container
--            _container = element;
+
+            // Create new content item element if it doesn't exist
+            if (element == null) {
+                // Create content item element
+                element = createElementWithClass('div', 'contentItem');
+                element.id = 'contentItem_' + _id;
+
+                // Create wrapper and text within the content item element
+                var wrapper = createElementWithClass('div', 'contentItemWrapper');
+                wrapper.appendChild(createElementWithClass('div', 'contentItemTitle'))
+                wrapper.appendChild(createElementWithClass('div', 'contentItemText'));
+                element.appendChild(wrapper);
+                
+
+                // Get the canvas container element and add the child
+                var container = document.getElementById('canvasContainer');
+                container.appendChild(element);
+            } 
+
+            // Store element as container
+            _container = element;
     }
 
     // Destructor
