@@ -304,7 +304,6 @@
             // Get the canvas container element and add the child
             var container = document.getElementById('canvasContainer');
             container.appendChild(element);
-<<<<<<< HEAD
         }
     }
 
@@ -366,8 +365,6 @@
             // Get the canvas container element and add the child
             var container = document.getElementById('canvasContainer');
             container.appendChild(element);
-=======
->>>>>>> parent of c1ec27a... Merge Panelfeatures
         }
     }
 
