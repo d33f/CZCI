@@ -419,8 +419,8 @@
 
         updateDOMElement(canvasHeight);
 
-        _container.getElementsByClassName("title")[0].innerHTML = _title;
-        _container.getElementsByClassName("text")[0].innerHTML = _data.description == "" ? "Nvt" : _data.description;
+        _container.getElementsByClassName("contentItemTitle")[0].innerHTML = _title;
+        _container.getElementsByClassName("contentItemText")[0].innerHTML = _data.description == "" ? "" : _data.description;
     }
 
     // Update (DOM) container element
