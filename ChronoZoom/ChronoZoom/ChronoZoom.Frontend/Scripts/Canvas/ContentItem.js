@@ -65,7 +65,6 @@ function ContentItem(data, parentContentItem) {
         // Add child to parent
         if (_parentContentItem !== undefined) {
             _parentContentItem.addChild(instance);
-            _y = _parentContentItem.getPosition().y + 30;
         }
 
         // Check if it has no children
@@ -372,6 +371,11 @@ function ContentItem(data, parentContentItem) {
 
     // Update y position
     function updateYPosition(contentItems) {
+        // Start at y position of parent if set
+        if (_parentContentItem !== undefined) {
+            _y = _parentContentItem.getPosition().y + 30;
+        }
+
         var length = contentItems.length;
         for (var i = 0; i < length; i++) {
             // Don't collide on your self!
@@ -612,22 +616,17 @@ function ContentItem(data, parentContentItem) {
         // distance between centerpointY and y
         var deltaY = centerpointAY >= centerpointBY ? centerpointAY - centerpointBY : centerpointBY - centerpointAY;
 
-        var distance;
 
-        if (deltaY !== 0 && deltaX !== 0) {
-            // angle between centerpoint and given position (in radial)
-            var angle = Math.atan(deltaY / deltaX);
+        // angle between centerpoint and given position (in radial)
+        var angle = Math.atan(deltaY / deltaX);
 
-            // sinus value of angle
-            var sinangle = Math.sin(angle);
+        // sinus value of angle
+        var sinangle = Math.sin(angle);
 
-            // distance between centerpoint and given position
-            distance = deltaY / sinangle;
-        } else {
-            distance = deltaX !== 0 ? deltaX : deltaY;
-        }
+        // distance between centerpoint and given position
+        var distance = deltaY / sinangle;
 
-        // check distance between centerpoints
+        // is mousepoint in circle
         distance = (deltaX === 0 && deltaY === 0) ? 0 : distance;
         return ((_radius + bRadius) >= distance);
     }
