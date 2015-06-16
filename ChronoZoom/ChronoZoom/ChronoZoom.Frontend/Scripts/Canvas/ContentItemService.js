@@ -118,7 +118,6 @@
                 // Store in cache as json
                 _cache.setItem("C" + parentContentItemID, JSON.stringify(items));
             }
-
         }
 
         // Convert content items to array by getting all the data objects from each content item
@@ -181,7 +180,7 @@
             _timelineID = timeline.id;
 
             // Set the background if a background exists
-            setBackground(timeline.backgroundURL);
+            setBackground(timeline.backgroundUrl);
 
             // Set timeline range
             Canvas.Timescale.setRange(timeline.beginDate, timeline.endDate);

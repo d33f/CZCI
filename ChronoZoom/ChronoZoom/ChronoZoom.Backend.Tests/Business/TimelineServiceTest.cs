@@ -82,28 +82,32 @@ namespace ChronoZoom.Backend.Tests.Business
         {
             // Arrange
             Mock<ITimelineDao> mock = new Mock<ITimelineDao>(MockBehavior.Strict);
-            mock.Setup(setup => setup.FindAllPublicTimelines()).Returns(new TimelineSummary[]
+            mock.Setup(setup => setup.FindAllPublicTimelines()).Returns(new List<Timeline>()
             {
-                new TimelineSummary()
+                new Timeline()
                 {
                     Id = 1,
                     Title = "1ste wereld oorlog",
-                    Description = "Test"
+                    BeginDate = 1914M,
+                    EndDate = 1918M,
+                    IsPublic = true
                 },
-                new TimelineSummary()
+                new Timeline()
             });
             TimelineService target = new TimelineService(mock.Object, null);
 
             // Act
-            IEnumerable<TimelineSummary> result = target.GetAllTimelineSummariesForPublicTimelines();
+            IEnumerable<Timeline> result = target.GetAllPublicTimelinesWithoutContentItems();
 
             // Assert
             Assert.IsNotNull(result);
             Assert.AreEqual(2, result.Count());
-            TimelineSummary firstResult = result.First();
+            Timeline firstResult = result.First();
             Assert.AreEqual((long)1, firstResult.Id);
             Assert.AreEqual("1ste wereld oorlog", firstResult.Title);
-            Assert.AreEqual("Test", firstResult.Description);
+            Assert.AreEqual(1914M, firstResult.BeginDate);
+            Assert.AreEqual(1918M, firstResult.EndDate);
+            Assert.AreEqual(null, firstResult.RootContentItem);
             mock.Verify(verify => verify.FindAllPublicTimelines(), Times.Once);
         }
 
@@ -118,7 +122,7 @@ namespace ChronoZoom.Backend.Tests.Business
             TimelineService target = new TimelineService(mock.Object, contentItemMock.Object);
 
             // Act
-            target.GetAllTimelineSummariesForPublicTimelines();
+            target.GetAllPublicTimelinesWithoutContentItems();
         }
 
         [TestMethod]

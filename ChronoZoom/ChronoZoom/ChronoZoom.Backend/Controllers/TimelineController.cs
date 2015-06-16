@@ -39,10 +39,10 @@ namespace ChronoZoom.Backend.Controllers
         {
             try
             {
-                var timelines = _service.GetAllTimelineSummariesForPublicTimelines();
+                var timelines = _service.GetAllPublicTimelinesWithoutContentItems();
                 return Ok(timelines);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return BadRequest("An error occured");
             }

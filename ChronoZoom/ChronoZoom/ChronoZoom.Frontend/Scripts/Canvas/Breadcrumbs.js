@@ -5,14 +5,10 @@
         Breadcrumbs.setContentItem = setContentItem;
         Breadcrumbs.decreaseDepthAndGetTheNewContentItem = decreaseDepthAndGetTheNewContentItem;
         Breadcrumbs.redirect = redirect;
-        Breadcrumbs.getRootItem = getRootItem;
-        Breadcrumbs.getCurrentItem = getCurrentItem;
 
         // Private fields
         var _stack = [];
         var _container = null;
-        var rootItem;
-        var currentItem;
 
         // Constructor
         function initialize() {
@@ -30,23 +26,6 @@
 
             // Store element as container
             _container = breadcrumbs;
-        }
-
-        function getCurrentItem(){
-            return currentItem;
-        }
-
-        function setCurrentItem(item) {
-            currentItem = item;
-        }
-
-        function getRootItem() {
-            return rootItem;
-        }
-
-        function setRootItem(item) {
-            rootItem = item;
-
         }
 
         // set the new content item
@@ -112,15 +91,10 @@
         function displayNew() {
             // Add crumbs
             var length = _stack.length;
-            setRootItem(_stack[0]);
-
             for (var i = 0; i < length; i++) {
                 var breadcrumb = i === length-1 ? document.createElement("div") : document.createElement("a");
-                breadcrumb.className = i === length - 1 ? "active section" : "section";
-                
-                setCurrentItem(_stack[i]);
+                breadcrumb.className = i === length-1 ? "active section" : "section";
                 breadcrumb.appendChild(document.createTextNode(_stack[i].getTitle()));
-
                 breadcrumb.title = _stack[i].getTitle();
                 breadcrumb.href = "javascript:Canvas.Breadcrumbs.redirect(" + i + ")";
                 

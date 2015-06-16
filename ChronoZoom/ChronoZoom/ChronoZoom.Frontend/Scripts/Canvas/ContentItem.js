@@ -185,7 +185,6 @@
     function update(contentItems) {
         _x = Canvas.Timescale.getXPositionForTime(_beginDate);
         _width = Canvas.Timescale.getXPositionForTime(_endDate) - _x;
-
         /*
         var parentWidth = _parentContentItem.getSize().width;
         var radius = (parentWidth - (parentWidth / 40)) / 4;
@@ -214,7 +213,7 @@
     function checkSpacing() {
         // Get position of the parent
         var positionParent = _parentContentItem.getPosition();
-        
+
         // ContentItem with children spacing, the check exclude the root content item
         if (positionParent.x !== 0 && positionParent.y !== 0) {
             updateHorizontalSpacing(positionParent);
@@ -305,6 +304,7 @@
             // Get the canvas container element and add the child
             var container = document.getElementById('canvasContainer');
             container.appendChild(element);
+<<<<<<< HEAD
         }
     }
 
@@ -366,6 +366,8 @@
             // Get the canvas container element and add the child
             var container = document.getElementById('canvasContainer');
             container.appendChild(element);
+=======
+>>>>>>> parent of c1ec27a... Merge Panelfeatures
         }
     }
 
@@ -404,12 +406,12 @@
     // Update (DOM) container element
     function updateDOMElement(canvasHeight) {
         _container.style.top = "110px";
-            _container.style.left = _x + "px";
-            _container.style.width = (_radius * 2) + "px";
+        _container.style.left = _x + "px";
+        _container.style.width = (_radius * 2) + "px";
         _container.style.height = canvasHeight + "px";
         //_container.style.display = "block";
-            //_container.style.pointerEvents = "none";
-        }
+        //_container.style.pointerEvents = "none";
+    }
 
     // Update it's children and calculate height
     function updateChildren() {
@@ -494,7 +496,7 @@
     // Draw content item without childeren
     function drawContentItemWithoutChildren(context) {
         _width = _width > 0 ? -_width : 50;
-        
+
         if (_isFullScreen) {
             context.beginPath();
             context.fillStyle = 'rgba(0, 0, 0, 0.8)';
@@ -548,7 +550,7 @@
             context.drawImage(_image, x, y, width, height);
         }
     }
-    
+
     // Draw child content items
     function drawChildren() {
         var length = _children.length;
@@ -638,7 +640,7 @@
         if (!_hasChildren && contentItem.hasChildren()) {
             aX2 = _x + (_radius * 2);
             aY2 = _y + (_radius * 2);
-            
+
             bX2 = position.x + size.width;
             bY2 = position.y + size.height;
         } else if (_hasChildren && !contentItem.hasChildren()) {

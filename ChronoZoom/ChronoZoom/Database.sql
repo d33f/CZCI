@@ -28,10 +28,9 @@ VALUES (@root.GetDescendant(NULL,NULL), 0, 0, '__ROOT__', 1, 1);
 
 CREATE TABLE dbo.Timeline
 (
-	[Id] bigint identity(1,1) PRIMARY KEY CLUSTERED,
-	[RootContentItemId] bigint NOT NULL,
-	[IsPublic] bit NOT NULL,
-	[BackgroundURL] [nvarchar](200) NULL,
+	Id bigint identity(1,1) PRIMARY KEY CLUSTERED,
+	RootContentItemId bigint NOT NULL,
+	IsPublic bit NOT NULL,
 	[Timestamp] [timestamp] NOT NULL
 )
 GO

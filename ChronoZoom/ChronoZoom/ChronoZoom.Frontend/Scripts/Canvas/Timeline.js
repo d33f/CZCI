@@ -30,8 +30,12 @@
 
             // Get and set old content items and content items
             _contentItems = Canvas.ContentItemService.getContentItems();
+<<<<<<< HEAD
             Canvas.PanelManager.updateAddItemPanel();
              
+=======
+
+>>>>>>> parent of c1ec27a... Merge Panelfeatures
             // Hide loader
             Canvas.WindowManager.showLoader(false);
         }

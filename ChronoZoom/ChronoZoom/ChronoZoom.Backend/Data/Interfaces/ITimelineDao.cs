@@ -6,7 +6,7 @@ namespace ChronoZoom.Backend.Data.Interfaces
     public interface ITimelineDao
     {
         Timeline Find(long id);
-        IEnumerable<TimelineSummary> FindAllPublicTimelines();
+        IEnumerable<Timeline> FindAllPublicTimelines();
         Timeline Add(Timeline timeline);
         void Update(Timeline timeline);
     }

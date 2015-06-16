@@ -1,5 +1,5 @@
 # CZCI
-ChronoZoom source with continuous integration  
+ChronoZoom continuous integration  
 
 # Installation
 To get ChronoZoom up and running please follow the steps described in the installation_guide.pdf.

@@ -83,7 +83,7 @@ div.contentItem > .wrapper > .title {
 div.contentItem > .wrapper > .images, div.contentItem > .wrapper > .content {
     width: 50%;
 	height: 90%;
-    color: white;
+	color: white;
 	float: left;
 }
 div.contentItem > .wrapper > .content > .text {
@@ -92,7 +92,7 @@ div.contentItem > .wrapper > .content > .text {
 }
 
 div.contentItem > .wrapper > .images > .thumbnails {
-    height: 20%;
+	height: 20%;
 	overflow-x: hidden;
 	overflow-y: hidden;
 }
@@ -142,27 +142,6 @@ div#timelinePanel {
     border: 1px solid #ccc;
 }
 
-div#addItemPanel{
-    width: 400px;
-    background-color: #1B1C1D;
-    color: #e0e0e0;
-    position: absolute;
-    top: 40px;
-    bottom: 0;
-    height: 100%;
-    z-index: 1500;
-    padding: 10px;
-}
-
-.addItemPanelShow {
-    left: -0px;
-}
-
-.addItemPanelHidden {
-    left: -420px;
-    display: inline;
-}
-
 .timelinePanelShow {
     left: -0px;
 }
@@ -175,7 +154,8 @@ div#addItemPanel{
 }
 
 /* Import PANEL */
-div#addTimelinePanel {
+div#importPanel {
+    transition: right .6s ease;
     width: 400px;
     background-color: #1B1C1D;
     color: #e0e0e0;
@@ -184,16 +164,15 @@ div#addTimelinePanel {
     bottom: 0;
     height: 100%;
     z-index: 1500;
-    padding: 10px;
 }
 
-.addTimelinePanelHidden {
-    left: -420px;
+.importPanelHidden {
+    right: -420px;
     display: inline;
 }
 
-.addTimelinePanelShow {
-    left: -0px;
+.importPanelShow {
+    right: -0px;
 }
 
 #importPanel > h1 {
@@ -226,8 +205,6 @@ div#addTimelinePanel {
             #importPanel ul li a:hover {
                 background-color: rgb(60,60,60);
             }
-
-
 
 
 /* Menu */
