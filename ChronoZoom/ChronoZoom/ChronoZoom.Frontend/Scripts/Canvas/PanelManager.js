@@ -22,7 +22,6 @@
             inputPanel.className = showPanel ? 'importPanelShow' : 'importPanelHidden';
         }
 
-<<<<<<< HEAD
         //Show the panel for adding new items on the left side of the screen
         function showAddItemPanel(showPanel, button) {
             itemPanelShown = showPanel;
@@ -56,11 +55,11 @@
             var radios = document.getElementsByName('select')
             radios[0].checked = false;
             radios[1].checked = false;
-=======
+        }
+        
         function hideBothPanels() {
             showTimelinePanel(false);
             showImportPanel(false);
->>>>>>> parent of c1ec27a... Merge Panelfeatures
         }
 
         function handleImportBtnClick() {
