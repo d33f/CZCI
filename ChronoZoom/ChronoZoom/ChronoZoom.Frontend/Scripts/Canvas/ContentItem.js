@@ -429,8 +429,8 @@
         _container.style.left = _x + "px";
         _container.style.width = (_radius * 2) + "px";
         _container.style.height = canvasHeight + "px";
-        //_container.style.display = "block";
-        //_container.style.pointerEvents = "none";
+        _container.style.display = "block";
+        _container.style.pointerEvents = "none";
     }
 
     // Update it's children and calculate height
