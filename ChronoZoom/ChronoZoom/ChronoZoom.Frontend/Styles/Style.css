@@ -118,10 +118,13 @@ div#timelinePanel {
     position: absolute;
     top: 40px;
     bottom: 0;
-    height: 100%;
     z-index: 1500;
     padding: 10px;
     overflow:auto;
+    height: -moz-calc(100% - 40px);
+    height: -webkit-calc(100% - 40px);
+    height: -o-calc(100% - 40px);
+    height: calc(100% - 40px);
 }
 
 .timelinePanelHidden {
