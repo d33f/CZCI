@@ -1,4 +1,4 @@
-﻿function ContentItem(data, parentContentItem) {
+function ContentItem(data, parentContentItem) {
     // Public properties
     this.getId = getId;
     this.getBeginDate = getBeginDate;
@@ -74,29 +74,6 @@
             _width = (_radius * 2);
             _height = (_radius * 2);
         }
-        
-         var element = document.getElementById('contentItem_' + _id);
-
-            // Create new content item element if it doesn't exist
-            if (element == null) {
-                // Create content item element
-                element = createElementWithClass('div', 'contentItem');
-                element.id = 'contentItem_' + _id;
-
-                // Create wrapper and text within the content item element
-                var wrapper = createElementWithClass('div', 'contentItemWrapper');
-                wrapper.appendChild(createElementWithClass('div', 'contentItemTitle'))
-                wrapper.appendChild(createElementWithClass('div', 'contentItemText'));
-                element.appendChild(wrapper);
-                
-
-                // Get the canvas container element and add the child
-                var container = document.getElementById('canvasContainer');
-                container.appendChild(element);
-            } 
-
-            // Store element as container
-            _container = element;
     }
 
     // Destructor
@@ -236,7 +213,7 @@
     function checkSpacing() {
         // Get position of the parent
         var positionParent = _parentContentItem.getPosition();
-
+        
         // ContentItem with children spacing, the check exclude the root content item
         if (positionParent.x !== 0 && positionParent.y !== 0) {
             updateHorizontalSpacing(positionParent);
@@ -296,7 +273,7 @@
             var images = createElementWithClass('div', 'images');
             var image = document.createElement('img');
             image.setAttribute('name', 'largeImage');
-            image.setAttribute('src', _pictureURLs.length > 0 ? _pictureURLs[0] : 'resources/no_image.jpg');
+            image.setAttribute('src', _pictureURLs[0]);
             image.setAttribute('width', '100%');
             image.setAttribute('height', '60%');
             images.appendChild(image);
@@ -315,7 +292,7 @@
             }
 
             images.appendChild(thumbnails);
-
+        
             // Create text wrapper
             var textWrapper = createElementWithClass('div', 'content');
             textWrapper.appendChild(createElementWithClass('div', 'text'));
@@ -328,67 +305,9 @@
             var container = document.getElementById('canvasContainer');
             container.appendChild(element);
         }
-    }
 
-
-    // Create (DOM) element with class
-    function createElementWithClass(element, classname) {
-        var domElement = document.createElement(element);
-        domElement.classList.add(classname);
-        return domElement;
-    }
-
-    // Create DOM element for fullscreen content item
-        // Create DOM element for fullscreen content item
-    function createDOMElementForFullscreenContentItem() {
-        var element = document.getElementById('contentItem_' + _id);
-
-        // Create new content item element if it doesn't exist
-        if (element == null) {
-            // Create content item element
-            element = createElementWithClass('div', 'contentItem');
-            element.id = 'contentItem_' + _id;
-
-            // Create wrapper with title
-            var wrapper = createElementWithClass('div', 'wrapper');
-            wrapper.appendChild(createElementWithClass('div', 'title'))
-
-            // Create image wrapper
-            var images = createElementWithClass('div', 'images');
-            var image = document.createElement('img');
-            image.setAttribute('name', 'largeImage');
-            image.setAttribute('src', _pictureURLs.length > 0 ? _pictureURLs[0] : 'resources/no_image.jpg');
-            image.setAttribute('width', '100%');
-            image.setAttribute('height', '60%');
-            images.appendChild(image);
-            wrapper.appendChild(images);
-
-            var thumbnails = createElementWithClass('div', 'thumbnails');
-
-            var length = _pictureURLs.length;
-            for (var i = 0; i < length; i++) {
-                var smallImages = document.createElement('img');
-                smallImages.setAttribute('src', _pictureURLs[i]);
-                smallImages.setAttribute('name', 'smallImage' + i);
-                smallImages.setAttribute('height', '100%');
-                smallImages.setAttribute('onmouseover', 'largeImage.src=smallImage' + i + '.src');
-                thumbnails.appendChild(smallImages);
-            }
-
-            images.appendChild(thumbnails);
-
-            // Create text wrapper
-            var textWrapper = createElementWithClass('div', 'content');
-            textWrapper.appendChild(createElementWithClass('div', 'text'));
-            wrapper.appendChild(textWrapper);
-
-            // Add wrapper to element
-            element.appendChild(wrapper);
-
-            // Get the canvas container element and add the child
-            var container = document.getElementById('canvasContainer');
-            container.appendChild(element);
-        }
+        // Store element as container
+        _container = element;
     }
 
     // Remove the dom element
@@ -419,8 +338,8 @@
 
         updateDOMElement(canvasHeight);
 
-        _container.getElementsByClassName("contentItemTitle")[0].innerHTML = _title;
-        _container.getElementsByClassName("contentItemText")[0].innerHTML = _data.description == "" ? "" : _data.description;
+        _container.getElementsByClassName("title")[0].innerHTML = _title;
+        _container.getElementsByClassName("text")[0].innerHTML = _data.description == "" ? "Nvt" : _data.description;
     }
 
     // Update (DOM) container element
@@ -429,8 +348,8 @@
         _container.style.left = _x + "px";
         _container.style.width = (_radius * 2) + "px";
         _container.style.height = canvasHeight + "px";
-        _container.style.display = "block";
-        _container.style.pointerEvents = "none";
+        //_container.style.display = "block";
+        //_container.style.pointerEvents = "none";
     }
 
     // Update it's children and calculate height
@@ -463,7 +382,6 @@
             if (contentItems[i].getId() !== _id) {
                 while (collidesContentItem(contentItems[i])) {
                     _y += contentItems[i].getSize().height + 10;
-                    //console.log("collide");
                 }
             }
         }
@@ -516,7 +434,7 @@
     // Draw content item without childeren
     function drawContentItemWithoutChildren(context) {
         _width = _width > 0 ? -_width : 50;
-
+        
         if (_isFullScreen) {
             context.beginPath();
             context.fillStyle = 'rgba(0, 0, 0, 0.8)';
@@ -565,12 +483,12 @@
         try {
             context.drawImage(_image, x, y, width, height);
         }
-        catch (ex) {
+        catch(ex) {
             _image.src = 'resources/no_image.jpg';
             context.drawImage(_image, x, y, width, height);
         }
     }
-
+    
     // Draw child content items
     function drawChildren() {
         var length = _children.length;
@@ -660,7 +578,7 @@
         if (!_hasChildren && contentItem.hasChildren()) {
             aX2 = _x + (_radius * 2);
             aY2 = _y + (_radius * 2);
-
+            
             bX2 = position.x + size.width;
             bY2 = position.y + size.height;
         } else if (_hasChildren && !contentItem.hasChildren()) {
