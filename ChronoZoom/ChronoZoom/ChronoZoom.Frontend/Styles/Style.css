@@ -62,7 +62,7 @@ div.contentItem {
     position: absolute;
 }
 
-div.contentItem > .wrapper {
+div.contentItem > .contentItemWrapper {
     position: relative;
 	top: 5%;
 	left: 5%;
@@ -70,7 +70,7 @@ div.contentItem > .wrapper {
     height: 85%;
 }
 
-div.contentItem > .wrapper > .title {
+div.contentItem > .contentItemWrapper > .contentItemTitle {
     position: relative;
     width: 100%;
     height: 10%;
@@ -80,24 +80,24 @@ div.contentItem > .wrapper > .title {
     color: white;
 }
 
-div.contentItem > .wrapper > .images, div.contentItem > .wrapper > .content {
+div.contentItem > .contentItemWrapper > .images, div.contentItem > .wrapper > .content {
     width: 50%;
 	height: 90%;
 	color: white;
 	float: left;
 }
-div.contentItem > .wrapper > .content > .text {
+div.contentItem > .contentItemWrapper > .content > .text {
 	padding: 10px;
     overflow: auto;
 }
 
-div.contentItem > .wrapper > .images > .thumbnails {
+div.contentItem > .contentItemWrapper > .images > .thumbnails {
 	height: 20%;
 	overflow-x: hidden;
 	overflow-y: hidden;
 }
 
-div.contentItem > .wrapper > .images > .thumbnails > img {
+div.contentItem > .contentItemWrapper > .images > .thumbnails > img {
     margin-top: 5px;
 	height: 140%;
     width: 32.5%;
@@ -105,7 +105,7 @@ div.contentItem > .wrapper > .images > .thumbnails > img {
     cursor: pointer;
 }
 
-div.contentItem > .wrapper > .images > .thumbnails > img:first-child {
+div.contentItem > .contentItemWrapper > .images > .thumbnails > img:first-child {
     margin-left: 0;
 }
 
