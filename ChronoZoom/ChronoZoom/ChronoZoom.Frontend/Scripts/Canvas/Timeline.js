@@ -30,7 +30,7 @@
 
             // Get and set old content items and content items
             _contentItems = Canvas.ContentItemService.getContentItems();
-            Canvas.PanelManager.updateAddItemPanel();
+            
             // Hide loader
             Canvas.WindowManager.showLoader(false);
         }
