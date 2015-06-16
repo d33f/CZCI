@@ -7,6 +7,7 @@
         Timeline.handleClickOnTimeline = handleClickOnTimeline;
         Timeline.setTimeline = setTimeline;
         Timeline.stopFullScreenContentItemMode = stopFullScreenContentItemMode;
+        Timeline.dragTimeline = dragTimeline;
 
         // Private fields
         var _contentItems = [];
@@ -30,6 +31,7 @@
 
             // Get and set old content items and content items
             _contentItems = Canvas.ContentItemService.getContentItems();
+            _contentItems[0].setPosition(_contentItems[0].getPosition().x, 100);
             
             // Hide loader
             Canvas.WindowManager.showLoader(false);
@@ -96,17 +98,20 @@
 
         // Handle the click on timeline event
         function handleClickOnTimeline() {
-            // Find clicked item
-            var clickedContentItem = getContentItemOnMousePosition();
+            if (!Canvas.Mousepointer.getDrag()) {
 
-            // If no item found zoom out
-            if (clickedContentItem === undefined) {
-                clickedContentItem = Canvas.Breadcrumbs.decreaseDepthAndGetTheNewContentItem();
-            }
+                // Find clicked item
+                var clickedContentItem = getContentItemOnMousePosition();
 
-            // Make sure root is not reached
-            if (clickedContentItem !== undefined) {
-                handleClickOnContentItem(clickedContentItem);
+                // If no item found zoom out
+                if (clickedContentItem === undefined) {
+                    clickedContentItem = Canvas.Breadcrumbs.decreaseDepthAndGetTheNewContentItem();
+                }
+
+                // Make sure root is not reached
+                if (clickedContentItem !== undefined) {
+                    handleClickOnContentItem(clickedContentItem);
+                }
             }
         }
 
@@ -188,6 +193,25 @@
                 return contentItem;
             }
             return undefined;
+        }
+
+        function dragTimeline(yOffset) {
+            dragUpdatePosition(_contentItems[0], yOffset);
+        }
+
+        function dragUpdatePosition(contentItem, yOffset) {
+            var position = contentItem.getPosition();
+            var newYPosition = position.y - yOffset;
+            var parent = _contentItems[0];
+            var parentPosition = parent.getPosition();
+            if (Canvas.getCanvasContainer().height - 100 < parentPosition.y + parent.getSize().height - yOffset && parentPosition.y - yOffset <= 120) {
+                contentItem.setPosition(position.x, newYPosition);
+                var children = contentItem.getChildren();
+                var length = children.length;
+                for (var i = 0; i < length; i++) {
+                    dragUpdatePosition(children[i], yOffset);
+                }
+            } 
         }
 
         initialize();

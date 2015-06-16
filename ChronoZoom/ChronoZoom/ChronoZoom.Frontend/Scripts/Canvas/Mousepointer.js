@@ -4,9 +4,16 @@
         // Public methods
         Mousepointer.getPosition = getPosition;
         Mousepointer.start = start;
+        Mousepointer.getDrag = getDrag;
 
         // Private fields
         var _position = { x: 0, y: 0 };
+
+        // Drag Variables
+        var _drag = false;
+        var _startPosition = { x: 0, y: 0 };
+        var _lastPosition = { x: 0, y: 0 };
+        var _preventClick = false;
 
         // Start capturing the mouse position
         function start() {
@@ -16,6 +23,8 @@
             // Add event listeners
             container.addEventListener("mousemove", updateMousePosition, false);
             container.addEventListener("click", clickedOnTimeline, false);
+            container.addEventListener("mousedown", startDrag, false);
+            container.addEventListener("mouseup", endDrag, false);
 
             // Check user agent and add event listener
             if (navigator.userAgent.toLocaleLowerCase().indexOf('firefox') > 1) {
@@ -28,6 +37,11 @@
         // Get current position
         function getPosition() {
             return _position;
+        }
+
+        // Check if drag
+        function getDrag() {
+            return _drag;
         }
 
         // Update mouse position
@@ -44,11 +58,33 @@
                 _position.x = 0;
                 _position.y = 0;
             }
+            if (_drag) {
+                Canvas.Timeline.dragTimeline(_lastPosition.y - _position.y);
+                _lastPosition.x = _position.x;
+                _lastPosition.y = _position.y;
+            }
+        }
+
+        function startDrag(e) {
+            _drag = true;
+            _startPosition.x = _position.x;
+            _startPosition.y = _position.y;
+            _lastPosition.x = _position.x;
+            _lastPosition.y = _position.y;
+        }
+
+        function endDrag(e) {
+            _drag = false;
+            if (_startPosition.x !== _position.x || _startPosition.y !== _position.y)
+                _preventClick = true; 
         }
 
         // Handle click on time event
         function clickedOnTimeline(e) {
-            Canvas.Timeline.handleClickOnTimeline(e);
+            if (!_preventClick)
+                Canvas.Timeline.handleClickOnTimeline(e);
+            else
+                _preventClick = false;
         }
 
         // Handle zoom on canvas

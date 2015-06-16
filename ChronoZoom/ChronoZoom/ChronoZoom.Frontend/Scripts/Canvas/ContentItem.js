@@ -68,6 +68,7 @@ function ContentItem(data, parentContentItem) {
         // Add child to parent
         if (_parentContentItem !== undefined) {
             _parentContentItem.addChild(instance);
+            _y = _parentContentItem.getPosition().y + 30;
         }
 
         // Check if it has no children
@@ -188,11 +189,6 @@ function ContentItem(data, parentContentItem) {
     function update(contentItems) {
         _x = Canvas.Timescale.getXPositionForTime(_beginDate);
         _width = Canvas.Timescale.getXPositionForTime(_endDate) - _x;
-        /*
-        var parentWidth = _parentContentItem.getSize().width;
-        var radius = (parentWidth - (parentWidth / 40)) / 4;
-        _radius = radius < 50 ? radius : 50;
-        */
 
         if (_isFullScreen) {
             updateFullScreenContentItem();
@@ -374,10 +370,6 @@ function ContentItem(data, parentContentItem) {
 
     // Update y position
     function updateYPosition(contentItems) {
-        // Start at y position of parent if set
-        if (_parentContentItem !== undefined) {
-            _y = _parentContentItem.getPosition().y + 30;
-        }
 
         var length = contentItems.length;
         for (var i = 0; i < length; i++) {
