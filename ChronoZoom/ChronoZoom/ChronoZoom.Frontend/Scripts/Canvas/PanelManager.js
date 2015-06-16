@@ -159,9 +159,14 @@
                 // Get and set the text of the item and append the text content to the A class
                 var caption = document.createTextNode(array[i].title);
                 newLink.appendChild(caption);
+				
+				// Get description and add it to the divContentElement
+				
+				var description = document.createTextNode(array[i].description);
 
                 // Add item to divContentElement
                 divContentElement.appendChild(newLink);
+				divContentElement.appendChild(description);
                 item.appendChild(divContentElement);
 
                 // Add it to the top level div element
