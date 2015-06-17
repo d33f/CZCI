@@ -90,7 +90,7 @@
         }*/
 
         function imageUrlFieldShow(showField) {
-            var imageUrlField = document.getElementById('imageUrlInput');
+            var imageUrlField = document.getElementById('imageUrlContentItem');
             imageUrlField.disabled = showField;
         }
 
