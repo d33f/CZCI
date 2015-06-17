@@ -8,7 +8,7 @@ using System.Web.Http.Cors;
 namespace ChronoZoom.Backend.Controllers
 {
 
-    [EnableCors(origins: "*", headers: "*", methods: "GET")]
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class TimelineController : ApiController
     {
         private readonly ITimelineService _service;
