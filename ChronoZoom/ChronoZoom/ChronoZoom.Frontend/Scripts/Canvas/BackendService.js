@@ -163,8 +163,6 @@ var Canvas;
             var url = _baseUrl + "timeline";
             var object = createTimelineObjectFormFields(title, beginDate, endDate, description, imageUrl, isPublic);
             xmlHttpRequest.open("POST", url, false);
-            console.log('POSTING URL:' + url);
-            console.log(object);
             //Send the proper header information along with the request
             xmlHttpRequest.setRequestHeader("Content-type", "application/json");
             xmlHttpRequest.onreadystatechange = function () {//Call a function when the state changes.
