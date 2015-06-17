@@ -43,6 +43,7 @@ var Canvas;
 
         // Create a timeline object of given json input (convert it to our internal structure)
         function createTimelineObject(json) {
+            //console.log(json);
             return {
                 id: json.Id,
                 beginDate: json.BeginDate,
@@ -50,7 +51,7 @@ var Canvas;
                 title: json.Title,
                 contentItems: [],
                 description: json.Description,
-                backgroundURL: json.BackgroundURL,
+                backgroundUrl: json.BackgroundUrl,
                 isPublic: json.IsPublic
             };
         }
@@ -128,6 +129,7 @@ var Canvas;
 
                 for (var i = 0; i < json.length; i++) {
                     var timeline = createTimelineObject(json[i]);
+                    console.log(timeline);
                     timelines.push(timeline);
                 }
 
