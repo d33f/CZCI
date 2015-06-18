@@ -5,7 +5,7 @@
         PanelManager.showTimelinePanel = showTimelinePanel;
         PanelManager.handleAddTimelineInput = handleAddTimelineInput;
         PanelManager.addTimelines = addTimelines;
-        PanelManager.imageUrlFieldShow = imageUrlFieldShow;
+        PanelManager.imageUrlFieldHide = imageUrlFieldHide;
         PanelManager.updateAddItemPanel = updateAddItemPanel;
         PanelManager.showAddTimelinePanel = showAddTimelinePanel;
         PanelManager.showAddItemPanel = showAddItemPanel;
@@ -18,39 +18,55 @@
         var addItemPanelcorrectValues;
 
         //Show the timeline panel on the left side of the screen
-        function showTimelinePanel(showPanel) {
+        function showTimelinePanel() {
             var inputPanel = document.getElementById('timelinePanel');
-            inputPanel.className = showPanel ? 'timelinePanelShow' : 'timelinePanelHidden';
+            if (inputPanel.className == 'timelinePanelShow') {
+                inputPanel.className = 'timelinePanelHidden';
+            }
+            else if (inputPanel.className = 'timelinePanelHidden') {
+                inputPanel.className = 'timelinePanelShow';
+                if (itemPanelShown == true) {
+                    showAddItemPanel();
+                }
+            }
+            //inputPanel.className = showPanel ? 'timelinePanelShow' : 'timelinePanelHidden';   
         }
 
         //Show the panel for adding new timelines on the left side of the screen
         function showAddTimelinePanel(showPanel) {
             var panel = document.getElementById('addTimelinePanel');
-            panel.className = showPanel ? 'addTimelinePanelShow' : 'addTimelinePanelHidden';
+            if (panel.className == 'addTimelinePanelShow') {
+                panel.className = 'addTimelinePanelHidden';
+            }
+            else if (panel.className == 'addTimelinePanelHidden') {
+                panel.className = 'addTimelinePanelShow';
+            }
         }
 
         //Show the panel for adding new items on the left side of the screen
-        function showAddItemPanel(showPanel, button) {
-            itemPanelShown = showPanel;
+        function showAddItemPanel(button) {
             updateAddItemPanel();
             var addItemPanel = document.getElementById('addItemPanel');
-            console.log(button);
-            if (button === 'addItem') {
-                if (!showPanel && addItemPanelcorrectValues !== false) {
+
+            //Add entry button is clicked, panel needs to be hidden and cleared if the correct values are entered.
+            if (button === 'addEntry') {
+                if (addItemPanelcorrectValues !== false) {
                     addItemPanel.className = 'addItemPanelHidden';
+                    itemPanelShown = false;
                     clearAddItemPanel();
                 }
             }
             else {
-                if (!showPanel) {
+                if (addItemPanel.className == 'addItemPanelShow') {
                     addItemPanel.className = 'addItemPanelHidden';
+                    itemPanelShown = false;
                     clearAddItemPanel();
                 }
-                else if (showPanel) {
+                else if (addItemPanel.className == 'addItemPanelHidden') {
                     addItemPanel.className = 'addItemPanelShow';
+                    itemPanelShown = true;
                 }
             }
-
         }
 
         function clearAddItemPanel() {
@@ -60,18 +76,17 @@
             document.getElementById("endDateInputContentItem").value = "";
             document.getElementById("descriptionInputContentItem").value = "";
             document.getElementById("imageUrlContentItem").value = "";
+            imageUrlFieldHide(false);
             var radios = document.getElementsByName('select')
             radios[0].checked = false;
             radios[1].checked = false;
         }
 
         function updateAddItemPanel() {
-            if (itemPanelShown) {
-                var timelineLabel = document.getElementById('timelineName');
-                var itemLabel = document.getElementById('itemName');
-                getCurrentItems();
-                itemLabel.innerHTML = currentItem.getTitle() + " ( " + currentItem.getBeginDate() + " - " + currentItem.getEndDate() + " )";
-            }
+            var timelineLabel = document.getElementById('timelineName');
+            var itemLabel = document.getElementById('itemName');
+            getCurrentItems();
+            itemLabel.innerHTML = currentItem.getTitle() + " ( " + currentItem.getBeginDate() + " - " + currentItem.getEndDate() + " )";
         }
 
         function getCurrentItems() {
@@ -89,9 +104,9 @@
             }
         }*/
 
-        function imageUrlFieldShow(showField) {
+        function imageUrlFieldHide(hideField) {
             var imageUrlField = document.getElementById('imageUrlContentItem');
-            imageUrlField.disabled = showField;
+            imageUrlField.disabled = hideField;
         }
 
         //Handle the input of the timeline import panel
@@ -142,7 +157,7 @@
 
             // Create div element
             var divElement = document.createElement('div');
-            divElement.setAttribute('class','ui divided list inverted');
+            divElement.setAttribute('class', 'ui divided list inverted');
 
             for (var i = 0; i < array.length; i++) {
 
@@ -209,7 +224,7 @@
 
             var output = document.getElementById("importOutputAddItem");
             var errorMessage = "Error message";
-            
+
             var correctValues;
 
             if (hasChildren === "" || hasChildren === undefined) {
