@@ -149,6 +149,7 @@ div#timelinePanel {
 }
 
 div#addItemPanel{
+    transition: left .6s ease;
     width: 400px;
     background-color: #1B1C1D;
     color: #e0e0e0;
@@ -182,6 +183,7 @@ div#addItemPanel{
 
 /* Import PANEL */
 div#addTimelinePanel {
+    transition: left .6s ease;
     width: 400px;
     background-color: #1B1C1D;
     color: #e0e0e0;
