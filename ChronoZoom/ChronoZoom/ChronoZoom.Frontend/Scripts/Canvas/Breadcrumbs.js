@@ -60,8 +60,7 @@
                     contentItem.setIsFullScreen(true);
                 }
 
-                while (contentItem !== undefined)
-                {
+                while (contentItem !== undefined) {
                     _stack.unshift(contentItem);
                     contentItem = contentItem.getParentContentItem();
                 }
@@ -114,13 +113,14 @@
             // Add crumbs
             var length = _stack.length;
             for (var i = 0; i < length; i++) {
-                var breadcrumb = i === length-1 ? document.createElement("div") : document.createElement("a");
+                var breadcrumb = i === length - 1 ? document.createElement("div") : document.createElement("a");
                 breadcrumb.className = i === length - 1 ? "active section" : "section";
                 setCurrentItem(_stack[i]);
+                Canvas.PanelManager.updateAddItemPanel();
                 breadcrumb.appendChild(document.createTextNode(_stack[i].getTitle()));
                 breadcrumb.title = _stack[i].getTitle();
                 breadcrumb.href = "javascript:Canvas.Breadcrumbs.redirect(" + i + ")";
-                
+
                 var divider = document.createElement("i");
                 divider.className = "right chevron icon divider";
                 _container.appendChild(divider);
