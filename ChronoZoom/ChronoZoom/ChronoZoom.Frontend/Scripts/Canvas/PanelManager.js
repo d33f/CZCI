@@ -13,58 +13,46 @@
         PanelManager.hideAllPanels = hideAllPanels;
         PanelManager.showTimelinePanel = showTimelinePanel;
 
-        PanelManager.addItemMenuButtonClicked = addItemMenuButtonClicked;
-        PanelManager.addTimelineMenuBtnClicked = addTimelineMenuBtnClicked;
-
         var rootItem;
         var currentItem;
 
-        var itemPanelShown;
-        var timelinePanelShown;
-        var addItemPanelShown;
+        var addItemPanelShown = false;
+        var timelinePanelShown = false;
+        var addTimelinePanelShown = false;
 
         var addItemPanelcorrectValues;
-
-        var addItemMenuButtonClicked = 0;
-        var addTimelineButtonClicked = 0;
 
         //Show the timeline panel on the left side of the screen
         function showTimelinePanel(buttonType) {
             var timelinePanel = document.getElementById('timelinePanel');
             
-            if (addTimelineButtonClicked % 2) {
-                if (timelinePanel.className == 'timelinePanelShow') {
-                    timelinePanelShown = false;
-                    timelinePanel.className = 'timelinePanelHidden';
-                }
-                else if (timelinePanel.className = 'timelinePanelHidden') {
-                    timelinePanelShown = true;
-                    timelinePanel.className = 'timelinePanelShow';
-                }
+            if (timelinePanelShown) {
+                timelinePanelShown = false
             }
-            
+            else {
+                timelinePanelShown = true;
+                timelinePanel.className = 'timelinePanelShow';
+                addItemPanelShown = false;
+                addTimelinePanelShown = false;
+                clearAddItemPanel();
+            }
         }
-
-        function addItemMenuButtonClicked() {
-            return addItemMenuButtonClicked++;
-        }
-
-        function addTimelineMenuBtnClicked() {
-            return addTimelineButtonClicked++;
-        }
-
 
         //Show the panel for adding new timelines on the left side of the screen
         function showAddTimelinePanel() {
-            var addItemPanel = document.getElementById('addTimelinePanel');
+            var addTimelinePanel = document.getElementById('addTimelinePanel');
+            var timelinePanel = document.getElementById('timelinePanel');
 
-            if (addItemPanel.className == 'addTimelinePanelShow') {
-                addItemPanelShown = true;
-                addItemPanel.className = 'addTimelinePanelHidden';
+            if (addTimelinePanelShown) {
+                timelinePanel.className = 'timelinePanelShow';
+                addTimelinePanelShown = false;
+                timelinePanelShown = true;
             }
-            else if (addItemPanel.className == 'addTimelinePanelHidden') {
+            else {
+                addTimelinePanelShown = true;
+                addTimelinePanel.className = 'addTimelinePanelShow';
                 addItemPanelShown = false;
-                addItemPanel.className = 'addTimelinePanelShow';
+                timelinePanelShown = false;
             }
             
         }
@@ -73,25 +61,23 @@
         function showAddItemPanel(buttonType) {
             var addItemPanel = document.getElementById('addItemPanel');
             updateAddItemPanel();
-
             //Add entry button is clicked, panel needs to be hidden and cleared if the correct values are entered.
             if (buttonType === 'addEntry') {
                 if (addItemPanelcorrectValues !== false) {
                     addItemPanel.className = 'addItemPanelHidden';
-                    itemPanelShown = false;
+                    addItemPanelShown = false;
                     clearAddItemPanel();
                 }
             }
-            else if (addItemMenuButtonClicked % 2) {
-                if (addItemPanel.className == 'addItemPanelShow') {
-                    addItemPanel.className = 'addItemPanelHidden';
-                    itemPanelShown = false;
-                    clearAddItemPanel();
-                }
-                else if (addItemPanel.className == 'addItemPanelHidden') {
-                    addItemPanel.className = 'addItemPanelShow';
-                    itemPanelShown = true;
-                }
+            else if (addItemPanelShown) {
+                addItemPanelShown = false;
+                clearAddItemPanel();
+            }
+            else {
+                addItemPanelShown = true;
+                addItemPanel.className = 'addItemPanelShow';
+                timelinePanelShown = false;
+                addTimelinePanelShown = false;
             }
         }
 

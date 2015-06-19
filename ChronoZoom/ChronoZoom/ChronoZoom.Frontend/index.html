@@ -10,19 +10,19 @@
         <div id="title"></div>
         <div id="timerange"></div>
         <div id="menuButtons">
-            <button class="compact ui button default" onclick="Canvas.PanelManager.addItemMenuButtonClicked(); Canvas.PanelManager.hideAllPanels(); Canvas.PanelManager.showAddItemPanel()">Add item</button>
-            <button class="compact ui button default" onclick="Canvas.PanelManager.addTimelineMenuBtnClicked(); Canvas.PanelManager.hideAllPanels(); Canvas.PanelManager.showTimelinePanel()">My Timelines</button>
+            <button class="compact ui button default" onclick="Canvas.PanelManager.hideAllPanels(); Canvas.PanelManager.showAddItemPanel()">Add item</button>
+            <button class="compact ui button default" onclick="Canvas.PanelManager.hideAllPanels(); Canvas.PanelManager.showTimelinePanel()">My Timelines</button>
         </div>
     </div>
     <div id="timelinePanel" class="timelinePanelHidden">
         <h1>Timelines</h1>
         <div id="timelineList"></div>
         <div style="padding-top:15px; float: right">
-            <div class="compact ui button green small right" onclick="Canvas.PanelManager.showAddTimelinePanel(true); Canvas.PanelManager.showTimelinePanel(false)">
+            <div class="compact ui button green small right" onclick="Canvas.PanelManager.hideAllPanels(); Canvas.PanelManager.showAddTimelinePanel(true);">
                 <i class="icon add"></i>
                 Add timeline
             </div>
-            <div class="compact negative ui button" onclick="Canvas.PanelManager.showTimelinePanel(false)">Close</div>
+            <div class="compact negative ui button" onclick="Canvas.PanelManager.hideAllPanels(); Canvas.PanelManager.showTimelinePanel(false)">Close</div>
         </div>
     </div>
 
@@ -60,7 +60,7 @@
                     <i class="icon add"></i>
                     Add timeline
                 </div>
-                <div class="compact negative ui button" onclick="Canvas.PanelManager.showAddTimelinePanel(false)">Close</div>
+                <div class="compact negative ui button" onclick="Canvas.PanelManager.hideAllPanels(); Canvas.PanelManager.showAddTimelinePanel(false)">Close</div>
             </div>
         </div>
         <div id="importOutput">
