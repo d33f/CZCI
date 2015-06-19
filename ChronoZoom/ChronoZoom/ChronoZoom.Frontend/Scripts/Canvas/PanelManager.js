@@ -39,11 +39,16 @@
         }
 
         //Show the panel for adding new timelines on the left side of the screen
-        function showAddTimelinePanel() {
+        function showAddTimelinePanel(close) {
             var addTimelinePanel = document.getElementById('addTimelinePanel');
             var timelinePanel = document.getElementById('timelinePanel');
-
-            if (addTimelinePanelShown) {
+           
+            if (close) {
+                addTimelinePanelShown = false;
+                timelinePanelShown = false;
+                timelinePanel.className = 'timelinePanelHidden';
+            }
+            else if (addTimelinePanelShown) {
                 timelinePanel.className = 'timelinePanelShow';
                 addTimelinePanelShown = false;
                 timelinePanelShown = true;
@@ -53,8 +58,7 @@
                 addTimelinePanel.className = 'addTimelinePanelShow';
                 addItemPanelShown = false;
                 timelinePanelShown = false;
-            }
-            
+            }   
         }
 
         //Show the panel for adding new items on the left side of the screen
