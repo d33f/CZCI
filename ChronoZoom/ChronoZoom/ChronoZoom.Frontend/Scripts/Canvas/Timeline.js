@@ -109,7 +109,7 @@
                 }
 
                 // Make sure root is not reached
-                if (clickedContentItem !== undefined) {
+                if (clickedContentItem !== undefined && clickedContentItem.getId() !== 0) {
                     handleClickOnContentItem(clickedContentItem);
                 }
             }
