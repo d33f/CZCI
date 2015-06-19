@@ -10,8 +10,8 @@
         <div id="title"></div>
         <div id="timerange"></div>
         <div id="menuButtons">
-            <button class="compact ui button default" onclick="Canvas.PanelManager.showAddItemPanel()">Add item</button>
-            <button class="compact ui button default" onclick="Canvas.PanelManager.showTimelinePanel()">My Timelines</button>
+            <button class="compact ui button default" onclick="Canvas.PanelManager.addItemMenuButtonClicked(); Canvas.PanelManager.hideAllPanels(); Canvas.PanelManager.showAddItemPanel()">Add item</button>
+            <button class="compact ui button default" onclick="Canvas.PanelManager.addTimelineMenuBtnClicked(); Canvas.PanelManager.hideAllPanels(); Canvas.PanelManager.showTimelinePanel()">My Timelines</button>
         </div>
     </div>
     <div id="timelinePanel" class="timelinePanelHidden">

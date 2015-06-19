@@ -2,7 +2,6 @@
 (function (Canvas) {
     (function (PanelManager) {
         // Public methods
-        PanelManager.showTimelinePanel = showTimelinePanel;
         PanelManager.handleAddTimelineInput = handleAddTimelineInput;
         PanelManager.addTimelines = addTimelines;
         PanelManager.imageUrlFieldHide = imageUrlFieldHide;
@@ -11,52 +10,79 @@
         PanelManager.showAddItemPanel = showAddItemPanel;
         PanelManager.handleAddContentItemInput = handleAddContentItemInput;
         PanelManager.clearAddItemPanel = clearAddItemPanel;
+        PanelManager.hideAllPanels = hideAllPanels;
+        PanelManager.showTimelinePanel = showTimelinePanel;
+
+        PanelManager.addItemMenuButtonClicked = addItemMenuButtonClicked;
+        PanelManager.addTimelineMenuBtnClicked = addTimelineMenuBtnClicked;
 
         var rootItem;
         var currentItem;
+
         var itemPanelShown;
+        var timelinePanelShown;
+        var addItemPanelShown;
+
         var addItemPanelcorrectValues;
 
+        var addItemMenuButtonClicked = 0;
+        var addTimelineButtonClicked = 0;
+
         //Show the timeline panel on the left side of the screen
-        function showTimelinePanel() {
-            var inputPanel = document.getElementById('timelinePanel');
-            if (inputPanel.className == 'timelinePanelShow') {
-                inputPanel.className = 'timelinePanelHidden';
-            }
-            else if (inputPanel.className = 'timelinePanelHidden') {
-                inputPanel.className = 'timelinePanelShow';
-                if (itemPanelShown == true) {
-                    showAddItemPanel();
+        function showTimelinePanel(buttonType) {
+            var timelinePanel = document.getElementById('timelinePanel');
+            
+            if (addTimelineButtonClicked % 2) {
+                if (timelinePanel.className == 'timelinePanelShow') {
+                    timelinePanelShown = false;
+                    timelinePanel.className = 'timelinePanelHidden';
+                }
+                else if (timelinePanel.className = 'timelinePanelHidden') {
+                    timelinePanelShown = true;
+                    timelinePanel.className = 'timelinePanelShow';
                 }
             }
-            //inputPanel.className = showPanel ? 'timelinePanelShow' : 'timelinePanelHidden';   
+            
         }
 
+        function addItemMenuButtonClicked() {
+            return addItemMenuButtonClicked++;
+        }
+
+        function addTimelineMenuBtnClicked() {
+            return addTimelineButtonClicked++;
+        }
+
+
         //Show the panel for adding new timelines on the left side of the screen
-        function showAddTimelinePanel(showPanel) {
-            var panel = document.getElementById('addTimelinePanel');
-            if (panel.className == 'addTimelinePanelShow') {
-                panel.className = 'addTimelinePanelHidden';
+        function showAddTimelinePanel() {
+            var addItemPanel = document.getElementById('addTimelinePanel');
+
+            if (addItemPanel.className == 'addTimelinePanelShow') {
+                addItemPanelShown = true;
+                addItemPanel.className = 'addTimelinePanelHidden';
             }
-            else if (panel.className == 'addTimelinePanelHidden') {
-                panel.className = 'addTimelinePanelShow';
+            else if (addItemPanel.className == 'addTimelinePanelHidden') {
+                addItemPanelShown = false;
+                addItemPanel.className = 'addTimelinePanelShow';
             }
+            
         }
 
         //Show the panel for adding new items on the left side of the screen
-        function showAddItemPanel(button) {
-            updateAddItemPanel();
+        function showAddItemPanel(buttonType) {
             var addItemPanel = document.getElementById('addItemPanel');
+            updateAddItemPanel();
 
             //Add entry button is clicked, panel needs to be hidden and cleared if the correct values are entered.
-            if (button === 'addEntry') {
+            if (buttonType === 'addEntry') {
                 if (addItemPanelcorrectValues !== false) {
                     addItemPanel.className = 'addItemPanelHidden';
                     itemPanelShown = false;
                     clearAddItemPanel();
                 }
             }
-            else {
+            else if (addItemMenuButtonClicked % 2) {
                 if (addItemPanel.className == 'addItemPanelShow') {
                     addItemPanel.className = 'addItemPanelHidden';
                     itemPanelShown = false;
@@ -68,6 +94,25 @@
                 }
             }
         }
+
+
+        function hideAllPanels() {
+            var timelinePanel = document.getElementById('timelinePanel');
+            var panel = document.getElementById('addTimelinePanel');
+            var addItemPanel = document.getElementById('addItemPanel');
+
+            if (timelinePanel.className == 'timelinePanelShow') {
+                timelinePanel.className = 'timelinePanelHidden';
+            }
+            if (panel.className == 'addTimelinePanelShow') {
+                panel.className = 'addTimelinePanelHidden';
+            }
+            if (addItemPanel.className == 'addItemPanelShow') {
+                addItemPanel.className = 'addItemPanelHidden';
+                clearAddItemPanel();
+            }
+        }
+
 
         function clearAddItemPanel() {
             document.getElementById("importOutputAddItem").innerHTML = "";
@@ -93,16 +138,6 @@
             rootItem = Canvas.Breadcrumbs.getRootItem();
             currentItem = Canvas.Breadcrumbs.getCurrentItem();
         }
-        /*
-        function handleTimelineBtnClick() {
-            var inputPanel = document.getElementById('timelinePanel');
-            if (inputPanel.className === 'timelinePanelShow') {
-                showTimelinePanel(false);
-            }
-            else {
-                showTimelinePanel(true);
-            }
-        }*/
 
         function imageUrlFieldHide(hideField) {
             var imageUrlField = document.getElementById('imageUrlContentItem');
