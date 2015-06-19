@@ -68,6 +68,7 @@ function ContentItem(data, parentContentItem) {
         // Add child to parent
         if (_parentContentItem !== undefined) {
             _parentContentItem.addChild(instance);
+            _parentContentItem.setPosition(_parentContentItem.getPosition().x, 100);
             _y = _parentContentItem.getPosition().y + 30;
         }
 
@@ -618,11 +619,29 @@ function ContentItem(data, parentContentItem) {
         // sinus value of angle
         var sinangle = Math.sin(angle);
 
-        // distance between centerpoint and given position
+        // distance between centerpoints of circles
         var distance = deltaY / sinangle;
 
-        // is mousepoint in circle
-        distance = (deltaX === 0 && deltaY === 0) ? 0 : distance;
+        if (_title === "Onderschotel" && contentItem.getTitle() === "Cylinder van koffiebrander") {
+            console.log(deltaX);
+            console.log(deltaY);
+            console.log(sinangle);
+        }
+
+        // If pythagoras not applicable
+        if (deltaX === 0 && deltaY === 0) {
+            distance = 0;
+        } else if (deltaX === 0) {
+            distance = deltaY
+        } else if (deltaY === 0) {
+            distance = deltaX;
+        }
+
+        if (_title === "Onderschotel") {
+            console.log(_radius);
+            console.log(bRadius);
+            console.log(distance);
+        }
         return ((_radius + bRadius) >= distance);
     }
 
