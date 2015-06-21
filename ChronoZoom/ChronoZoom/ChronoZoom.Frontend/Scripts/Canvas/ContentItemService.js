@@ -190,7 +190,7 @@
             Canvas.Timescale.setRange(rangeBegin, rangeEnd);
 
             // Set breadcrumb with root
-            Canvas.Breadcrumbs.setContentItem(parentContentItem);
+            Canvas.Breadcrumbs.setContentItem(parentContentItem.getChildren()[0]);
 
             // Set content items
             setContentItems(timeline.contentItems);
