@@ -13,8 +13,8 @@
     var _canvasContainer;
     var _lastTime;
 
-    // 1000 divided by 150 gives 15fps, 1000 dived by 1 given 1fps
-    var _requiredElapsed = 1000 / 150;
+    // 1000 divided by 60 gives 60fps
+    var _requiredElapsed = 1000 / 30;
     var _context;
 
     // Constructor
