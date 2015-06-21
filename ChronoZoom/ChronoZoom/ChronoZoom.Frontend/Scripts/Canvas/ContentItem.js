@@ -481,6 +481,7 @@ function ContentItem(data, parentContentItem) {
         }
         catch(ex) {
             _image.src = 'resources/no_image.jpg';
+            _pictureURLs[0] = 'resources/no_image.jpg';
             context.drawImage(_image, x, y, width, height);
         }
     }
