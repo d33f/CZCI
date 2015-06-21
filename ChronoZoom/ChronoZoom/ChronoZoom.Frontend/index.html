@@ -10,19 +10,19 @@
         <div id="title"></div>
         <div id="timerange"></div>
         <div id="menuButtons">
-            <button class="compact ui button default" onclick="Canvas.PanelManager.showAddItemPanel(true)">Add item</button>
-            <button class="compact ui button default" onclick="Canvas.PanelManager.showTimelinePanel(true)">My Timelines</button>
+            <button class="compact ui button default" onclick="Canvas.PanelManager.hideAllPanels(); Canvas.PanelManager.showAddItemPanel()">Add item</button>
+            <button class="compact ui button default" onclick="Canvas.PanelManager.hideAllPanels(); Canvas.PanelManager.showTimelinePanel()">My Timelines</button>
         </div>
     </div>
     <div id="timelinePanel" class="timelinePanelHidden">
         <h1>Timelines</h1>
         <div id="timelineList"></div>
         <div style="padding-top:15px; float: right">
-            <div class="compact ui button green small right" onclick="Canvas.PanelManager.showAddTimelinePanel(true); Canvas.PanelManager.showTimelinePanel(false)">
+            <div class="compact ui button green small right" onclick="Canvas.PanelManager.hideAllPanels(); Canvas.PanelManager.showAddTimelinePanel(false);">
                 <i class="icon add"></i>
                 Add timeline
             </div>
-            <div class="compact negative ui button" onclick="Canvas.PanelManager.showTimelinePanel(false)">Close</div>
+            <div class="compact negative ui button" onclick="Canvas.PanelManager.hideAllPanels(); Canvas.PanelManager.showTimelinePanel(false)">Close</div>
         </div>
     </div>
 
@@ -53,14 +53,14 @@
             </div>
             <div class="field">
                 <label>Make timeline public</label>
-                <input id="isPublicInput" type="checkbox"/>
+                <input id="isPublicInput" type="checkbox" />
             </div>
             <div style="padding-top:15px; float: right">
-                <div class="compact ui button green small right" onclick="Canvas.PanelManager.handleAddTimelineInput()">
+                <div class="compact ui button green small right" onclick="Canvas.PanelManager.handleAddTimelineInput(); Canvas.PanelManager.showTimelinePanel(true);">
                     <i class="icon add"></i>
                     Add timeline
                 </div>
-                <div class="compact negative ui button" onclick="Canvas.PanelManager.showAddTimelinePanel(false)">Close</div>
+                <div class="compact negative ui button" onclick="Canvas.PanelManager.hideAllPanels(); Canvas.PanelManager.showAddTimelinePanel(true)">Close</div>
             </div>
         </div>
         <div id="importOutput">
@@ -74,11 +74,11 @@
             <div class="two fields">
                 <div class="field">
                     <div class="circle"></div>
-                    <input type="radio" id="circleRadioButton" name="select" value="contentItem" onclick="Canvas.PanelManager.imageUrlFieldShow(false)" required>
+                    <input type="radio" id="circleRadioButton" name="select" value="contentItem" onclick="Canvas.PanelManager.imageUrlFieldHide(false)" required>
                 </div>
                 <div class="field">
                     <div class="rectangle"></div>
-                    <input type="radio" id="rectangleRadioButton" name="select" value="timeline" onclick="Canvas.PanelManager.imageUrlFieldShow(true)" required>
+                    <input type="radio" id="rectangleRadioButton" name="select" value="timeline" onclick="Canvas.PanelManager.imageUrlFieldHide(true)" required>
                 </div>
             </div>
 
@@ -105,7 +105,7 @@
                 <textarea id="descriptionInputContentItem" placeholder="Timeline description"></textarea>
             </div>
             <div style="padding-top:15px; float: right">
-                <div class="compact ui button green small right" onclick="Canvas.PanelManager.handleAddContentItemInput(); Canvas.PanelManager.showAddItemPanel(false, 'addItem')">
+                <div class="compact ui button green small right" onclick="Canvas.PanelManager.handleAddContentItemInput(); Canvas.PanelManager.showAddItemPanel('addEntry')">
                     <i class="icon add"></i>
                     Add item
                 </div>
@@ -113,11 +113,11 @@
                     <i class="icon add"></i>
                     Add + new entry
                 </div>
-                <div class="compact negative ui button" onclick="Canvas.PanelManager.showAddItemPanel(false)">Close</div>
+                <div class="compact negative ui button" onclick="Canvas.PanelManager.showAddItemPanel()">Close</div>
             </div>
         </div>
 
-        
+
         <div id="importOutputAddItem" style="color: yellow">
             <ul></ul>
         </div>
