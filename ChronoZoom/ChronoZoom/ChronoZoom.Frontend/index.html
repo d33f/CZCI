@@ -68,6 +68,10 @@
     </div>
 
     <div id="addItemPanel" class="addItemPanelHidden">
+        <div id="errorArea" class="ui hidden error message">
+            <div class="header">Error</div>
+            <div id="addItemErrorMessage"></div>
+        </div>
         <h1>Add item to:</h1>
         <h3 id="itemName"></h3>
         <div class="ui error inverted form segment">
@@ -113,13 +117,8 @@
                     <i class="icon add"></i>
                     Add + new entry
                 </div>
-                <div class="compact negative ui button" onclick="Canvas.PanelManager.showAddItemPanel()">Close</div>
+                <div class="compact negative ui button" onclick="Canvas.PanelManager.hideAllPanels();">Close</div>
             </div>
-        </div>
-
-
-        <div id="importOutputAddItem" style="color: yellow">
-            <ul></ul>
         </div>
     </div>
 

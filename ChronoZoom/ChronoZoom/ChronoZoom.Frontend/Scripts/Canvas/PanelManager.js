@@ -25,7 +25,7 @@
         //Show the timeline panel on the left side of the screen
         function showTimelinePanel(buttonType) {
             var timelinePanel = document.getElementById('timelinePanel');
-            
+
             if (timelinePanelShown) {
                 timelinePanelShown = false
             }
@@ -42,7 +42,7 @@
         function showAddTimelinePanel(close) {
             var addTimelinePanel = document.getElementById('addTimelinePanel');
             var timelinePanel = document.getElementById('timelinePanel');
-           
+
             if (close) {
                 addTimelinePanelShown = false;
                 timelinePanelShown = false;
@@ -58,7 +58,7 @@
                 addTimelinePanel.className = 'addTimelinePanelShow';
                 addItemPanelShown = false;
                 timelinePanelShown = false;
-            }   
+            }
         }
 
         //Show the panel for adding new items on the left side of the screen
@@ -78,6 +78,7 @@
                 clearAddItemPanel();
             }
             else {
+                hideErrorMessageArea();
                 addItemPanelShown = true;
                 addItemPanel.className = 'addItemPanelShow';
                 timelinePanelShown = false;
@@ -105,12 +106,19 @@
 
 
         function clearAddItemPanel() {
-            document.getElementById("importOutputAddItem").innerHTML = "";
-            document.getElementById("titleInputContentItem").value = "";
-            document.getElementById("startDateInputContentItem").value = "";
-            document.getElementById("endDateInputContentItem").value = "";
-            document.getElementById("descriptionInputContentItem").value = "";
-            document.getElementById("imageUrlContentItem").value = "";
+            var titleInput = document.getElementById("titleInputContentItem");
+            var startDate = document.getElementById("startDateInputContentItem");
+            var endDate = document.getElementById("endDateInputContentItem");
+            var description = document.getElementById("descriptionInputContentItem");
+            var imageUrl = document.getElementById("imageUrlContentItem");
+
+            //Clear inputfields
+            titleInput.innerHTML = "";
+            startDate.innerHTML = "";
+            endDate.innerHTML = "";
+            description.innerHTML = "";
+
+            //Do not hide the imageURLField
             imageUrlFieldHide(false);
             var radios = document.getElementsByName('select')
             radios[0].checked = false;
@@ -236,36 +244,38 @@
                 hasChildren = true;
             }
 
-            var title = document.getElementById("titleInputContentItem").value;
-            var startDate = document.getElementById("startDateInputContentItem").value;
-            var endDate = document.getElementById("endDateInputContentItem").value;
-            var description = document.getElementById("descriptionInputContentItem").value;
-            var imageUrl = document.getElementById("imageUrlContentItem").value;
+            var title = document.getElementById("titleInputContentItem");
+            var startDate = document.getElementById("startDateInputContentItem");
+            var endDate = document.getElementById("endDateInputContentItem");
+            var description = document.getElementById("descriptionInputContentItem");
+            var imageUrl = document.getElementById("imageUrlContentItem");
             var pictureURLs = new Array();
-            pictureURLs.push(imageUrl)
+            pictureURLs.push(imageUrl.value)
             var parentId = currentItem.getId();
             var parentIdBeginDate = currentItem.getBeginDate();
             var parentIdEndDate = currentItem.getEndDate();
 
-            var output = document.getElementById("importOutputAddItem");
+
             var errorMessage = "Error message";
 
             var correctValues;
 
             if (hasChildren === "" || hasChildren === undefined) {
                 errorMessage = errorMessage + "<li>Use the radio button to select an item type! </li>";
+
                 correctValues = false;
             }
-            if (title === "") {
+            if (title.value === "") {
+                var titleArea = document.getElementById('title');
                 errorMessage = errorMessage + "<li>Enter a title!</li>";
                 correctValues = false;
             }
-            if (startDate < parentIdBeginDate || endDate > parentIdEndDate || startDate === "" || endDate === "") {
+            if (startDate.value < parentIdBeginDate || endDate.value > parentIdEndDate || startDate.value === "" || endDate.value === "") {
                 errorMessage = errorMessage + "<li>Begin and enddate not between " + parentIdBeginDate + " and " + parentIdEndDate + "</li>";
                 correctValues = false;
             }
 
-            if (startDate > endDate) {
+            if (startDate.value > endDate.value) {
                 errorMessage = errorMessage + "<li> Start date bigger then end date</li>";
                 correctValues = false;
             }
@@ -282,12 +292,28 @@
             addItemPanelcorrectValues = correctValues;
 
             if (addItemPanelcorrectValues !== false) {
-                errorMessage = "";
-                Canvas.BackendService.createPersonalContentItem(startDate, endDate, title, description, hasChildren, currentItem, pictureURLs);
+                hideErrorMessageArea();
+                Canvas.BackendService.createPersonalContentItem(startDate.value, endDate.value, title.value, description.value, hasChildren, currentItem, pictureURLs);
             }
 
-            output.innerHTML = errorMessage;
+            else {
+                showErrorMessageArea(errorMessage);
+            }
         }
+
+        function hideErrorMessageArea() {
+            var errorMessage = "";
+            var errorArea = document.getElementById('errorArea');
+            errorArea.innerHTML = errorMessage;
+            errorArea.className = 'ui hidden error message';
+        }
+
+        function showErrorMessageArea(errorMessage) {
+            var errorArea = document.getElementById('errorArea');
+            errorArea.innerHTML = errorMessage;
+            errorArea.className = 'ui error message';
+        }
+
     })(Canvas.PanelManager || (Canvas.PanelManager = {}));
     var PanelManager = Canvas.PanelManager;
 })(Canvas || (Canvas = {}));
