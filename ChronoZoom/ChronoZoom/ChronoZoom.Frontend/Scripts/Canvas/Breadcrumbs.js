@@ -61,7 +61,7 @@
                 }
 
                 while (contentItem !== undefined) {
-                    if(contentItem.getId() !== 0)
+                    if(contentItem.id !== 0)
                         _stack.unshift(contentItem);
                     contentItem = contentItem.getParentContentItem();
                 }

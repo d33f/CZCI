@@ -60,7 +60,7 @@
                 Canvas.BackendService.getContentItems(parentContentItem, function (contentItems) {
                     // Set content items and cache the data
                     setContentItems([parentContentItem]);
-                    addContentItemsToCache(parentContentItem.getId(), contentItems);
+                    addContentItemsToCache(parentContentItem.id, contentItems);
                 }, function (error) {
                     console.log("No content items for parent content id found!!!", error);
                 });
@@ -70,7 +70,7 @@
         // Get content items from cache with given parent content
         function getContentItemsFromCache(parentContentItem) {
             // Check if parent content item is not root
-            if (parentContentItem.getId() === 0) {
+            if (parentContentItem.id === 0) {
                 var cachedData = getTimelineFromCache(_timelineID);
                 if (cachedData !== undefined) {
                     return cachedData.contentItems;
@@ -83,7 +83,7 @@
             // Check for caching
             if (_cache !== undefined) {
                 // Try to get the data from the cache
-                var data = _cache.getItem("C" + parentContentItem.getId());
+                var data = _cache.getItem("C" + parentContentItem.id);
 
                 // Check if data is found
                 if (data !== null) {
@@ -265,7 +265,7 @@
                 var position = org[i].getPosition();
                 var size = org[i].getSize();
                 var contentItem = new ContentItem({
-                    id: org[i].getId(),
+                    id: org[i].id,
                     beginDate: org[i].getBeginDate(),
                     endDate: org[i].getEndDate(),
                     title: org[i].getTitle(),

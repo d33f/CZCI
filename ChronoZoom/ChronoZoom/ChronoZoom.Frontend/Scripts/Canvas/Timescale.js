@@ -38,7 +38,7 @@
             }
 
             // Check if not rounded time
-            if (time !== Math.round(time)) {
+            if (time !== Math.round(time) && (_range.end - _range.begin) < 10) {
                 var date = convertTimeToDate(time);
 
                 var monthNames = [
@@ -50,7 +50,7 @@
 
                 return monthNames[date.getMonth()] + ", " + date.getFullYear();
             }
-            return String(time);
+            return String(Math.round(time));
         }
 
         // Convert given time to date
@@ -98,6 +98,7 @@
         function draw() {
             // Get (canvas) context and canvas width
             var context = Canvas.getContext();
+
             // Draw layers
             drawBaseLayer(context);
             drawTimescaleLayer(context);
@@ -117,8 +118,16 @@
             var amountOfSmallTicksPerTick = 5;
 
             // Draw ticks, tick labels and bottom line
-            drawTicks(context, ticks, amountOfSmallTicksPerTick);
-            drawTickLabels(context, ticks);
+            var span = _range.end - _range.begin;
+            if (span == 0) {
+                drawTicks(context, 2, 1);
+                drawTickLabels(context, 2);
+            } else {
+                drawTicks(context, ticks, amountOfSmallTicksPerTick);
+                drawTickLabels(context, ticks);
+            }
+
+            
             drawBottomLine(context);
         }
 
@@ -154,7 +163,7 @@
             context.fillStyle = Canvas.Settings.getTimescaleTickLabelColor();
 
             // Draw all ticks
-            for (var i = 0; i <= ticks; i++) {
+            for (var i = 1; i < ticks; i++) {
                 // Set year and convert year to string
                 var year = _range.begin + (i * tickTime);
                 var yearString = convertTimeToString(year);

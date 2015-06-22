@@ -1,6 +1,5 @@
 function ContentItem(data, parentContentItem) {
     // Public properties
-    this.getId = getId;
     this.getBeginDate = getBeginDate;
     this.getEndDate = getEndDate;
     this.getTitle = getTitle;
@@ -27,7 +26,7 @@ function ContentItem(data, parentContentItem) {
     this.destructor = destructor;
 
     // Private fields
-    var _id = data.id;
+    this.id = data.id;
     var _beginDate = data.beginDate;
     var _endDate = data.endDate;
     var _title = data.title;
@@ -84,11 +83,6 @@ function ContentItem(data, parentContentItem) {
     // Destructor
     function destructor() {
         removeDOMElement();
-    }
-
-    // Get id property
-    function getId() {
-        return _id;
     }
 
     // Get begin date property
@@ -257,13 +251,13 @@ function ContentItem(data, parentContentItem) {
 
     // Create DOM element for fullscreen content item
     function createDOMElementForFullscreenContentItem() {
-        var element = document.getElementById('contentItem_' + _id);
+        var element = document.getElementById('contentItem_' + _data.id);
 
         // Create new content item element if it doesn't exist
         if (element == null) {
             // Create content item element
             element = createElementWithClass('div', 'contentItem');
-            element.id = 'contentItem_' + _id;
+            element.id = 'contentItem_' + _data.id;
 
             // Create wrapper with title
             var wrapper = createElementWithClass('div', 'wrapper');
@@ -275,7 +269,7 @@ function ContentItem(data, parentContentItem) {
             image.setAttribute('name', 'largeImage');
             image.setAttribute('src', _pictureURLs[0]);
             image.setAttribute('width', '100%');
-            image.setAttribute('height', '60%');
+            image.setAttribute('height', '65%');
             images.appendChild(image);
             wrapper.appendChild(images);
 
@@ -313,7 +307,7 @@ function ContentItem(data, parentContentItem) {
     // Remove the dom element
     function removeDOMElement() {
         // Get content item element
-        var element = document.getElementById('contentItem_' + _id);
+        var element = document.getElementById('contentItem_' + _data.id);
         if (element !== null) {
             // Get the canvas container element and remove this content item container
             var container = document.getElementById('canvasContainer');
@@ -371,11 +365,10 @@ function ContentItem(data, parentContentItem) {
 
     // Update y position
     function updateYPosition(contentItems) {
-
         var length = contentItems.length;
         for (var i = 0; i < length; i++) {
             // Don't collide on your self!
-            if (contentItems[i].getId() !== _id) {
+            if (contentItems[i].id !== _data.id) {
                 while (collidesContentItem(contentItems[i])) {
                     _y += contentItems[i].getSize().height + 10;
                 }
@@ -411,7 +404,7 @@ function ContentItem(data, parentContentItem) {
         }
 
         context.fill();
-        _linewidth = _isHovered ? 3 : 1;
+        _linewidth = _isHovered ? 4 : 2;
         context.lineWidth = _linewidth;
         context.strokeStyle = 'white';
         context.stroke();
@@ -436,20 +429,13 @@ function ContentItem(data, parentContentItem) {
             context.fillStyle = 'rgba(0, 0, 0, 0.8)';
             context.arc(_x + _radius, _y + _radius, _radius, 0, 2 * Math.PI);
             context.fill();
-            _linewidth = _isHovered ? 3 : 1;
+            _linewidth = _isHovered ? 4 : 2;
             context.lineWidth = _linewidth;
             context.strokeStyle = 'white';
             context.stroke();
             context.closePath();
 
             context.beginPath();
-            //var centerPointX = _x + _radius;
-            //var centerPointY = _y + _radius;
-            ////var rectX = centerPointX - ((_radius * 0.9) * Math.cos(0.7853981634));
-            //var rectY = centerPointY - ((_radius * 0.9) * Math.sin(0.7853981634));
-            //var rectWidth = (centerPointX - rectX) * 2;
-            //var rectHeight = (centerPointY - rectY) * 1.2;
-            //drawImage(context, (_x + (_radius * 0.5)), 120, _radius, _radius * 0.8);
 
             context.strokeStyle = 'white';
             context.stroke();
@@ -459,7 +445,7 @@ function ContentItem(data, parentContentItem) {
             context.save();
             context.beginPath();
             context.arc(_x + _radius, _y + _radius, _radius, 0, 2 * Math.PI);
-            _linewidth = _isHovered ? 3 : 1;
+            _linewidth = _isHovered ? 4 : 2;
             context.lineWidth = _linewidth;
             context.strokeStyle = 'white';
             context.stroke();

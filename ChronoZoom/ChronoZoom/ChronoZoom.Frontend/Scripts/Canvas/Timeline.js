@@ -7,13 +7,16 @@
         Timeline.handleClickOnTimeline = handleClickOnTimeline;
         Timeline.setTimeline = setTimeline;
         Timeline.stopFullScreenContentItemMode = stopFullScreenContentItemMode;
-        Timeline.dragTimeline = dragTimeline;
-
+        Timeline.updateOffsetY = updateOffsetY;
+        Timeline.getOffsetY = getOffsetY;
+        //Timeline.dragTimeline = dragTimeline;
+        
         // Private fields
         var _contentItems = [];
         var _oldRange = [];
         var _newRange = [];
         var _fullscreenContentItem;
+        var _offsetY = 0;
 
         // Constructor
         function initialize() {
@@ -25,13 +28,18 @@
             Canvas.ContentItemService.findTimeline(timelineId);       
         }
 
+        function getOffsetY() {
+            return _offsetY;
+        }
+
         // Handle on content item changed event
         function onContentItemsChanged() {
             _contentItems = [];
+            _offsetY = 0;
 
             // Get and set old content items and content items
             _contentItems = Canvas.ContentItemService.getContentItems();
-            _contentItems[0].setPosition(_contentItems[0].getPosition().x, 100);
+            //_contentItems[0].setPosition(_contentItems[0].getPosition().x, 100);
             
             // Hide loader
             Canvas.WindowManager.showLoader(false);
@@ -98,20 +106,17 @@
 
         // Handle the click on timeline event
         function handleClickOnTimeline() {
-            if (!Canvas.Mousepointer.getDrag()) {
+            // Find clicked item
+            var clickedContentItem = getContentItemOnMousePosition();
 
-                // Find clicked item
-                var clickedContentItem = getContentItemOnMousePosition();
+            // If no item found zoom out
+            if (clickedContentItem === undefined) {
+                clickedContentItem = Canvas.Breadcrumbs.decreaseDepthAndGetTheNewContentItem();
+            }
 
-                // If no item found zoom out
-                if (clickedContentItem === undefined) {
-                    clickedContentItem = Canvas.Breadcrumbs.decreaseDepthAndGetTheNewContentItem();
-                }
-
-                // Make sure root is not reached
-                if (clickedContentItem !== undefined && clickedContentItem.getId() !== 0) {
-                    handleClickOnContentItem(clickedContentItem);
-                }
+            // Make sure root is not reached
+            if (clickedContentItem !== undefined && clickedContentItem.id !== 0) {
+                handleClickOnContentItem(clickedContentItem);
             }
         }
 
@@ -192,26 +197,30 @@
                 }
                 return contentItem;
             }
+
             return undefined;
         }
 
-        function dragTimeline(yOffset) {
-            dragUpdatePosition(_contentItems[0], yOffset);
+        function updateOffsetY(addPixels) {
+            _offsetY += addPixels;
+
+            var length = _contentItems.length;
+            for (var i = 0; i < length; i++) {
+                updateOffsetYChild(_contentItems[i], addPixels);
+            }
         }
 
-        function dragUpdatePosition(contentItem, yOffset) {
+        function updateOffsetYChild(contentItem, addPixels) {
             var position = contentItem.getPosition();
-            var newYPosition = position.y - yOffset;
-            var parent = _contentItems[0];
-            var parentPosition = parent.getPosition();
-            if (Canvas.getCanvasContainer().height - 100 < parentPosition.y + parent.getSize().height - yOffset && parentPosition.y - yOffset <= 120) {
-                contentItem.setPosition(position.x, newYPosition);
+            contentItem.setPosition(position.x, position.y + addPixels);
+
+            if (contentItem.hasChildren()) {
                 var children = contentItem.getChildren();
                 var length = children.length;
                 for (var i = 0; i < length; i++) {
-                    dragUpdatePosition(children[i], yOffset);
+                    updateOffsetYChild(children[i], addPixels);
                 }
-            } 
+            }
         }
 
         initialize();
