@@ -129,7 +129,7 @@
             var timelineLabel = document.getElementById('timelineName');
             var itemLabel = document.getElementById('itemName');
             getCurrentItems();
-            itemLabel.innerHTML = currentItem.getTitle() + " ( " + currentItem.getBeginDate() + " - " + currentItem.getEndDate() + " )";
+            itemLabel.innerHTML = currentItem.getTitle() + " ( " + currentItem.beginDate + " - " + currentItem.endDate + " )";
         }
 
         function getCurrentItems() {
@@ -252,8 +252,8 @@
             var pictureURLs = new Array();
             pictureURLs.push(imageUrl.value)
             var parentId = currentItem.getId();
-            var parentIdBeginDate = currentItem.getBeginDate();
-            var parentIdEndDate = currentItem.getEndDate();
+            var parentIdBeginDate = currentItem.beginDate;
+            var parentIdEndDate = currentItem.endDate;
 
 
             var errorMessage = "Error message";

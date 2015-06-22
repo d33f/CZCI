@@ -183,13 +183,13 @@
 
             // Set timeline range
             var parentContentItem = timeline.contentItems[0].getParentContentItem();
-            var rangeItem = parentContentItem.getEndDate() - parentContentItem.getBeginDate();
-            var rangeBegin = parentContentItem.getBeginDate() - (rangeItem / 20);
-            var rangeEnd = parentContentItem.getEndDate() + (rangeItem / 20);
+            var rangeItem = parentContentItem.endDate - parentContentItem.beginDate;
+            var rangeBegin = parentContentItem.beginDate - (rangeItem / 20);
+            var rangeEnd = parentContentItem.endDate + (rangeItem / 20);
             Canvas.Timescale.setRange(rangeBegin, rangeEnd);
 
             // Set breadcrumb with root
-            Canvas.Breadcrumbs.setContentItem(parentContentItem.getChildren()[0]);
+            Canvas.Breadcrumbs.setContentItem(parentContentItem.getChildren[0]);
 
             // Set content items
             setContentItems(timeline.contentItems);

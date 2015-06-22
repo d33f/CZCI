@@ -78,3 +78,8 @@
 
     initialize();
 })(Canvas || (Canvas = {}));
+
+
+var CZ = {
+    
+}

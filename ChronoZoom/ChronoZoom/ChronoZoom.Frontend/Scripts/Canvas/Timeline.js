@@ -83,7 +83,7 @@
         // Draw given content item on canvas if in (current) range
         function drawContentItem(range, contentItem) {
             // Check if content item visible in current range
-            if (contentItem.getBeginDate() >= range.begin || contentItem.getEndDate() <= range.end) {
+            if (contentItem.beginDate >= range.begin || contentItem.endDate <= range.end) {
                 contentItem.draw();
             }
         }
@@ -123,9 +123,9 @@
         // Handle click on given content item
         function handleClickOnContentItem(clickedContentItem) {
             // Calculate new range
-            var rangeItem = clickedContentItem.getEndDate() - clickedContentItem.getBeginDate();
-            var rangeBegin = clickedContentItem.getBeginDate() - (rangeItem / 20);
-            var rangeEnd = clickedContentItem.getEndDate() + (rangeItem / 20);
+            var rangeItem = clickedContentItem.endDate - clickedContentItem.beginDate;
+            var rangeBegin = clickedContentItem.beginDate - (rangeItem / 20);
+            var rangeEnd = clickedContentItem.endDate + (rangeItem / 20);
 
             // Set old and new range
             _oldRange = Canvas.Timescale.getRange();            
@@ -187,18 +187,18 @@
         // Check if current content item collides given content item
         function checkCollision(contentItem) {
             var position = Canvas.Mousepointer.getPosition();
-            if (contentItem.collides(position.x, position.y)) {
-                var children = contentItem.getChildren();
-                var length = children.length;
-                for (var i = 0; i < length; i++) {
-                    if (checkCollision(children[i]) !== undefined) {
-                        return children[i];
-                    }
-                }
-                return contentItem;
+            if (!contentItem.collides(position.x, position.y)) {
+                return undefined;
             }
-
-            return undefined;
+            var children = contentItem.getChildren();
+            var length = children.length;
+            for (var i = 0; i < length; i++) {
+                var child = children[i];
+                if (checkCollision(child) !== undefined) {
+                    return child;
+                }
+            }
+            return contentItem;
         }
 
         function updateOffsetY(addPixels) {
@@ -213,9 +213,8 @@
         function updateOffsetYChild(contentItem, addPixels) {
             var position = contentItem.getPosition();
             contentItem.setPosition(position.x, position.y + addPixels);
-
             if (contentItem.hasChildren()) {
-                var children = contentItem.getChildren();
+                var children = contentItem.getCchildren();
                 var length = children.length;
                 for (var i = 0; i < length; i++) {
                     updateOffsetYChild(children[i], addPixels);

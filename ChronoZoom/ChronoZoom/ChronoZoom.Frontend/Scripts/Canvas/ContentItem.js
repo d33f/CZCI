@@ -1,38 +1,30 @@
 function ContentItem(data, parentContentItem) {
     // Public properties
-    this.getBeginDate = getBeginDate;
-    this.getEndDate = getEndDate;
+    this.beginDate = data.beginDate;
+    this.endDate = data.endDate;
+    this.id = data.id;
     this.getTitle = getTitle;
     this.getParentContentItem = getParentContentItem;
-    this.getSource = getSource;
     this.getData = getData;
     this.getSize = getSize;
     this.getChildren = getChildren;
     this.hasChildren = hasChildren;
-    this.getHovered = getHovered;
     this.getFullScreen = getFullScreen;
 
     // Public methods
     this.update = update;
     this.draw = draw;
     this.collides = collides;
-    this.collidesContentItem = collidesContentItem;
     this.getPosition = getPosition;
     this.setPosition = setPosition;
-    this.updatePosition = updatePosition;
     this.addChild = addChild;
     this.setIsFullScreen = setIsFullScreen;
     this.clearChildren = clearChildren;
     this.destructor = destructor;
 
     // Private fields
-    this.id = data.id;
-    var _beginDate = data.beginDate;
-    var _endDate = data.endDate;
     var _title = data.title;
     var _hasChildren = data.hasChildren;
-    var _sourceURL = data.sourceURL;
-    var _sourceRef = data.sourceRef;
     var _pictureURLs = data.pictureURLs;
 
     var _data = data;
@@ -85,16 +77,6 @@ function ContentItem(data, parentContentItem) {
         removeDOMElement();
     }
 
-    // Get begin date property
-    function getBeginDate() {
-        return _beginDate;
-    }
-
-    // Get end date property
-    function getEndDate() {
-        return _endDate;
-    }
-
     // Get title property
     function getTitle() {
         return _title;
@@ -105,18 +87,9 @@ function ContentItem(data, parentContentItem) {
         return _parentContentItem;
     }
 
-    function getSource() {
-        return _sourceURL;
-    }
-
     // Get has childeren property
     function hasChildren() {
         return _hasChildren;
-    }
-
-    // Get if content item is hovered
-    function getHovered() {
-        return _isHovered;
     }
 
     // Get childeren
@@ -164,12 +137,6 @@ function ContentItem(data, parentContentItem) {
         _y = y;
     }
 
-    // Update the position of the content item
-    function updatePosition() {
-        _x = Canvas.Timescale.getXPositionForTime(_beginDate);
-        _width = Canvas.Timescale.getXPositionForTime(_endDate) - _x;
-    }
-
     // Get (all) data as object
     function getData() {
         return _data;
@@ -182,8 +149,8 @@ function ContentItem(data, parentContentItem) {
 
     // Update this content item
     function update(contentItems) {
-        _x = Canvas.Timescale.getXPositionForTime(_beginDate);
-        _width = Canvas.Timescale.getXPositionForTime(_endDate) - _x;
+        _x = Canvas.Timescale.getXPositionForTime(this.beginDate);
+        _width = Canvas.Timescale.getXPositionForTime(this.endDate) - _x;
 
         if (_isFullScreen) {
             updateFullScreenContentItem();
@@ -333,7 +300,7 @@ function ContentItem(data, parentContentItem) {
         updateDOMElement(canvasHeight);
 
         _container.getElementsByClassName("title")[0].innerHTML = _title;
-        _container.getElementsByClassName("text")[0].innerHTML = _data.description == "" ? "Nvt" : _data.description;
+        _container.getElementsByClassName("text")[0].innerHTML = _data.description === "" ? "Nvt" : _data.description;
     }
 
     // Update (DOM) container element
@@ -342,8 +309,6 @@ function ContentItem(data, parentContentItem) {
         _container.style.left = _x + "px";
         _container.style.width = (_radius * 2) + "px";
         _container.style.height = canvasHeight + "px";
-        //_container.style.display = "block";
-        //_container.style.pointerEvents = "none";
     }
 
     // Update it's children and calculate height
@@ -379,10 +344,8 @@ function ContentItem(data, parentContentItem) {
     // Draw this content item
     function draw() {
         var context = Canvas.context;
-
         if (_hasChildren) {
             drawContentItemWithChildren(context);
-            drawChildren();
         } else {
             drawContentItemWithoutChildren(context);
         }
@@ -418,6 +381,7 @@ function ContentItem(data, parentContentItem) {
             context.fillText(_title, _x + 5, (_y + 5) + 12);
         }
         context.closePath();
+        drawChildren();
     }
 
     // Draw content item without childeren
