@@ -7,28 +7,27 @@
         Breadcrumbs.redirect = redirect;
         Breadcrumbs.getRootItem = getRootItem;
         Breadcrumbs.getCurrentItem = getCurrentItem;
-        var rootItem;
-        var currentItem;
-
+        
         // Private fields
         var _stack = [];
         var _container = null;
+        var _rootItem;
+        var _currentItem;
 
         function getCurrentItem() {
-            return currentItem;
+            return _currentItem;
         }
 
         function setCurrentItem(item) {
-            currentItem = item;
+            _currentItem = item;
         }
 
         function getRootItem() {
-            return rootItem;
+            return _rootItem;
         }
 
         function setRootItem(item) {
-            rootItem = item;
-
+            _rootItem = item;
         }
 
         // Constructor

@@ -8,10 +8,12 @@
         PanelManager.updateAddItemPanel = updateAddItemPanel;
         PanelManager.showAddTimelinePanel = showAddTimelinePanel;
         PanelManager.showAddItemPanel = showAddItemPanel;
+        PanelManager.toggleEditPanel = toggleEditPanel;
         PanelManager.handleAddContentItemInput = handleAddContentItemInput;
         PanelManager.clearAddItemPanel = clearAddItemPanel;
         PanelManager.hideAllPanels = hideAllPanels;
         PanelManager.showTimelinePanel = showTimelinePanel;
+        PanelManager.submitPanel = submitPanel;
 
         var rootItem;
         var currentItem;
@@ -21,6 +23,9 @@
         var addTimelinePanelShown = false;
 
         var addItemPanelcorrectValues;
+
+        // Private fields
+        var _currentPanel = undefined;
 
         //Show the timeline panel on the left side of the screen
         function showTimelinePanel(buttonType) {
@@ -312,6 +317,88 @@
             var errorArea = document.getElementById('errorArea');
             errorArea.innerHTML = errorMessage;
             errorArea.className = 'ui error message';
+        }
+
+        /// EDIT PANEL
+
+        function toggleEditPanel() {
+            var panel = document.getElementById('editItemPanel');
+            if (togglePanelAndReturnIfShown(panel)) {
+                var data = Canvas.Breadcrumbs.getCurrentItem().getData();
+
+                data.pictureURLs = JSON.stringify(data.pictureURLs);
+                setPanelData(panel, data);
+            } else {
+                clearPanel(panel);
+            }
+        }
+
+        function togglePanelAndReturnIfShown(panel) {
+            if (panel.className.indexOf("hidePanel") !== -1) {
+                if (_currentPanel !== undefined && _currentPanel.className.indexOf("hidePanel") === -1) {
+                    _currentPanel.className.replace("showPanel", "hidePanel");
+                }
+                _currentPanel = panel;
+
+                panel.className = panel.className.replace("hidePanel", "showPanel");
+                return true;
+            } else {
+                panel.className = panel.className.replace("showPanel", "hidePanel");
+                return false;
+            }
+        }
+
+        function clearPanel(panel) {
+            clearPanelElements(panel, "input");
+            clearPanelElements(panel, "textarea");
+        }
+
+        function clearPanelElements(panel, tagName) {
+            var elements = panel.getElementsByTagName(tagName);
+            for (var i = 0; i < elements.length; i++) {
+                elements[i].value = "";
+            }
+        }
+
+        function getPanelData(panel) {
+            data = {};
+            getPanelElements(panel, "textarea", data);
+            getPanelElements(panel, "input", data);
+            return data;
+        }
+        
+        function getPanelElements(panel, tagName, data) {
+            var elements = panel.getElementsByTagName(tagName);
+            for (var i = 0; i < elements.length; i++) {
+                data[elements[i].getAttribute("name")] = elements[i].value;
+            }
+        }
+
+        function setPanelData(panel, data) {
+            setPanelElements(panel, "textarea", data);
+            setPanelElements(panel, "input", data);
+        }
+
+        function setPanelElements(panel, tagName, data) {
+            var elements = panel.getElementsByTagName(tagName);
+            for (var i = 0; i < elements.length; i++) {
+                var name = elements[i].getAttribute("name");
+                if (data.hasOwnProperty(name)) {
+                    elements[i].value = data[name];
+                }
+            }
+        }
+
+        function submitPanel() {
+            var data = getPanelData(_currentPanel);
+
+            if (_currentPanel.getAttribute("id") === "editItemPanel") {
+                data.pictureURLs = JSON.parse(data.pictureURLs);
+                Canvas.BackendService.editContentItem(data);
+                Canvas.Breadcrumbs.getCurrentItem().setData(data);
+            }
+
+            _currentPanel.className = _currentPanel.className.replace("showPanel", "hidePanel");
         }
 
     })(Canvas.PanelManager || (Canvas.PanelManager = {}));

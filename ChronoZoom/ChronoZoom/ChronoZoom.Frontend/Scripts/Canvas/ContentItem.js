@@ -6,6 +6,7 @@ function ContentItem(data, parentContentItem) {
     this.getParentContentItem = getParentContentItem;
     this.getSource = getSource;
     this.getData = getData;
+    this.setData = setData;
     this.getSize = getSize;
     this.getChildren = getChildren;
     this.hasChildren = hasChildren;
@@ -27,6 +28,7 @@ function ContentItem(data, parentContentItem) {
 
     // Private fields
     this.id = data.id;
+    this.timestamp = data.timestamp;
     var _beginDate = data.beginDate;
     var _endDate = data.endDate;
     var _title = data.title;
@@ -173,6 +175,13 @@ function ContentItem(data, parentContentItem) {
     // Get (all) data as object
     function getData() {
         return _data;
+    }
+
+    function setData(data) {
+        _data = data;
+        if (_isFullScreen) {
+            updateFullScreenContentItem();
+        }
     }
 
     // Get size
@@ -332,7 +341,7 @@ function ContentItem(data, parentContentItem) {
 
         updateDOMElement(canvasHeight);
 
-        _container.getElementsByClassName("title")[0].innerHTML = _title;
+        _container.getElementsByClassName("title")[0].innerHTML = data.title;
         _container.getElementsByClassName("text")[0].innerHTML = _data.description == "" ? "Nvt" : _data.description;
     }
 

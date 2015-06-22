@@ -4,6 +4,9 @@
     height: 100%;
     overflow: hidden;
 }
+.hidden {
+    display: none;
+}
 
 #canvasContainer {
     width: 100%;
@@ -170,7 +173,7 @@ div#timelinePanel {
     border: 1px solid #ccc;
 }
 
-div#addItemPanel {
+div#addItemPanel, .panel {
     transition: left .6s ease;
     width: 400px;
     background-color: #1B1C1D;
@@ -183,13 +186,17 @@ div#addItemPanel {
     padding: 10px;
 }
 
-.addItemPanelShow {
+.addItemPanelShow, .showPanel {
     left: -0px;
 }
 
-.addItemPanelHidden {
+.addItemPanelHidden, .hidePanel {
     left: -420px;
     display: inline;
+}
+
+textarea#description {
+    height: 120px;
 }
 
 .timelinePanelShow {

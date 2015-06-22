@@ -153,10 +153,16 @@
             // Mark content item as fullscreen mode
             contentItem.setIsFullScreen(true);
             _fullscreenContentItem = contentItem;
+
+            document.getElementById("addButton").style.display = "none";
+            document.getElementById("editButton").style.display = "inline-block";
+            
         }
 
         function stopFullScreenContentItemMode() {
-            if (_fullscreenContentItem  !== undefined) _fullscreenContentItem.setIsFullScreen(false);
+            if (_fullscreenContentItem !== undefined) _fullscreenContentItem.setIsFullScreen(false);
+            document.getElementById("addButton").style.display = "inline-block";
+            document.getElementById("editButton").style.display = "none";
         }
 
         // Handle click on content item with children

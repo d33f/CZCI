@@ -10,7 +10,8 @@
         <div id="title"></div>
         <div id="timerange"></div>
         <div id="menuButtons">
-            <button class="compact ui button default" onclick="Canvas.PanelManager.hideAllPanels(); Canvas.PanelManager.showAddItemPanel()">Add item</button>
+            <button class="compact ui button default" id="editButton" style="display:none;" onclick="Canvas.PanelManager.toggleEditPanel()">Edit item</button>
+            <button class="compact ui button default" id="addButton" onclick="Canvas.PanelManager.hideAllPanels(); Canvas.PanelManager.showAddItemPanel()">Add item</button>
             <button class="compact ui button default" onclick="Canvas.PanelManager.hideAllPanels(); Canvas.PanelManager.showTimelinePanel()">My Timelines</button>
         </div>
     </div>
@@ -118,6 +119,50 @@
                     Add + new entry
                 </div>
                 <div class="compact negative ui button" onclick="Canvas.PanelManager.hideAllPanels();">Close</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="editItemPanel" class="panel hidePanel">
+        <input name="id" type="hidden" required />
+        <input name="hasChildren" type="hidden" required />
+        <input name="parentId" type="hidden" required />
+        <input name="pictureURLs" type="hidden" required />
+        <input name="sourceURL" type="hidden" required />
+        <input name="sourceRef" type="hidden" required />
+        <input name="timestamp" type="hidden" required />
+
+        <div id="errorArea" class="ui hidden error message">
+            <div class="header">Error</div>
+            <div id="addItemErrorMessage"></div>
+        </div>
+        <h1>Edit item:</h1>
+        <h3 id="itemName"></h3>
+        <div class="ui error inverted form segment">
+            <div class="field">
+                <label for="title">Title</label>
+                <input name="title" placeholder="Content item title" type="text" required />
+            </div>
+            <div class="two fields">
+                <div class="field">
+                    <label for="beginDate">Begin date</label>
+                    <input name="beginDate" placeholder="Begin date" type="number" required />
+                </div>
+                <div class="field">
+                    <label for="endDate">End date</label>
+                    <input name="endDate" placeholder="End date" type="number" required />
+                </div>
+            </div>
+            <div class="field">
+                <label for="description">Description</label>
+                <textarea name="description" id="description" placeholder="Content item description"></textarea>
+            </div>
+            <div style="padding-top:15px; float: right">
+                <div class="compact ui button green small right" onclick="Canvas.PanelManager.submitPanel()">
+                    <i class="icon"></i>
+                    Edit item
+                </div>
+                <div class="compact negative ui button" onclick="Canvas.PanelManager.toggleEditPanel();">Close</div>
             </div>
         </div>
     </div>

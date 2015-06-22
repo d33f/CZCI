@@ -6,8 +6,8 @@ var Canvas;
         BackendService.getContentItems = getContentItems;
         BackendService.createPersonalTimeLine = createPersonalTimeLine;
         BackendService.createPersonalContentItem = createPersonalContentItem;
-
         BackendService.getAllTimelines = getAllTimelines;
+        BackendService.editContentItem = editContentItem;
 
         // Private fields
         var _baseUrl = "http://www.kompili.nl/chronozoomApi/api/";
@@ -63,11 +63,13 @@ var Canvas;
                 beginDate: json.BeginDate,
                 endDate: json.EndDate,
                 title: json.Title,
+                parentId: json.ParentId,
                 description: json.Description,
                 hasChildren: json.HasChildren,
                 sourceURL: json.SourceURL,
                 sourceRef: json.SourceRef,
                 pictureURLs: json.PictureURLs,
+                timestamp: json.Timestamp
             }, parentContentItem);
 
             // Convert all content items
@@ -218,6 +220,23 @@ var Canvas;
             }
         }
 
+        function editContentItem(data) {
+            put('contentItem', data);
+        }
+
+        function put(path, data) {
+            var xmlHttpRequest = new XMLHttpRequest();
+            var url = _baseUrl + path;
+            xmlHttpRequest.open("PUT", url, false);
+            //Send the proper header information along with the request
+            xmlHttpRequest.setRequestHeader("Content-type", "application/json");
+            xmlHttpRequest.onreadystatechange = function () {//Call a function when the state changes.
+                if (xmlHttpRequest.readyState == 4 && xmlHttpRequest.status == 200) {
+                    return true;
+                }
+            }
+            xmlHttpRequest.send(JSON.stringify(data));
+        }
 
     })(Canvas.BackendService || (Canvas.BackendService = {}));
     var BackendService = Canvas.BackendService;
