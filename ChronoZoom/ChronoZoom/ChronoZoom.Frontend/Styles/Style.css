@@ -203,6 +203,32 @@ div#addItemPanel{
     margin-bottom: 10px;
 }
 
+div#editItemPanel {
+    transition: left .6s ease;
+    width: 400px;
+    background-color: #1B1C1D;
+    color: #e0e0e0;
+    position: absolute;
+    top: 40px;
+    bottom: 0;
+    height: 100%;
+    z-index: 1500;
+    padding: 10px;
+}
+
+.editItemPanelShow {
+    left: -0px;
+}
+
+.editItemPanelHidden {
+    left: -420px;
+    display: inline;
+}
+
+
+
+
+
 /* Import PANEL */
 div#addTimelinePanel {
     transition: left .6s ease;
