@@ -6,8 +6,7 @@
         ContentItemService.getContentItems = getContentItems;
         ContentItemService.findTimeline = findTimeline;
         ContentItemService.findContentItemsByParentContent = findContentItemsByParentContent;
-        ContentItemService.deepCopy = deepCopy;
-
+        
         // Private fields
         var _contentItems = [];
         var _contentItemChangedEvent;
@@ -256,30 +255,6 @@
 
             // No caching or data not found
             return undefined;
-        }
-
-        function deepCopy(org) {
-            var length = org.length;
-            var copy = [];
-            for (var i = 0; i < length; i++) {
-                var position = org[i].getPosition();
-                var size = org[i].getSize();
-                var contentItem = new ContentItem({
-                    id: org[i].id,
-                    beginDate: org[i].getBeginDate(),
-                    endDate: org[i].getEndDate(),
-                    title: org[i].getTitle(),
-                    hasChildren: org[i].hasChildren(),
-                    sourceURL: org[i].getSource(),
-                    x: position.x,
-                    y: position.y,
-                    width: size.width,
-                    height: size.height,
-                    radius: size.radius
-                }, org[i].getParentContentItem());
-                copy.push(contentItem);
-            }
-            return copy;
         }
 
         initialize();
