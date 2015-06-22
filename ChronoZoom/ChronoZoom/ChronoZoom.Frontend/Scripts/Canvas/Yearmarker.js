@@ -81,7 +81,7 @@
             x = Canvas.Mousepointer.getPosition().x;
         }
         function draw() {
-            context = Canvas.getContext();
+            context = Canvas.context;
             drawBox();
             drawRectangleArrow();
             // Must be the last call to draw ontop of the other items

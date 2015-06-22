@@ -37,7 +37,7 @@
         }
 
         function updatePosition() {
-            var canvasWidth = Canvas.getCanvasContainer().width;
+            var canvasWidth = Canvas.canvasContainer.width;
 
             if (_contentItemHasChildren) {
                 if ((_contentItemPosition.x + _contentItemSize.width + _tooltipWidth) < canvasWidth) {
@@ -165,7 +165,7 @@
 
         // Draw the tooltip
         function draw() {
-            var context = Canvas.getContext();
+            var context = Canvas.context;
             //Save and restore used so the globalAlpha isn't applied to the whole Canvas
             context.save();
             context.fillStyle = 'rgb(72,77,73)';
@@ -188,7 +188,7 @@
 
         // Calculate and get text width for given text and font
         function getTextWidth(text, font) {
-            var context = Canvas.getContext();
+            var context = Canvas.context;
             context.font = font;
             var metrics = context.measureText(text);
             return metrics.width;

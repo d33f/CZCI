@@ -1,38 +1,28 @@
 ﻿var Canvas;
 (function (Canvas) {
     // Public methods
-    Canvas.getContext = getContext;
-    Canvas.getContainer = getContainer;
-    Canvas.getCanvasContainer = getCanvasContainer;
-    Canvas.getFPS = getFPS;
+    Canvas.context;
+    Canvas.canvasContainer;
     Canvas.setTimeline = setTimeline;
     Canvas.resetWindowWidthAndHeight = resetWindowWidthAndHeight;
-
-    // Private fields
-    var _container;
-    var _canvasContainer;
-    var _lastTime;
+    var _lastTime = Date.now();;
 
     // 1000 divided by 60 gives 60fps
-    var _requiredElapsed = 1000 / 35;
-    var _context;
+    var requiredElapsed = 1000 / 35;
 
     // Constructor
     function initialize() {
-        // Get the container element
-        _container = document.getElementById('canvasContainer');
-
+        Canvas.WindowManager.showLoader(true);
         // Get canvas container element and update it's width and height
-        _canvasContainer = document.getElementById('canvas');
-        _canvasContainer.width = window.innerWidth;
-        _canvasContainer.height = window.innerHeight;
+        Canvas.canvasContainer = document.getElementById("canvas");
+        Canvas.canvasContainer.width = window.innerWidth;
+        Canvas.canvasContainer.height = window.innerHeight;
 
         // Get the canvas context
-        _context = _canvasContainer.getContext("2d");
+        Canvas.context = Canvas.canvasContainer.getContext("2d");
 
         // Start the mouse pointer and draw process loop
         Canvas.Mousepointer.start();
-        Canvas.WindowManager.showLoader(false);
         canvasDrawProcessLoop();
 
         //Add timelines to Panel
@@ -40,6 +30,7 @@
 
         // Select default timeline
         Canvas.Timeline.setTimeline(2);
+        Canvas.WindowManager.showLoader(false);
     }
 
     // Set the new timeline
@@ -51,27 +42,8 @@
 
     // Reset window width and height after window resize
     function resetWindowWidthAndHeight() {
-        _canvasContainer.width = window.innerWidth;
-        _canvasContainer.height = window.innerHeight;
-    }
-
-    // Get the (canvas) context
-    function getContext() {
-        return _context;
-    }
-
-    // Get the container element
-    function getContainer() {
-        return _container;
-    }
-
-    // Get the canvas container element
-    function getCanvasContainer() {
-        return _canvasContainer;
-    }
-
-    function getFPS() {
-        return _requiredElapsed;
+        Canvas.canvasContainer.width = window.innerWidth;
+        Canvas.canvasContainer.height = window.innerHeight;
     }
 
     // Update the canvas
@@ -83,7 +55,7 @@
     // Draw the canvas
     function draw() {
         // Clear the canvas
-        getContext().clearRect(0, 0, _canvasContainer.width, _canvasContainer.height);
+        Canvas.context.clearRect(0, 0, Canvas.canvasContainer.width, Canvas.canvasContainer.height);
 
         // Draw all components
         Canvas.Timeline.draw();
@@ -94,12 +66,9 @@
     // The draw loop will call the update and draw method each given frames per second
     // This means that if the fps is on 60, it will call draw and update 60 times.
     function canvasDrawProcessLoop() {
-        if (_lastTime === undefined) {
-            _lastTime = Date.now();
-        };
         var elapsed = Date.now() - _lastTime;
 
-        if (elapsed > _requiredElapsed) {
+        if (elapsed > requiredElapsed) {
             update();
             draw();
             _lastTime = Date.now();
