@@ -34,7 +34,7 @@
         function convertTimeToString(time) {
             // Check if before christ
             if (time < 0) {
-                return String(time * -1) + " BC";
+                return String(Math.round(time) * -1) + " BC";
             }
 
             // Check if not rounded time
