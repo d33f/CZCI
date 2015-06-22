@@ -46,6 +46,7 @@
     function setTimeline(timelineId) {
         Canvas.Timeline.setTimeline(timelineId);
         Canvas.PanelManager.showTimelinePanel(false);
+        Canvas.PanelManager.hideAllPanels();
     }
 
     // Reset window width and height after window resize
