@@ -14,7 +14,7 @@
     var _lastTime;
 
     // 1000 divided by 60 gives 60fps
-    var _requiredElapsed = 1000 / 20;
+    var _requiredElapsed = 1000 / 35;
     var _context;
 
     // Constructor
