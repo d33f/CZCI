@@ -142,6 +142,10 @@
                 var rangeItem = contentItem.getEndDate() - contentItem.getBeginDate();
                 var rangeBegin = contentItem.getBeginDate() - (rangeItem / 20);
                 var rangeEnd = contentItem.getEndDate() + (rangeItem / 20);
+
+                document.getElementById("addButton").style.display = "inline-block";
+                document.getElementById("editButton").style.display = "none"
+
                 Canvas.Timescale.setRange(rangeBegin, rangeEnd);
                 Canvas.ContentItemService.findContentItemsByParentContent(contentItem);
             }
