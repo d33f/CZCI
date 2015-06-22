@@ -14,7 +14,7 @@
     var _lastTime;
 
     // 1000 divided by 60 gives 60fps
-    var _requiredElapsed = 1000 / 8;
+    var _requiredElapsed = 1000 / 35;
     var _context;
 
     // Constructor
@@ -46,6 +46,7 @@
     function setTimeline(timelineId) {
         Canvas.Timeline.setTimeline(timelineId);
         Canvas.PanelManager.showTimelinePanel(false);
+        Canvas.PanelManager.hideAllPanels();
     }
 
     // Reset window width and height after window resize

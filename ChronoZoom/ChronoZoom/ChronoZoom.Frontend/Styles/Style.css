@@ -28,7 +28,7 @@ canvas {
     width: 100%;
 }
 
-    /*#breadcrumbs, #breadcrumbs a {
+/*#breadcrumbs, #breadcrumbs a {
         color: gold;
         text-decoration: none;
     }
@@ -105,32 +105,33 @@ div.contentItem > .wrapper > .title {
 
 div.contentItem > .wrapper > .images, div.contentItem > .wrapper > .content {
     width: 50%;
-	height: 90%;
-	color: white;
-	float: left;
-}
-div.contentItem > .wrapper > .content > .text {
-	padding: 10px;
-    overflow: auto;
+    height: 90%;
+    color: white;
+    float: left;
 }
 
-div.contentItem > .wrapper > .images > .thumbnails {
-	height: 20%;
-	overflow-x: hidden;
-	overflow-y: hidden;
-}
+    div.contentItem > .wrapper > .content > .text {
+        padding: 10px;
+        overflow: auto;
+    }
 
-div.contentItem > .wrapper > .images > .thumbnails > img {
-    margin-top: 5px;
-	height: 140%;
-    width: 32.5%;
-    margin-left: 0.8%;
-    cursor: pointer;
-}
+    div.contentItem > .wrapper > .images > .thumbnails {
+        height: 20%;
+        /*overflow-x: hidden;
+	overflow-y: hidden;*/
+    }
 
-div.contentItem > .wrapper > .images > .thumbnails > img:first-child {
-    margin-left: 0;
-}
+        div.contentItem > .wrapper > .images > .thumbnails > img {
+            margin-top: 5px;
+            height: 140%;
+            width: 32.5%;
+            margin-left: 0.8%;
+            cursor: pointer;
+        }
+
+            div.contentItem > .wrapper > .images > .thumbnails > img:first-child {
+                margin-left: 0;
+            }
 
 /* INPUT PANEL */
 div#timelinePanel {
@@ -144,7 +145,7 @@ div#timelinePanel {
     height: 100%;
     z-index: 1500;
     padding: 10px;
-    overflow:auto;
+    overflow: auto;
     height: -moz-calc(100% - 40px);
     height: -webkit-calc(100% - 40px);
     height: -o-calc(100% - 40px);
@@ -155,7 +156,6 @@ div#timelinePanel {
     left: -420px;
     display: inline;
 }
-
 
 .circle {
     width: 50px;
@@ -170,7 +170,7 @@ div#timelinePanel {
     border: 1px solid #ccc;
 }
 
-div#addItemPanel{
+div#addItemPanel {
     transition: left .6s ease;
     width: 400px;
     background-color: #1B1C1D;
@@ -238,27 +238,24 @@ div#addTimelinePanel {
     list-style-type: none;
 }
 
-    #importPanel ul li {
-        margin: 0;
-        border-top: 1px solid #1B1C1D;
-    }
+#importPanel ul li {
+    margin: 0;
+    border-top: 1px solid #1B1C1D;
+}
 
-        #importPanel ul li a {
-            display: block;
-            padding: 20px;
-            background-color: rgb(35,35,35);
-            font-family: Verdana;
-            color: white;
-            text-decoration: none;
-            font-style: italic;
-        }
+#importPanel ul li a {
+    display: block;
+    padding: 20px;
+    background-color: rgb(35,35,35);
+    font-family: Verdana;
+    color: white;
+    text-decoration: none;
+    font-style: italic;
+}
 
-            #importPanel ul li a:hover {
-                background-color: rgb(60,60,60);
-            }
-
-
-
+#importPanel ul li a:hover {
+    background-color: rgb(60,60,60);
+}
 
 /* Menu */
 #header {

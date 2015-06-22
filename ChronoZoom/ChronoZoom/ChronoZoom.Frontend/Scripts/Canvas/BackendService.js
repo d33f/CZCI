@@ -141,7 +141,7 @@ var Canvas;
 
         // Get content items for parent content item 
         function getContentItems(parentContentItem, resolve, reject) {
-            getJSON(parentContentItem.getId(), 'contentitem', function (json) {
+            getJSON(parentContentItem.id, 'contentitem', function (json) {
                 // Create empty array
                 var contentItems = [];
 
@@ -187,7 +187,7 @@ var Canvas;
         function createPersonalContentItem(beginDate, endDate, title, description, hasChildren, parentContentItem, pictureURLs) {
             var xmlHttpRequest = new XMLHttpRequest();
             var url = _baseUrl + "contentitem";
-            var parentContentItemId = parentContentItem.getId();
+            var parentContentItemId = parentContentItem.id;
             console.log("create" + parentContentItemId);
             var object = createContentItemObjectFormField(beginDate, endDate, title, description, hasChildren, parentContentItemId, pictureURLs);
             xmlHttpRequest.open("POST", url, false);
