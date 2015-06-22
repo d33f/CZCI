@@ -320,7 +320,7 @@ function ContentItem(data, parentContentItem) {
         // Make sure dom element is available
         createDOMElementForFullscreenContentItem();
 
-        var canvasContainer = Canvas.getCanvasContainer();
+        var canvasContainer = Canvas.canvasContainer;
         var canvasHeight = canvasContainer.height - 100;
 
         _radius = (canvasContainer.width * 0.4);
@@ -378,7 +378,7 @@ function ContentItem(data, parentContentItem) {
 
     // Draw this content item
     function draw() {
-        var context = Canvas.getContext();
+        var context = Canvas.context;
 
         if (_hasChildren) {
             drawContentItemWithChildren(context);

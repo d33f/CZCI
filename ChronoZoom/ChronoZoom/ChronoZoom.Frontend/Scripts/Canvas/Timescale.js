@@ -88,7 +88,7 @@
         // Update the state of timescale and the yearscale
         function update() {
             // Update timescale
-            _width = Canvas.getCanvasContainer().width;
+            _width = Canvas.canvasContainer.width;
 
             // Update year marker
             Canvas.YearMarker.update();
@@ -97,7 +97,7 @@
         // Draw the current yearscale state
         function draw() {
             // Get (canvas) context and canvas width
-            var context = Canvas.getContext();
+            var context = Canvas.context;
 
             // Draw layers
             drawBaseLayer(context);

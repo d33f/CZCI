@@ -12,7 +12,7 @@
         // Start capturing the mouse position
         function start() {
             // Get container
-            var container = Canvas.getCanvasContainer();
+            var container = Canvas.canvasContainer;
 
             // Add event listeners
             container.addEventListener("mousemove", updateMousePosition, false);

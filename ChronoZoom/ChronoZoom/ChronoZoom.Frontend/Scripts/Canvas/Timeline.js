@@ -96,7 +96,7 @@
                 Canvas.Tooltip.draw();
             }
 
-            var container = Canvas.getCanvasContainer();
+            var container = Canvas.canvasContainer;
             var cursor = _contentItemOnMousePosition !== undefined ? 'pointer' : 'default';
             
             if (container.style.cursor !== cursor) {
