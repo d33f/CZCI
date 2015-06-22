@@ -8,13 +8,16 @@
         PanelManager.updateAddItemPanel = updateAddItemPanel;
         PanelManager.showAddTimelinePanel = showAddTimelinePanel;
         PanelManager.showAddItemPanel = showAddItemPanel;
+        PanelManager.showEditItemPanel = showEditItemPanel;
         PanelManager.handleAddContentItemInput = handleAddContentItemInput;
         PanelManager.clearAddItemPanel = clearAddItemPanel;
         PanelManager.hideAllPanels = hideAllPanels;
         PanelManager.showTimelinePanel = showTimelinePanel;
+        PanelManager.updateEditPanelFields = updateEditPanelFields;
 
         var rootItem;
         var currentItem;
+        var currentChildren;
 
         var addItemPanelShown = false;
         var timelinePanelShown = false;
@@ -59,6 +62,19 @@
                 addItemPanelShown = false;
                 timelinePanelShown = false;
             }
+        }
+
+        function showEditItemPanel() {
+            var editItemPanel = document.getElementById('editItemPanel');
+
+            if (editItemPanel.className == 'editItemPanelShow') {
+                editItemPanel.className = 'editItemPanelHidden';
+            }
+            else {
+                updateEditItemPanel();
+                editItemPanel.className = 'editItemPanelShow';
+            }
+
         }
 
         //Show the panel for adding new items on the left side of the screen
@@ -130,6 +146,46 @@
             var itemLabel = document.getElementById('itemName');
             getCurrentItems();
             itemLabel.innerHTML = currentItem.getTitle() + " ( " + currentItem.getBeginDate() + " - " + currentItem.getEndDate() + " )";
+        }
+
+        function updateEditItemPanel() {
+            var select = document.getElementById("editableContentItems");
+            currentChildren = currentItem.getChildren();
+
+            var i;
+            for (i = select.options.length - 1; i >= 0; i--) {
+                select.remove(i);
+            }
+
+            //Add the children
+            for (var i = 0; i < currentChildren.length; i++) {
+                var child = currentChildren[i];
+                var el = document.createElement("option");
+                el.textContent = child.getTitle();
+                el.value = child.getId();
+                select.appendChild(el);
+            }
+        }
+
+        function updateEditPanelFields() {
+            var select = document.getElementById("editableContentItems");
+            var childId = select.options[select.selectedIndex].value;
+            var selectedContentItem;
+
+            for (var i = 0; i < currentChildren.length; i++) {
+                if (childId == currentChildren[i].getId()) {
+                    selectedContentItem = currentChildren[i];
+                }
+            }
+
+            var data = selectedContentItem.getData();
+
+            var titleField = document.getElementById("titleEditInputContentItem");
+            var imageUrl = document.getElementById("imageUrlEditContentItem");
+            var description = document.getElementById("descriptionEditContentItem");
+
+            titleField.value = selectedContentItem.title;
+            description.value = data.description;
         }
 
         function getCurrentItems() {
