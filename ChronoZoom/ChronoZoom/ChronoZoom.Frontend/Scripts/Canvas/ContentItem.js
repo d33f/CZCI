@@ -62,8 +62,7 @@ function ContentItem(data, parentContentItem) {
         if (_pictureURLs !== undefined) {
             if(_pictureURLs.length > 0){
                 _image.src = _pictureURLs[0];
-            }
-            
+            }           
         }
 
         // Add child to parent
@@ -333,6 +332,7 @@ function ContentItem(data, parentContentItem) {
         var canvasHeight = canvasContainer.height - 100;
 
         _radius = (canvasContainer.width * 0.4);
+        _radius = _radius < 400 ? 400 : _radius;
         _width = (_radius * 2);
         _height = (_radius * 2);
 
@@ -618,12 +618,6 @@ function ContentItem(data, parentContentItem) {
         // distance between centerpoints of circles
         var distance = deltaY / sinangle;
 
-        if (_title === "Onderschotel" && contentItem.getTitle() === "Cylinder van koffiebrander") {
-            console.log(deltaX);
-            console.log(deltaY);
-            console.log(sinangle);
-        }
-
         // If pythagoras not applicable
         if (deltaX === 0 && deltaY === 0) {
             distance = 0;
@@ -633,11 +627,6 @@ function ContentItem(data, parentContentItem) {
             distance = deltaX;
         }
 
-        if (_title === "Onderschotel") {
-            console.log(_radius);
-            console.log(bRadius);
-            console.log(distance);
-        }
         return ((_radius + bRadius) >= distance);
     }
 
