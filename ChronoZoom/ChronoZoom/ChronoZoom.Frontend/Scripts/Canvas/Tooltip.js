@@ -1,199 +1,166 @@
-﻿var Canvas;
-(function (Canvas) {
-    (function (Tooltip) {
-        // Public methods
-        Tooltip.update = update;
-        Tooltip.draw = draw;
+﻿Canvas.Tooltip = (function () {
+    // Private fields
+    var tooltipX;
+    var tooltipY;
+    var tooltipWidth;
+    var tooltipHeight = 40;
+    var tooltipMarginRight = 5;
 
-        // Private fields
-        var _tooltipX;
-        var _tooltipY;
-        var _tooltipWidth;
-        var _tooltipHeight = 40;
-        var _tooltipMarginRight = 5;
+    var triangle = {
+        x1: 0, 
+        y1: 0, 
+        x2: 0, 
+        y2: 0, 
+        x3: 0,
+        y3: 0
+    };
+    var triangleWidth = 10;
 
-        var _triangleX1;
-        var _triangleX2;
-        var _triangleX3;
-        var _triangleY1;
-        var _triangleY2;
-        var _triangleY3;
-        var _triangleWidth = 10;
+    var contentItemPosition;
+    var contentItemSize;
 
-        var _contentItemPosition;
-        var _contentItemSize;
+    var contentItemTitle;
+    var contentItemHasChildren;
 
-        var _contentItemTitle;
-        var _contentItemHasChildren;
+    // Update the tooltip
+    function update(contentItem) {
+        contentItemPosition = contentItem.getPosition();
+        contentItemSize = contentItem.getSize();
+        contentItemTitle = contentItem.getTitle();
+        contentItemHasChildren = contentItem.hasChildren();
+        tooltipWidth = getTextWidth(contentItemTitle, 18);
+        updatePosition();
+    }
 
-        // Update the tooltip
-        function update(contentItem) {
-            _contentItemPosition = contentItem.getPosition();
-            _contentItemSize = contentItem.getSize();
-            _contentItemTitle = contentItem.getTitle();
-            _contentItemHasChildren = contentItem.hasChildren();
-            _tooltipWidth = getTextWidth(_contentItemTitle, 18);
-            updatePosition();
-        }
+    function updatePosition() {
+        var canvasWidth = Canvas.canvasContainer.width;
 
-        function updatePosition() {
-            var canvasWidth = Canvas.canvasContainer.width;
-
-            if (_contentItemHasChildren) {
-                if ((_contentItemPosition.x + _contentItemSize.width + _tooltipWidth) < canvasWidth) {
-                    positionsRightSideRectangle();
-                } else if (_contentItemPosition.x - _tooltipWidth > 0) {
-                    positionsLeftSideRectangle();
-                } else {
-                    positionsBottomRectangle();
-                }
+        if (contentItemHasChildren) {
+            if ((contentItemPosition.x + contentItemSize.width + tooltipWidth) < canvasWidth) {
+                positionsRightSideRectangle();
+            } else if (contentItemPosition.x - tooltipWidth > 0) {
+                positionsLeftSideRectangle();
             } else {
-                if ((_contentItemPosition.x + (_contentItemSize.radius * 2) + _tooltipWidth) < canvasWidth) {
-                    positionsRightSideCircle();
-                } else if(_contentItemPosition.x - _tooltipWidth > 0) {
-                    positionsLeftSideCircle();
-                }
-                else {
-                    positionsBottomCircle();
-                }
+                positionsBottomRectangle();
+            }
+        } else {
+            if ((contentItemPosition.x + (contentItemSize.radius * 2) + tooltipWidth) < canvasWidth) {
+                positionsRightSideCircle();
+            } else if (contentItemPosition.x - tooltipWidth > 0) {
+                positionsLeftSideCircle();
+            }
+            else {
+                positionsBottomCircle();
             }
         }
+    }
 
-        function positionsRightSideRectangle() {
-            //Rectangle
-            _tooltipX = _contentItemSize.width + _contentItemPosition.x + _triangleWidth + _contentItemSize.linewidth;
-            _tooltipY = (_contentItemSize.height * 0.5) - (_tooltipHeight * 0.5) + _contentItemPosition.y;
-            _tooltipWidth = _tooltipWidth + _tooltipMarginRight;
+    function positionsRightSideRectangle() {
+        //Rectangle
+        tooltipX = contentItemSize.width + contentItemPosition.x + triangleWidth + contentItemSize.linewidth;
+        tooltipY = (contentItemSize.height * 0.5) - (tooltipHeight * 0.5) + contentItemPosition.y;
+        tooltipWidth = tooltipWidth + tooltipMarginRight;
 
-            //Triangle
-            _triangleX1 = _tooltipX - _triangleWidth;
-            _triangleY1 = _tooltipY + (_tooltipHeight * 0.5);
+        //Triangle
+        setTriangle((tooltipX - triangleWidth), (tooltipY + (tooltipHeight * 0.5)), tooltipX, tooltipY, tooltipX, (tooltipY + tooltipHeight));
+    }
 
-            _triangleX2 = _tooltipX;
-            _triangleY2 = _tooltipY;
+    function positionsLeftSideRectangle() {
+        tooltipX = (contentItemPosition.x - triangleWidth) - (tooltipWidth - contentItemSize.linewidth);
+        tooltipY = (contentItemSize.height * 0.5) - (tooltipHeight * 0.5) + contentItemPosition.y;
 
-            _triangleX3 = _tooltipX;
-            _triangleY3 = _tooltipY + _tooltipHeight;
-        }
+        //Triangle
+        setTriangle((tooltipX + tooltipWidth + triangleWidth), (tooltipY + (tooltipHeight * 0.5)), (tooltipX + tooltipWidth), tooltipY, (tooltipX + tooltipWidth), (tooltipY + tooltipHeight));
+    }
 
-        function positionsLeftSideRectangle() {
-            _tooltipX = (_contentItemPosition.x - _triangleWidth) - (_tooltipWidth - _contentItemSize.linewidth);
-            _tooltipY = (_contentItemSize.height * 0.5) - (_tooltipHeight * 0.5) + _contentItemPosition.y;
+    function positionsBottomRectangle() {
+        var triangleHeight = 10;
 
-            //Triangle
-            _triangleX1 = _tooltipX + _tooltipWidth + _triangleWidth;
-            _triangleY1 = _tooltipY + (_tooltipHeight * 0.5);
+        tooltipX = contentItemPosition.x + (0.5 * contentItemSize.width) - (0.5 * tooltipWidth);
+        tooltipY = contentItemPosition.y + contentItemSize.height + triangleHeight + contentItemSize.linewidth;
+        tooltipWidth += tooltipMarginRight;
 
-            _triangleX2 = _tooltipX + _tooltipWidth;
-            _triangleY2 = _tooltipY;
+        //Triangle
+        setTriangle((tooltipX + (0.5 * tooltipWidth)), (tooltipY - triangleHeight), (tooltipX + (tooltipWidth * 0.33)), tooltipY, (tooltipX + (tooltipWidth * 0.66)), tooltipY);
+    }
 
-            _triangleX3 = _tooltipX + _tooltipWidth;
-            _triangleY3 = _tooltipY + _tooltipHeight;
-        }
+    function positionsRightSideCircle() {
+        triangleWidth = 10;
 
-        function positionsBottomRectangle() {
-            var triangleHeight = 10;
+        //Rectangle
+        tooltipX = (contentItemPosition.x + triangleWidth) + (contentItemSize.radius * 2) + contentItemSize.linewidth;
+        tooltipY = (contentItemPosition.y + contentItemSize.radius) - (0.5 * tooltipHeight);
+        tooltipWidth += tooltipMarginRight;
 
-            _tooltipX = _contentItemPosition.x + (0.5 * _contentItemSize.width) - (0.5 * _tooltipWidth);
-            _tooltipY = _contentItemPosition.y + _contentItemSize.height + triangleHeight + _contentItemSize.linewidth;
-            _tooltipWidth += _tooltipMarginRight;
+        //Triangle
+        setTriangle((tooltipX - triangleWidth), (tooltipY + (tooltipHeight * 0.5)), tooltipX, tooltipY, tooltipX, (tooltipY + tooltipHeight));
+    }
 
-            //Triangle
-            _triangleX1 = _tooltipX + (0.5 * _tooltipWidth);
-            _triangleY1 = _tooltipY - triangleHeight;
+    function positionsLeftSideCircle() {
+        tooltipX = contentItemPosition.x - (triangleWidth + tooltipWidth + contentItemSize.linewidth);
+        tooltipY = contentItemPosition.y + (contentItemSize.radius - tooltipHeight * 0.5);
 
-            _triangleX2 = _tooltipX + (_tooltipWidth * 0.33);
-            _triangleY2 = _tooltipY;
+        //Triangle
+        setTriangle((tooltipX + tooltipWidth + triangleWidth), (tooltipY + (tooltipHeight * 0.5)), (tooltipX + tooltipWidth), tooltipY, (tooltipX + tooltipWidth), (tooltipY + tooltipHeight));
+    }
 
-            _triangleX3 = _tooltipX + (_tooltipWidth * 0.66);
-            _triangleY3 = _tooltipY;
-        }
+    function positionsBottomCircle() {
+        var triangleHeight = 10;
 
-        function positionsRightSideCircle() {
-            _triangleWidth = 10;
+        tooltipX = contentItemPosition.x + (contentItemSize.radius) - (0.5 * tooltipWidth);
+        tooltipY = contentItemPosition.y + contentItemSize.height + triangleHeight + contentItemSize.linewidth;
+        tooltipWidth += tooltipMarginRight;
 
-            //Rectangle
-            _tooltipX = (_contentItemPosition.x + _triangleWidth) + (_contentItemSize.radius * 2) + _contentItemSize.linewidth;
-            _tooltipY = (_contentItemPosition.y + _contentItemSize.radius) - (0.5 * _tooltipHeight);
-            _tooltipWidth += _tooltipMarginRight;
+        //Triangle
+        setTriangle(tooltipX + (0.5 * tooltipWidth)),(tooltipY - triangleHeight),(tooltipX + (tooltipWidth * 0.33)),tooltipY, (tooltipX + (tooltipWidth * 0.66), tooltipY);
+    }
 
-            //Triangle
-            _triangleX1 = _tooltipX - _triangleWidth;
-            _triangleY1 = _tooltipY + (_tooltipHeight * 0.5);
-
-            _triangleX2 = _tooltipX;
-            _triangleY2 = _tooltipY;
-
-            _triangleX3 = _tooltipX;
-            _triangleY3 = _tooltipY + _tooltipHeight;
-        }
-
-        function positionsLeftSideCircle() {
-            _tooltipX = _contentItemPosition.x - (_triangleWidth + _tooltipWidth + _contentItemSize.linewidth);
-            _tooltipY = _contentItemPosition.y + (_contentItemSize.radius - _tooltipHeight * 0.5);
-
-            //Triangle
-            _triangleX1 = _tooltipX + _tooltipWidth + _triangleWidth;
-            _triangleY1 = _tooltipY + (_tooltipHeight * 0.5);
-
-            _triangleX2 = _tooltipX + _tooltipWidth;
-            _triangleY2 = _tooltipY;
-
-            _triangleX3 = _tooltipX + _tooltipWidth;
-            _triangleY3 = _tooltipY + _tooltipHeight;
-        }
-
-        function positionsBottomCircle() {
-            var triangleHeight = 10;
-            
-            _tooltipX = _contentItemPosition.x + (_contentItemSize.radius) - (0.5 * _tooltipWidth);
-            _tooltipY = _contentItemPosition.y + _contentItemSize.height + triangleHeight + _contentItemSize.linewidth;
-            _tooltipWidth += _tooltipMarginRight;
-
-            //Triangle
-            _triangleX1 = _tooltipX + (0.5 * _tooltipWidth);
-            _triangleY1 = _tooltipY - triangleHeight;
-
-            _triangleX2 = _tooltipX + (_tooltipWidth * 0.33);
-            _triangleY2 = _tooltipY;
-
-            _triangleX3 = _tooltipX + (_tooltipWidth * 0.66);
-            _triangleY3 = _tooltipY;
-            
-        }
-
-
-        // Draw the tooltip
-        function draw() {
-            var context = Canvas.context;
-            //Save and restore used so the globalAlpha isn't applied to the whole Canvas
-            context.save();
-            context.fillStyle = 'rgb(72,77,73)';
-
-            context.beginPath();
-            //Draw the triangle
-            context.moveTo(_triangleX1, _triangleY1);
-            context.lineTo(_triangleX2, _triangleY2);
-            context.lineTo(_triangleX3, _triangleY3);
-            //Draw the rectangle
-            context.rect(_tooltipX, _tooltipY, _tooltipWidth, _tooltipHeight);
-            context.fill();
-            context.closePath();
-
-            //Draw the text
-            context.fillStyle = "white";
-            context.fillText(_contentItemTitle, (_tooltipX + 2), (_tooltipY + _tooltipHeight / 2) + 4);
-            context.restore();
-        }
-
-        // Calculate and get text width for given text and font
-        function getTextWidth(text, font) {
-            var context = Canvas.context;
-            context.font = font;
-            var metrics = context.measureText(text);
-            return metrics.width;
+    function setTriangle(x1, y1, x2, y2, x3, y3) {
+        triangle = {
+            x1: x1, 
+            y1: y1, 
+            x2: x2, 
+            y2: y2, 
+            x3: x3,
+            y3: y3
         };
+    }
 
-    }(Canvas.Tooltip || (Canvas.Tooltip = {})));
-    var Tooltip = Canvas.Tooltip;
-})(Canvas || (Canvas = {}));
+    // Draw the tooltip
+    function draw() {
+        var context = Canvas.context;
+        //Save and restore used so the globalAlpha isn't applied to the whole Canvas
+        context.save();
+        context.fillStyle = 'rgb(72,77,73)';
+
+        context.beginPath();
+        //Draw the triangle
+        context.moveTo(triangle.x1, triangle.y1);
+        context.lineTo(triangle.x2, triangle.y2);
+        context.lineTo(triangle.x3, triangle.y3);
+
+        //Draw the rectangle
+        context.rect(tooltipX, tooltipY, tooltipWidth, tooltipHeight);
+        context.fill();
+        context.closePath();
+
+        //Draw the text
+        context.fillStyle = "white";
+        context.fillText(contentItemTitle, (tooltipX + 2), (tooltipY + tooltipHeight / 2) + 4);
+        context.restore();
+    }
+
+    // Calculate and get text width for given text and font
+    function getTextWidth(text, font) {
+        var context = Canvas.context;
+        context.font = font;
+        var metrics = context.measureText(text);
+        return metrics.width;
+    };
+
+    // Public methods
+    return {
+        update: update,
+        draw: draw
+    };
+})();

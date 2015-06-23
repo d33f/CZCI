@@ -2,14 +2,14 @@
     // Private fields
     var stack = [];
     var container = null;
-    var currentItem;
+    var currentContentItem;
 
     var getCurrentItem = function () {
-        return currentItem;
+        return currentContentItem;
     }
 
-    function setCurrentItem(item) {
-        currentItem = item;
+    function setCurrentItem(contentItem) {
+        currentContentItem = contentItem;
     }
 
     var getRootItem = function () {
@@ -46,8 +46,9 @@
             }
 
             while (contentItem !== undefined) {
-                if (contentItem.id !== 0)
+                if (contentItem.id !== 0) {
                     stack.unshift(contentItem);
+                }
                 contentItem = contentItem.getParentContentItem();
             }
 
