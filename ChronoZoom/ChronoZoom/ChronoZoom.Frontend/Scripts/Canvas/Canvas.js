@@ -21,6 +21,9 @@
         // Get the canvas context
         Canvas.context = Canvas.canvasContainer.getContext("2d");
 
+        // Update timescale width
+        Canvas.Timescale.updateWidth(Canvas.canvasContainer.width);
+
         // Start the mouse pointer and draw process loop
         Canvas.Mousepointer.start();
         canvasDrawProcessLoop();
@@ -44,6 +47,8 @@
     function resetWindowWidthAndHeight() {
         Canvas.canvasContainer.width = window.innerWidth;
         Canvas.canvasContainer.height = window.innerHeight;
+
+        Canvas.Timescale.updateWidth(Canvas.canvasContainer.width);
     }
 
     // Update the canvas
