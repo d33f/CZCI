@@ -11,7 +11,7 @@ var Canvas;
 
         // Private fields
         var _baseUrl = "http://www.kompili.nl/chronozoomApi/api/";
-        //var _baseUrl = "http://localhost:40001/api/";
+        //var _baseUrl = "http://localhost:40001/api/"; 
 
         // Get json data from path, execute callback resolve when succesfull and reject if failed. 
         function getJSON(id, path, resolve, reject) {
