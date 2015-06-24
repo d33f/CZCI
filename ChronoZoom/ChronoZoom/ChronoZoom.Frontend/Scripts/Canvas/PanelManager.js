@@ -109,7 +109,7 @@
             }
         }
 
-
+        //Clears the add content item values
         function clearAddItemPanel() {
             var titleInput = document.getElementById("titleInputContentItem");
             var startDate = document.getElementById("startDateInputContentItem");
@@ -125,6 +125,8 @@
 
             //Do not hide the imageURLField
             imageUrlFieldHide(false);
+
+            removeErrorClasses();
             var radios = document.getElementsByName('select')
             radios[0].checked = false;
             radios[1].checked = false;
@@ -239,6 +241,7 @@
             return divElement;
         }
 
+        //Handles the data inserted in add contentitem panel
         function handleAddContentItemInput() {
             var hasChildren;
             var radios = document.getElementsByName('select');
@@ -250,13 +253,16 @@
             }
 
             var title = document.getElementById("titleInputContentItem");
+            var titleArea = document.getElementById('titleAreaAddItem');
             var startDate = document.getElementById("startDateInputContentItem");
             var endDate = document.getElementById("endDateInputContentItem");
+            var beginDateArea = document.getElementById('beginDateAddItem');
+            var endDateArea = document.getElementById('endDateAddItem');
             var description = document.getElementById("descriptionInputContentItem");
             var imageUrl = document.getElementById("imageUrlContentItem");
             var pictureURLs = new Array();
             pictureURLs.push(imageUrl.value)
-            var parentId = currentItem.getId();
+            var parentId = currentItem.Id;
             var parentIdBeginDate = currentItem.getBeginDate();
             var parentIdEndDate = currentItem.getEndDate();
 
@@ -270,17 +276,21 @@
 
                 correctValues = false;
             }
-            if (title.value === "") {
-                var titleArea = document.getElementById('title');
+            if (title.value === "") {;
                 errorMessage = errorMessage + "<li>Enter a title!</li>";
+                addErrorClass(titleArea);
                 correctValues = false;
             }
             if (startDate.value < parentIdBeginDate || endDate.value > parentIdEndDate || startDate.value === "" || endDate.value === "") {
+                addErrorClass(beginDateArea);
+                addErrorClass(endDateArea);
                 errorMessage = errorMessage + "<li>Begin and enddate not between " + parentIdBeginDate + " and " + parentIdEndDate + "</li>";
                 correctValues = false;
             }
 
             if (startDate.value > endDate.value) {
+                addErrorClass(beginDateArea);
+                addErrorClass(endDateArea);
                 errorMessage = errorMessage + "<li> Start date bigger then end date</li>";
                 correctValues = false;
             }
@@ -298,6 +308,7 @@
 
             if (addItemPanelcorrectValues !== false) {
                 hideErrorMessageArea();
+                removeErrorClasses();
                 Canvas.BackendService.createPersonalContentItem(startDate.value, endDate.value, title.value, description.value, hasChildren, currentItem, pictureURLs);
             }
 
@@ -306,6 +317,7 @@
             }
         }
 
+        //Hides the error message on top of the edit panel
         function hideErrorMessageArea() {
             var errorMessage = "";
             var errorArea = document.getElementById('errorArea');
@@ -313,10 +325,26 @@
             errorArea.className = 'ui hidden error message';
         }
 
+        //Shows the error message on top of the edit panel
         function showErrorMessageArea(errorMessage) {
             var errorArea = document.getElementById('errorArea');
             errorArea.innerHTML = errorMessage;
             errorArea.className = 'ui error message';
+        }
+
+        //Adds error class to specific element
+        function addErrorClass(element) {
+            element.className = 'field error';
+        }
+
+        //Sets the classnames of input fields back to normal
+        function removeErrorClasses() {
+            var titleArea = document.getElementById('titleAreaAddItem');
+            var beginDateArea = document.getElementById('beginDateAddItem');
+            var endDateArea = document.getElementById('endDateAddItem');
+            titleArea.className = 'field';
+            beginDateArea.className = 'field';
+            endDateArea.className = 'field';
         }
 
         /// EDIT PANEL
