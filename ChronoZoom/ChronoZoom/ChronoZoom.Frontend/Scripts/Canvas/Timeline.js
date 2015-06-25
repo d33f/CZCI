@@ -192,7 +192,7 @@
 
         // Check if current content item collides given content item
         function checkCollision(contentItem) {
-            var position = Canvas.Mousepointer.getPosition();
+            var position = Canvas.Mousepointer.position;
             if (contentItem.collides(position.x, position.y)) {
                 var children = contentItem.getChildren();
                 var length = children.length;
@@ -207,18 +207,17 @@
             return undefined;
         }
 
-        function updateOffsetY(addPixels) {
-            _offsetY += addPixels;
-
+        function updateOffsetY(newOffsetY) {
             var length = _contentItems.length;
             for (var i = 0; i < length; i++) {
-                updateOffsetYChild(_contentItems[i], addPixels);
+                updateOffsetYChild(_contentItems[i], newOffsetY);
             }
         }
 
         function updateOffsetYChild(contentItem, addPixels) {
             var position = contentItem.getPosition();
-            contentItem.setPosition(position.x, position.y + addPixels);
+            var ypos = position.y + addPixels;
+            contentItem.setPosition(position.x, ypos);
 
             if (contentItem.hasChildren()) {
                 var children = contentItem.getChildren();

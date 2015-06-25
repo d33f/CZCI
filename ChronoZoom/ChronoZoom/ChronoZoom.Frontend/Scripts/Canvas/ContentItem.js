@@ -207,7 +207,7 @@ function ContentItem(data, parentContentItem) {
             updateChildren();
         }
 
-        var position = Canvas.Mousepointer.getPosition();
+        var position = Canvas.Mousepointer.position;
         _isHovered = (collides(position.x, position.y) && !collidesInChildren(position.x, position.y));
     }
 

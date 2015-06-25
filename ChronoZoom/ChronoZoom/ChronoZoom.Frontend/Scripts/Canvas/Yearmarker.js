@@ -71,7 +71,7 @@
 
     var update = function () {
         fontSize = Canvas.Settings.getYearmarkerFontSize();
-        x = Canvas.Mousepointer.getPosition().x;
+        x = Canvas.Mousepointer.position.x;
     }
 
     var draw = function () {

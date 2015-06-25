@@ -44,6 +44,7 @@
   <ItemGroup>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Scripts\Canvas\HelperModels.js" />
     <Content Include="upload.html" />
     <Content Include="index.html" />
     <None Include="Properties\PublishProfiles\custom.pubxml" />
@@ -96,7 +97,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>25017</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:20000/</IISUrl>
+          <IISUrl>http://localhost:20001/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

@@ -1,75 +1,87 @@
-﻿var Canvas;
-(function (Canvas) {
-    (function (Mousepointer) {
-        // Public methods
-        Mousepointer.getPosition = getPosition;
-        Mousepointer.start = start;
+﻿/**
+ * The Mousepointer is responsible for keeping track on the mouse input.
+ * The changes of input that will be tracked are, click and drag events
+ */
+Canvas.Mousepointer = (function () {
+    var position = new Position();
+    var preventClick = false;
+    var drag = false;
+    var startPosition = new Position();
+    var lastPosition = new Position();
 
-        // Private fields
-        var _position = { x: 0, y: 0 };
-        var _preventClick = false;
+    function start() {
+        var container = Canvas.canvasContainer;
+        container.addEventListener("mousemove", updateMousePosition, false);
+        container.addEventListener("click", clickedOnTimeline, false);
+        container.addEventListener("mousedown", startDrag, false);
+        container.addEventListener("mouseup", endDrag, false);
 
-        // Start capturing the mouse position
-        function start() {
-            // Get container
-            var container = Canvas.canvasContainer;
-
-            // Add event listeners
-            container.addEventListener("mousemove", updateMousePosition, false);
-            container.addEventListener("click", clickedOnTimeline, false);
-        
-            // Check user agent and add event listener
-            if (navigator.userAgent.toLocaleLowerCase().indexOf('firefox') > 1) {
-                container.addEventListener("DOMMouseScroll", scrollTimelineFirefox, false);
-            } else {
-                container.addEventListener("mousewheel", scrollTimelineOthers, false);
-            }
+        // Check user agent and add event listener
+        if (navigator.userAgent.toLocaleLowerCase().indexOf('firefox') > 1) {
+            container.addEventListener("DOMMouseScroll", scrollTimelineFirefox, false);
+        } else {
+            container.addEventListener("mousewheel", scrollTimelineOthers, false);
         }
+    }
 
-        // Get current position
-        function getPosition() {
-            return _position;
-        }
-
-        // Update mouse position
-        function updateMousePosition(e) {
-            // Opera, ie
-            if ("offsetX" in e) {
-                _position.x = e.offsetX;
-                _position.y = e.offsetY;
+    function updateMousePosition(e) {
+        // Opera, ie
+        if ("offsetX" in e) {
+            position.x = e.offsetX;
+            position.y = e.offsetY;
             // Firefox
-            } else if ("pageX" in e) {
-                _position.x = e.pageX;
-                _position.y = e.pageY;
-            } else {
-                _position.x = 0;
-                _position.y = 0;
-            }
+        } else if ("pageX" in e) {
+            position.x = e.pageX;
+            position.y = e.pageY;
+        } else {
+            position.x = 0;
+            position.y = 0;
         }
 
-        // Handle click on time event
-        function clickedOnTimeline(e) {
-            if (!_preventClick) {
-                Canvas.Timeline.handleClickOnTimeline(e);
-            } else {
-                _preventClick = false;
-            }
+        if (drag) {
+            Canvas.Timeline.updateOffsetY(-(lastPosition.y - position.y));
+            lastPosition.x = position.x;
+            lastPosition.y = position.y;
         }
+    }
 
-        // Handle scroll on canvas for all browsers
-        function scrollTimelineOthers(e) {
-            scrollTimeline(e.wheelDelta);
-        }
+    function startDrag(e) {
+        drag = true;
+        startPosition.x = position.x;
+        startPosition.y = position.y;
+        lastPosition.x = position.x;
+        lastPosition.y = position.y;
+    }
 
-        // Handle scroll on canvas firefox
-        function scrollTimelineFirefox(e) {
-            scrollTimeline(e.detail);
-        }
+    function endDrag(e) {
+        drag = false;
+        if (startPosition.x !== position.x || startPosition.y !== position.y)
+            preventClick = true;
+    }
 
-        // Handle scroll on canvas 
-        function scrollTimeline(wheelDelta) {
-            Canvas.Timeline.updateOffsetY(wheelDelta < 0 ? 5 : -5);
+    function clickedOnTimeline(e) {
+        if (!preventClick) {
+            Canvas.Timeline.handleClickOnTimeline(e);
+        } else {
+            preventClick = false;
         }
-    })(Canvas.Mousepointer || (Canvas.Mousepointer = {}));
-    var Mousepointer = Canvas.Mousepointer;
-})(Canvas || (Canvas = {}));
+    }
+
+    function scrollTimelineOthers(e) {
+        scrollTimeline(e.wheelDelta);
+    }
+
+    function scrollTimelineFirefox(e) {
+        scrollTimeline(e.detail);
+    }
+
+    // Handle scroll on canvas 
+    function scrollTimeline(wheelDelta) {
+        Canvas.Timeline.updateOffsetY(wheelDelta < 0 ? 20 : -20);
+    }
+
+    return {
+        position: position,
+        start: start
+    }
+})();
