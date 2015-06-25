@@ -3,11 +3,11 @@
  * The changes of input that will be tracked are, click and drag events
  */
 Canvas.Mousepointer = (function () {
-    var position = new Position();
+    var position = new Point();
     var preventClick = false;
     var drag = false;
-    var startPosition = new Position();
-    var lastPosition = new Position();
+    var startPosition = new Point();
+    var lastPosition = new Point();
 
     function start() {
         var container = Canvas.canvasContainer;
@@ -39,7 +39,7 @@ Canvas.Mousepointer = (function () {
         }
 
         if (drag) {
-            Canvas.Timeline.updateOffsetY(-(lastPosition.y - position.y));
+            Canvas.setOffsetY(-(lastPosition.y - position.y));
             lastPosition.x = position.x;
             lastPosition.y = position.y;
         }
@@ -59,9 +59,11 @@ Canvas.Mousepointer = (function () {
             preventClick = true;
     }
 
+    var clickedOnTimelineHandler;
+
     function clickedOnTimeline(e) {
         if (!preventClick) {
-            Canvas.Timeline.handleClickOnTimeline(e);
+            if (clickedOnTimelineHandler !== undefined) clickedOnTimelineHandler(new Point(position.x,position.y));
         } else {
             preventClick = false;
         }
@@ -75,13 +77,22 @@ Canvas.Mousepointer = (function () {
         scrollTimeline(e.detail);
     }
 
+    function registerclickOnCanvasHandler(handler) {
+        if (!preventClick) {
+            clickedOnTimelineHandler = handler;
+        } else {
+            preventClick = false;
+        }
+    }
+
     // Handle scroll on canvas 
     function scrollTimeline(wheelDelta) {
-        Canvas.Timeline.updateOffsetY(wheelDelta < 0 ? 20 : -20);
+        Canvas.setOffsetY(wheelDelta < 0 ? 20 : -20);
     }
 
     return {
         position: position,
-        start: start
+        start: start,
+        registerclickOnCanvasHandler: registerclickOnCanvasHandler
     }
 })();

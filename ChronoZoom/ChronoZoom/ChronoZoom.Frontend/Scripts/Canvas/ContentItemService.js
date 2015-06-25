@@ -125,7 +125,7 @@
 
             var length = contentItems.length;
             for (var i = 0; i < length; i++) {
-                items.push(contentItems[i].getData());
+                items.push(JSON.stringify(contentItems[i]));
             }
 
             return items;
@@ -146,22 +146,22 @@
         // Find timeline
         function findTimeline(timelineId) {
             // Get cached data
-            var cachedData = getTimelineFromCache(timelineId);
-            if (cachedData !== undefined) {
-                // Set the timeline with the cached data
-                setTimeline(cachedData);
-            } else {
+            //var cachedData = getTimelineFromCache(timelineId);
+            //if (cachedData !== undefined) {
+            //    // Set the timeline with the cached data
+            //    setTimeline(cachedData);
+            //} else {
                 // Get from backend service
                 Canvas.BackendService.getTimeline(timelineId, function (timeline) {
                     // Cache the timeline
-                    addTimelineToCache(timeline.id, timeline);
+            //        addTimelineToCache(timeline.id, timeline);
 
-                    // Set the timeline
+            //        // Set the timeline
                     setTimeline(timeline);
-                }, function (error) {
-                    console.log("No timeline data found!!!", error);
+            //    }, function (error) {
+            //        console.log("No timeline data found!!!", error);
                 });
-            }
+            //}
         }
 
         // Set the new timeline
@@ -204,58 +204,58 @@
 
         // Set the background of the canvas/timeline
         // Add timeline to cache
-        function addTimelineToCache(timelineID, timeline) {
-            // Check for caching
-            if (_cache !== undefined) {
-                // Get data from all content items
-                var items = convertContentItemsToDataArray(timeline.contentItems);
+        //function addTimelineToCache(timelineID, timeline) {
+        //    // Check for caching
+        //    if (_cache !== undefined) {
+        //        // Get data from all content items
+        //        var items = convertContentItemsToDataArray(timeline.contentItems);
 
-                // Store in cache as json
-                _cache.setItem("T" + timelineID, JSON.stringify({
-                    id: timelineID,
-                    beginDate: timeline.beginDate,
-                    endDate: timeline.endDate,
-                    title: timeline.title,
-                    contentItems: items,
-                    parentContentItem: timeline.contentItems[0].getParentContentItem().getData(),
-                    backgroundUrl : timeline.backgroundUrl
-                }));
-            }
-        }
+        //        // Store in cache as json
+        //        _cache.setItem("T" + timelineID, JSON.stringify({
+        //            id: timelineID,
+        //            beginDate: timeline.beginDate,
+        //            endDate: timeline.endDate,
+        //            title: timeline.title,
+        //            contentItems: items,
+        //            parentContentItem: timeline.contentItems[0].getParentContentItem().getData(),
+        //            backgroundUrl : timeline.backgroundUrl
+        //        }));
+        //    }
+        //}
 
         // Get timeline from cache with given timeline id
-        function getTimelineFromCache(timelineID) {
-            // Check for caching
-            if (_cache !== undefined) {
-                // Try to get the data from the cache
-                var data = _cache.getItem("T" + timelineID);
+        //function getTimelineFromCache(timelineID) {
+        //    // Check for caching
+        //    if (_cache !== undefined) {
+        //        // Try to get the data from the cache
+        //        var data = _cache.getItem("T" + timelineID);
 
-                // Check if data is found
-                if (data !== null) {
-                    // Parse data to json
-                    var json = JSON.parse(data);
+        //        // Check if data is found
+        //        if (data !== null) {
+        //            // Parse data to json
+        //            var json = JSON.parse(data);
 
-                    // Create parent content item
-                    var parentContentItem = new ContentItem(json.parentContentItem, undefined);
+        //            // Create parent content item
+        //            var parentContentItem = new ContentItem(json.parentContentItem, undefined);
 
-                    // Parse json and create content items from cache
-                    var contentItems = convertDataArrayToContentItems(json.contentItems, parentContentItem);
+        //            // Parse json and create content items from cache
+        //            var contentItems = convertDataArrayToContentItems(json.contentItems, parentContentItem);
 
-                    // Return response
-                    return {
-                        id: json.id,
-                        beginDate: json.beginDate,
-                        endDate: json.endDate,
-                        title: json.title,
-                        contentItems: contentItems,
-                        backgroundUrl : json.backgroundUrl
-                    };
-                }
-            }
+        //            // Return response
+        //            return {
+        //                id: json.id,
+        //                beginDate: json.beginDate,
+        //                endDate: json.endDate,
+        //                title: json.title,
+        //                contentItems: contentItems,
+        //                backgroundUrl : json.backgroundUrl
+        //            };
+        //        }
+        //    }
 
-            // No caching or data not found
-            return undefined;
-        }
+        //    // No caching or data not found
+        //    return undefined;
+        //}
 
         initialize();
     })(Canvas.ContentItemService || (Canvas.ContentItemService = {}));

@@ -2,7 +2,7 @@ var Canvas;
 (function (Canvas) {
     (function (BackendService) {
         // Public methods
-        BackendService.getTimeline = getTimeline;
+        BackendService.getTimelineByIdAsync = getTimelineByIdAsync;
         BackendService.getContentItems = getContentItems;
         BackendService.createPersonalTimeLine = createPersonalTimeLine;
         BackendService.createPersonalContentItem = createPersonalContentItem;
@@ -98,6 +98,19 @@ var Canvas;
             return contentItem;
         };
 
+        /**
+    * Request the server for a timeline with id
+    * @param {the id of the timeline} timelineId 
+    * @param {the method to invoke after a succesfull request with the data} asyncCallback 
+    * @returns {Timeline} 
+    */
+        function getTimelineByIdAsync (timelineId, asyncCallback) {
+            $.get(_baseUrl.concat("timeline/").concat(timelineId), function (data) {
+                console.log(data);
+                var timeline = Canvas.Mapper.toTimeline(data);
+                asyncCallback(timeline);
+            });
+        }
 
         // Get timeline
         function getTimeline(timelineId, resolve, reject) {

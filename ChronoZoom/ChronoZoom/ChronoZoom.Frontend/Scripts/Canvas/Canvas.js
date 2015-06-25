@@ -5,12 +5,30 @@
     Canvas.canvasContainer;
     Canvas.setTimeline = setTimeline;
     Canvas.resetWindowWidthAndHeight = resetWindowWidthAndHeight;
+    Canvas.setOffsetY = setOffsetY;
     var _lastTime = Date.now();;
+
+    var timeline = undefined;
 
     // 1000 divided by 60 gives 60fps
     var requiredElapsed = 1000 / 35;
 
-    // Constructor
+    function setOffsetY(offset) {
+        timeline.setOffsetY(offset);
+    }
+
+    function clickOnCanvasHandler(point) {
+        timeline.selectedContentItem(point);
+    }
+
+    function getTimelineCallback(tl) {
+        timeline = tl;
+        Canvas.WindowManager.showLoader(false);
+        canvasDrawProcessLoop();
+        Canvas.Timescale.setRange(timeline.beginDate, timeline.endDate);
+        Canvas.Mousepointer.registerclickOnCanvasHandler(clickOnCanvasHandler);
+    }
+
     function initialize() {
         Canvas.WindowManager.showLoader(true);
         // Get canvas container element and update it's width and height
@@ -32,13 +50,12 @@
         Canvas.PanelManager.addTimelines();
 
         // Select default timeline
-        Canvas.Timeline.setTimeline(2);
-        Canvas.WindowManager.showLoader(false);
-    }
+        setTimeline(2);
 
+    }
     // Set the new timeline
     function setTimeline(timelineId) {
-        Canvas.Timeline.setTimeline(timelineId);
+        Canvas.BackendService.getTimelineByIdAsync(timelineId, getTimelineCallback);
         Canvas.PanelManager.showTimelinePanel(false);
         Canvas.PanelManager.hideAllPanels();
     }
@@ -54,7 +71,7 @@
     // Update the canvas
     function update() {
         Canvas.Timescale.update();
-        Canvas.Timeline.update();
+        timeline.update();
     }
 
     // Draw the canvas
@@ -63,7 +80,7 @@
         Canvas.context.clearRect(0, 0, Canvas.canvasContainer.width, Canvas.canvasContainer.height);
 
         // Draw all components
-        Canvas.Timeline.draw();
+        timeline.draw(Canvas.context);
         Canvas.Timescale.draw();
     }
 
@@ -71,6 +88,7 @@
     // The draw loop will call the update and draw method each given frames per second
     // This means that if the fps is on 60, it will call draw and update 60 times.
     function canvasDrawProcessLoop() {
+        if (timeline == undefined) return;
         var elapsed = Date.now() - _lastTime;
 
         if (elapsed > requiredElapsed) {

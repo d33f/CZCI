@@ -44,7 +44,10 @@
   <ItemGroup>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Scripts\Canvas\HelperModels.js" />
+    <Content Include="Scripts\Helpers\ApiMapper.js" />
+    <Content Include="Scripts\Helpers\HelperModels.js" />
+    <Content Include="Scripts\Models\ContentItem.js" />
+    <Content Include="Scripts\Models\Timeline.js" />
     <Content Include="upload.html" />
     <Content Include="index.html" />
     <None Include="Properties\PublishProfiles\custom.pubxml" />
@@ -61,7 +64,7 @@
     <Content Include="Resources\favicon.ico" />
     <Content Include="Resources\no_image.jpg" />
     <Content Include="Resources\Space.jpg" />
-    <Content Include="Scripts\Canvas\ContentItem.js" />
+    <Content Include="Scripts\Canvas\ContentItem1.js" />
     <Content Include="Scripts\Canvas\PanelManager.js" />
     <Content Include="Scripts\Canvas\PublicAPIService.js" />
     <Content Include="Scripts\Canvas\Breadcrumbs.js" />
@@ -71,7 +74,7 @@
     <Content Include="Scripts\Canvas\Settings.js" />
     <Content Include="Scripts\Canvas\Mousepointer.js" />
     <Content Include="Scripts\Canvas\ContentItemEnricher.js" />
-    <Content Include="Scripts\Canvas\Timeline.js" />
+    <Content Include="Scripts\Canvas\Timeline1.js" />
     <Content Include="Scripts\Canvas\Tooltip.js" />
     <Content Include="Scripts\Canvas\WindowManager.js" />
     <Content Include="Scripts\Canvas\Yearmarker.js" />
