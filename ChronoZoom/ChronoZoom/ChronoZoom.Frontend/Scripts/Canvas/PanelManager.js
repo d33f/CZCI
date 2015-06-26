@@ -171,7 +171,7 @@
                     // Refresh timeline panel
                     addTimelines();
                     hideAllPanels();
-                    showTimelinePanel(true);
+                    //showTimelinePanel(true);
                 }
             }
         }
