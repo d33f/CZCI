@@ -190,7 +190,7 @@ var Canvas;
             var xmlHttpRequest = new XMLHttpRequest();
             var url = _baseUrl + "contentitem";
             var parentContentItemId = parentContentItem.id;
-            console.log("create" + parentContentItemId);
+
             var object = createContentItemObjectFormField(beginDate, endDate, title, description, hasChildren, parentContentItemId, pictureURLs);
             xmlHttpRequest.open("POST", url, false);
 
@@ -199,8 +199,14 @@ var Canvas;
             xmlHttpRequest.onreadystatechange = function () {//Call a function when the state changes.
                 if (xmlHttpRequest.readyState == 4 && xmlHttpRequest.status == 200) {
                     var contentItem = createAddedContentItem(JSON.parse(xmlHttpRequest.response));
-                    console.log(parentContentItem.getTitle());
                     parentContentItem.addChild(contentItem);
+                    
+                    var addPixels = Canvas.Mousepointer.getOffset();
+                    console.log(addPixels);
+                    var position = contentItem.getPosition();
+                    var ypos = position.y + addPixels;
+                    contentItem.setPosition(position.x, ypos);
+
                     ContentItemService.findContentItemsByParentContent(parentContentItem);
                     return true;
                 }

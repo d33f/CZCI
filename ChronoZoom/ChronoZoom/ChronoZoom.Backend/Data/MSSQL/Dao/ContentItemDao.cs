@@ -37,7 +37,7 @@ namespace ChronoZoom.Backend.Data.MSSQL.Dao
 
         private ContentItem ContentItemsToTree(ContentItem parentContentItem, List<ContentItem> contentItems)
         {
-            parentContentItem.Children = contentItems.AsParallel().Where(contentItem => contentItem.ParentId == parentContentItem.Id).ToArray();
+            parentContentItem.Children = contentItems.Where(contentItem => contentItem.ParentId == parentContentItem.Id).ToArray();
 
             foreach (ContentItem contentItem in parentContentItem.Children)
             {

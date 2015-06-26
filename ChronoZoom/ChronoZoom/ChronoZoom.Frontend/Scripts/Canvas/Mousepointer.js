@@ -24,6 +24,10 @@ Canvas.Mousepointer = (function () {
         }
     }
 
+    function getOffset() {
+        return -(lastPosition.y - position.y);
+    }
+
     function updateMousePosition(e) {
         // Opera, ie
         if ("offsetX" in e) {
@@ -82,6 +86,7 @@ Canvas.Mousepointer = (function () {
 
     return {
         position: position,
-        start: start
+        start: start,
+        getOffset: getOffset
     }
 })();
