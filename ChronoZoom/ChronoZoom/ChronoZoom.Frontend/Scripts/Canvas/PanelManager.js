@@ -421,7 +421,9 @@
             if (_currentPanel.getAttribute("id") === "editItemPanel") {
                 data.pictureURLs = JSON.parse(data.pictureURLs);
                 Canvas.BackendService.editContentItem(data);
+
                 Canvas.Breadcrumbs.getCurrentItem().setData(data);
+                console.log(Canvas.Breadcrumbs.getCurrentItem().getData());
             }
 
             _currentPanel.className = _currentPanel.className.replace("showPanel", "hidePanel");

@@ -64,7 +64,7 @@ namespace ChronoZoom.Backend.Data.MSSQL.Dao
         {
             using (DatabaseContext context = new DatabaseContext())
             {
-                context.Update<MSSQL.Entities.ContentItem, ContentItem>(contentItem, new string[] { "Id", "Timestamp" });
+                context.Update<MSSQL.Entities.ContentItem, ContentItem>(contentItem, new string[] { "Id" });
             }
         }
     }

@@ -12,6 +12,6 @@
         public long ParentId { get; set; }
         public string SourceURL { get; set; }
         public string SourceRef { get; set; }
-        public byte[] Timestamp { get; set; }
+        //public byte[] Timestamp { get; set; }
     }
 }

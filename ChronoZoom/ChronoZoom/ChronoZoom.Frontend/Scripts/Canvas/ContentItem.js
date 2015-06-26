@@ -178,9 +178,7 @@ function ContentItem(data, parentContentItem) {
 
     function setData(data) {
         _data = data;
-        if (_isFullScreen) {
-            updateFullScreenContentItem();
-        }
+        updateFullScreenContentItem();
     }
 
     // Get size
@@ -341,8 +339,8 @@ function ContentItem(data, parentContentItem) {
 
         updateDOMElement(canvasHeight);
 
-        _container.getElementsByClassName("title")[0].innerHTML = data.title;
-        _container.getElementsByClassName("text")[0].innerHTML = _data.description == "" ? "Nvt" : _data.description;
+        _container.getElementsByClassName("title")[0].innerHTML = _data.title;
+        _container.getElementsByClassName("text")[0].innerHTML = _data.description;
     }
 
     // Update (DOM) container element
