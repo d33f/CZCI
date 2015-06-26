@@ -27,25 +27,9 @@ namespace ChronoZoom.Backend.Tests.Data.MSSQL
 
             // Assert
             Assert.IsNotNull(result);
-            Assert.AreEqual(2, result.Children.Count());
+            Assert.AreEqual(7, result.Children.Count());
             Assert.AreEqual(0, result.Children[0].Children.Count());
             Assert.AreEqual(0, result.Children[1].Children.Count());
-        }
-
-        [TestMethod]
-        public void ContentItemDao_Find_Depth2_IntegrationTest()
-        {
-            // Arrange
-            IContentItemDao target = new ContentItemDao();
-
-            // Act
-            ContentItem result = target.Find(18, 2);
-
-            // Assert
-            Assert.IsNotNull(result);
-            Assert.AreEqual(2, result.Children.Count());
-            Assert.AreEqual(5, result.Children[0].Children.Count());
-            Assert.AreEqual(4, result.Children[1].Children.Count());
         }
 
         [TestMethod]
@@ -71,25 +55,6 @@ namespace ChronoZoom.Backend.Tests.Data.MSSQL
         }
 
         [TestMethod]
-        public void ContentItemDao_Update_IntegrationTest()
-        {
-            using (var scope = new TransactionScope())
-            {
-                // Arrange
-                IContentItemDao target = new ContentItemDao();
-                ContentItem contentItem;
-                 
-                using (DatabaseContext context = new DatabaseContext())
-                {
-                    contentItem = context.FirstOrDefault<Backend.Data.MSSQL.Entities.ContentItem, ContentItem>("SELECT * FROM [dbo].[ContentItem] WHERE Id=@Id", new { Id = 1 });
-                }
-                    
-                // Act
-                target.Update(contentItem);
-            }
-        }
-
-        [TestMethod]
         [ExpectedException(typeof(UpdateFailedException))]
         public void ContentItemDao_Update_Exception_IntegrationTest()
         {
@@ -100,27 +65,6 @@ namespace ChronoZoom.Backend.Tests.Data.MSSQL
 
                 // Act
                 target.Update(new ContentItem());
-            }
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(UpdateFailedException))]
-        public void ContentItemDao_Update_TimestampChanged_IntegrationTest()
-        {
-            using (var scope = new TransactionScope())
-            {
-                // Arrange
-                IContentItemDao target = new ContentItemDao();
-                ContentItem contentItem;
-
-                using (DatabaseContext context = new DatabaseContext())
-                {
-                    contentItem = context.FirstOrDefault<Backend.Data.MSSQL.Entities.ContentItem, ContentItem>("SELECT * FROM [dbo].[ContentItem] WHERE Id=@Id", new { Id = 1 });
-                }
-                contentItem.Timestamp[0]++;
-
-                // Act
-                target.Update(contentItem);
             }
         }
     }

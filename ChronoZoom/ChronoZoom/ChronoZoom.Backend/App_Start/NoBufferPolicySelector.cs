@@ -1,11 +1,13 @@
 ﻿using ChronoZoom.Backend.Controllers;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Web;
 using System.Web.Http.WebHost;
 
 namespace ChronoZoom.Backend.App_Start
 {
+    [ExcludeFromCodeCoverage]
     public class NoBufferPolicySelector : WebHostBufferPolicySelector
     {
         public override bool UseBufferedInputStream(object hostContext)

@@ -157,7 +157,6 @@
             var description = document.getElementById("descriptionInput").value;
             var imageUrl = document.getElementById("imageUrlInput").value;
             var isPublic = document.getElementById("isPublicInput").checked;
-
             Canvas.BackendService.createPersonalTimeLine(title, startDate, endDate, description, imageUrl, isPublic);
 
             // write output to panel
@@ -171,8 +170,7 @@
                 else {
                     // Refresh timeline panel
                     addTimelines();
-                    alert('Timeline added');
-                    showAddTimelinePanel(false);
+                    hideAllPanels();
                     showTimelinePanel(true);
                 }
             }

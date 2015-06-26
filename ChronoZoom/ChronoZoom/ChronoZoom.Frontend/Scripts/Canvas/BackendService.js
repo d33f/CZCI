@@ -163,13 +163,15 @@ var Canvas;
         function createPersonalTimeLine(title, beginDate, endDate, description, imageUrl, isPublic) {
             var xmlHttpRequest = new XMLHttpRequest();
             var url = _baseUrl + "timeline";
+            
             var object = createTimelineObjectFormFields(title, beginDate, endDate, description, imageUrl, isPublic);
+            
             xmlHttpRequest.open("POST", url, false);
             //Send the proper header information along with the request
             xmlHttpRequest.setRequestHeader("Content-type", "application/json");
             xmlHttpRequest.onreadystatechange = function () {//Call a function when the state changes.
                 if (xmlHttpRequest.readyState == 4 && xmlHttpRequest.status == 200) {
-                    return true;
+                    Canvas.setTimeline(parseInt(xmlHttpRequest.response));
                 }
             }
             xmlHttpRequest.send(JSON.stringify(object));

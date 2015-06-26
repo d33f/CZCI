@@ -25,6 +25,7 @@ Canvas.Mousepointer = (function () {
     }
 
     function getOffset() {
+        console.log(lastPosition.y, position.y);
         return -(lastPosition.y - position.y);
     }
 
