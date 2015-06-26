@@ -199,7 +199,7 @@
 
             // Set title and range of the window
             Canvas.WindowManager.setTitle(timeline.title);
-            Canvas.WindowManager.setTimeRange(timeline.beginDate + " - " + timeline.endDate);
+            Canvas.WindowManager.setTimeRange(timeline.beginDate + " - " + Math.ceil(timeline.endDate));
         }
 
         // Set the background of the canvas/timeline
