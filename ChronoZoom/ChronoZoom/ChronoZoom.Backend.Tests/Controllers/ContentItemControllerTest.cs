@@ -74,7 +74,7 @@ namespace ChronoZoom.Backend.Tests.Controllers
             // Act
             target.Configuration = new HttpConfiguration();
             target.Validate<ContentItem>(item);
-            IHttpActionResult result = target.Put(item);
+            IHttpActionResult result = target.Put(0,item);
 
             // Assert
             Assert.IsNotNull(result);
@@ -99,7 +99,7 @@ namespace ChronoZoom.Backend.Tests.Controllers
             // Act
             target.Configuration = new HttpConfiguration();
             target.Validate<ContentItem>(item);
-            IHttpActionResult result = target.Put(item);
+            IHttpActionResult result = target.Put(0,item);
 
             // Assert
             Assert.IsNotNull(result);
@@ -117,7 +117,7 @@ namespace ChronoZoom.Backend.Tests.Controllers
             ContentItemController target = new ContentItemController(mock.Object);
             
             // Act
-            IHttpActionResult result = target.Put(new ContentItem());
+            IHttpActionResult result = target.Put(0,new ContentItem());
 
             // Assert
             Assert.IsNotNull(result);

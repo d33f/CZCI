@@ -39,6 +39,7 @@ namespace ChronoZoom.Backend.Controllers
         /// <summary>
         /// Updates a content item
         /// </summary>
+        /// <param name="id"></param>
         /// <param name="contentItem">The content item</param>
         /// <returns>Status OK if succesfully added</returns>
         [HttpPut]
