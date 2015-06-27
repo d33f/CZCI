@@ -275,7 +275,7 @@ function ContentItem(data, parentContentItem) {
             image.setAttribute('name', 'largeImage');
             image.setAttribute('src', _pictureURLs[0]);
             image.setAttribute('width', '100%');
-            image.setAttribute('height', '65%');
+            image.setAttribute('height', '55%');
             images.appendChild(image);
             wrapper.appendChild(images);
 
