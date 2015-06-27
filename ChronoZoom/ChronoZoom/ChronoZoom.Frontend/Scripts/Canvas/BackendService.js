@@ -229,7 +229,7 @@ var Canvas;
         }
 
         function editContentItem(data) {
-            put('contentItem', data);
+            put('contentItem/0', data);
         }
 
         function put(path, data) {
