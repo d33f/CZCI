@@ -27,7 +27,7 @@ namespace ChronoZoom.Backend
         protected void Application_BeginRequest(object sender, EventArgs e)
         {
 
-           /* if (Context.Request.Path.Contains("api/") && Context.Request.HttpMethod == "OPTIONS")
+            if (Context.Request.Path.Contains("api/") && Context.Request.HttpMethod == "OPTIONS")
             {
                 Context.Response.AddHeader("Access-Control-Allow-Origin", Context.Request.Headers["Origin"]);
                 Context.Response.AddHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -35,7 +35,7 @@ namespace ChronoZoom.Backend
                 // This line is added because whatever is coming from the Register " { SupportsCredentials = true };" is ignored.
                 Context.Response.AddHeader("Access-Control-Allow-Credentials", "true");
                 Context.Response.End();
-            }*/
+            }
 
         } 
     }
