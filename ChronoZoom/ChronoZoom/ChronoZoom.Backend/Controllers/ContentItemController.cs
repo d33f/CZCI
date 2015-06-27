@@ -42,7 +42,7 @@ namespace ChronoZoom.Backend.Controllers
         /// <param name="contentItem">The content item</param>
         /// <returns>Status OK if succesfully added</returns>
         [HttpPut]
-        public IHttpActionResult Put(ContentItem contentItem)
+        public IHttpActionResult Put(int id, ContentItem contentItem)
         {
             if (!ModelState.IsValid)
             {
