@@ -209,7 +209,7 @@ var Canvas;
                     var ypos = position.y + addPixels;
                     contentItem.setPosition(position.x, ypos);
 
-                    ContentItemService.findContentItemsByParentContent(parentContentItem);
+                    Canvas.ContentItemService.findContentItemsByParentContent(parentContentItem);
                     return true;
                 }
             }
