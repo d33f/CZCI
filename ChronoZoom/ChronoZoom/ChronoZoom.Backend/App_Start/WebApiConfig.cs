@@ -10,7 +10,7 @@ namespace ChronoZoom.Backend
         public static void Register(HttpConfiguration config)
         {
             // Enable cross-origin-requests
-            var cors = new EnableCorsAttribute("*", "*", "GET");
+            var cors = new EnableCorsAttribute("*", "*", "*");
             config.EnableCors(cors);
             // Web API configuration and services
 
