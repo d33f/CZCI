@@ -11,9 +11,9 @@
         <div id="title"></div>
         <div id="timerange"></div>
         <div id="menuButtons">
-            <button class="compact ui button default" id="editButton" style="display:none;" onclick="Canvas.PanelManager.toggleEditPanel()">Edit item</button>
-            <button class="compact ui button default" id="addButton" onclick="Canvas.PanelManager.hideAllPanels(); Canvas.PanelManager.showAddItemPanel()">Add item</button>
-            <button class="compact ui button default" onclick="Canvas.PanelManager.hideAllPanels(); Canvas.PanelManager.showTimelinePanel()">My Timelines</button>
+            <button class="compact ui button default" id="editButton" style="display:none;" onclick="Canvas.PanelManager.toggleEditPanel()"><i class="icon edit"></i>Edit item</button>
+            <button class="compact ui button default" id="addButton" onclick="Canvas.PanelManager.hideAllPanels(); Canvas.PanelManager.showAddItemPanel();"><i class="icon add"></i>Add item</button>
+            <button class="compact ui button default" onclick="Canvas.PanelManager.hideAllPanels(); Canvas.PanelManager.showTimelinePanel();"><i class="icon list"></i>My Timelines</button>
         </div>
     </div>
     <div id="timelinePanel" class="timelinePanelHidden">
@@ -58,11 +58,11 @@
                 <input id="isPublicInput" type="checkbox" checked />
             </div>
             <div style="padding-top:15px; float: right">
-                <div class="compact ui button green small right" onclick="Canvas.PanelManager.handleAddTimelineInput(); Canvas.PanelManager.showTimelinePanel(true);">
+                <div class="compact ui  green small right" onclick="Canvas.PanelManager.handleAddTimelineInput(); Canvas.PanelManager.showTimelinePanel(true);">
                     <i class="icon add"></i>
                     Add timeline
                 </div>
-                <div class="compact negative ui button" onclick="Canvas.PanelManager.hideAllPanels(); Canvas.PanelManager.showAddTimelinePanel(true)">Close</div>
+                <div class="compact negative ui button" onclick="Canvas.PanelManager.hideAllPanels(); Canvas.PanelManager.showAddTimelinePanel(true)"><i class="icon close"></i>Close</div>
             </div>
         </div>
         <div id="importOutput">
@@ -104,18 +104,18 @@
             </div>
             <div class="field">
                 <label>Image url</label>
-                <input id="imageUrlContentItem" placeholder="None" type="url" />
+                <input id="imageUrlContentItem" type="text" />
             </div>
             <div class="field">
                 <label>Description</label>
                 <textarea id="descriptionInputContentItem" placeholder="Timeline description"></textarea>
             </div>
             <div style="padding-top:15px; float: right">
-                <div class="compact ui button green small right" onclick="Canvas.PanelManager.handleAddContentItemInput(); Canvas.PanelManager.showAddItemPanel('addEntry')">
+                <div class="compact ui button green small right" onclick="Canvas.PanelManager.handleAddContentItemInput(); Canvas.PanelManager.showAddItemPanel('addEntry');">
                     <i class="icon add"></i>
                     Add item
                 </div>
-                <div class="compact ui button green small right" onclick="Canvas.PanelManager.handleAddContentItemInput(); Canvas.PanelManager.clearAddItemPanel()">
+                <div class="compact ui button green small right" onclick="Canvas.PanelManager.handleAddContentItemInput(); Canvas.PanelManager.clearAddItemPanel();">
                     <i class="icon add"></i>
                     Add + new entry
                 </div>
@@ -128,7 +128,6 @@
         <input name="id" type="hidden" required />
         <input name="hasChildren" type="hidden" required />
         <input name="parentId" type="hidden" required />
-        <input name="pictureURLs" type="hidden" required />
         <input name="sourceURL" type="hidden" required />
         <input name="sourceRef" type="hidden" required />
         <input name="timestamp" type="hidden" required />
@@ -158,12 +157,18 @@
                 <label for="description">Description</label>
                 <textarea name="description" id="description" placeholder="Content item description"></textarea>
             </div>
+            <div class="field">
+                <label>Image url</label>
+                <input name="pictureURLs" type="text" />
+            </div>
             <div style="padding-top:15px; float: right">
-                <div class="compact ui button green small right" onclick="Canvas.PanelManager.submitPanel()">
-                    <i class="icon"></i>
+                <div class="compact ui button green " onclick="Canvas.PanelManager.submitPanel()">
+                    <i class="edit icon"></i>
                     Edit item
                 </div>
-                <div class="compact negative ui button" onclick="Canvas.PanelManager.toggleEditPanel();">Close</div>
+                <div class="compact ui button red" onclick="Canvas.PanelManager.toggleEditPanel();">
+                    <i class="close icon"></i>Close
+                </div>
             </div>
         </div>
     </div>

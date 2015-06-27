@@ -258,8 +258,7 @@
             var endDateArea = document.getElementById('endDateAddItem');
             var description = document.getElementById("descriptionInputContentItem");
             var imageUrl = document.getElementById("imageUrlContentItem");
-            var pictureURLs = new Array();
-            pictureURLs.push(imageUrl.value)
+            var pictureURLs = imageUrl.value.split(",");
             var parentId = currentItem.Id;
             var parentIdBeginDate = currentItem.getBeginDate();
             var parentIdEndDate = currentItem.getEndDate();
@@ -351,8 +350,6 @@
             var panel = document.getElementById('editItemPanel');
             if (togglePanelAndReturnIfShown(panel)) {
                 var data = Canvas.Breadcrumbs.getCurrentItem().getData();
-
-                data.pictureURLs = JSON.stringify(data.pictureURLs);
                 setPanelData(panel, data);
             } else {
                 clearPanel(panel);
@@ -392,7 +389,7 @@
             getPanelElements(panel, "input", data);
             return data;
         }
-        
+
         function getPanelElements(panel, tagName, data) {
             var elements = panel.getElementsByTagName(tagName);
             for (var i = 0; i < elements.length; i++) {
@@ -410,7 +407,12 @@
             for (var i = 0; i < elements.length; i++) {
                 var name = elements[i].getAttribute("name");
                 if (data.hasOwnProperty(name)) {
-                    elements[i].value = data[name];
+                    if (name === "pictureURLs") {
+                        elements[i].value = data.pictureURLs instanceof Array ? data.pictureURLs.join(",") : data.pictureURLs;
+                    } else {
+                        elements[i].value = data[name];
+                    }
+
                 }
             }
         }
@@ -419,7 +421,7 @@
             var data = getPanelData(_currentPanel);
 
             if (_currentPanel.getAttribute("id") === "editItemPanel") {
-                data.pictureURLs = JSON.parse(data.pictureURLs);
+                data.pictureURLs = data.pictureURLs.split(",");
                 Canvas.BackendService.editContentItem(data);
 
                 Canvas.Breadcrumbs.getCurrentItem().setData(data);

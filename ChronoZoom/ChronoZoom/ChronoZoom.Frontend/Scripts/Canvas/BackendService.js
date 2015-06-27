@@ -224,7 +224,7 @@ var Canvas;
                 description: description,
                 hasChildren: hasChildren,
                 parentId: parentContentItemId,
-                pictureURLs: pictureURLs,
+                pictureURLs: pictureURLs
             }
         }
 
