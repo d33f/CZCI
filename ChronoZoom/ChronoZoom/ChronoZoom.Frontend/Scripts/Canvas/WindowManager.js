@@ -36,8 +36,9 @@
 
             $("#dialog-confirm").dialog({
                 modal: true,
-                maxWidth: '90%',
                 width: 'auto',
+                maxWidth: '90%',
+                maxHeight: '80%',
                 buttons: {
                     Ok: function () {
                         $(this).dialog("close");
