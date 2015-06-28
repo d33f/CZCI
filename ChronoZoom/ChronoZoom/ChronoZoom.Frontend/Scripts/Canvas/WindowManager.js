@@ -30,7 +30,7 @@
         }
 
         function showImageModal(image) {
-            var modal = "<div id=\"dialog-confirm\">".concat("<img width=100% src=\"".concat(image).concat("\">"))
+            var modal = "<div id=\"dialog-confirm\">".concat("<img width=90% src=\"".concat(image).concat("\">"))
 .concat("</div>");
             document.body.insertAdjacentHTML("afterbegin", modal);
 
