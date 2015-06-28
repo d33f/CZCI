@@ -86,7 +86,7 @@ div.contentItem {
     }
 }
 
-@media screen and (max-width: 1280px), screen and (min-width: 1281px) {
+@media screen and (max-width: 1280px), screen and (min-width: 1025) {
     div.contentItem > .wrapper {
         position: relative;
         top: 5%;
