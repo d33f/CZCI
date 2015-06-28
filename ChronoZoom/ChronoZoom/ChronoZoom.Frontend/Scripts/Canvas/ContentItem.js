@@ -289,7 +289,7 @@ function ContentItem(data, parentContentItem) {
                 smallImages.setAttribute('name', 'smallImage' + i);
                 smallImages.setAttribute('height', '100%');
                 smallImages.setAttribute('onmouseover', 'largeImage.src=smallImage' + i + '.src');
-                smallImages.setAttribute('onclick','Canvas.WindowManager.showImageModal('+smallImages.src+')');
+                smallImages.setAttribute('onclick','Canvas.WindowManager.showImageModal(\"'+smallImages.src+'\")');
                 thumbnails.appendChild(smallImages);
             }
 
