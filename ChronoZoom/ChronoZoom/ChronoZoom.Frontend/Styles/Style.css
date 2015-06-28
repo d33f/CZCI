@@ -80,9 +80,9 @@ div.contentItem {
     div.contentItem > .wrapper {
         position: relative;
         top: 5%;
-        left: 7%;
-        width: 85%;
-        height: 85%;
+        left: 10%;
+        width: 80%;
+        height: 80%;
     }
 }
 
@@ -91,8 +91,8 @@ div.contentItem {
         position: relative;
         top: 5%;
         left: 10%;
-        width: 75%;
-        height: 85%;
+        width: 80%;
+        height: 80%;
     }
 }
 
