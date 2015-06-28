@@ -332,7 +332,13 @@ div#addTimelinePanel {
 .ui-dialog-titlebar-close {
   visibility: hidden;
 }
-.ui-dialog { position: absolute;} 
+.ui-dialog { position: absolute;
+	width:80%;
+	left:0;
+	right:0;
+	margin-left:auto;
+	margin-right:auto;
+} 
 .dialogImage {
     display: block;
     margin-left: auto;
