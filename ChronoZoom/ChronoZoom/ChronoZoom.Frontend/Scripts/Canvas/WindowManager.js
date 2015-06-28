@@ -29,23 +29,24 @@
             Canvas.resetWindowWidthAndHeight();
         }
 
-
-        var modal = "<div id=\"dialog-confirm\">".concat("<img width=100% src=\"".concat(image).concat("\">"))
+        function showImageModal(image) {
+            var modal = "<div id=\"dialog-confirm\">".concat("<img width=100% src=\"".concat(image).concat("\">"))
 .concat("</div>");
-        document.body.insertAdjacentHTML("afterbegin", modal);
+            document.body.insertAdjacentHTML("afterbegin", modal);
 
-
-        $("#dialog-confirm").dialog({
-            modal: true,
-            maxWidth: '90%',
-            width: 'auto',
-            buttons: {
-                Ok: function () {
-                    $(this).dialog("close");
-                    $(this).remove();
+            $("#dialog-confirm").dialog({
+                modal: true,
+                maxWidth: '90%',
+                width: 'auto',
+                buttons: {
+                    Ok: function () {
+                        $(this).dialog("close");
+                        $(this).remove();
+                    }
                 }
-            }
-        });
+            });
+        }
+
 
 
     })(Canvas.WindowManager || (Canvas.WindowManager = {}));
