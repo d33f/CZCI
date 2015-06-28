@@ -30,13 +30,13 @@
         }
 
         function showImageModal(image) {
-            var modal = "<div id=\"dialog-confirm\">".concat("<img width=90% src=\"".concat(image).concat("\">"))
+            var modal = "<div id=\"dialog-confirm\">".concat("<img class=\"dialogImage\" width=90% src=\"".concat(image).concat("\">"))
 .concat("</div>");
             document.body.insertAdjacentHTML("afterbegin", modal);
 
             $("#dialog-confirm").dialog({
                 modal: true,
-                width: 'auto',
+                width: '90%',
                 maxWidth: '90%',
                 maxHeight: '80%',
                 buttons: {
