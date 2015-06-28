@@ -276,6 +276,7 @@ function ContentItem(data, parentContentItem) {
             image.setAttribute('src', _pictureURLs[0]);
             image.setAttribute('width', '100%');
             image.setAttribute('height', '55%');
+            image.setAttribute("onclick", "Canvas.WindowManager.showImageModal(\"".concat(_pictureURLs[0]).concat("\")"));
             images.appendChild(image);
             wrapper.appendChild(images);
 

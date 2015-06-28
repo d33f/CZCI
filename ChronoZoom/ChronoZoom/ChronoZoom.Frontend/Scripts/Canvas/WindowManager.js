@@ -5,6 +5,7 @@
         WindowManager.setTitle = setTitle;
         WindowManager.setTimeRange = setTimeRange;
         WindowManager.showLoader = showLoader;
+        WindowManager.showImageModal = showImageModal;
 
         // Set the title (top of screen)
         function setTitle(timelineTitle) {
@@ -27,6 +28,25 @@
         window.onresize = function (e) {
             Canvas.resetWindowWidthAndHeight();
         }
+
+
+        var modal = "<div id=\"dialog-confirm\">".concat("<img width=100% src=\"".concat(image).concat("\">"))
+.concat("</div>");
+        document.body.insertAdjacentHTML("afterbegin", modal);
+
+
+        $("#dialog-confirm").dialog({
+            modal: true,
+            maxWidth: '90%',
+            width: 'auto',
+            buttons: {
+                Ok: function () {
+                    $(this).dialog("close");
+                    $(this).remove();
+                }
+            }
+        });
+
 
     })(Canvas.WindowManager || (Canvas.WindowManager = {}));
     var WindowManager = Canvas.WindowManager;
