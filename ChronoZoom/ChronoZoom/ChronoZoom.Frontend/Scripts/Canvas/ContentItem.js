@@ -267,8 +267,7 @@ function ContentItem(data, parentContentItem) {
 
             // Create wrapper with title
             var wrapper = createElementWithClass('div', 'wrapper');
-            wrapper.appendChild(createElementWithClass('div', 'title'));
-
+            wrapper.appendChild(createElementWithClass('div', 'title'))
 
             // Create image wrapper
             var images = createElementWithClass('div', 'images');
@@ -277,7 +276,6 @@ function ContentItem(data, parentContentItem) {
             image.setAttribute('src', _pictureURLs[0]);
             image.setAttribute('width', '100%');
             image.setAttribute('height', '55%');
-            image.setAttribute("onclick", "Canvas.WindowManager.showImageModal(\"".concat(_pictureURLs[0]).concat("\")"));
             images.appendChild(image);
             wrapper.appendChild(images);
 
