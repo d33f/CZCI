@@ -334,6 +334,7 @@ div#addTimelinePanel {
 }
 .ui-dialog { 
 	z-index:9999;
+	position:absolute;
 } 
 .czModal{
 	display:block;
