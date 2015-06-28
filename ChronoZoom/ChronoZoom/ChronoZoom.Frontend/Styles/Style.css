@@ -338,6 +338,7 @@ div#addTimelinePanel {
 	right:0;
 	margin-left:auto;
 	margin-right:auto;
+	z-index:9999;
 } 
 .dialogImage {
     display: block;
