@@ -90,9 +90,9 @@ div.contentItem {
     div.contentItem > .wrapper {
         position: relative;
         top: 5%;
-        left: 10%;
-        width: 80%;
-        height: 80%;
+        left: 5%;
+        width: 90%;
+        height: 85%;
     }
 }
 
