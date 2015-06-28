@@ -7,7 +7,7 @@ using System.Web.Http.Cors;
 
 namespace ChronoZoom.Backend.Controllers
 {
-    [EnableCors("*", "*", "GET,POST,PUT,HEAD,OPTIONS,DELETE")]
+    //[EnableCors("*", "*", "GET,POST,PUT,HEAD,OPTIONS,DELETE")]
     public class ContentItemController : ApiController
     {
         private readonly IContentItemService _service;

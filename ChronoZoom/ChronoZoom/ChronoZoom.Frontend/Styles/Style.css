@@ -331,3 +331,7 @@ div#addTimelinePanel {
 }
 
 /*Button*/
+.ui-dialog-titlebar-close {
+  visibility: hidden;
+}
+.ui-dialog { position: absolute;}
